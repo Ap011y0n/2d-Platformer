@@ -36,26 +36,26 @@ bool j1Window::Awake(pugi::xml_node *node)
 		//Create window
 		Uint32 flags = SDL_WINDOW_SHOWN;
 
-		width = WIDTH;
-		height = HEIGHT;
-		scale = SCALE;
+		width = node->child("width").attribute("value").as_int();
+		height = node->child("height").attribute("value").as_int();
+		scale = node->child("scale").attribute("value").as_int();;
 
-		if(FULLSCREEN)
+		if(node->child("fullscreen").attribute("value").as_bool())
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if(BORDERLESS)
+		if(node->child("borderless").attribute("value").as_bool())
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
 		}
 
-		if(RESIZABLE)
+		if(node->child("resizable").attribute("value").as_bool())
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
 
-		if(FULLSCREEN_WINDOW)
+		if(node->child("fulscreen_window").attribute("value").as_bool())
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
