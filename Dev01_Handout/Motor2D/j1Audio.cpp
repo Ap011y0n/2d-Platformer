@@ -24,6 +24,7 @@ bool j1Audio::Awake(pugi::xml_node *node)
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
+	volumemusic = node->child("volumemusic").attribute("value").as_int();
 
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
@@ -83,6 +84,8 @@ bool j1Audio::CleanUp()
 bool j1Audio::PlayMusic(const char* path, float fade_time)
 {
 	bool ret = true;
+
+	Mix_VolumeMusic(volumemusic);
 
 	if(!active)
 		return false;

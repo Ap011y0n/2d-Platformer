@@ -9,8 +9,8 @@
  </renderer>
 
 <audio>
-
- </audio>
+  <volumemusic value="10"/>
+</audio>
 
 <input>
 
