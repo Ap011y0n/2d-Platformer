@@ -17,5 +17,7 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
-
+  <audio>
+    <volumemusic value="100"/>
+  </audio>
 </config>
