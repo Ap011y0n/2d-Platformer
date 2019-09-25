@@ -292,8 +292,8 @@ const char* j1App::GetOrganization() const
 }
 
 const bool j1App::Save() {
-	bool ret = true;
-/*	bool ret = LoadConfig();
+	
+	bool ret = LoadSaveGame();
 
 	if (ret == true)
 	{
@@ -302,11 +302,11 @@ const bool j1App::Save() {
 
 		while (item != NULL && ret == true)
 		{
-			ret = item->data->Awake(config.child(item->data->name.GetString()));
+			savegame = savegame_file.append_child(item->data->name.GetString());
 			item = item->next;
 		}
 	}
-*/
+
 	return ret;
 	
 }
