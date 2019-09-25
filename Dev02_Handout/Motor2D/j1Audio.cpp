@@ -177,3 +177,8 @@ bool j1Audio::Load(pugi::xml_node& save) {
 	bool ret = true;
 	return ret;
 }
+
+bool j1Audio::Save(pugi::xml_node& save) {
+	bool ret = true;
+	return ret;
+}

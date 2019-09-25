@@ -31,6 +31,9 @@ public:
 	//Load savegame file
 	bool Load(pugi::xml_node&);
 
+	//Save savegame file
+	bool Save(pugi::xml_node&);
+
 	// Blit
 	void SetViewPort(const SDL_Rect& rect);
 	void ResetViewPort();

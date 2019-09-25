@@ -64,6 +64,10 @@ public:
 	{
 		return true;
 	}
+	virtual bool Save(pugi::xml_node&)
+	{
+		return true;
+	}
 public:
 
 	p2SString	name;

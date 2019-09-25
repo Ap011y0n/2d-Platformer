@@ -151,7 +151,7 @@ bool j1App::LoadSaveGame()
 
 	if (result == NULL)
 	{
-		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+		LOG("Could not load map xml file config.xml pugi error: %s", result.description());
 		ret = false;
 	}
 	else
@@ -302,9 +302,11 @@ const bool j1App::Save() {
 
 		while (item != NULL && ret == true)
 		{
-			savegame = savegame_file.append_child(item->data->name.GetString());
+			savegame_file.set_value(item->data->name.GetString());
+			ret = item->data->Save(savegame.child(item->data->name.GetString()));
 			item = item->next;
 		}
+		savegame_file.save_file("savegame.xml");
 	}
 
 	return ret;

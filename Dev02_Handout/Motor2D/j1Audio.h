@@ -25,6 +25,9 @@ public:
 
 	//Load savegame file
 	bool Load(pugi::xml_node&);
+
+	//Save savegame file
+	bool Save(pugi::xml_node&);
 	
 
 	// Play a music file

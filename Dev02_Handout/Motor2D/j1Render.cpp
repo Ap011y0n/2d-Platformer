@@ -239,3 +239,11 @@ bool j1Render::Load(pugi::xml_node& save) {
 	bool ret = true;
 	return ret;
 }
+
+bool j1Render::Save(pugi::xml_node& save) {
+	LOG("%s", save.name());
+	save.child("camera").attribute("x").set_value(camera.x);
+	save.child("camera").attribute("y").set_value(camera.y);
+	bool ret = true;
+	return ret;
+}

@@ -123,3 +123,8 @@ bool j1Textures::Load(pugi::xml_node& save) {
 	bool ret = true;
 	return ret;
 }
+
+bool j1Textures::Save(pugi::xml_node& save) {
+	bool ret = true;
+	return ret;
+}
