@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!-- Config file for the game -->
+<config>
+ 
+<renderer>
+ <vsync value="false"/>
+ </renderer>
+
+<audio>
+  <volumemusic value="10"/>
+</audio>
+
+<input>
+
+ </input>
+
+<textures>
+
+ </textures>
+
+<window>
+<title>My super awesome game with XML</title>
+<fullscreen value="false"/>
+<borderless value="false"/>
+<resizable value="true"/>
+<fullscreen_window value="false"/>
+<width value="1024"/>
+<height value="768"/>
+<scale value="1"/>
+ <organization>UPC</organization>
+ </window>
+
+<scene>
+
+ </scene>
+</config>
