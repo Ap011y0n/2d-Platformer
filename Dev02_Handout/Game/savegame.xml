@@ -8,6 +8,7 @@
 	</audio>
 	<scene />
 	<renderer>
-		<camera x="-28" y="-26" />
+		<camera.x x="421" />
+		<camera.y y="129" />
 	</renderer>
 </save>
