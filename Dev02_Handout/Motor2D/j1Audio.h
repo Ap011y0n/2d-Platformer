@@ -31,6 +31,7 @@ public:
 	
 
 	// Play a music file
+	void volumechanger(bool );
 	bool PlayMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
 
 	// Load a WAV in memory
@@ -38,10 +39,10 @@ public:
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
-
+	float volumemusic;
 
 private:
-	uint volumemusic;
+	
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
 };
