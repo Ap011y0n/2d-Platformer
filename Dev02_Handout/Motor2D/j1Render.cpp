@@ -232,18 +232,18 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	return ret;
 }
 
-bool j1Render::Load(pugi::xml_node& save) {
-	camera.x = save.child("camera").attribute("x").as_int();
-	camera.y= save.child("camera").attribute("y").as_int();
-	LOG("%d", save.child("camera").attribute("y").as_int());
+bool j1Render::Load(pugi::xml_node& load) {
+	camera.x = load.child("camera.x").attribute("x").as_int();
+	camera.y= load.child("camera.y").attribute("y").as_int();
+	
 	bool ret = true;
 	return ret;
 }
 
 bool j1Render::Save(pugi::xml_node& save) {
-	LOG("%s", save.name());
-	save.child("camera").attribute("x").set_value(camera.x);
-	save.child("camera").attribute("y").set_value(camera.y);
+	
+	save.append_child("camera.x").append_attribute("x").set_value(camera.x);
+	save.append_child("camera.y").append_attribute("y").set_value(camera.y);
 	bool ret = true;
 	return ret;
 }
