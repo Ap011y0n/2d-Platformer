@@ -175,12 +175,12 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 void j1Audio:: volumechanger(bool increase) {
 	if (increase)
 	{
-		volumemusic +=0.3;
+		if (volumemusic < 179)volumemusic +=0.1;
 		Mix_VolumeMusic(volumemusic);
 	}
 	if (!increase) {
 	
-		volumemusic -= 0.3;
+		if (volumemusic > 1) volumemusic -= 0.1;
 		Mix_VolumeMusic(volumemusic);
 	}
 
