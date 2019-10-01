@@ -51,7 +51,6 @@ bool j1Map::CleanUp()
 	// from tilesets / map
 	delete [] tiles;
 	delete[] layerData;
-	//delete MapData;
 		
 	map_file.reset();
 
