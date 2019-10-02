@@ -41,16 +41,12 @@ void j1Map::Draw()
 
 				if (l->tilegid[l->Get(x, y)] != 0) {
 					SDL_Rect rect2;
-
-					rect2 = getRekt(1);
-					
+					rect2 = getRekt(1, l->tilegid[l->Get(x, y)]);
 					xmap = ReturnPos(x, rect2.w);
-					
 					ymap = ReturnPos(y, rect2.h);
 					App->render->Blit(image,  xmap, ymap, &rect2);
 				}
 			}
-
 		}
 		item_layer = item_layer->next;
 	}
@@ -316,7 +312,6 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 // TODO 3: Create the definition for a function that loads a single layer
 bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer)
 {
-	LOG("Todo bien :)");
 	int i = 0;
 	bool ret = true;
 	layer->name.create(node.attribute("name").as_string());
@@ -332,27 +327,39 @@ bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer)
 		layer->tilegid[i] = tilesgid.attribute("gid").as_uint();
 		i++;
 	}
-	/*for (i = 0; i < layer->width*layer->height; i++) {
-	LOG("Tilegid = %d", layer->tilegid[i]);
-	}*/
+
 	return ret;
 }
-SDL_Rect j1Map::getRekt(int firstgid) {
+SDL_Rect j1Map::getRekt(int firstgid, int gid) {
 	
 	
 	p2List_item<TileSet*>* item = data.tilesets.start;
 	while (item != NULL)
 	{
 		TileSet* s = item->data;
-		
-		if (s->firstgid == firstgid){
-		//filas 6
-		//columnas 8
+		int iterator = 0, addx = 0, addy = 0;
 
-			rect.x = 0;
-			rect.y = 0;
-			rect.h = s->tile_height + s->spacing;
-			rect.w = s->tile_width + s->spacing;
+		if (s->firstgid == firstgid){
+			for (int y = 0; y < s->num_tiles_height; y++) {
+				if (y != 0)addy += s->tile_height + s->spacing;
+				else { addy = 0; }
+				for (int x = 0; x < s->num_tiles_width; x++) {
+					iterator++;
+					if (x != 0)addx += s->tile_width + s->spacing;
+					else { addx = 0; }
+					
+					if (gid == iterator) {
+						x = s->num_tiles_width;
+						y = s->num_tiles_height;
+					}
+				}
+			}
+			
+			
+			rect.x = s->margin + addx;
+			rect.y = s->margin + addy;
+			rect.h = s->tile_height;
+			rect.w = s->tile_width;
 			
 
 	}

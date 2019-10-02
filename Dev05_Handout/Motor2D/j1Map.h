@@ -108,7 +108,7 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
-	SDL_Rect getRekt(int firstgid);
+	SDL_Rect getRekt(int firstgid, int gid);
 	SDL_Rect rect;
 	SDL_Texture* image;
 };
