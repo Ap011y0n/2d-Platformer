@@ -30,21 +30,26 @@ void j1Map::Draw()
 {
 	if(map_loaded == false)
 		return;
-	int xmap, ymap;
-	// TODO 5: Prepare the loop to iterate all the tiles in a layer
+	iPoint coord;
+	p2List_item<TileSet*>* item_tileset = data.tilesets.start;
+		TileSet* t = item_tileset->data;
+	
+		// TODO 5: Prepare the loop to iterate all the tiles in a layer
+	//codigo para seleccionar qyue tileset queremos usar
 	p2List_item<Layer*>* item_layer = data.layers.start;
 	while (item_layer != NULL)
 	{
 		Layer* l = item_layer->data;
 		for (int y = 0; y < l->height; y++) {
+
 			for (int x = 0; x < l->width; x++) {
 
 				if (l->tilegid[l->Get(x, y)] != 0) {
 					SDL_Rect rect2;
-					rect2 = getRekt(1, l->tilegid[l->Get(x, y)]);
-					xmap = ReturnPos(x, rect2.w);
-					ymap = ReturnPos(y, rect2.h);
-					App->render->Blit(image,  xmap, ymap, &rect2);
+					rect2 = t->getRekt(t->firstgid, l->tilegid[l->Get(x, y)]);
+					coord = ReturnPos(x, y, rect2.w);
+					
+					App->render->Blit(image, coord.x, coord.y, &rect2);
 				}
 			}
 		}
@@ -330,49 +335,31 @@ bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer)
 
 	return ret;
 }
-SDL_Rect j1Map::getRekt(int firstgid, int gid) {
-	
-	
-	p2List_item<TileSet*>* item = data.tilesets.start;
+SDL_Rect TileSet::getRekt(int gid, int tileid) {
+	SDL_Rect rect;
+	p2List_item<TileSet*>* item = App->map->data.tilesets.start;
 	while (item != NULL)
 	{
-		TileSet* s = item->data;
-		int iterator = 0, addx = 0, addy = 0;
-
-		if (s->firstgid == firstgid){
-			for (int y = 0; y < s->num_tiles_height; y++) {
-				if (y != 0)addy += s->tile_height + s->spacing;
-				else { addy = 0; }
-				for (int x = 0; x < s->num_tiles_width; x++) {
-					iterator++;
-					if (x != 0)addx += s->tile_width + s->spacing;
-					else { addx = 0; }
-					
-					if (gid == iterator) {
-						x = s->num_tiles_width;
-						y = s->num_tiles_height;
-					}
-				}
-			}
-			
-			
-			rect.x = s->margin + addx;
-			rect.y = s->margin + addy;
-			rect.h = s->tile_height;
-			rect.w = s->tile_width;
-			
-
+		if (item->data->firstgid == gid) {
+			rect.h = tile_height;
+			rect.w = tile_width;
+			rect.x = margin + ((rect.w + spacing)*((tileid - 1) % num_tiles_width));
+			rect.y = margin + ((rect.h + spacing)*((tileid - 1) / num_tiles_width));
+		}
+		item = item->next;
 	}
+	
+	
+	
 
-item = item->next;
-	}
 	return rect;
 }
 
-int j1Map::ReturnPos(int x, int y) {
+iPoint j1Map::ReturnPos(int x, int y, int map) {
 
-	int pos;
-	pos = x * y;
+	iPoint pos;
+	pos.x = x * map;
+	pos.y = y * map;
 
 	
 	return pos;

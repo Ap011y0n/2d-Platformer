@@ -27,7 +27,7 @@ struct Layer {
 struct TileSet
 {
 	// TODO 7: Create a method that receives a tile id and returns it's Rect
-
+	SDL_Rect getRekt(int firstgid, int gid);
 	p2SString			name;
 	int					firstgid;
 	int					margin;
@@ -87,7 +87,7 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	int ReturnPos(int x, int y);
+	iPoint ReturnPos(int x, int y, int rect);
 	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
 
 private:
@@ -108,7 +108,7 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
-	SDL_Rect getRekt(int firstgid, int gid);
+	
 	SDL_Rect rect;
 	SDL_Texture* image;
 };
