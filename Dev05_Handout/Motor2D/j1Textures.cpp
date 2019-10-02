@@ -2,7 +2,6 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Render.h"
-#include "j1FileSystem.h"
 #include "j1Textures.h"
 
 #include "SDL_image/include/SDL_image.h"
@@ -117,14 +116,4 @@ SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
 void j1Textures::GetSize(const SDL_Texture* texture, uint& width, uint& height) const
 {
 	SDL_QueryTexture((SDL_Texture*)texture, NULL, NULL, (int*) &width, (int*) &height);
-}
-
-bool j1Textures::Load(pugi::xml_node& save) {
-	bool ret = true;
-	return ret;
-}
-
-bool j1Textures::Save(pugi::xml_node& save) {
-	bool ret = true;
-	return ret;
 }

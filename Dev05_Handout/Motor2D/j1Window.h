@@ -21,12 +21,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Load savegame file
-	bool Load(pugi::xml_node&);
-
-	//Save savegame file
-	bool Save(pugi::xml_node&);
-
 	// Changae title
 	void SetTitle(const char* new_title);
 

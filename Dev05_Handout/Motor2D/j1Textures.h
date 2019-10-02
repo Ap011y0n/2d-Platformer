@@ -25,12 +25,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Load savegame file
-	bool Load(pugi::xml_node&);
-
-	//Save savegame file
-	bool Save(pugi::xml_node&);
-
 	// Load Texture
 	SDL_Texture* const	Load(const char* path);
 	bool				UnLoad(SDL_Texture* texture);

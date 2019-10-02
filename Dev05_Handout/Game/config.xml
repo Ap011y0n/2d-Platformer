@@ -17,7 +17,13 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
-  <audio>
-    <volumemusic value="100"/>
-  </audio>
+
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+
+  <map>
+    <folder>maps/</folder>
+  </map>
+
 </config>

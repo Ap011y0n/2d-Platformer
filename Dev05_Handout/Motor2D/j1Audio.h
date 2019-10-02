@@ -2,6 +2,8 @@
 #define __j1AUDIO_H__
 
 #include "j1Module.h"
+#include "SDL_mixer\include\SDL_mixer.h"
+#include "p2List.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -23,15 +25,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Load savegame file
-	bool Load(pugi::xml_node&);
-
-	//Save savegame file
-	bool Save(pugi::xml_node&);
-	
-
 	// Play a music file
-	void volumechanger(bool );
 	bool PlayMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
 
 	// Load a WAV in memory
@@ -39,10 +33,9 @@ public:
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
-	float volumemusic;
 
 private:
-	
+
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
 };

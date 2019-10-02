@@ -47,12 +47,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Load savegame file
-	bool Load(pugi::xml_node&);
-
-	//Save savegame file
-	bool Save(pugi::xml_node&);
-
 	// Gather relevant win events
 	bool GetWindowEvent(j1EventWindow ev);
 

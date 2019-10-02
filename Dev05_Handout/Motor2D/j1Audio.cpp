@@ -1,8 +1,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "j1App.h"
-#include "j1FileSystem.h"
 #include "j1Audio.h"
+#include "p2List.h"
 
 #include "SDL/include/SDL.h"
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -24,7 +23,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
-	volumemusic = config.child("volumemusic").attribute("value").as_float();
+
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
 		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -84,7 +83,7 @@ bool j1Audio::CleanUp()
 bool j1Audio::PlayMusic(const char* path, float fade_time)
 {
 	bool ret = true;
-	Mix_VolumeMusic(volumemusic);
+
 	if(!active)
 		return false;
 
@@ -170,35 +169,5 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
 	}
 
-	return ret;
-}
-void j1Audio:: volumechanger(bool increase) {
-	if (increase)
-	{
-		if (volumemusic < 179)volumemusic +=0.1;
-		Mix_VolumeMusic(volumemusic);
-	}
-	if (!increase) {
-	
-		if (volumemusic > 1) volumemusic -= 0.1;
-		Mix_VolumeMusic(volumemusic);
-	}
-
-};
-
-bool j1Audio::Load(pugi::xml_node& load) {
-	
-	volumemusic = load.child("volumemusic").attribute("value").as_int();
-	Mix_VolumeMusic(volumemusic);
-	bool ret = true;
-	return ret;
-}
-
-bool j1Audio::Save(pugi::xml_node& save) {
-	
-	save.append_child("volumemusic").append_attribute("value").set_value(volumemusic);
-
-
-	bool ret = true;
 	return ret;
 }

@@ -12,6 +12,7 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1Scene;
+class j1Map;
 
 class j1App
 {
@@ -38,25 +39,20 @@ public:
 	// Add a new module to handle
 	void AddModule(j1Module* module);
 
-	const bool Save();
-	const bool Load();
-
 	// Exposing some properties for reading
 	int GetArgc() const;
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-	// TODO 1: Create methods to request save and load
-	// that can be called anytime
+	void LoadGame();
+	void SaveGame() const;
+	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
 private:
 
 	// Load config file
-	bool LoadConfig();
-
-	// Load save file
-	bool LoadSaveGame();
+	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();
@@ -73,6 +69,10 @@ private:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
+	// Load / Save
+	bool LoadGameNow();
+	bool SavegameNow() const;
+
 public:
 
 	// Modules
@@ -82,28 +82,25 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
-	bool isSave = false;
-	bool isLoad = false;
+	j1Map*				map;
 
 private:
 
 	p2List<j1Module*>	modules;
 	uint				frames;
 	float				dt;
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-	pugi::xml_node		app_config;
-	pugi::xml_document	savegame_file;
-	pugi::xml_node		savegame;
 	int					argc;
 	char**				args;
-
 
 	p2SString			title;
 	p2SString			organization;
 
+	mutable bool		want_to_save;
+	bool				want_to_load;
+	p2SString			load_game;
+	mutable p2SString	save_game;
 };
 
-extern j1App* App;
+extern j1App* App; // No student is asking me about that ... odd :-S
 
 #endif
