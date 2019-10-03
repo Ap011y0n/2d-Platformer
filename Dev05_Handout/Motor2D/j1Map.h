@@ -27,7 +27,6 @@ struct Layer {
 struct TileSet
 {
 	// TODO 7: Create a method that receives a tile id and returns it's Rect
-	SDL_Rect getRekt(int firstgid, int gid);
 	p2SString			name;
 	int					firstgid;
 	int					margin;
@@ -98,6 +97,8 @@ private:
 	
 	// TODO 3: Create a method that loads a single laye
 	bool LoadLayer(pugi::xml_node& node, Layer* layer);
+	SDL_Rect getRekt(int firstgid, int gid);
+
 
 public:
 
@@ -108,7 +109,7 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
-	
+	uint TilesetId = 0;
 	SDL_Rect rect;
 	SDL_Texture* image;
 };

@@ -22,6 +22,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
+	TilesetId = config.child("id").attribute("value").as_int();
 
 	return ret;
 }
@@ -30,15 +31,15 @@ void j1Map::Draw()
 {
 	if(map_loaded == false)
 		return;
+	int iterator=0;
 	iPoint coord;
-	p2List_item<TileSet*>* item_tileset = data.tilesets.start;
-		TileSet* t = item_tileset->data;
 	
 		// TODO 5: Prepare the loop to iterate all the tiles in a layer
-	//codigo para seleccionar qyue tileset queremos usar
 	p2List_item<Layer*>* item_layer = data.layers.start;
 	while (item_layer != NULL)
 	{
+		iterator++;
+		if (iterator == TilesetId){
 		Layer* l = item_layer->data;
 		for (int y = 0; y < l->height; y++) {
 
@@ -46,13 +47,14 @@ void j1Map::Draw()
 
 				if (l->tilegid[l->Get(x, y)] != 0) {
 					SDL_Rect rect2;
-					rect2 = t->getRekt(t->firstgid, l->tilegid[l->Get(x, y)]);
+					rect2 = getRekt(TilesetId, l->tilegid[l->Get(x, y)]);
 					coord = ReturnPos(x, y, rect2.w);
 					
 					App->render->Blit(image, coord.x, coord.y, &rect2);
 				}
 			}
 		}
+	}
 		item_layer = item_layer->next;
 	}
 	
@@ -249,7 +251,7 @@ bool j1Map::LoadMap()
 			data.type = MAPTYPE_UNKNOWN;
 		}
 	}
-
+	LOG("CARPETA?? %s", folder);
 	return ret;
 }
 
@@ -335,18 +337,20 @@ bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer)
 
 	return ret;
 }
-SDL_Rect TileSet::getRekt(int gid, int tileid) {
+SDL_Rect j1Map::getRekt(int gid, int tileid) {
 	SDL_Rect rect;
-	p2List_item<TileSet*>* item = App->map->data.tilesets.start;
-	while (item != NULL)
+	p2List_item<TileSet*>* item_tileset = App->map->data.tilesets.start;
+	
+	while (item_tileset != NULL)
 	{
-		if (item->data->firstgid == gid) {
-			rect.h = tile_height;
-			rect.w = tile_width;
-			rect.x = margin + ((rect.w + spacing)*((tileid - 1) % num_tiles_width));
-			rect.y = margin + ((rect.h + spacing)*((tileid - 1) / num_tiles_width));
+		if (item_tileset->data->firstgid == gid) {
+			TileSet* t = item_tileset->data;
+			rect.h = t->tile_height;
+			rect.w = t->tile_width;
+			rect.x = t->margin + ((rect.w + t->spacing)*((tileid - 1) % t->num_tiles_width));
+			rect.y = t->margin + ((rect.h + t->spacing)*((tileid - 1) / t->num_tiles_width));
 		}
-		item = item->next;
+		item_tileset = item_tileset->next;
 	}
 	
 	
