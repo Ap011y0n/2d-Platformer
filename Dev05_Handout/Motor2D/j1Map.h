@@ -5,6 +5,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "PugiXml\src\pugixml.hpp"
 
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
@@ -27,7 +28,7 @@ struct Layer {
 struct TileSet
 {
 	// TODO 7: Create a method that receives a tile id and returns it's Rect
-	SDL_Rect getRekt(int firstgid, int gid);
+	SDL_Rect getRekt(int gid);
 	p2SString			name;
 	int					firstgid;
 	int					margin;
@@ -98,10 +99,14 @@ private:
 	
 	// TODO 3: Create a method that loads a single laye
 	bool LoadLayer(pugi::xml_node& node, Layer* layer);
+	int GetID(pugi::xml_node& node);
 
 public:
 
 	MapData data;
+	int TilesetId = 0;
+	int TilesetId2 = 0;
+	pugi::xml_node MapNode;
 
 private:
 

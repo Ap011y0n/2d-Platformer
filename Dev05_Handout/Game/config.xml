@@ -24,6 +24,8 @@
 
   <map>
     <folder>maps/</folder>
+ <id value= "1"/>
+<id2 value= "2"/>
   </map>
 
 </config>
