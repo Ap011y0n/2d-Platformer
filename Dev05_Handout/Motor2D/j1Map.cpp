@@ -110,7 +110,7 @@ bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
-	image = App->tex->Load("maps/tmw_desert_spacing.png");
+	image = App->tex->Load("maps/warped.png");
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
 	if (result == NULL)
