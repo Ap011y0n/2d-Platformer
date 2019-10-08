@@ -42,6 +42,8 @@ void j1Map::Draw()
 
 	// TODO 5: Prepare the loop to iterate all the tiles in a layer
 	p2List_item<TileSet*>* item = App->map->data.tilesets.start;
+	p2List_item<Collider*>* collider = App->map->data.colliders.start;
+	Collider* col = collider->data;
 	TileSet* t = item->data;
 	p2List_item<Layer*>* item_layer = data.layers.start;
 	while (item_layer != NULL)
@@ -54,11 +56,29 @@ void j1Map::Draw()
 				for (int x = 0; x < l->width; x++) {
 
 					if (l->tilegid[l->Get(x, y)] != 0) {
-						SDL_Rect rect2;
-						rect2 = t->getRekt(l->tilegid[l->Get(x, y)]);
-						coord = ReturnPos(x, y, rect2.w);
-
-						App->render->Blit(image, coord.x, coord.y, &rect2, iterator);
+						SDL_Rect rect;
+						rect = t->getRekt(l->tilegid[l->Get(x, y)]);
+						coord = ReturnPos(x, y, rect.w);
+						App->render->Blit(image, coord.x, coord.y, &rect);
+// --------------------------------------------------------------------------------------------------------
+//Draw colliders
+						collider = App->map->data.colliders.start;
+						Collider* col = collider->data;
+						while (collider != NULL) {
+							SDL_Rect rect2;
+							rect2.x = coord.x + col->x;
+							rect2.y = coord.y + col->y;
+							rect2.h = col->h;
+							rect2.w = col->w;
+							if (l->tilegid[l->Get(x, y)] == col->id + 1) {
+								App->render->DrawQuad(rect2, 0, 0, 225, 100);
+							}
+							collider = collider->next;
+							
+						}
+						
+// --------------------------------------------------------------------------------------------------------
+						
 					}
 				}
 			}
@@ -131,7 +151,6 @@ bool j1Map::Load(const char* file_name)
 	for (tileset = map_file.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
 	{
 		TileSet* set = new TileSet();
-
 		if (ret == true)
 		{
 			ret = LoadTilesetDetails(tileset, set);
@@ -140,6 +159,10 @@ bool j1Map::Load(const char* file_name)
 		if (ret == true)
 		{
 			ret = LoadTilesetImage(tileset, set);
+		}
+		if (ret == true) 
+		{
+			ret = LoadTilesetColliders(tileset);
 		}
 
 		data.tilesets.add(set);
@@ -160,7 +183,7 @@ bool j1Map::Load(const char* file_name)
 	}
 	// TODO 4: Iterate all layers and load each of them
 	// Load layer info ----------------------------------------------
-
+	
 
 	if (ret == true)
 	{
@@ -289,6 +312,46 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
+bool j1Map::LoadTilesetColliders(pugi::xml_node& tileset_node)
+{
+	bool ret = true;
+	pugi::xml_node collider;
+	Collider* coll = new Collider();
+
+	for (collider = tileset_node.child("tile"); collider && ret; collider = tileset_node.next_sibling("tile")) {
+	if (collider == NULL)
+	{
+		LOG("Error parsing tileset xml file: Cannot find 'tileset' tag.");
+		ret = false;
+	}
+	else {
+		coll->id = collider.attribute("id").as_int();
+		
+		coll->type.create(collider.child("objectgroup").child("object").attribute("name").as_string());
+		coll->x = collider.child("objectgroup").child("object").attribute("x").as_int();
+		coll->y = collider.child("objectgroup").child("object").attribute("y").as_int();
+		coll->w = collider.child("objectgroup").child("object").attribute("width").as_int();
+		coll->h = collider.child("objectgroup").child("object").attribute("height").as_int();
+		
+		LOG("Collider id %d", coll->id);
+		LOG("Collider type %s", coll->type);
+		LOG("Collider x %d", coll->x);
+		LOG("Collider y %d", coll->y);
+		LOG("Collider y %d", coll->w);
+		LOG("Collider y %d", coll->h);
+
+
+
+
+
+	}
+	data.colliders.add(coll);
+	}
+	
+
+	return ret;
+}
+
 bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
@@ -348,22 +411,11 @@ bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer)
 }
 SDL_Rect TileSet::getRekt(int tileid) {
 	SDL_Rect rect;
-	//p2List_item<TileSet*>* item_tileset = App->map->data.tilesets.start;
 
-	//while (item_tileset != NULL)
-	//{
-		//if (item_tileset->data->firstgid == gid) {
-			//TileSet* t = item_tileset->data;
 			rect.h = tile_height;
 			rect.w = tile_width;
 			rect.x = margin + ((rect.w + spacing)*((tileid - 1) % num_tiles_width));
 			rect.y = margin + ((rect.h + spacing)*((tileid - 1) / num_tiles_width));
-	//	}
-	//	item_tileset = item_tileset->next;
-	//}
-
-
-
 
 	return rect;
 }

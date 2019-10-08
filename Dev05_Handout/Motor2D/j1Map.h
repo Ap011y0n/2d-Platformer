@@ -9,6 +9,15 @@
 
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
+struct Collider {
+	uint id = 0u;
+	p2SString type;
+	uint x = 0u;
+	uint y = 0u;
+	uint w = 0u;
+	uint h = 0u;
+};
+// ----------------------------------------------------
 struct Layer {
 	p2SString			name;
 	uint				width = 0u;
@@ -22,8 +31,6 @@ struct Layer {
 };
 
 	// TODO 6: Short function to get the value of x,y
-
-
 // ----------------------------------------------------
 struct TileSet
 {
@@ -43,7 +50,9 @@ struct TileSet
 	int					offset_x;
 	int					offset_y;
 	
+	
 };
+
 
 enum MapTypes
 {
@@ -64,9 +73,11 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	// TODO 2: Add a list/array of layers to the map!
 	p2List<Layer*>	layers;
+	p2List<Collider*> colliders;
 };
 
 // ----------------------------------------------------
+
 class j1Map : public j1Module
 {
 public:
@@ -96,6 +107,7 @@ private:
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
+	bool LoadTilesetColliders(pugi::xml_node& tileset_node);
 	
 	// TODO 3: Create a method that loads a single laye
 	bool LoadLayer(pugi::xml_node& node, Layer* layer);
