@@ -7,6 +7,6 @@
 	<map />
 	<scene />
 	<renderer>
-		<camera x="-149" y="138" />
+		<camera x="173" y="166" />
 	</renderer>
 </game_state>

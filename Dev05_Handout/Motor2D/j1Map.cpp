@@ -47,7 +47,7 @@ void j1Map::Draw()
 	while (item_layer != NULL)
 	{
 		iterator++;
-		if (iterator == TilesetId || iterator == TilesetId2) {
+		if (iterator == TilesetId || iterator == TilesetId2 || iterator == 3) {
 			Layer* l = item_layer->data;
 			for (int y = 0; y < l->height; y++) {
 
@@ -58,7 +58,7 @@ void j1Map::Draw()
 						rect2 = t->getRekt(l->tilegid[l->Get(x, y)]);
 						coord = ReturnPos(x, y, rect2.w);
 
-						App->render->Blit(image, coord.x, coord.y, &rect2);
+						App->render->Blit(image, coord.x, coord.y, &rect2, iterator);
 					}
 				}
 			}
@@ -111,7 +111,7 @@ bool j1Map::Load(const char* file_name)
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
-	image = App->tex->Load("maps/Assets.png");
+	image = App->tex->Load("maps/map_tileset.png");
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
 	if (result == NULL)
@@ -260,7 +260,7 @@ bool j1Map::LoadMap()
 			data.type = MAPTYPE_UNKNOWN;
 		}
 	}
-	LOG("CARPETA?? %s", folder);
+	
 	return ret;
 }
 
