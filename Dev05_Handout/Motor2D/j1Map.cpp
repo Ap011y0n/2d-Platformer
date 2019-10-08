@@ -378,8 +378,10 @@ iPoint j1Map::ReturnPos(int x, int y, int map) {
 	return pos;
 }
 
-int j1Map::GetID(pugi::xml_node& node) {
-	LOG("HOla buenas que tal va %d", node.child("id").attribute("value").as_int());
-	return node.child("id").attribute("value").as_int();
-}
+p2Point<uint> j1Map::pixelsToTiles(int x, int y) {
+	p2Point<uint> coor;
+	coor.x = x / data.tile_width;
+	coor.y = y / data.tile_height;
+	return coor;
 
+}

@@ -99,7 +99,7 @@ private:
 	
 	// TODO 3: Create a method that loads a single laye
 	bool LoadLayer(pugi::xml_node& node, Layer* layer);
-	int GetID(pugi::xml_node& node);
+	
 
 public:
 
@@ -107,6 +107,7 @@ public:
 	int TilesetId = 0;
 	int TilesetId2 = 0;
 	pugi::xml_node MapNode;
+	p2Point<uint> pixelsToTiles(int x, int y);
 
 private:
 

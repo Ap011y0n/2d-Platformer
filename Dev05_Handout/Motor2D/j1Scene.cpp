@@ -63,11 +63,16 @@ bool j1Scene::Update(float dt)
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
-
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count());
+	int x = 0,y=0;
+	p2Point<uint> coor;
+	App->input->GetMousePosition(x, y);
+	coor = App->map->pixelsToTiles(x, y);
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Mousex %d Mousey %d",
+		App->map->data.width, App->map->data.height,
+		App->map->data.tile_width, App->map->data.tile_height,
+		App->map->data.tilesets.count(),
+		coor.x,
+		coor.y);
 
 	App->win->SetTitle(title.GetString());
 	return true;
