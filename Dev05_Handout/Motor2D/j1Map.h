@@ -118,6 +118,9 @@ public:
 	MapData data;
 	int TilesetId = 0;
 	int TilesetId2 = 0;
+
+	int firstLayer = 0;
+	int lastLayer = 0;
 	pugi::xml_node MapNode;
 	p2Point<uint> pixelsToTiles(int x, int y);
 

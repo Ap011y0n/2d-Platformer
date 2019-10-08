@@ -23,8 +23,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 	
-	TilesetId = config.child("id").attribute("value").as_int();
-	TilesetId2 = config.child("id2").attribute("value").as_int();
+	firstLayer = config.child("id").attribute("value").as_int();
+	lastLayer = config.child("id2").attribute("value").as_int();
 	
 	
 
@@ -35,7 +35,7 @@ void j1Map::Draw()
 {
 	if (map_loaded == false)
 		return;
-	int iterator = 0;
+	
 
 	
 	iPoint coord;
@@ -48,8 +48,9 @@ void j1Map::Draw()
 	p2List_item<Layer*>* item_layer = data.layers.start;
 	while (item_layer != NULL)
 	{
-		iterator++;
-		if (iterator == TilesetId || iterator == TilesetId2 || iterator == 3) {
+		
+		for (firstLayer = 1; firstLayer <= lastLayer; firstLayer++) 
+		{
 			Layer* l = item_layer->data;
 			for (int y = 0; y < l->height; y++) {
 
