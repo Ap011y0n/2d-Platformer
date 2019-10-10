@@ -46,8 +46,9 @@ void j1Map::Draw()
 	Collider* col = collider->data;
 	TileSet* t = item->data;
 	p2List_item<Layer*>* item_layer = data.layers.start;
-	while (item_layer != NULL)
-	{
+	
+	//while (item_layer != NULL)
+	//{
 		
 		for (firstLayer = 1; firstLayer <= lastLayer; firstLayer++) 
 		{
@@ -83,7 +84,7 @@ void j1Map::Draw()
 					}
 				}
 			}
-		}
+		//}
 		item_layer = item_layer->next;
 	}
 

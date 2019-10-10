@@ -7,7 +7,7 @@
   </app>
 	
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
   </renderer>
 
   <window>
@@ -25,7 +25,7 @@
   <map>
     <folder>maps/</folder>
  <id value= "1"/>
-<id2 value= "7"/>
+<id2 value= "6"/>
   </map>
 
 </config>
