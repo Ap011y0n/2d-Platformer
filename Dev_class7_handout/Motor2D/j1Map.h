@@ -5,21 +5,23 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
-
+#define MAX_PROPERTIES 2
 // TODO 5: Create a generic structure to hold properties
 // TODO 7: Our custom properties should have one method
 // to ask for the value of a custom property
 // ----------------------------------------------------
 struct Properties
 {
-	p2SString layer_name;
-	union{
+	p2SString name;
+	union prop {
 		int ivalue;
 		bool bvalue;
 		SDL_Color cvalue;
 		float fvalue;
 
-	};
+	}prop;
+
+	
 };
 
 // ----------------------------------------------------
@@ -29,8 +31,9 @@ struct MapLayer
 	int			width;
 	int			height;
 	uint*		data;
-	p2List<Properties*>properties;
-	
+	//p2List<Properties*>properties;
+	Properties property[MAX_PROPERTIES];
+	int returnPropValue(p2SString propName);
 
 	MapLayer() : data(NULL)
 	{}
@@ -117,19 +120,20 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool LoadProperties(pugi::xml_node& node, p2List<Properties*> properties);
+	bool LoadProperties(pugi::xml_node& node, Properties* properties);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 
 	MapData data;
-
+	p2SString paint = name.create("Nodraw");
 private:
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+
 };
 
 #endif // __j1MAP_H__
