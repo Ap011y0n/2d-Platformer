@@ -328,7 +328,6 @@ bool j1Map::LoadTilesetColliders(pugi::xml_node& tileset_node)
 	}
 	else {
 		coll->id = collider.attribute("id").as_int();
-		
 		coll->type.create(collider.child("objectgroup").child("object").attribute("name").as_string());
 		coll->x = collider.child("objectgroup").child("object").attribute("x").as_int();
 		coll->y = collider.child("objectgroup").child("object").attribute("y").as_int();
@@ -341,11 +340,6 @@ bool j1Map::LoadTilesetColliders(pugi::xml_node& tileset_node)
 		LOG("Collider y %d", coll->y);
 		LOG("Collider y %d", coll->w);
 		LOG("Collider y %d", coll->h);
-
-
-
-
-
 	}
 	data.colliders.add(coll);
 	}

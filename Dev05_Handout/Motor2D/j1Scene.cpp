@@ -65,14 +65,26 @@ bool j1Scene::Update(float dt)
 	App->map->Draw();
 	int x = 0,y=0;
 	p2Point<uint> coor;
+	p2List_item<Layer*>* item_layer = App->map->data.layers.end;
+	p2List_item<Collider*>* item_collider = App->map->data.colliders.start;
+
+	Layer* l = item_layer->data;
 	App->input->GetMousePosition(x, y);
 	coor = App->map->pixelsToTiles(x, y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Mousex %d Mousey %d",
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Mousex %d Mousey %d tile num %d",
 		App->map->data.width, App->map->data.height,
 		App->map->data.tile_width, App->map->data.tile_height,
 		App->map->data.tilesets.count(),
 		coor.x,
-		coor.y);
+		coor.y,
+		l->Get(coor.x, coor.y));
+	while (item_collider != NULL) {
+		if (l->tilegid[l->Get(coor.x, coor.y)] == item_collider->data->id + 1)
+			LOG("COLLISION");
+
+		item_collider =	item_collider->next;
+	}
+	
 
 	App->win->SetTitle(title.GetString());
 	return true;
