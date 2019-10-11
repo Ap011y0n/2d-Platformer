@@ -244,12 +244,21 @@ bool j1Map::Load(const char* file_name)
 		}
 
 		p2List_item<MapLayer*>* item_layer = data.layers.start;
+		
 		while(item_layer != NULL)
 		{
 			MapLayer* l = item_layer->data;
+			p2List_item<Properties*>* item_property = l->properties.start;
 			LOG("Layer ----");
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
+			while (item_property != NULL)
+			{
+				Properties *property = item_property->data;
+				LOG("Layer attribute %s = %d", property->layer_name, property->bvalue);
+				item_property = item_property->next;
+			}
+
 			item_layer = item_layer->next;
 		}
 	}
@@ -393,7 +402,9 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").as_string();
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
-	LoadProperties(node, layer->properties);
+	
+		LoadProperties(node, layer->properties);
+		
 	pugi::xml_node layer_data = node.child("data");
 
 	if(layer_data == NULL)
@@ -418,16 +429,47 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 }
 
 // Load a group of properties from a node and fill a list with it
-bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+bool j1Map::LoadProperties(pugi::xml_node& node, p2List<Properties*> properties)
 {
+	LOG("Loading properties");
+	Properties* property;
+	property = new Properties;
+	pugi::xml_node layer;
 	bool ret = true;
-	/*properties.draw = node.child("properties").child("name").attribute("draw").as_bool();
+	
+
+	for (layer = node.child("properties").child("property"); layer && ret; layer = layer.next_sibling("property"))
+	{
+		
+		
+		property->layer_name = layer.attribute("name").as_string();
+		
+		name.create("Nodraw");
+		if (property->layer_name == name.GetString()) {
+				property->ivalue = layer.attribute("value").as_int();
+			properties.add(property);
+			LOG("Value =  %d", property->ivalue);
+		}
+	
+		
+			name.create("Navigation");
+			if (property->layer_name == name.GetString()) {
+				property->ivalue = layer.attribute("value").as_int();
+				properties.add(property);
+				LOG("Layer name %s", name.GetString());
+				LOG("Value= %d", property->ivalue);
+			}
+
+		
+	}
+	
+	/*
+	properties.draw = node.child("properties").child("name").attribute("draw").as_bool();
 	properties.navigation = node.child("properties").attribute("navigation").as_bool();
 	if (properties.draw == false)
 		LOG("false");
 	*/
-	properties.layer_name = node.attribute("name").as_string();
-		if(properties.layer_name == "Capa de Patrones 1 ")
+	
 			
 	// TODO 6: Fill in the method to fill the custom properties from 
 	// an xml_node

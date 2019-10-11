@@ -38,7 +38,7 @@
  </tileset>
  <layer name="Graphics" width="25" height="25">
   <properties>
-   <property name="Nodraw" value="0"/>
+   <property name="Nodraw" value="1"/>
   </properties>
   <data>
    <tile gid="24"/>

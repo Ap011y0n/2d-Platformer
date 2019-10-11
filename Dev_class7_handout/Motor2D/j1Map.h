@@ -29,7 +29,8 @@ struct MapLayer
 	int			width;
 	int			height;
 	uint*		data;
-	Properties	properties;
+	p2List<Properties*>properties;
+	
 
 	MapLayer() : data(NULL)
 	{}
@@ -116,7 +117,7 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+	bool LoadProperties(pugi::xml_node& node, p2List<Properties*> properties);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 
