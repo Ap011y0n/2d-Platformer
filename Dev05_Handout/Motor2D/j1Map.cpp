@@ -134,6 +134,9 @@ bool j1Map::Load(const char* file_name)
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
 	image = App->tex->Load("maps/map_tileset.png");
+	trees = App->tex->Load("maps/Trees.png");
+	mountains = App->tex->Load("maps/Mountains.png");
+	caves = App->tex->Load("maps/Caves.png");
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
 	if (result == NULL)

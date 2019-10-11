@@ -131,6 +131,10 @@ private:
 	bool				map_loaded;
 	
 	SDL_Rect rect;
+	SDL_Texture* tileset;
+	SDL_Texture* trees;
+	SDL_Texture* mountains;
+	SDL_Texture* caves;
 	SDL_Texture* image;
 };
 
