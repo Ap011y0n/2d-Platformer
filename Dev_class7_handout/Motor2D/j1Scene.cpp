@@ -30,7 +30,8 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("maplevel1.tmx");
+	App->map->Load("iso_walk.tmx");
+	
 	return true;
 }
 
@@ -44,47 +45,33 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame();
+		App->LoadGame("save_game.xml");
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->SaveGame();
+		App->SaveGame("save_game.xml");
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y -= 1;
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		App->render->camera.y += 1;
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x -= 1;
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		App->render->camera.y -= 1;
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		App->render->camera.x += 1;
 
-	//App->render->Blit(img, 0, 0);
+	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		App->render->camera.x -= 1;
+
 	App->map->Draw();
-	int x = 0,y=0;
-	p2Point<uint> coor;
-	p2List_item<Layer*>* item_layer = App->map->data.layers.end;
-	p2List_item<Collider*>* item_collider = App->map->data.colliders.start;
 
-	Layer* l = item_layer->data;
+	int x, y;
 	App->input->GetMousePosition(x, y);
-	coor = App->map->pixelsToTiles(x, y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Mousex %d Mousey %d tile num %d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.count(),
-		coor.x,
-		coor.y,
-		l->Get(coor.x, coor.y));
-	while (item_collider != NULL) {
-		if (l->tilegid[l->Get(coor.x, coor.y)] == item_collider->data->id + 1)
-			LOG("COLLISION");
-
-		item_collider =	item_collider->next;
-	}
-	
+	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
+					App->map->data.width, App->map->data.height,
+					App->map->data.tile_width, App->map->data.tile_height,
+					App->map->data.tilesets.count(),
+					map_coordinates.x, map_coordinates.y);
 
 	App->win->SetTitle(title.GetString());
 	return true;
