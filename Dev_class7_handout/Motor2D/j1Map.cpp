@@ -33,7 +33,8 @@ void j1Map::Draw()
 
 	// TODO 4: Make sure we draw all the layers and not just the first one
 	p2List_item<MapLayer*>* layer_iterator = this->data.layers.start;
-
+	/*p2List_item<Collider*>* collider = App->map->data.colliders.start;
+	Collider* col = collider->data;*/
 	MapLayer* layer = this->data.layers.start->data;
 	while (layer_iterator != NULL) {
 		layer = layer_iterator->data;
@@ -50,16 +51,33 @@ void j1Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 						
-						//if( layer->returnPropValue(paint)==0){
+						if( layer->returnPropValue(paint)==0){
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
-						//}
+						}
 					}
 				}
 			}
 		}
-	layer_iterator = layer_iterator->next;
+		//Draw colliders
+	/*	collider = App->map->data.colliders.start;
+		Collider* col = collider->data;
+		while (collider != NULL) {
+			SDL_Rect rect2;
+			rect2.x = coord.x + col->x;
+			rect2.y = coord.y + col->y;
+			rect2.h = col->h;
+			rect2.w = col->w;
+			if (l->tilegid[l->Get(x, y)] == col->id + 1) {
+				App->render->DrawQuad(rect2, 0, 0, 225, 100);
+			}
+			collider = collider->next;
+
+		}*/
+
+		// --------------------------------------------------------------------------------------------------------
+		layer_iterator = layer_iterator->next;
+		}
 	}
-}
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
 
@@ -71,7 +89,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 
 	while (tileset_iterator != NULL)
 	{
-		if (id > tileset_iterator->data->firstgid) {
+		if (id >= tileset_iterator->data->firstgid) {
 			tileset = tileset_iterator->data; 
 			tileset_iterator = tileset_iterator->next;
 			
@@ -185,6 +203,7 @@ bool j1Map::Load(const char* file_name)
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
+
 	if(result == NULL)
 	{
 		LOG("Could not load map xml file %s. pugi error: %s", file_name, result.description());
@@ -212,6 +231,10 @@ bool j1Map::Load(const char* file_name)
 		{
 			ret = LoadTilesetImage(tileset, set);
 		}
+		//if (ret == true)
+		//{
+		//	ret = LoadTilesetColliders(tileset);
+		//}
 
 		data.tilesets.add(set);
 	}
@@ -481,4 +504,37 @@ int MapLayer::returnPropValue(p2SString propName) {
 	
 	return value;
 }
+//bool j1Map::LoadTilesetColliders(pugi::xml_node& tileset_node)
+//{
+//	bool ret = true;
+//	pugi::xml_node collider;
+//	Collider* coll = new Collider();
+//
+//	for (collider = tileset_node.child("tile"); collider && ret; collider = tileset_node.next_sibling("tile")) {
+//		if (collider == NULL)
+//		{
+//			LOG("Error parsing tileset xml file: Cannot find 'tileset' tag.");
+//			ret = false;
+//		}
+//		else {
+//			coll->id = collider.attribute("id").as_int();
+//			coll->type.create(collider.child("objectgroup").child("object").attribute("name").as_string());
+//			coll->x = collider.child("objectgroup").child("object").attribute("x").as_int();
+//			coll->y = collider.child("objectgroup").child("object").attribute("y").as_int();
+//			coll->w = collider.child("objectgroup").child("object").attribute("width").as_int();
+//			coll->h = collider.child("objectgroup").child("object").attribute("height").as_int();
+//
+//			LOG("Collider id %d", coll->id);
+//			LOG("Collider type %s", coll->type);
+//			LOG("Collider x %d", coll->x);
+//			LOG("Collider y %d", coll->y);
+//			LOG("Collider y %d", coll->w);
+//			LOG("Collider y %d", coll->h);
+//		}
+//		data.colliders.add(coll);
+//	}
+//
+//
+//	return ret;
+//}
 

@@ -12,6 +12,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1App.h"
+#include "j1Player.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -26,6 +27,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
+	player = new j1Player;
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -35,6 +37,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
+	AddModule(player);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -272,7 +275,7 @@ const char* j1App::GetOrganization() const
 }
 
 // Load / Save
-void j1App::LoadGame(const char* file)
+void j1App::LoadGame()
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
@@ -281,7 +284,7 @@ void j1App::LoadGame(const char* file)
 }
 
 // ---------------------------------------
-void j1App::SaveGame(const char* file) const
+void j1App::SaveGame() const
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
@@ -302,7 +305,7 @@ bool j1App::LoadGameNow()
 
 	pugi::xml_document data;
 	pugi::xml_node root;
-
+	load_game.create("save_game");
 	pugi::xml_parse_result result = data.load_file(load_game.GetString());
 
 	if(result != NULL)
@@ -336,7 +339,7 @@ bool j1App::LoadGameNow()
 bool j1App::SavegameNow() const
 {
 	bool ret = true;
-
+	save_game.create("save_game");
 	LOG("Saving Game State to %s...", save_game.GetString());
 
 	// xml object were we will store all data

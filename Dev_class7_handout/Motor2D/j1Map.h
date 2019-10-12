@@ -10,6 +10,16 @@
 // TODO 7: Our custom properties should have one method
 // to ask for the value of a custom property
 // ----------------------------------------------------
+
+//struct Collider {
+//	uint id = 0u;
+//	p2SString type;
+//	uint x = 0u;
+//	uint y = 0u;
+//	uint w = 0u;
+//	uint h = 0u;
+//};
+
 struct Properties
 {
 	p2SString name;
@@ -87,6 +97,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
+	//p2List<Collider*> colliders;
 };
 
 // ----------------------------------------------------
@@ -121,6 +132,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties* properties);
+	/*bool LoadTilesetColliders(pugi::xml_node& tileset_node);*/
 
 	TileSet* GetTilesetFromTileId(int id) const;
 
