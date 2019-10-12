@@ -20,6 +20,8 @@ j1Audio::~j1Audio()
 // Called before render is available
 bool j1Audio::Awake(pugi::xml_node& config)
 {
+	music_folder = config.child("music").child_value("folder");
+	volume = config.child("music").child("volume").attribute("value").as_float();
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
@@ -82,6 +84,7 @@ bool j1Audio::CleanUp()
 // Play a music file
 bool j1Audio::PlayMusic(const char* path, float fade_time)
 {
+	Mix_VolumeMusic(128 * volume);
 	bool ret = true;
 
 	if(!active)
@@ -102,7 +105,9 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 		Mix_FreeMusic(music);
 	}
 
-	music = Mix_LoadMUS(path);
+	p2SString tmp("%s%s", music_folder.GetString(), path);
+
+	music = Mix_LoadMUS(tmp.GetString());
 
 	if(music == NULL)
 	{
@@ -170,4 +175,18 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+bool j1Audio::Save(pugi::xml_node& config) 
+{
+	config.append_child("musicVolumeModifier").append_attribute("value") = volume;
+	return true;
+}
+
+bool j1Audio::Load(pugi::xml_node& config)
+{
+	volume = config.child("musicVolumeModifier").attribute("value").as_float();
+
+	Mix_VolumeMusic(128 * volume);
+
+	return true;
 }
