@@ -6,6 +6,10 @@
 #include "p2Point.h"
 #include "p2DynArray.h"
 
+#define SPEED_X 4
+#define SPEED_Y 4
+#define GRAVITY 2
+
 struct SDL_Texture;
 struct Collider;
 
@@ -19,6 +23,12 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+	void Movement();
+	void CheckCollision();
+	void DrawHitbox();
+
 
 
 public:
@@ -29,6 +39,14 @@ public:
 	Animation up;
 	Animation down;
 	iPoint position;
+	bool Canright = true;
+	bool Canleft = true;
+	bool Canjump = true;
+	bool Candown = true;
+	int playerHeight = 50;
+	int playerWidth = 20;
+	int playerCentre = 10;
+
 };
 
 #endif

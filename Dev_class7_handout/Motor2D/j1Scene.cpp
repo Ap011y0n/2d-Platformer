@@ -48,7 +48,7 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame();
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 		App->SaveGame();
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -94,5 +94,22 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	return true;
+}
+bool j1Scene::Load(pugi::xml_node& data)
+{
+	LOG("Loading Scene state");
+	App->map->CleanUp();
+	App->map->Load("maplevel2.0.tmx");
+	return true;
+}
+
+// Save Game State
+bool j1Scene::Save(pugi::xml_node& data) const
+{
+	LOG("Saving Scene state");
+
+	App->map->CleanUp();
+	App->map->Load("maplevel1.tmx");
 	return true;
 }

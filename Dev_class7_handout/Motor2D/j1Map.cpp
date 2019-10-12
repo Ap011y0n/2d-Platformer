@@ -173,6 +173,7 @@ bool j1Map::CleanUp()
 
 	while(item != NULL)
 	{
+		App->tex->UnLoad(item->data->texture);
 		RELEASE(item->data);
 		item = item->next;
 	}
@@ -490,7 +491,7 @@ bool j1Map::LoadProperties(pugi::xml_node& node,Properties property[])
 }
 
 int MapLayer::returnPropValue(const char* propName) {
-	int value = 0;
+	int value = -1;
 	for (int i = 0; i < MAX_PROPERTIES; i++){
 
 		if (property[i].name == propName) {
