@@ -51,7 +51,7 @@ void j1Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 						
-						if( layer->returnPropValue(paint)==0){
+						if( layer->returnPropValue("Nodraw")==0){
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 						}
 					}
@@ -489,16 +489,12 @@ bool j1Map::LoadProperties(pugi::xml_node& node,Properties property[])
 	return ret;
 }
 
-int MapLayer::returnPropValue(p2SString propName) {
+int MapLayer::returnPropValue(const char* propName) {
 	int value = 0;
 	for (int i = 0; i < MAX_PROPERTIES; i++){
-	
-	if (propName == "Nodraw") {
-		value = property->prop.ivalue;
-		}
-	
-	if (propName == "Navigation") {
-		value = property->prop.ivalue;
+
+		if (property[i].name == propName) {
+			value = property[i].prop.ivalue;
 		}
 	}
 	

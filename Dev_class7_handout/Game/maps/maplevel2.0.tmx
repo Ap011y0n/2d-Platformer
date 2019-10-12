@@ -20,7 +20,7 @@
  </tileset>
  <layer name="Mountains" width="200" height="50">
   <properties>
-   <property name="Nodraw" type="int" value="1"/>
+   <property name="Nodraw" type="int" value="0"/>
   </properties>
   <data>
    <tile gid="12"/>
@@ -10027,7 +10027,7 @@
  </layer>
  <layer name="Trees III" width="200" height="50">
   <properties>
-   <property name="Nodraw" type="int" value="1"/>
+   <property name="Nodraw" type="int" value="0"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -20034,7 +20034,7 @@
  </layer>
  <layer name="Trees II" width="200" height="50">
   <properties>
-   <property name="Nodraw" type="int" value="1"/>
+   <property name="Nodraw" type="int" value="0"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -30041,7 +30041,7 @@
  </layer>
  <layer name="Trees I" width="200" height="50">
   <properties>
-   <property name="Nodraw" type="int" value="1"/>
+   <property name="Nodraw" type="int" value="0"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -40048,7 +40048,7 @@
  </layer>
  <layer name="Cave II" width="200" height="50">
   <properties>
-   <property name="Nodraw" type="int" value="1"/>
+   <property name="Nodraw" type="int" value="0"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -50055,7 +50055,7 @@
  </layer>
  <layer name="Cave I" width="200" height="50">
   <properties>
-   <property name="Nodraw" type="int" value="1"/>
+   <property name="Nodraw" type="int" value="0"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -60062,7 +60062,7 @@
  </layer>
  <layer name="Details" width="200" height="50">
   <properties>
-   <property name="Nodraw" type="int" value="1"/>
+   <property name="Nodraw" type="int" value="0"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -70069,7 +70069,7 @@
  </layer>
  <layer name="Map" width="200" height="50">
   <properties>
-   <property name="Nodraw" type="int" value="1"/>
+   <property name="Nodraw" type="int" value="0"/>
   </properties>
   <data>
    <tile gid="0"/>

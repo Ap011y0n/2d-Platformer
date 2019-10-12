@@ -43,7 +43,7 @@ struct MapLayer
 	uint*		data;
 	//p2List<Properties*>properties;
 	Properties property[MAX_PROPERTIES];
-	int returnPropValue(p2SString propName);
+	int returnPropValue(const char* propName);
 
 	MapLayer() : data(NULL)
 	{}
