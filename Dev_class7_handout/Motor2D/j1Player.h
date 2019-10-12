@@ -18,7 +18,7 @@ enum player_state
 	IDLE = 0,
 	FORWARD,
 	BACKWARD,
-	JUMPING
+	CROUCH
 };
 
 class j1Player : public j1Module
