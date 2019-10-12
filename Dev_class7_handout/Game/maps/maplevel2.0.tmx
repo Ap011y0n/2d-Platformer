@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
- <tileset firstgid="1" name="Mountains" tilewidth="32" tileheight="32" tilecount="312" columns="24">
+ <properties>
+  <property name="Music" value="bossbattle3.ogg">  
+  </property>
+ </properties>
+  <tileset firstgid="1" name="Mountains" tilewidth="32" tileheight="32" tilecount="312" columns="24">
   <image source="Mountains.png" width="768" height="432"/>
  </tileset>
  <tileset firstgid="313" name="Trees" tilewidth="32" tileheight="32" tilecount="792" columns="72">

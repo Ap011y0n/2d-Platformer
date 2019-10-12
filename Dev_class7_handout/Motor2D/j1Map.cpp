@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Audio.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -20,9 +21,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Map Parser");
 	bool ret = true;
-
 	folder.create(config.child("folder").child_value());
-
 	return ret;
 }
 
@@ -30,7 +29,6 @@ void j1Map::Draw()
 {
 	if(map_loaded == false)
 		return;
-
 	// TODO 4: Make sure we draw all the layers and not just the first one
 	p2List_item<MapLayer*>* layer_iterator = this->data.layers.start;
 	/*p2List_item<Collider*>* collider = App->map->data.colliders.start;
@@ -313,6 +311,7 @@ bool j1Map::LoadMap()
 		data.tile_height = map.attribute("tileheight").as_int();
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());
 
+		data.music = map.child("properties").child("property").attribute("value").as_string();
 		data.background_color.r = 0;
 		data.background_color.g = 0;
 		data.background_color.b = 0;

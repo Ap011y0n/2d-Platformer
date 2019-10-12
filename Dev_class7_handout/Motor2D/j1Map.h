@@ -98,6 +98,7 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	//p2List<Collider*> colliders;
+	p2SString			music;
 };
 
 // ----------------------------------------------------
