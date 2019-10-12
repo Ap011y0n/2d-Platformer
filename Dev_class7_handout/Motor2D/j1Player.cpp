@@ -76,7 +76,7 @@ bool j1Player::Update(float dt)
 	{
 		App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f);
 	}
-	else if(state == BACKWARD)
+	else if(state == BACKWARD || state == IDLE_FLIP)
 	{
 		App->render->BlitWithScale(graphics, position.x + (current_animation->pivotx2[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty2[current_animation->returnCurrentFrame()]), r, -1, 1.0f, 1, TOP_LEFT);
 	}
@@ -170,6 +170,7 @@ void j1Player::setAnimation()
 	if(state == BACKWARD)
 	{
 		current_animation = &forward;
+		state = IDLE_FLIP;
 	}
 	if (state == CROUCH)
 	{

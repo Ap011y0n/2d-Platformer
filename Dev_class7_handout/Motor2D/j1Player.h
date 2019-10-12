@@ -16,6 +16,7 @@ struct Collider;
 enum player_state
 {
 	IDLE = 0,
+	IDLE_FLIP,
 	FORWARD,
 	BACKWARD,
 	CROUCH
