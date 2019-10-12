@@ -8,6 +8,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
+#include "Animation.h"
 
 
 #include<stdio.h>
@@ -22,13 +23,22 @@ j1Player::j1Player()
 	position.y = 200;
 
 	// idle animation (just the ship)
-	idle.PushBack({ 28, 14, 38, 58 });
-	idle.PushBack({ 132, 12, 34, 60 });
-	idle.PushBack({ 230, 12, 38, 60 });
-	idle.PushBack({ 326, 14, 40, 58 });
-	idle.speed = 0.08f;
+	idle.PushBack({ 28, 14, 38, 58 }, 0.1, 0, 0, 0, 0);
+	idle.PushBack({ 132, 12, 34, 60 }, 0.1, 0, 0, 0, 0);
+	idle.PushBack({ 230, 12, 38, 60 }, 0.1, 0, 0, 0, 0);
+	idle.PushBack({ 326, 14, 40, 58 }, 0.1, 0, 0, 0, 0);
 
+	forward.PushBack({ 34, 90, 40, 56 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 132, 92, 40, 54 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 232, 96, 40, 50 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 334, 90, 46, 56 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 431, 92, 40, 54 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 531, 96, 40, 50 }, 0.1, 0, 0, 0, 0);
 
+	crouch.PushBack({ 629, 98, 40, 48 }, 0.3, 0, 16, 0, 0);
+	crouch.PushBack({ 729, 102, 40, 44 }, 0.2, 0, 16, 0, 0);
+	crouch.PushBack({ 431, 30, 38, 42 }, 0.05, 0, 16, 0, 0);
+	//crouch.loop = false;
 }
 
 j1Player::~j1Player()
@@ -58,7 +68,20 @@ bool j1Player::Update(float dt)
 	current_animation = &idle;
 	CheckCollision();
 	Movement();
-	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f);
+	setAnimation();
+
+	SDL_Rect* r = &current_animation->GetCurrentFrame();
+	
+	if(state == IDLE || state == FORWARD || state == CROUCH)
+	{
+		App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f);
+	}
+	else if(state == BACKWARD)
+	{
+		App->render->BlitWithScale(graphics, position.x + (current_animation->pivotx2[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty2[current_animation->returnCurrentFrame()]), r, -1, 1.0f, 1, TOP_LEFT);
+	}
+	
+	
 	DrawHitbox();
 
 	return true;
@@ -86,20 +109,73 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	return true;
 }
+
+
 void j1Player::Movement(){
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		if (Canjump)position.y -= SPEED_Y;
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
 		if (Candown)position.y += SPEED_Y;
+		state = CROUCH;
+
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
+	{
+		if (state == CROUCH)
+		{
+			state = IDLE;
+		}
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
 		if (Canright)position.x += SPEED_X;
-
+		state = FORWARD;
+		
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+	{
+		if (state == FORWARD)
+		{
+			state = IDLE;
+		}
+	}
+		
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		
+	{
 		if (Canleft)position.x -= SPEED_X;
+		state = BACKWARD;
+
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	{
+		if (state == BACKWARD)
+		{
+			state = IDLE;
+		}
+	}
+
 }
 
+void j1Player::setAnimation()
+{
+
+	if(state == FORWARD)
+	{
+		current_animation = &forward;
+	}
+	if(state == BACKWARD)
+	{
+		current_animation = &forward;
+	}
+	if (state == CROUCH)
+	{
+		current_animation = &crouch;
+	}
+}
 
 void j1Player::CheckCollision() {
 

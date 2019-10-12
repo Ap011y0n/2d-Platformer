@@ -13,6 +13,14 @@
 struct SDL_Texture;
 struct Collider;
 
+enum player_state
+{
+	IDLE = 0,
+	FORWARD,
+	BACKWARD,
+	CROUCH
+};
+
 class j1Player : public j1Module
 {
 public:
@@ -27,15 +35,20 @@ public:
 	bool Save(pugi::xml_node&) const;
 	void Movement();
 	void CheckCollision();
+	void setAnimation();
 	void DrawHitbox();
 
 
 
 public:
 
+	player_state state;
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	Animation idle;
+	Animation forward;
+	Animation backward;
+	Animation crouch;
 	Animation up;
 	Animation down;
 	iPoint position;
@@ -43,6 +56,7 @@ public:
 	bool Canleft = true;
 	bool Canjump = true;
 	bool Candown = true;
+
 	int playerHeight = 50;
 	int playerWidth = 20;
 	int playerCentre = 10;
