@@ -114,17 +114,15 @@ void j1Player::CheckCollision() {
 
 	while (layer_iterator != NULL) {
 		layer = layer_iterator->data;
-		//	LOG("%d", layer->returnPropValue("Navigation"));
 				if (layer->returnPropValue("Navigation") == 1) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y - SPEED_Y);
-					if (layer->Get((int)coord.x, (int)coord.y) != 0) Canjump = false;
+					if (layer->Get(coord.x, coord.y) != 0) Canjump = false;
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + SPEED_Y);
-					if (layer->Get((int)coord.x, (int)coord.y) != 0) Candown = false;
+					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
 					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y + playerHeight);
-					if (layer->Get((int)coord.x, (int)coord.y) != 0) Canright = false;
+					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
 					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y + playerHeight);
-					if (layer->Get((int)coord.x, (int)coord.y) != 0) Canleft = false;
-
+					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
 				}
 		layer_iterator = layer_iterator->next;
 	}
