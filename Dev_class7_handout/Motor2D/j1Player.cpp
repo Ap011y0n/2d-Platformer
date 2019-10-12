@@ -33,6 +33,10 @@ j1Player::j1Player()
 	forward.PushBack({ 334, 90, 46, 56 }, 0.1, 0, 0, 0, 0);
 	forward.PushBack({ 431, 92, 40, 54 }, 0.1, 0, 0, 0, 0);
 	forward.PushBack({ 531, 96, 40, 50 }, 0.1, 0, 0, 0, 0);
+
+	crouch.PushBack({ 334, 90, 46, 56 }, 0.1, 0, 0, 0, 0);
+	crouch.PushBack({ 431, 92, 40, 54 }, 0.1, 0, 0, 0, 0);
+	crouch.PushBack({ 531, 96, 40, 50 }, 0.1, 0, 0, 0, 0);
 }
 
 j1Player::~j1Player()
