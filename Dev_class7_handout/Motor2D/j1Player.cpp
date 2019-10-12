@@ -38,7 +38,7 @@ j1Player::j1Player()
 	crouch.PushBack({ 629, 98, 40, 48 }, 0.3, 0, 16, 0, 0);
 	crouch.PushBack({ 729, 102, 40, 44 }, 0.2, 0, 16, 0, 0);
 	crouch.PushBack({ 431, 30, 38, 42 }, 0.05, 0, 16, 0, 0);
-	//crouch.loop = false;
+	crouch.loop = false;
 }
 
 j1Player::~j1Player()
