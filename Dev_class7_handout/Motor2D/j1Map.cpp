@@ -50,9 +50,9 @@ void j1Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 						
-						if( layer->returnPropValue(paint)==0){
+						//if( layer->returnPropValue(paint)==0){
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
-						}
+						//}
 					}
 				}
 			}
@@ -181,9 +181,9 @@ bool j1Map::CleanUp()
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
-	p2SString tmp("maps\\%s", folder.GetString(), file_name);
+	p2SString tmp("%s%s", folder.GetString(), file_name);
 
-	pugi::xml_parse_result result = map_file.load_file("maps/iso_walk.tmx");
+	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
 	if(result == NULL)
 	{
