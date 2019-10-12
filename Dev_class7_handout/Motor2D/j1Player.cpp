@@ -8,6 +8,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
+#include "Animation.h"
 
 
 #include<stdio.h>
@@ -34,9 +35,10 @@ j1Player::j1Player()
 	forward.PushBack({ 431, 92, 40, 54 }, 0.1, 0, 0, 0, 0);
 	forward.PushBack({ 531, 96, 40, 50 }, 0.1, 0, 0, 0, 0);
 
-	crouch.PushBack({ 334, 90, 46, 56 }, 0.1, 0, 0, 0, 0);
-	crouch.PushBack({ 431, 92, 40, 54 }, 0.1, 0, 0, 0, 0);
-	crouch.PushBack({ 531, 96, 40, 50 }, 0.1, 0, 0, 0, 0);
+	crouch.PushBack({ 629, 98, 40, 48 }, 0.3, 0, 16, 0, 0);
+	crouch.PushBack({ 729, 102, 40, 44 }, 0.2, 0, 16, 0, 0);
+	crouch.PushBack({ 431, 30, 38, 42 }, 0.05, 0, 16, 0, 0);
+	//crouch.loop = false;
 }
 
 j1Player::~j1Player()
@@ -67,14 +69,16 @@ bool j1Player::Update(float dt)
 	CheckCollision();
 	Movement();
 	setAnimation();
+
+	SDL_Rect* r = &current_animation->GetCurrentFrame();
 	
-	if(state == IDLE || state == FORWARD)
+	if(state == IDLE || state == FORWARD || state == CROUCH)
 	{
-		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f);
+		App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f);
 	}
 	else if(state == BACKWARD)
 	{
-		App->render->BlitWithScale(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), -1, 1.0f, 1, TOP_LEFT);
+		App->render->BlitWithScale(graphics, position.x + (current_animation->pivotx2[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty2[current_animation->returnCurrentFrame()]), r, -1, 1.0f, 1, TOP_LEFT);
 	}
 	
 	
@@ -112,7 +116,18 @@ void j1Player::Movement(){
 		if (Canjump)position.y -= SPEED_Y;
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
 		if (Candown)position.y += SPEED_Y;
+		state = CROUCH;
+
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
+	{
+		if (state == CROUCH)
+		{
+			state = IDLE;
+		}
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
@@ -155,6 +170,10 @@ void j1Player::setAnimation()
 	if(state == BACKWARD)
 	{
 		current_animation = &forward;
+	}
+	if (state == CROUCH)
+	{
+		current_animation = &crouch;
 	}
 }
 
