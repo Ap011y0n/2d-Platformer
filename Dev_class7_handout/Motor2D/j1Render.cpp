@@ -164,6 +164,61 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	return ret;
 }
 
+bool j1Render::BlitWithScale(SDL_Texture* texture, int x, int y, SDL_Rect* _section, float direction, float speed, float fillAmount, RENDER_PIVOT pivot)
+{
+	bool ret = true;
+	uint scale = App->win->GetScale();
+
+	SDL_Rect rect;
+	SDL_Rect section = *_section;
+	int w = section.w - section.w * fillAmount;
+
+	section.w -= w;
+
+	switch (pivot)
+	{
+	case TOP_RIGHT:
+		rect.x = (int)(camera.x * speed) + (x - section.w) * scale;
+		rect.y = (int)(camera.y * speed) + y * scale;
+		break;
+	case TOP_LEFT:
+		rect.x = (int)(camera.x * speed) + (x)* scale;
+		rect.y = (int)(camera.y * speed) + y * scale;
+		break;
+	case MIDDLE:
+		rect.x = (int)(camera.x * speed) + (x + w + section.x / 2) * scale;
+		rect.y = (int)(camera.y * speed) + (y + section.y / 2) * scale;
+		break;
+	}
+
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+
+	if (direction < 0)
+	{
+		direction = fabsf(direction);
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+
+	if (&section != NULL)
+	{
+		rect.w = section.w * direction;
+		rect.h = section.h * direction;
+	}
+	else
+	{
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	}
+
+	if (SDL_RenderCopyEx(renderer, texture, &section, &rect, 0, NULL, flip) != 0)
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+
+}
+
 bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;

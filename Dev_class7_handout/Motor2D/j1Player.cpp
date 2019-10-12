@@ -22,13 +22,17 @@ j1Player::j1Player()
 	position.y = 200;
 
 	// idle animation (just the ship)
-	idle.PushBack({ 28, 14, 38, 58 });
-	idle.PushBack({ 132, 12, 34, 60 });
-	idle.PushBack({ 230, 12, 38, 60 });
-	idle.PushBack({ 326, 14, 40, 58 });
-	idle.speed = 0.08f;
+	idle.PushBack({ 28, 14, 38, 58 }, 0.1, 0, 0, 0, 0);
+	idle.PushBack({ 132, 12, 34, 60 }, 0.1, 0, 0, 0, 0);
+	idle.PushBack({ 230, 12, 38, 60 }, 0.1, 0, 0, 0, 0);
+	idle.PushBack({ 326, 14, 40, 58 }, 0.1, 0, 0, 0, 0);
 
-
+	forward.PushBack({ 34, 90, 40, 56 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 132, 92, 40, 54 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 232, 96, 40, 50 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 334, 90, 46, 56 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 431, 92, 40, 54 }, 0.1, 0, 0, 0, 0);
+	forward.PushBack({ 531, 96, 40, 50 }, 0.1, 0, 0, 0, 0);
 }
 
 j1Player::~j1Player()
@@ -58,7 +62,18 @@ bool j1Player::Update(float dt)
 	current_animation = &idle;
 	CheckCollision();
 	Movement();
-	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f);
+	setAnimation();
+	
+	if(state == IDLE || state == FORWARD)
+	{
+		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f);
+	}
+	else if(state == BACKWARD)
+	{
+		App->render->BlitWithScale(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), -1, 1.0f, 1, TOP_LEFT);
+	}
+	
+	
 	DrawHitbox();
 
 	return true;
@@ -86,6 +101,8 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	return true;
 }
+
+
 void j1Player::Movement(){
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		if (Canjump)position.y -= SPEED_Y;
@@ -94,12 +111,48 @@ void j1Player::Movement(){
 		if (Candown)position.y += SPEED_Y;
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
 		if (Canright)position.x += SPEED_X;
-
+		state = FORWARD;
+		
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+	{
+		if (state == FORWARD)
+		{
+			state = IDLE;
+		}
+	}
+		
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		
+	{
 		if (Canleft)position.x -= SPEED_X;
+		state = BACKWARD;
+
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	{
+		if (state == BACKWARD)
+		{
+			state = IDLE;
+		}
+	}
+
 }
 
+void j1Player::setAnimation()
+{
+
+	if(state == FORWARD)
+	{
+		current_animation = &forward;
+	}
+	if(state == BACKWARD)
+	{
+		current_animation = &forward;
+	}
+}
 
 void j1Player::CheckCollision() {
 
