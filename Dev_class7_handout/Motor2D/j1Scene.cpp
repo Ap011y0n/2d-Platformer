@@ -98,8 +98,8 @@ bool j1Scene::CleanUp()
 bool j1Scene::Load(pugi::xml_node& data)
 {
 	LOG("Loading Scene state");
-	App->map->CleanUp();
-	App->map->Load("maplevel2.0.tmx");
+/*	App->map->CleanUp();
+	App->map->Load("maplevel2.0.tmx");*/
 	return true;
 }
 
@@ -108,7 +108,7 @@ bool j1Scene::Save(pugi::xml_node& data) const
 {
 	LOG("Saving Scene state");
 
-	App->map->CleanUp();
-	App->map->Load("maplevel1.tmx");
+/*App->map->CleanUp();
+	App->map->Load("maplevel1.tmx");*/
 	return true;
 }
