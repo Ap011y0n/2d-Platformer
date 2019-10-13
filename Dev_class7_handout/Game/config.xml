@@ -17,12 +17,18 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
+  
   <audio>
     <music>
       <folder>audio/music/</folder>
       <volume value="0.05" />
     </music>
+    <fx>
+      <folder>audio/fx/</folder>
+      <volume value="0.5" />
+    </fx>
   </audio>
+  
   <file_system>
     <path>data.zip</path>
   </file_system>
@@ -30,5 +36,11 @@
   <map>
     <folder>maps/</folder>
   </map>
-
+  
+  
+  <player>
+   <moveFx source="move.wav"/>
+    
+    
+  </player>
 </config>

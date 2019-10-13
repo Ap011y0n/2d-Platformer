@@ -14,6 +14,17 @@
 #include<stdio.h>
 
 
+bool j1Player::Awake(pugi::xml_node& config)
+{
+	bool ret = true;
+	config = config.child("player");
+
+	moveFx = config.child("moveFx").attribute("source").as_string();
+	LOG("%s", moveFx);
+	return ret;
+}
+
+
 j1Player::j1Player()
 {
 	graphics = NULL;
@@ -47,7 +58,7 @@ j1Player::~j1Player()
 // Load assets
 bool j1Player::Start()
 {
-
+	App->audio->LoadFx(moveFx.GetString());
 	LOG("Loading player");
 
 	graphics = App->tex->Load("textures/adventurer.png");
@@ -165,6 +176,8 @@ void j1Player::setAnimation()
 
 	if(state == FORWARD)
 	{
+		App->audio->PlayFx(0);
+		LOG("%s", App->audio->PlayFx(0));
 		current_animation = &forward;
 	}
 	if(state == BACKWARD)

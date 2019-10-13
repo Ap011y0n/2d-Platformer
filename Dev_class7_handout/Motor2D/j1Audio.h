@@ -39,8 +39,10 @@ private:
 
 	_Mix_Music*			music = NULL;
 	p2List<Mix_Chunk*>	fx;
-	p2SString			music_folder;
-	float volume;
+	p2SString			music_directory;
+	p2SString			fx_directory;
+	float volumemusic;
+	float volumefx;
 };
 
 #endif // __j1AUDIO_H__

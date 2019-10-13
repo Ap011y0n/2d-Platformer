@@ -27,7 +27,7 @@ class j1Player : public j1Module
 public:
 	j1Player();
 	~j1Player();
-
+	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);
@@ -61,7 +61,7 @@ public:
 	int playerHeight = 50;
 	int playerWidth = 20;
 	int playerCentre = 10;
-
+	p2SString		moveFx;
 };
 
 #endif

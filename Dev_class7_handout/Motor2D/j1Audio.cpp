@@ -20,8 +20,9 @@ j1Audio::~j1Audio()
 // Called before render is available
 bool j1Audio::Awake(pugi::xml_node& config)
 {
-	music_folder = config.child("music").child_value("folder");
-	volume = config.child("music").child("volume").attribute("value").as_float();
+	music_directory = config.child("music").child_value("folder");
+	volumemusic = config.child("music").child("volume").attribute("value").as_float();
+	volumefx = config.child("fx").child("volume").attribute("value").as_float();
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
@@ -84,7 +85,7 @@ bool j1Audio::CleanUp()
 // Play a music file
 bool j1Audio::PlayMusic(const char* path, float fade_time)
 {
-	Mix_VolumeMusic(128 * volume);
+	Mix_VolumeMusic(128 * volumemusic);
 	bool ret = true;
 
 	if(!active)
@@ -105,7 +106,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 		Mix_FreeMusic(music);
 	}
 
-	p2SString tmp("%s%s", music_folder.GetString(), path);
+	p2SString tmp("%s%s", music_directory.GetString(), path);
 
 	music = Mix_LoadMUS(tmp.GetString());
 
@@ -145,8 +146,8 @@ unsigned int j1Audio::LoadFx(const char* path)
 
 	if(!active)
 		return 0;
-
-	Mix_Chunk* chunk = Mix_LoadWAV(path);
+	p2SString tmp("%s%s", fx_directory.GetString(), path);
+	Mix_Chunk* chunk = Mix_LoadWAV(tmp.GetString());
 
 	if(chunk == NULL)
 	{
@@ -171,22 +172,25 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 
 	if(id > 0 && id <= fx.count())
 	{
+		Mix_VolumeChunk(fx[id - 1], volumefx);
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
 	}
 
 	return ret;
 }
+
+
 bool j1Audio::Save(pugi::xml_node& config) 
 {
-	config.append_child("musicVolumeModifier").append_attribute("value") = volume;
+	config.append_child("musicVolumeModifier").append_attribute("value") = volumemusic;
 	return true;
 }
 
 bool j1Audio::Load(pugi::xml_node& config)
 {
-	volume = config.child("musicVolumeModifier").attribute("value").as_float();
+	volumemusic = config.child("musicVolumeModifier").attribute("value").as_float();
 
-	Mix_VolumeMusic(128 * volume);
+	Mix_VolumeMusic(128 * volumemusic);
 
 	return true;
 }
