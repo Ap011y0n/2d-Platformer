@@ -50,7 +50,7 @@ void j1Map::Draw()
 						iPoint pos = MapToWorld(x, y);
 						
 						if( layer->returnPropValue("Nodraw")==0){
-						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r,layer->returnPropfValue("Parallax"));
 						}
 					}
 				}
@@ -277,9 +277,9 @@ bool j1Map::Load(const char* file_name)
 			LOG("Layer ----");
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
-			LOG("%d", MAX_PROPERTIES);
 			for (int i = 0; i < MAX_PROPERTIES; i++) {
 				LOG("Prop name: %s  value %d", l->property[i].name.GetString(), l->property[i].prop.ivalue);
+				//LOG("Prop name: %s  value %f", l->property[i].name.GetString(), l->property[i].prop.fvalue);
 			}
 
 
@@ -468,22 +468,20 @@ bool j1Map::LoadProperties(pugi::xml_node& node,Properties property[])
 		property[i].name = layer.attribute("name").as_string();
 		if (property[i].name == "Nodraw") {
 			property[i].prop.ivalue = layer.attribute("value").as_int();
-
-			LOG("Layer name %s", property[i].name.GetString());
-			LOG("Value =  %d", property[i].prop.ivalue);
-			LOG("%d", i);
 			i++;
 		}
 	
-		else{
+		
 			if (property[i].name == "Navigation") {
 				property[i].prop.ivalue = layer.attribute("value").as_int();
-				LOG("Layer name %s", property[i].name.GetString());
-				LOG("Value= %d", property[i].prop.ivalue);
-				LOG("%d", i);
 				i++;
 			}
+
+			if (property[i].name == "Parallax") {
+				property[i].prop.fvalue = layer.attribute("value").as_float();
+				i++;
 			}
+			
 	}
 
 	return ret;
@@ -498,6 +496,18 @@ int MapLayer::returnPropValue(const char* propName) {
 		}
 	}
 	
+	return value;
+}
+
+float MapLayer::returnPropfValue(const char* propName) {
+	float value = -1;
+	for (int i = 0; i < MAX_PROPERTIES; i++) {
+
+		if (property[i].name == propName) {
+			value = property[i].prop.fvalue;
+		}
+	}
+
 	return value;
 }
 //bool j1Map::LoadTilesetColliders(pugi::xml_node& tileset_node)

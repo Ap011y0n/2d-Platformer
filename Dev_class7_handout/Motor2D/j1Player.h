@@ -39,6 +39,7 @@ public:
 	void CheckCollision();
 	void setAnimation();
 	void DrawHitbox();
+	void Camera();
 
 
 

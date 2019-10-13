@@ -5,7 +5,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
-#define MAX_PROPERTIES 2
+#define MAX_PROPERTIES 3
 // TODO 5: Create a generic structure to hold properties
 // TODO 7: Our custom properties should have one method
 // to ask for the value of a custom property
@@ -44,6 +44,7 @@ struct MapLayer
 	//p2List<Properties*>properties;
 	Properties property[MAX_PROPERTIES];
 	int returnPropValue(const char* propName);
+	float returnPropfValue(const char* propName);
 
 	MapLayer() : data(NULL)
 	{}

@@ -94,6 +94,7 @@ bool j1Player::Update(float dt)
 	
 	*/
 	DrawHitbox();
+	Camera();
 
 	return true;
 }
@@ -204,4 +205,8 @@ void j1Player::DrawHitbox() {
 	hitbox.x = position.x + playerCentre;
 	hitbox.y = position.y;
 	App->render->DrawQuad(hitbox, 0, 225, 0, 70);
+}
+void j1Player::Camera() {
+	App->render->camera.x = -position.x + App->win->width/2;
+	App->render->camera.y = -position.y + App->win->height/1.5;
 }
