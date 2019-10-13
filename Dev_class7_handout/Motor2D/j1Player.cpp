@@ -21,6 +21,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	moveFx = config.child("moveFx").attribute("source").as_string();
 	LOG("%s", moveFx);
+	name.create("player");
 	return ret;
 }
 
@@ -110,6 +111,8 @@ bool j1Player::PostUpdate(float dt)
 bool j1Player::Load(pugi::xml_node& data)
 {
 	LOG("Loading player state");
+	position.x = data.child("position").attribute("pos_x").as_int();
+	position.y = data.child("position").attribute("pos_y").as_int();
 
 	return true;
 }
@@ -118,7 +121,10 @@ bool j1Player::Load(pugi::xml_node& data)
 bool j1Player::Save(pugi::xml_node& data) const
 {
 	LOG("Saving player state");
+	pugi::xml_node adventurer = data.append_child("position");
 
+	adventurer.append_attribute("pos_x") = position.x;
+	adventurer.append_attribute("pos_y") = position.y;
 	return true;
 }
 
