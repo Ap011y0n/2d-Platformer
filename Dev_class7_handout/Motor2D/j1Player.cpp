@@ -83,16 +83,16 @@ bool j1Player::Update(float dt)
 
 	SDL_Rect* r = &current_animation->GetCurrentFrame();
 	
-	if(state == IDLE || state == FORWARD || state == CROUCH)
-	{
-		App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f);
-	}
-	else if(state == BACKWARD || state == IDLE_FLIP)
+	//if(state == IDLE || state == FORWARD || state == CROUCH)
+	//{
+		App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f,flip);
+	//}
+	/*else if(state == BACKWARD || state == IDLE_FLIP)
 	{
 		App->render->BlitWithScale(graphics, position.x + (current_animation->pivotx2[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty2[current_animation->returnCurrentFrame()]), r, -1, 1.0f, 1, TOP_LEFT);
 	}
 	
-	
+	*/
 	DrawHitbox();
 
 	return true;
@@ -123,51 +123,21 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 
 void j1Player::Movement(){
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	state = IDLE;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT){
 		if (Canjump)position.y -= SPEED_Y;
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		if (Candown)position.y += SPEED_Y;
-		state = CROUCH;
-
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
-	{
-		if (state == CROUCH)
-		{
-			state = IDLE;
+}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT){
+		if (Candown)position.y += SPEED_Y; state = CROUCH;
 		}
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		if (Canright)position.x += SPEED_X;
-		state = FORWARD;
-		
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
-	{
-		if (state == FORWARD)
-		{
-			state = IDLE;
+	
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT){
+		if (Canright)position.x += SPEED_X; state = FORWARD;
+}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
+		if (Canleft)position.x -= SPEED_X; state = BACKWARD;
 		}
-	}
-		
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		
-	{
-		if (Canleft)position.x -= SPEED_X;
-		state = BACKWARD;
 
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
-	{
-		if (state == BACKWARD)
-		{
-			state = IDLE;
-		}
-	}
 
 }
 
@@ -179,11 +149,12 @@ void j1Player::setAnimation()
 		App->audio->PlayFx(0);
 		LOG("%s", App->audio->PlayFx(0));
 		current_animation = &forward;
+		flip = SDL_FLIP_NONE;
 	}
 	if(state == BACKWARD)
 	{
 		current_animation = &forward;
-		state = IDLE_FLIP;
+		flip = SDL_FLIP_HORIZONTAL;
 	}
 	if (state == CROUCH)
 	{

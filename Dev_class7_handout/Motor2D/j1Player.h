@@ -62,6 +62,7 @@ public:
 	int playerWidth = 20;
 	int playerCentre = 10;
 	p2SString		moveFx;
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
 };
 
 #endif
