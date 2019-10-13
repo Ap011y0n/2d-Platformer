@@ -31,7 +31,7 @@ j1Player::j1Player()
 	current_animation = NULL;
 
 	position.x = 120;
-	position.y = 200;
+	position.y = 350;
 
 	// idle animation (just the ship)
 	idle.PushBack({ 28, 14, 38, 58 }, 0.1, 0, 0, 0, 0);
@@ -123,22 +123,29 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 
 void j1Player::Movement(){
-	state = IDLE;
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT){
-		if (Canjump)position.y -= SPEED_Y;
-}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT){
-		if (Candown)position.y += SPEED_Y; state = CROUCH;
-		}
+	if (state != JUMP)state = IDLE;
+	if (Candown)position.y += GRAVITY;
+	if (!Candown)jumpSpeed = -1 * SPEED_Y;
 	
+	
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP){
+		if (Canjump) { position.y += (jumpSpeed += 0.5); }
+		if (!Candown && state == JUMP) {
+			state = IDLE;
+		}
+		else { state = JUMP; }
+		}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT){
+		if (state != JUMP)state = CROUCH;
+		}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT){
-		if (Canright)position.x += SPEED_X; state = FORWARD;
+		if (Canright)position.x += SPEED_X; if (state != JUMP)state = FORWARD;
 }
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
-		if (Canleft)position.x -= SPEED_X; state = BACKWARD;
+		if (Canleft)position.x -= SPEED_X; if (state != JUMP)state = BACKWARD;
 		}
 
-
+	
 }
 
 void j1Player::setAnimation()
@@ -147,7 +154,7 @@ void j1Player::setAnimation()
 	if(state == FORWARD)
 	{
 		App->audio->PlayFx(0);
-		LOG("%s", App->audio->PlayFx(0));
+		//LOG("%s", App->audio->PlayFx(0));
 		current_animation = &forward;
 		flip = SDL_FLIP_NONE;
 	}
@@ -178,7 +185,7 @@ void j1Player::CheckCollision() {
 				if (layer->returnPropValue("Navigation") == 1) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y - SPEED_Y);
 					if (layer->Get(coord.x, coord.y) != 0) Canjump = false;
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + SPEED_Y);
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + GRAVITY - jumpSpeed);
 					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
 					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;

@@ -6,9 +6,9 @@
 #include "p2Point.h"
 #include "p2DynArray.h"
 
-#define SPEED_X 4
-#define SPEED_Y 4
-#define GRAVITY 2
+#define SPEED_X 6
+#define SPEED_Y 15
+#define GRAVITY 5
 
 struct SDL_Texture;
 struct Collider;
@@ -19,7 +19,8 @@ enum player_state
 	IDLE_FLIP,
 	FORWARD,
 	BACKWARD,
-	CROUCH
+	CROUCH,
+	JUMP
 };
 
 class j1Player : public j1Module
@@ -61,6 +62,7 @@ public:
 	int playerHeight = 50;
 	int playerWidth = 20;
 	int playerCentre = 10;
+	float jumpSpeed = -1*SPEED_Y;
 	p2SString		moveFx;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 };
