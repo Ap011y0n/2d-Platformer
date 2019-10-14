@@ -136,12 +136,20 @@ void j1Player::Movement(){
 	
 	
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP){
-		if (Canjump) { position.y += (jumpSpeed += 0.5); }
-		if (!Candown && state == JUMP) {
+		
+		if ((!Candown || !Canjump) && state == JUMP) {
 			state = IDLE;
 		}
-		else { state = JUMP; }
+		
+		else { state = JUMP; 
+		if (jumpSpeed < 0) {
+			if (Canjump) { position.y += (jumpSpeed += 0.5); }
 		}
+		else { jumpSpeed = 0; }
+		}
+	}
+	
+		
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT){
 		if (state != JUMP)state = CROUCH;
 		}
@@ -190,9 +198,9 @@ void j1Player::CheckCollision() {
 	while (layer_iterator != NULL) {
 		layer = layer_iterator->data;
 				if (layer->returnPropValue("Navigation") == 1) {
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y - SPEED_Y);
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + jumpSpeed + GRAVITY);
 					if (layer->Get(coord.x, coord.y) != 0) Canjump = false;
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + GRAVITY - jumpSpeed);
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + GRAVITY);
 					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
 					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
