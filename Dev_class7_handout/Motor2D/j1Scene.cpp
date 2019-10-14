@@ -105,7 +105,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 	App->map->CleanUp();
 	current_level.create(data.child("scenename").attribute("name").as_string());
 	App->map->Load(current_level.GetString());
-	LOG("%s", App->map->data.music.GetString());
+
 	App->audio->PlayMusic(App->map->data.music.GetString());
 	return true;
 }

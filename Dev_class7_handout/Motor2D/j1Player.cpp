@@ -207,6 +207,11 @@ void j1Player::CheckCollision() {
 					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
 				}
+				if (layer->returnPropValue("Navigation") == 2) {
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight/2);
+					if (layer->Get(coord.x, coord.y) != 0) LOG("Changemap");
+					
+				}
 		layer_iterator = layer_iterator->next;
 	}
 	
