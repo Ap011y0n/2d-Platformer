@@ -29,10 +29,8 @@ void j1Map::Draw()
 {
 	if(map_loaded == false)
 		return;
-	// TODO 4: Make sure we draw all the layers and not just the first one
+	
 	p2List_item<MapLayer*>* layer_iterator = this->data.layers.start;
-	/*p2List_item<Collider*>* collider = App->map->data.colliders.start;
-	Collider* col = collider->data;*/
 	MapLayer* layer = this->data.layers.start->data;
 	while (layer_iterator != NULL) {
 		layer = layer_iterator->data;
@@ -49,39 +47,18 @@ void j1Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 						
-						if( layer->returnPropValue("Nodraw")==0){
+						if( layer->returnPropValue("Nodraw")==0 || blitColliders){
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r,layer->returnPropfValue("Parallax"));
 						}
 					}
 				}
 			}
 		}
-		//Draw colliders
-	/*	collider = App->map->data.colliders.start;
-		Collider* col = collider->data;
-		while (collider != NULL) {
-			SDL_Rect rect2;
-			rect2.x = coord.x + col->x;
-			rect2.y = coord.y + col->y;
-			rect2.h = col->h;
-			rect2.w = col->w;
-			if (l->tilegid[l->Get(x, y)] == col->id + 1) {
-				App->render->DrawQuad(rect2, 0, 0, 225, 100);
-			}
-			collider = collider->next;
-
-		}*/
-
-		// --------------------------------------------------------------------------------------------------------
 		layer_iterator = layer_iterator->next;
 		}
 	}
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
-
-	// TODO 3: Complete this method so we pick the right
-	// Tileset based on a tile id
-	
 	p2List_item<TileSet*>* tileset_iterator = this->data.tilesets.start;
 	TileSet* tileset = tileset_iterator->data;
 

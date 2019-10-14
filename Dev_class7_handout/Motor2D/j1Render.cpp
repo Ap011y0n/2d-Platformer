@@ -69,7 +69,6 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
-
 	return true;
 }
 

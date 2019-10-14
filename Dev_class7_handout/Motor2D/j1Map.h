@@ -6,19 +6,6 @@
 #include "p2Point.h"
 #include "j1Module.h"
 #define MAX_PROPERTIES 3
-// TODO 5: Create a generic structure to hold properties
-// TODO 7: Our custom properties should have one method
-// to ask for the value of a custom property
-// ----------------------------------------------------
-
-//struct Collider {
-//	uint id = 0u;
-//	p2SString type;
-//	uint x = 0u;
-//	uint y = 0u;
-//	uint w = 0u;
-//	uint h = 0u;
-//};
 
 struct Properties
 {
@@ -41,7 +28,6 @@ struct MapLayer
 	int			width;
 	int			height;
 	uint*		data;
-	//p2List<Properties*>properties;
 	Properties property[MAX_PROPERTIES];
 	int returnPropValue(const char* propName);
 	float returnPropfValue(const char* propName);
@@ -139,7 +125,7 @@ private:
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
-
+	bool blitColliders = false;
 	MapData data;
 	p2SString paint = name.create("Nodraw");
 private:

@@ -81,19 +81,8 @@ bool j1Player::Update(float dt)
 	CheckCollision();
 	Movement();
 	setAnimation();
-
 	SDL_Rect* r = &current_animation->GetCurrentFrame();
-	
-	//if(state == IDLE || state == FORWARD || state == CROUCH)
-	//{
-		App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f,flip);
-	//}
-	/*else if(state == BACKWARD || state == IDLE_FLIP)
-	{
-		App->render->BlitWithScale(graphics, position.x + (current_animation->pivotx2[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty2[current_animation->returnCurrentFrame()]), r, -1, 1.0f, 1, TOP_LEFT);
-	}
-	
-	*/
+	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f,flip);
 	DrawHitbox();
 	Camera();
 
@@ -223,7 +212,8 @@ void j1Player::DrawHitbox() {
 	hitbox.w = playerWidth;
 	hitbox.x = position.x + playerCentre;
 	hitbox.y = position.y;
-	App->render->DrawQuad(hitbox, 0, 225, 0, 70);
+	if(App->map->blitColliders)	App->render->DrawQuad(hitbox, 0, 225, 0, 70);
+
 }
 void j1Player::Camera() {
 	App->render->camera.x = -position.x + App->win->width/2;
