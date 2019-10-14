@@ -188,9 +188,9 @@ bool j1Audio::Save(pugi::xml_node& config)
 
 bool j1Audio::Load(pugi::xml_node& config)
 {
-	volumemusic = config.child("musicVolumeModifier").attribute("value").as_float();
+	//volumemusic = config.child("musicVolumeModifier").attribute("value").as_float();
 
-	Mix_VolumeMusic(128 * volumemusic);
+	//Mix_VolumeMusic(128 * volumemusic);
 
 	return true;
 }

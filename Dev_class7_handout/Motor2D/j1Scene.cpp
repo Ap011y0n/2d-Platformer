@@ -30,8 +30,12 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("maplevel2.0.tmx");
+
+	current_level.create("maplevel1.tmx");
+	//lvl_2.create("maplevel2.tmx");
+	App->map->Load(current_level.GetString());
 	App->audio->PlayMusic(App->map->data.music.GetString());
+	
 	return true;
 }
 
@@ -98,8 +102,11 @@ bool j1Scene::CleanUp()
 bool j1Scene::Load(pugi::xml_node& data)
 {
 	LOG("Loading Scene state");
-/*	App->map->CleanUp();
-	App->map->Load("maplevel2.0.tmx");*/
+	App->map->CleanUp();
+	current_level.create(data.child("scenename").attribute("name").as_string());
+	App->map->Load(current_level.GetString());
+	LOG("%s", App->map->data.music.GetString());
+	App->audio->PlayMusic(App->map->data.music.GetString());
 	return true;
 }
 
@@ -107,8 +114,10 @@ bool j1Scene::Load(pugi::xml_node& data)
 bool j1Scene::Save(pugi::xml_node& data) const
 {
 	LOG("Saving Scene state");
+	pugi::xml_node scene = data.append_child("scenename");
+	scene.append_attribute("name") = current_level.GetString();
+	
 
-/*App->map->CleanUp();
-	App->map->Load("maplevel1.tmx");*/
+	
 	return true;
 }

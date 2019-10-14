@@ -5,11 +5,13 @@
 	<textures />
 	<audio />
 	<map />
-	<scene />
+	<scene>
+		<scenename name="maplevel2.tmx" />
+	</scene>
 	<player>
-		<position pos_x="1086" pos_y="397" />
+		<position pos_x="1470" pos_y="291" />
 	</player>
 	<renderer>
-		<camera x="-574" y="115" />
+		<camera x="-958" y="221" />
 	</renderer>
 </game_state>

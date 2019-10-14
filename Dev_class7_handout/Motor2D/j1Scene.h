@@ -34,7 +34,10 @@ public:
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
-
+	p2SString current_level;
+	p2SString lvl_1;
+	p2SString lvl_2;
+	
 private:
 };
 
