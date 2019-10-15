@@ -37,12 +37,13 @@
     <folder>maps/</folder>
   </map>
   
-  
   <player>
    <moveFx source="move.wav"/>
    <position pos_x="120" pos_y="350"/>
-    
-    
-    
   </player>
+
+   <scene>
+     <map name="maplevel1.tmx"/>
+     <map name="maplevel2.tmx"/>
+   </scene>
 </config>

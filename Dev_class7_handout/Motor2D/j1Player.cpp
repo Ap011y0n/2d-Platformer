@@ -179,12 +179,12 @@ void j1Player::CheckCollision() {
 	Canleft = true;
 	Canjump = true;
 	Candown = true;
-
+	bool ret = true;
 	iPoint coord;
 	p2List_item<MapLayer*>* layer_iterator = App->map->data.layers.start;
 	MapLayer* layer = App->map->data.layers.start->data;
 
-	while (layer_iterator != NULL) {
+	while (ret == true && layer_iterator != NULL) {
 		layer = layer_iterator->data;
 				if (layer->returnPropValue("Navigation") == 1) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + jumpSpeed + GRAVITY);
@@ -198,7 +198,12 @@ void j1Player::CheckCollision() {
 				}
 				if (layer->returnPropValue("Navigation") == 2) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight/2);
-					if (layer->Get(coord.x, coord.y) != 0) LOG("Changemap");
+					if (layer->Get(coord.x, coord.y) != 0) {
+						App->scene->Nextmap();	
+						position.x = 120;
+						position.y = 350;
+						ret = false;
+					}
 					
 				}
 		layer_iterator = layer_iterator->next;

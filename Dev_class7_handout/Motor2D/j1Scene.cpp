@@ -19,9 +19,16 @@ j1Scene::~j1Scene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake()
+bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
+	pugi::xml_node map;
+	for (map = config.child("map"); map; map = map.next_sibling("map")) {
+		p2SString* lvlname = new p2SString();
+		lvlname->create(map.attribute("name").as_string());
+		levels.add(lvlname->GetString());
+	}
+	
 	bool ret = true;
 
 	return ret;
@@ -31,8 +38,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 
-	current_level.create("maplevel1.tmx");
-	//lvl_2.create("maplevel2.tmx");
+	current_level = levels.start->data;
 	App->map->Load(current_level.GetString());
 	App->audio->PlayMusic(App->map->data.music.GetString());
 	
@@ -48,17 +54,8 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		App->LoadGame();
-
-	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->SaveGame();
-
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-		if (App->map->blitColliders) App->map->blitColliders = false; 
-		else if (!App->map->blitColliders) App->map->blitColliders = true; 
-	}
-
+	
+	Debug();
 	App->map->Draw();
 
 	int x, y;
@@ -113,4 +110,44 @@ bool j1Scene::Save(pugi::xml_node& data) const
 
 	
 	return true;
+}
+void j1Scene::Nextmap() {
+	App->map->CleanUp();
+	p2List_item<p2SString>* iterator;
+	for (iterator = levels.start; iterator->data != current_level.GetString(); iterator = iterator->next) {
+		LOG("%s  %s", iterator->data.GetString(), current_level.GetString());
+	}
+	if (iterator->next != NULL) { iterator = iterator->next; }
+	else { iterator = levels.start; }
+	current_level = iterator->data;
+	
+	App->map->Load(current_level.GetString());
+}
+
+void j1Scene::Debug() {
+	p2List_item<p2SString>* iterator = levels.start;
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		App->LoadGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		App->SaveGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		App->map->CleanUp();
+		App->map->Load(iterator->data.GetString());
+	}
+	iterator = iterator->next;
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		App->map->CleanUp();
+		App->map->Load(iterator->data.GetString());
+	}
+
+
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+		if (App->map->blitColliders) App->map->blitColliders = false;
+		else if (!App->map->blitColliders) App->map->blitColliders = true;
+	}
 }

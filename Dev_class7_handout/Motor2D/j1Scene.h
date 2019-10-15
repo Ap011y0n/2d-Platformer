@@ -15,7 +15,7 @@ public:
 	virtual ~j1Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -34,9 +34,11 @@ public:
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
+	void Nextmap();
+	void Debug();
 	p2SString current_level;
-	p2SString lvl_1;
-	p2SString lvl_2;
+	p2List<p2SString> levels;
+	
 	
 private:
 };
