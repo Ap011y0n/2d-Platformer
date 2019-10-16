@@ -261,6 +261,14 @@ void j1Player::DrawHitbox() {
 
 }
 void j1Player::Camera() {
+	
 	App->render->camera.x = -position.x + App->win->width/2;
 	App->render->camera.y = -position.y + App->win->height/1.5;
+	if (App->render->camera.x > 0) {
+		App->render->camera.x = 0;
+	}
+	if (App->render->camera.x < -4347) {
+		App->render->camera.x = -4347;
+	}
+	LOG("%d", App->render->camera.x);
 }
