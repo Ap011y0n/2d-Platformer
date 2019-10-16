@@ -51,6 +51,14 @@ j1Player::j1Player()
 	crouch.PushBack({ 729, 102, 40, 44 }, 0.2, 0, 16, 0, 0);
 	crouch.PushBack({ 431, 30, 38, 42 }, 0.05, 0, 16, 0, 0);
 	crouch.loop = false;
+
+	up.PushBack({ 34, 162, 38, 54 }, 0.1, 0, 0, 0, 0);
+	up.PushBack({ 128, 158, 42, 46 }, 0.1, 0, 0, 0, 0);
+	up.PushBack({ 236, 162, 30, 42 }, 0.1, 0, 0, 0, 0);
+	up.PushBack({ 328, 168, 48, 34 }, 0.1, 0, 0, 0, 0);
+	up.PushBack({ 439, 168, 36, 42 }, 0.1, 0, 0, 0, 0);
+	up.PushBack({ 521, 174, 52, 34 }, 0.1, 0, 0, 0, 0);
+	
 }
 
 j1Player::~j1Player()
@@ -206,6 +214,10 @@ void j1Player::setAnimation()
 	if (state == CROUCH)
 	{
 		current_animation = &crouch;
+	}
+	if(state == JUMP)
+	{
+		current_animation = &up;
 	}
 }
 

@@ -9,9 +9,9 @@
 		<scenename name="maplevel1.tmx" />
 	</scene>
 	<player>
-		<position pos_x="120" pos_y="394" />
+		<position pos_x="5405" pos_y="1876" />
 	</player>
 	<renderer>
-		<camera x="0" y="118" />
+		<camera x="-4347" y="-1364" />
 	</renderer>
 </game_state>
