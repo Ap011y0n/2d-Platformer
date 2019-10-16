@@ -122,34 +122,70 @@ void j1Player::Movement(){
 	if (state != JUMP)state = IDLE;
 	if (Candown)position.y += GRAVITY;
 	if (!Candown)jumpSpeed = -1 * SPEED_Y;
-	
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP){
-		
-		if ((!Candown || !Canjump) && state == JUMP) {
+		if ((!Candown) && state == JUMP) {
 			state = IDLE;
 		}
-		
 		else { state = JUMP; 
-		if (jumpSpeed < 0) {
-			if (Canjump) { position.y += (jumpSpeed += 0.5); }
+		if (jumpSpeed < GRAVITY) {
+			jumpSpeed += 0.45;
+			if (!Canjump) { position.y -= GRAVITY; }
+			if (Canjump) { position.y += (jumpSpeed); }
 		}
-		else { jumpSpeed = 0; }
+		if(jumpSpeed > 0) { jumpSpeed = 0; }
 		}
 	}
-	
-		
+	if (Candown && state != JUMP) {
+		state = FALLING;
+
+	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT){
 		if (state != JUMP)state = CROUCH;
 		}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT){
-		if (Canright)position.x += SPEED_X; if (state != JUMP)state = FORWARD;
-}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
-		if (Canleft)position.x -= SPEED_X; if (state != JUMP)state = BACKWARD;
-		}
+	/*
+		if (Canright) {
+			if (state != JUMP && state != FALLING) {
+				state = FORWARD;
+				position.x += SPEED_X;
+			}
+			else {
+				if (flip == SDL_FLIP_HORIZONTAL) {
+					position.x += SPEED_X / 2;
+				}
+				else { position.x += SPEED_X; }
+			}
+		}*/
+		if (Canright) {
+			position.x += SPEED_X;
+			flip = SDL_FLIP_NONE;
+			if (state != JUMP && state != FALLING) {
+				state = FORWARD;
+			}
 
-	
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
+		/*if (Canleft){
+			if (state != JUMP && state != FALLING) {
+				state = BACKWARD;
+				position.x -= SPEED_X;
+			}
+			else {
+				if(flip == SDL_FLIP_NONE){position.x -= SPEED_X/2;}
+				else{ position.x -= SPEED_X; }
+			}
+		}*/
+		if (Canleft) {
+			position.x -= SPEED_X;
+			flip = SDL_FLIP_HORIZONTAL;
+			if (state != JUMP && state != FALLING) {
+				state = BACKWARD;
+			}
+			
+		}
+	}
 }
 
 void j1Player::setAnimation()
@@ -160,12 +196,12 @@ void j1Player::setAnimation()
 		App->audio->PlayFx(0);
 		//LOG("%s", App->audio->PlayFx(0));
 		current_animation = &forward;
-		flip = SDL_FLIP_NONE;
+		//flip = SDL_FLIP_NONE;
 	}
 	if(state == BACKWARD)
 	{
 		current_animation = &forward;
-		flip = SDL_FLIP_HORIZONTAL;
+	//	flip = SDL_FLIP_HORIZONTAL;
 	}
 	if (state == CROUCH)
 	{
@@ -193,7 +229,11 @@ void j1Player::CheckCollision() {
 					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
 					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y);
+					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
 					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y + playerHeight);
+					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
+					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
 				}
 				if (layer->returnPropValue("Navigation") == 2) {

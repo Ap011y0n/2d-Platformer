@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Window.h"
 #include "j1Audio.h"
 #include <math.h>
 
@@ -29,7 +30,6 @@ void j1Map::Draw()
 {
 	if(map_loaded == false)
 		return;
-	
 	p2List_item<MapLayer*>* layer_iterator = this->data.layers.start;
 	MapLayer* layer = this->data.layers.start->data;
 	while (layer_iterator != NULL) {
@@ -47,8 +47,13 @@ void j1Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 						
-						if( layer->returnPropValue("Nodraw")==0 || blitColliders){
-						App->render->Blit(tileset->texture, pos.x, pos.y, &r,layer->returnPropfValue("Parallax"));
+						if( layer->returnPropValue("Nodraw")==0  || blitColliders ){
+						
+							if (pos.x >= -1 * App->render->camera.x-32 && pos.y >= -1 * App->render->camera.y-32) {
+								if (pos.x <= -1 * App->render->camera.x + App->win->width && pos.y <= -1 * App->render->camera.y + App->win->height) {
+									App->render->Blit(tileset->texture, pos.x, pos.y, &r, layer->returnPropfValue("Parallax")); 
+								}
+							}
 						}
 					}
 				}

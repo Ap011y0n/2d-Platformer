@@ -6,9 +6,9 @@
 #include "p2Point.h"
 #include "p2DynArray.h"
 
-#define SPEED_X 6
+#define SPEED_X 7
 #define SPEED_Y 22
-#define GRAVITY 12
+#define GRAVITY 11
 
 struct SDL_Texture;
 struct Collider;
@@ -20,7 +20,8 @@ enum player_state
 	FORWARD,
 	BACKWARD,
 	CROUCH,
-	JUMP
+	JUMP,
+	FALLING
 };
 
 class j1Player : public j1Module
