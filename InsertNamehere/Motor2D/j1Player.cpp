@@ -93,6 +93,9 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f,flip);
 	DrawHitbox();
 	Camera();
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) {
+		App->render->FadeToBlack();
+	}
 
 	return true;
 }
@@ -282,5 +285,5 @@ void j1Player::Camera() {
 	if (App->render->camera.x < -4347) {
 		App->render->camera.x = -4347;
 	}
-	LOG("%d", App->render->camera.x);
+	
 }

@@ -300,3 +300,13 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 
 	return ret;
 }
+void j1Render::FadeToBlack() {
+	SDL_Rect screen;
+	screen.x = -1*camera.x;
+	screen.y = -1*camera.y;
+	screen.w = App->win->width * App->win->GetScale();
+	screen.h = App->win->height * App->win->GetScale();
+	
+	DrawQuad(screen, 0, 0, 0);
+
+}
