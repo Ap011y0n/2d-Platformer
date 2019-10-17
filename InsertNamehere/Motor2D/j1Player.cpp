@@ -222,6 +222,10 @@ void j1Player::setAnimation()
 	{
 		current_animation = &up;
 	}
+	if (state == FALLING)
+	{
+		current_animation = &up;
+	}
 }
 
 void j1Player::CheckCollision() {
@@ -244,9 +248,13 @@ void j1Player::CheckCollision() {
 					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
 					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y + playerHeight/2);
+					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
 					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
 					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y + playerHeight);
+					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
+					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y + playerHeight/2);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
 					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
