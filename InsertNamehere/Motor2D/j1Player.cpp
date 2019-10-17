@@ -260,14 +260,21 @@ void j1Player::CheckCollision() {
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
 				}
 				if (layer->returnPropValue("Navigation") == 2) {
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight/2);
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) {
-						App->scene->Nextmap();	
+						App->scene->Nextmap();
 						position.x = 120;
 						position.y = 350;
 						ret = false;
 					}
-					
+				}
+				if (layer->returnPropValue("Navigation") == 3) {
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
+					if (layer->Get(coord.x, coord.y) != 0) {
+							position.x = 120;
+							position.y = 400;
+							ret = false;
+					}
 				}
 		layer_iterator = layer_iterator->next;
 	}
