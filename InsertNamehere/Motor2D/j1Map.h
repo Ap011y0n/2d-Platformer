@@ -128,6 +128,7 @@ public:
 	bool blitColliders = false;
 	MapData data;
 	p2SString paint = name.create("Nodraw");
+	float parallax = 1;
 private:
 
 	pugi::xml_document	map_file;

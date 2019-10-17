@@ -90,7 +90,7 @@ bool j1Player::Update(float dt)
 	Movement();
 	setAnimation();
 	SDL_Rect* r = &current_animation->GetCurrentFrame();
-	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f,flip);
+	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) {
