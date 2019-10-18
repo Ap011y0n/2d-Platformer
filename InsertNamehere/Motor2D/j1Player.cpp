@@ -130,71 +130,104 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 
 void j1Player::Movement(){
-	if (state != JUMP)state = IDLE;
-	if (Candown)position.y += GRAVITY;
-	if (!Candown)jumpSpeed = -1 * SPEED_Y;
+	if (Godmode == false)
+	{
+		if (state != JUMP)state = IDLE;
+		if (Candown)position.y += GRAVITY;
+		if (!Candown)jumpSpeed = -1 * SPEED_Y;
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP ){
-		if ((!Candown) && state == JUMP) {
-			state = IDLE;
-		}
-		else { state = JUMP; 
-		if (jumpSpeed < GRAVITY) {
-			jumpSpeed += 0.45;
-			if (!Canjump) { position.y -= GRAVITY; }
-			if (Canjump) { position.y += (jumpSpeed); }
-		}
-		if(jumpSpeed > 0) { jumpSpeed = 0; }
-		}
-	}
-	if (Candown && state != JUMP) {
-		state = FALLING;
-
-	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT){
-		if (state != JUMP)state = CROUCH;
-		}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT){
-	/*
-		if (Canright) {
-			if (state != JUMP && state != FALLING) {
-				state = FORWARD;
-				position.x += SPEED_X;
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) {
+			if ((!Candown) && state == JUMP) {
+				state = IDLE;
 			}
 			else {
-				if (flip == SDL_FLIP_HORIZONTAL) {
-					position.x += SPEED_X / 2;
+				state = JUMP;
+				if (jumpSpeed < GRAVITY) {
+					jumpSpeed += 0.45;
+					if (!Canjump) { position.y -= GRAVITY; }
+					if (Canjump) { position.y += (jumpSpeed); }
 				}
-				else { position.x += SPEED_X; }
+				if (jumpSpeed > 0) { jumpSpeed = 0; }
 			}
-		}*/
-		if (Canright) {
-			position.x += SPEED_X;
-			flip = SDL_FLIP_NONE;
-			if (state != JUMP && state != FALLING) {
-				state = FORWARD;
-			}
+		}
+		if (Candown && state != JUMP) {
+			state = FALLING;
 
 		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
-		/*if (Canleft){
-			if (state != JUMP && state != FALLING) {
-				state = BACKWARD;
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			if (state != JUMP)state = CROUCH;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			/*
+				if (Canright) {
+					if (state != JUMP && state != FALLING) {
+						state = FORWARD;
+						position.x += SPEED_X;
+					}
+					else {
+						if (flip == SDL_FLIP_HORIZONTAL) {
+							position.x += SPEED_X / 2;
+						}
+						else { position.x += SPEED_X; }
+					}
+				}*/
+			if (Canright) {
+				position.x += SPEED_X;
+				flip = SDL_FLIP_NONE;
+				if (state != JUMP && state != FALLING) {
+					state = FORWARD;
+				}
+
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			/*if (Canleft){
+				if (state != JUMP && state != FALLING) {
+					state = BACKWARD;
+					position.x -= SPEED_X;
+				}
+				else {
+					if(flip == SDL_FLIP_NONE){position.x -= SPEED_X/2;}
+					else{ position.x -= SPEED_X; }
+				}
+			}*/
+			if (Canleft) {
 				position.x -= SPEED_X;
+				flip = SDL_FLIP_HORIZONTAL;
+				if (state != JUMP && state != FALLING) {
+					state = BACKWARD;
+				}
+
 			}
-			else {
-				if(flip == SDL_FLIP_NONE){position.x -= SPEED_X/2;}
-				else{ position.x -= SPEED_X; }
-			}
-		}*/
-		if (Canleft) {
-			position.x -= SPEED_X;
-			flip = SDL_FLIP_HORIZONTAL;
-			if (state != JUMP && state != FALLING) {
+		}
+	}
+	else if (Godmode == true)
+	{
+		state = IDLE;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+
+				position.x -= SPEED_X;
+				flip = SDL_FLIP_HORIZONTAL;
 				state = BACKWARD;
-			}
-			
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+
+			position.x += SPEED_X;
+			state = FORWARD;
+			flip = SDL_FLIP_NONE;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+
+			position.y -= SPEED_X;
+			state = JUMP;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+
+			position.y += SPEED_X;
+			state = JUMP;
 		}
 	}
 }
