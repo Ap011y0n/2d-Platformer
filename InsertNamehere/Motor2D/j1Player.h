@@ -60,6 +60,7 @@ public:
 	bool Canleft = true;
 	bool Canjump = true;
 	bool Candown = true;
+	bool Godmode = false;
 
 	int playerHeight = 50;
 	int playerWidth = 20;

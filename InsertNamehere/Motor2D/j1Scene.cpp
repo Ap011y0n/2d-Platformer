@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "j1Player.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -144,7 +145,16 @@ void j1Scene::Debug() {
 		App->map->CleanUp();
 		App->map->Load(iterator->data.GetString());
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		if (App->player->Godmode == false)
+		{
+			App->player->Godmode = true;
+		}
+		else if (App->player->Godmode == true )
+		{
+			App->player->Godmode = false;
+		}
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		if (App->map->blitColliders) App->map->blitColliders = false;
