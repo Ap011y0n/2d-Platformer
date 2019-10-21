@@ -55,6 +55,9 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+
+	App->render->fade = false;
+
 	
 	Debug();
 	App->map->Draw();
@@ -93,11 +96,14 @@ bool j1Scene::CleanUp()
 bool j1Scene::Load(pugi::xml_node& data)
 {
 	LOG("Loading Scene state");
+	
+
 	App->map->CleanUp();
 	current_level.create(data.child("scenename").attribute("name").as_string());
 	App->map->Load(current_level.GetString());
 
 	App->audio->PlayMusic(App->map->data.music.GetString());
+
 	return true;
 }
 
@@ -129,7 +135,8 @@ void j1Scene::Debug() {
 	p2List_item<p2SString>* iterator = levels.start;
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		App->LoadGame();
+	{App->render->fade = true; App->LoadGame();
+}
 
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->SaveGame();

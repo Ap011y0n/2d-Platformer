@@ -58,6 +58,7 @@ public:
 	SDL_Rect		camera;
 	SDL_Rect		viewport;
 	SDL_Color		background;
+	bool fade = false;
 
 };
 

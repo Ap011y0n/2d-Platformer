@@ -94,9 +94,8 @@ bool j1Player::Update(float dt)
 	DrawHitbox();
 	Camera();
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) {
-		App->render->FadeToBlack();
+		App->render->fade = true;
 	}
-	LOG("%d", Godmode);
 	return true;
 }
 
