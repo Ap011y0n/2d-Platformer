@@ -133,7 +133,7 @@ void j1Player::Movement(){
 	if (Godmode == false)
 	{
 		if (state != JUMP && state != DEATH)state = IDLE;
-		if (Candown)position.y += GRAVITY;
+		if (Candown && position.y < -1 * App->render->camera.y + App->win->height)position.y += GRAVITY;
 		if (!Candown)jumpSpeed = -1 * SPEED_Y;
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) {
@@ -233,7 +233,7 @@ void j1Player::setAnimation()
 		current_animation = &up;
 	}
 	if (state == DEATH) {
-		position.y += (jumpSpeed += 0.45);
+		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45);
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
 			state = IDLE;
 			BarWidth = 40;

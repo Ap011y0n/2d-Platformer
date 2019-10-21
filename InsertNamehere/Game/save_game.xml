@@ -9,7 +9,7 @@
 		<scenename name="maplevel1.tmx" />
 	</scene>
 	<player>
-		<position pos_x="3466" pos_y="613" />
+		<position pos_x="1037" pos_y="759" />
 	</player>
 	<renderer />
 </game_state>
