@@ -39,7 +39,7 @@
   
   <player>
    <moveFx source="move.wav"/>
-   <position pos_x="120" pos_y="350"/>
+   <initialPosition x="120" y="350"/>
   </player>
 
    <scene>

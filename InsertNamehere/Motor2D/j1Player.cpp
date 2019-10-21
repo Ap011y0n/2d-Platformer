@@ -1,3 +1,4 @@
+#include "p2Defs.h"
 #include "j1App.h"
 #include "j1Textures.h"
 #include "j1Input.h"
@@ -14,25 +15,14 @@
 #include<stdio.h>
 
 
-bool j1Player::Awake(pugi::xml_node& config)
-{
-	bool ret = true;
-	config = config.child("player");
 
-	moveFx = config.child("moveFx").attribute("source").as_string();
-	LOG("%s", moveFx);
+
+j1Player::j1Player(): j1Module()
+{
 	name.create("player");
-	return ret;
-}
 
-
-j1Player::j1Player()
-{
 	graphics = NULL;
 	current_animation = NULL;
-
-	position.x = 120;
-	position.y = 350;
 
 	// idle animation (just the ship)
 	idle.PushBack({ 28, 14, 38, 58 }, 0.1, 0, 0, 0, 0);
@@ -59,12 +49,31 @@ j1Player::j1Player()
 	up.PushBack({ 439, 168, 36, 42 }, 0.1, 0, 0, 0, 0);
 	up.PushBack({ 521, 174, 52, 34 }, 0.1, 0, 0, 0, 0);
 
-
+	dead.PushBack({ 136, 899, 42, 52 }, 0.1, 0, 0, 0, 0);
+	dead.PushBack({ 237, 903, 40, 44 }, 0.1, 0, 0, 0, 0);
+	dead.PushBack({ 329, 907, 50, 44 }, 0.1, 0, 0, 0, 0);
+	dead.PushBack({ 433, 903, 44, 48 }, 0.1, 0, 0, 0, 0);
+	dead.PushBack({ 537, 905, 38, 46 }, 0.1, 0, 0, 0, 0);
+	dead.PushBack({ 630, 907, 48, 44 }, 0.1, 0, 0, 0, 0);
 	
 }
 
 j1Player::~j1Player()
 {}
+
+bool j1Player::Awake(pugi::xml_node& config)
+{
+	bool ret = true;
+	
+
+	moveFx = config.child("moveFx").attribute("source").as_string();
+
+	position.x = config.child("initialPosition").attribute("x").as_int();
+	position.y = config.child("initialPosition").attribute("y").as_int();
+
+	
+	return ret;
+}
 
 // Load assets
 bool j1Player::Start()
@@ -73,7 +82,7 @@ bool j1Player::Start()
 	LOG("Loading player");
 
 
-	graphics = App->tex->Load("textures/adventurer.png");
+	graphics = App->tex->Load("textures/adventurerfinalsprite.png");
 
 	return true;
 }
@@ -232,7 +241,9 @@ void j1Player::setAnimation()
 	{
 		current_animation = &up;
 	}
-	if (state == DEATH) {
+	if (state == DEATH) 
+	{
+		current_animation = &dead;
 		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45);
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
 			state = IDLE;

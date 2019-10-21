@@ -1,10 +1,13 @@
 #ifndef __ModulePlayer_H__
 #define __ModulePlayer_H__
 
+#include "PugiXml/src/pugixml.hpp"
 #include "j1Module.h"
 #include "Animation.h"
+#include "p2List.h"
 #include "p2Point.h"
 #include "p2DynArray.h"
+
 
 #define SPEED_X 7
 #define SPEED_Y 22
@@ -58,6 +61,7 @@ public:
 	Animation crouch;
 	Animation up;
 	Animation down;
+	Animation dead;
 	iPoint position;
 	bool Canright = true;
 	bool Canleft = true;
