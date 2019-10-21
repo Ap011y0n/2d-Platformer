@@ -335,7 +335,7 @@ void j1Player::MoveCondition() {
 
 	if (BarWidth > 0)BarWidth -= 0.3;
 	else {
-		if(state != DEATH){
+		if(state != DEATH && Godmode == false){
 		jumpSpeed = -1 * SPEED_Y;
 		DeathTimer = SDL_GetTicks();
 		state = DEATH;
