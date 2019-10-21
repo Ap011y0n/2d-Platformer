@@ -58,6 +58,8 @@ j1Player::j1Player()
 	up.PushBack({ 328, 168, 48, 34 }, 0.1, 0, 0, 0, 0);
 	up.PushBack({ 439, 168, 36, 42 }, 0.1, 0, 0, 0, 0);
 	up.PushBack({ 521, 174, 52, 34 }, 0.1, 0, 0, 0, 0);
+
+
 	
 }
 
@@ -69,6 +71,7 @@ bool j1Player::Start()
 {
 	App->audio->LoadFx(moveFx.GetString());
 	LOG("Loading player");
+
 
 	graphics = App->tex->Load("textures/adventurer.png");
 
@@ -93,9 +96,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) {
-		App->render->fade = true;
-	}
+	MoveCondition();
 	return true;
 }
 
@@ -131,7 +132,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 void j1Player::Movement(){
 	if (Godmode == false)
 	{
-		if (state != JUMP)state = IDLE;
+		if (state != JUMP && state != DEATH)state = IDLE;
 		if (Candown)position.y += GRAVITY;
 		if (!Candown)jumpSpeed = -1 * SPEED_Y;
 
@@ -149,47 +150,24 @@ void j1Player::Movement(){
 				if (jumpSpeed > 0) { jumpSpeed = 0; }
 			}
 		}
-		if (Candown && state != JUMP) {
+		if (Candown && state != JUMP && state != DEATH) {
 			state = FALLING;
 
 		}
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			if (state != JUMP)state = CROUCH;
+			if (state != JUMP && state != DEATH)state = CROUCH;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			/*
-				if (Canright) {
-					if (state != JUMP && state != FALLING) {
-						state = FORWARD;
-						position.x += SPEED_X;
-					}
-					else {
-						if (flip == SDL_FLIP_HORIZONTAL) {
-							position.x += SPEED_X / 2;
-						}
-						else { position.x += SPEED_X; }
-					}
-				}*/
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH) {
 			if (Canright) {
 				position.x += SPEED_X;
 				flip = SDL_FLIP_NONE;
-				if (state != JUMP && state != FALLING) {
+				if (state != JUMP && state != FALLING ) {
 					state = FORWARD;
 				}
 
 			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			/*if (Canleft){
-				if (state != JUMP && state != FALLING) {
-					state = BACKWARD;
-					position.x -= SPEED_X;
-				}
-				else {
-					if(flip == SDL_FLIP_NONE){position.x -= SPEED_X/2;}
-					else{ position.x -= SPEED_X; }
-				}
-			}*/
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH) {
 			if (Canleft) {
 				position.x -= SPEED_X;
 				flip = SDL_FLIP_HORIZONTAL;
@@ -204,27 +182,23 @@ void j1Player::Movement(){
 	{
 		state = IDLE;
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-
 				position.x -= SPEED_X;
 				flip = SDL_FLIP_HORIZONTAL;
 				state = BACKWARD;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-
 			position.x += SPEED_X;
 			state = FORWARD;
 			flip = SDL_FLIP_NONE;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-
 			position.y -= SPEED_X;
 			state = JUMP;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-
 			position.y += SPEED_X;
 			state = JUMP;
 		}
@@ -239,12 +213,12 @@ void j1Player::setAnimation()
 		App->audio->PlayFx(0);
 		//LOG("%s", App->audio->PlayFx(0));
 		current_animation = &forward;
-		//flip = SDL_FLIP_NONE;
+		if (BarWidth < 40)	BarWidth += 2;
 	}
 	if(state == BACKWARD)
 	{
 		current_animation = &forward;
-	//	flip = SDL_FLIP_HORIZONTAL;
+		if(BarWidth < 40)	BarWidth += 2;
 	}
 	if (state == CROUCH)
 	{
@@ -258,6 +232,15 @@ void j1Player::setAnimation()
 	{
 		current_animation = &up;
 	}
+	if (state == DEATH) {
+		position.y += (jumpSpeed += 0.45);
+		if (SDL_GetTicks() > (DeathTimer + 2000)) {
+			state = IDLE;
+			BarWidth = 40;
+			position.x = 120;
+			position.y = 400;
+		}
+	}
 }
 
 void j1Player::CheckCollision() {
@@ -266,6 +249,8 @@ void j1Player::CheckCollision() {
 	Canleft = true;
 	Canjump = true;
 	Candown = true;
+	death = false;
+
 	bool ret = true;
 	iPoint coord;
 	p2List_item<MapLayer*>* layer_iterator = App->map->data.layers.start;
@@ -273,7 +258,7 @@ void j1Player::CheckCollision() {
 
 	while (ret == true && layer_iterator != NULL) {
 		layer = layer_iterator->data;
-				if (layer->returnPropValue("Navigation") == 1) {
+				if (layer->returnPropValue("Navigation") == 1 && state != DEATH) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + jumpSpeed + GRAVITY);
 					if (layer->Get(coord.x, coord.y) != 0) Canjump = false;
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + GRAVITY);
@@ -300,12 +285,20 @@ void j1Player::CheckCollision() {
 						ret = false;
 					}
 				}
-				if (layer->returnPropValue("Navigation") == 3 && Godmode == false) {
+				if (layer->returnPropValue("Navigation") == 3 && Godmode == false && state != DEATH) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) {
-							position.x = 120;
-							position.y = 400;
-							ret = false;
+						death = true;	
+					}
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight);
+					if (layer->Get(coord.x, coord.y) != 0) {
+						death = true;
+					}
+					if (death == true){
+					state = DEATH;
+					jumpSpeed = -1 * SPEED_Y;
+					DeathTimer = SDL_GetTicks();
+					ret = false;
 					}
 				}
 		layer_iterator = layer_iterator->next;
@@ -323,14 +316,43 @@ void j1Player::DrawHitbox() {
 
 }
 void j1Player::Camera() {
-	
+	if (state != DEATH){
 	App->render->camera.x = -position.x + App->win->width/2;
 	App->render->camera.y = -position.y + App->win->height/1.5;
 	if (App->render->camera.x > 0) {
 		App->render->camera.x = 0;
 	}
-	if (App->render->camera.x < -4347) {
-		App->render->camera.x = -4347;
 	}
+	/*if (App->render->camera.x < -4347) {
+		App->render->camera.x = -4347;
+	}*/
 	
+}
+
+void j1Player::MoveCondition() {
+	SDL_Rect redbar;
+	SDL_Rect TimerBar;
+
+	if (BarWidth > 0)BarWidth -= 0.3;
+	else {
+		if(state != DEATH){
+		jumpSpeed = -1 * SPEED_Y;
+		DeathTimer = SDL_GetTicks();
+		state = DEATH;
+		}
+	}
+
+	redbar.h = 3;
+	redbar.w = 40;
+	TimerBar.h = 3;
+	TimerBar.w = BarWidth;
+	
+	redbar.x = position.x;
+	redbar.y = position.y + playerHeight + 20;
+
+	TimerBar.x = position.x;
+	TimerBar.y = position.y + playerHeight + 20;
+	
+	App->render->DrawQuad(redbar, 255, 0, 0);
+	App->render->DrawQuad(TimerBar, 255, 255, 0);
 }

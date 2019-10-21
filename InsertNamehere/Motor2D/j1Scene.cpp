@@ -96,12 +96,10 @@ bool j1Scene::CleanUp()
 bool j1Scene::Load(pugi::xml_node& data)
 {
 	LOG("Loading Scene state");
-	
-
+	App->player->BarWidth = 40;
 	App->map->CleanUp();
 	current_level.create(data.child("scenename").attribute("name").as_string());
 	App->map->Load(current_level.GetString());
-
 	App->audio->PlayMusic(App->map->data.music.GetString());
 
 	return true;
@@ -119,7 +117,9 @@ bool j1Scene::Save(pugi::xml_node& data) const
 	return true;
 }
 void j1Scene::Nextmap() {
+
 	App->map->CleanUp();
+	App->player->BarWidth = 40;
 	p2List_item<p2SString>* iterator;
 	for (iterator = levels.start; iterator->data != current_level.GetString(); iterator = iterator->next) {
 		LOG("%s  %s", iterator->data.GetString(), current_level.GetString());
@@ -129,6 +129,7 @@ void j1Scene::Nextmap() {
 	current_level = iterator->data;
 	
 	App->map->Load(current_level.GetString());
+	
 }
 
 void j1Scene::Debug() {

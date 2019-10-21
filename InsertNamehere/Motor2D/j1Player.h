@@ -21,7 +21,8 @@ enum player_state
 	BACKWARD,
 	CROUCH,
 	JUMP,
-	FALLING
+	FALLING,
+	DEATH
 };
 
 class j1Player : public j1Module
@@ -41,12 +42,14 @@ public:
 	void setAnimation();
 	void DrawHitbox();
 	void Camera();
+	void MoveCondition();
 
 
 
 public:
 
 	player_state state;
+	int DeathTimer = 0;
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	Animation idle;
@@ -61,6 +64,7 @@ public:
 	bool Canjump = true;
 	bool Candown = true;
 	bool Godmode = false;
+	bool death = false;
 
 	int playerHeight = 50;
 	int playerWidth = 20;
@@ -68,6 +72,7 @@ public:
 	float jumpSpeed = -1*SPEED_Y;
 	p2SString		moveFx;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	float BarWidth = 40;
 };
 
 #endif
