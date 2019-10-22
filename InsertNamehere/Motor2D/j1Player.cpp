@@ -315,6 +315,13 @@ void j1Player::CheckCollision() {
 					ret = false;
 					}
 				}
+				if (layer->returnPropValue("Navigation") == 4 && Godmode == false && state != DEATH) {
+	
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + GRAVITY);
+					if (layer->Get(coord.x, coord.y) != 0) {
+						if (jumpSpeed < 0) { Candown = false; }
+					}
+				}
 		layer_iterator = layer_iterator->next;
 	}
 	
@@ -352,7 +359,7 @@ void j1Player::MoveCondition() {
 		if(state != DEATH && Godmode == false){
 		jumpSpeed = -1 * SPEED_Y;
 		DeathTimer = SDL_GetTicks();
-		state = DEATH;
+		/*state = DEATH;*/
 		}
 	}
 
