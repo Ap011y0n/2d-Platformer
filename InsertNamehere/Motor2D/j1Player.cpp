@@ -38,6 +38,8 @@ j1Player::j1Player(): j1Module()
 	crouch = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
 
+	dead = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
 	
 	/*idle.PushBack({ 28, 14, 38, 58 }, 0.1, 0, 0, 0, 0);
 	idle.PushBack({ 132, 12, 34, 60 }, 0.1, 0, 0, 0, 0);
@@ -61,14 +63,14 @@ j1Player::j1Player(): j1Module()
 	up.PushBack({ 236, 162, 30, 42 }, 0.1, 0, 0, 0, 0);
 	up.PushBack({ 328, 168, 48, 34 }, 0.1, 0, 0, 0, 0);
 	up.PushBack({ 439, 168, 36, 42 }, 0.1, 0, 0, 0, 0);
-	up.PushBack({ 521, 174, 52, 34 }, 0.1, 0, 0, 0, 0);*/
+	up.PushBack({ 521, 174, 52, 34 }, 0.1, 0, 0, 0, 0);
 
 	dead.PushBack({ 136, 899, 42, 52 }, 0.1, 0, 0, 0, 0);
 	dead.PushBack({ 237, 903, 40, 44 }, 0.1, 0, 0, 0, 0);
 	dead.PushBack({ 329, 907, 50, 44 }, 0.1, 0, 0, 0, 0);
 	dead.PushBack({ 433, 903, 44, 48 }, 0.1, 0, 0, 0, 0);
 	dead.PushBack({ 537, 905, 38, 46 }, 0.1, 0, 0, 0, 0);
-	dead.PushBack({ 630, 907, 48, 44 }, 0.1, 0, 0, 0, 0);
+	dead.PushBack({ 630, 907, 48, 44 }, 0.1, 0, 0, 0, 0);*/
 	
 }
 
@@ -395,9 +397,9 @@ void j1Player::Camera() {
 			App->render->camera.x = -4347;
 
 		}
-		if (App->render->camera.y < -200) {
+		/*if (App->render->camera.y < -200) {
 			App->render->camera.y = -200;
-		}
+		}*/
 	}
 	//specific for map2
 	if (App->scene->current_level == "maplevel2.tmx")
@@ -422,7 +424,7 @@ void j1Player::MoveCondition() {
 		if(state != DEATH && Godmode == false){
 		jumpSpeed = -1 * SPEED_Y;
 		DeathTimer = SDL_GetTicks();
-		//state = DEATH;
+		state = DEATH;
 		}
 	}
 
