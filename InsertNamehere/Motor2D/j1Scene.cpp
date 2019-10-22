@@ -42,7 +42,7 @@ bool j1Scene::Start()
 	current_level = levels.start->data;
 	App->map->Load(current_level.GetString());
 	App->audio->PlayMusic(App->map->data.music.GetString());
-	
+	LOG("%s", current_level.GetString());
 	return true;
 }
 

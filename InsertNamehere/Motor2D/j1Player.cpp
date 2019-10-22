@@ -349,6 +349,13 @@ void j1Player::CheckCollision() {
 					ret = false;
 					}
 				}
+				if (layer->returnPropValue("Navigation") == 4 && Godmode == false && state != DEATH) {
+	
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + GRAVITY);
+					if (layer->Get(coord.x, coord.y) != 0) {
+						if (jumpSpeed < 0) { Candown = false; }
+					}
+				}
 		layer_iterator = layer_iterator->next;
 	}
 	
@@ -367,14 +374,38 @@ void j1Player::Camera() {
 	if (state != DEATH){
 	App->render->camera.x = -position.x + App->win->width/2;
 	App->render->camera.y = -position.y + App->win->height/1.5;
+
+	}
+	//Same limits for both maps
 	if (App->render->camera.x > 0) {
 		App->render->camera.x = 0;
 	}
+	if (App->render->camera.y > 0) {
+		App->render->camera.y = 0;
 	}
-	/*if (App->render->camera.x < -4347) {
-		App->render->camera.x = -4347;
-	}*/
-	
+	//specific for map1
+	if (App->scene->current_level == "maplevel1.tmx")
+	{
+		if (App->render->camera.x < -4347) {
+			App->render->camera.x = -4347;
+
+		}
+		if (App->render->camera.y < -200) {
+			App->render->camera.y = -200;
+		}
+	}
+	//specific for map2
+	if (App->scene->current_level == "maplevel2.tmx")
+	{
+
+		if (App->render->camera.y < -1100) {
+			App->render->camera.y = -1100;
+		}
+		if (App->render->camera.x < -5350) {
+			App->render->camera.x = -5350;
+
+		}
+	}
 }
 
 void j1Player::MoveCondition() {
