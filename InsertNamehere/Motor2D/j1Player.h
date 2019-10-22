@@ -15,6 +15,7 @@
 
 struct SDL_Texture;
 struct Collider;
+struct Anim;
 
 enum player_state
 {
@@ -27,6 +28,17 @@ enum player_state
 	FALLING,
 	DEATH
 };
+struct TileSetPlayer
+{
+	SDL_Rect GetAnimRect(int id) const;
+	int tile_width;
+	int tile_height;
+	int firstgid;
+	int num_tiles_width;
+	int tex_width;
+	p2SString Texname;
+};
+
 
 class j1Player : public j1Module
 {
@@ -46,6 +58,7 @@ public:
 	void DrawHitbox();
 	void Camera();
 	void MoveCondition();
+	void LoadAnimations(const char* path);
 
 
 
@@ -55,6 +68,7 @@ public:
 	int DeathTimer = 0;
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
+	p2List<Animation> animations;
 	Animation idle;
 	Animation forward;
 	Animation backward;
@@ -79,6 +93,8 @@ public:
 	p2SString		deathFx;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	float BarWidth = 40;
+	pugi::xml_document	player_file;
+	TileSetPlayer TileSetData;
 };
 
 #endif
