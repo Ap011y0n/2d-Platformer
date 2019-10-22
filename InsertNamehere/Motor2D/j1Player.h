@@ -69,7 +69,8 @@ public:
 	bool Candown = true;
 	bool Godmode = false;
 	bool death = false;
-
+	bool playChannel = true;
+	bool stopChannel = true;
 	int playerHeight = 50;
 	int playerWidth = 20;
 	int playerCentre = 10;

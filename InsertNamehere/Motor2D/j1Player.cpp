@@ -84,7 +84,7 @@ bool j1Player::Start()
 	LOG("%d", App->audio->LoadFx(moveFx.GetString()));
 	App->audio->LoadFx(deathFx.GetString());
 	LOG("%d", App->audio->LoadFx(deathFx.GetString()));
-	graphics = App->tex->Load("textures/adventurerfinalsprite.png");
+	graphics = App->tex->Load("textures/adventurer.png");
 
 	return true;
 }
@@ -150,6 +150,7 @@ void j1Player::Movement(){
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) {
 			if ((!Candown) && state == JUMP) {
 				state = IDLE;
+				playChannel = true;
 			}
 			else {
 				state = JUMP;
@@ -162,7 +163,10 @@ void j1Player::Movement(){
 			}
 		}
 		if (Candown && state != JUMP && state != DEATH) {
+			if(state != FALLING)stopChannel = true;
+			playChannel = true;
 			state = FALLING;
+			
 
 		}
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
@@ -173,7 +177,8 @@ void j1Player::Movement(){
 				position.x += SPEED_X;
 				flip = SDL_FLIP_NONE;
 				if (state != JUMP && state != FALLING ) {
-					state = FORWARD;
+					state = IDLE;
+					if (state == IDLE)state = FORWARD;
 				}
 
 			}
@@ -183,7 +188,8 @@ void j1Player::Movement(){
 				position.x -= SPEED_X;
 				flip = SDL_FLIP_HORIZONTAL;
 				if (state != JUMP && state != FALLING) {
-					state = BACKWARD;
+					state = IDLE;
+					if (state == IDLE)state = BACKWARD;
 				}
 
 			}
@@ -195,59 +201,74 @@ void j1Player::Movement(){
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				position.x -= SPEED_X;
 				flip = SDL_FLIP_HORIZONTAL;
-				state = BACKWARD;
+				state = IDLE;
+				if (state == IDLE)state = BACKWARD;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			position.x += SPEED_X;
-			state = FORWARD;
+			state = IDLE;
+			if (state == IDLE)state = FORWARD;
 			flip = SDL_FLIP_NONE;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 			position.y -= SPEED_X;
-			state = JUMP;
+			state = IDLE;
+			if (state == IDLE)state = JUMP;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			position.y += SPEED_X;
-			state = JUMP;
+			state = IDLE; 
+			if (state == IDLE)state = JUMP;
 		}
 	}
 }
 
 void j1Player::setAnimation()
 {
-
+	if (state == IDLE) {
+		App->audio->StopFx();
+		playChannel = true;
+		stopChannel = true;
+	}
 	if(state == FORWARD)
 	{
-		App->audio->PlayFx(0);
-		//LOG("%s", App->audio->PlayFx(0));
+		//if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
+		if (playChannel) { App->audio->PlayFx(2, 10); playChannel = false; }
+		
 		current_animation = &forward;
 		if (BarWidth < 40)	BarWidth += 2;
 	}
 	if(state == BACKWARD)
 	{
+		//if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
+		if (playChannel) { App->audio->PlayFx(2, 10); playChannel = false; }
 		current_animation = &forward;
 		if(BarWidth < 40)	BarWidth += 2;
 	}
 	if (state == CROUCH)
 	{
+		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
 		current_animation = &crouch;
 	}
 	if(state == JUMP)
 	{
+		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
 		current_animation = &up;
 	}
 	if (state == FALLING)
 	{
+		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
 		current_animation = &up;
 	}
 	if (state == DEATH) 
 	{
+		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
 		current_animation = &dead;
 		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45);
-		App->audio->PlayFx(4, 0);
+		if (playChannel) { App->audio->PlayFx(4, 0); playChannel = false; }
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
 			state = IDLE;
 			BarWidth = 40;
@@ -302,13 +323,16 @@ void j1Player::CheckCollision() {
 				if (layer->returnPropValue("Navigation") == 3 && Godmode == false && state != DEATH) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) {
+						playChannel = true;
 						death = true;	
 					}
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) {
+						playChannel = true;
 						death = true;
 					}
 					if (death == true){
+						
 					state = DEATH;
 					jumpSpeed = -1 * SPEED_Y;
 					DeathTimer = SDL_GetTicks();
