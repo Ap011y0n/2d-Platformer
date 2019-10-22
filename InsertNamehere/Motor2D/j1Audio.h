@@ -31,9 +31,11 @@ public:
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
-
+	void StopFx();
+	bool channelFinished();
 	bool j1Audio::Save(pugi::xml_node& config);
 	bool j1Audio::Load(pugi::xml_node& config);
+
 
 private:
 
