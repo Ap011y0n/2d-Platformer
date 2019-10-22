@@ -32,9 +32,14 @@ j1Player::j1Player(): j1Module()
 	forward = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
 
+	up = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
 
-	/*
-	idle.PushBack({ 28, 14, 38, 58 }, 0.1, 0, 0, 0, 0);
+	crouch = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
+
+	
+	/*idle.PushBack({ 28, 14, 38, 58 }, 0.1, 0, 0, 0, 0);
 	idle.PushBack({ 132, 12, 34, 60 }, 0.1, 0, 0, 0, 0);
 	idle.PushBack({ 230, 12, 38, 60 }, 0.1, 0, 0, 0, 0);
 	idle.PushBack({ 326, 14, 40, 58 }, 0.1, 0, 0, 0, 0);
@@ -45,18 +50,18 @@ j1Player::j1Player(): j1Module()
 	forward.PushBack({ 334, 90, 46, 56 }, 0.1, 0, 0, 0, 0);
 	forward.PushBack({ 431, 92, 40, 54 }, 0.1, 0, 0, 0, 0);
 	forward.PushBack({ 531, 96, 40, 50 }, 0.1, 0, 0, 0, 0);
-	*/
+	
 	crouch.PushBack({ 629, 98, 40, 48 }, 0.3, 0, 16, 0, 0);
 	crouch.PushBack({ 729, 102, 40, 44 }, 0.2, 0, 16, 0, 0);
 	crouch.PushBack({ 431, 30, 38, 42 }, 0.05, 0, 16, 0, 0);
-	crouch.loop = false;
+	
 
 	up.PushBack({ 34, 162, 38, 54 }, 0.1, 0, 0, 0, 0);
 	up.PushBack({ 128, 158, 42, 46 }, 0.1, 0, 0, 0, 0);
 	up.PushBack({ 236, 162, 30, 42 }, 0.1, 0, 0, 0, 0);
 	up.PushBack({ 328, 168, 48, 34 }, 0.1, 0, 0, 0, 0);
 	up.PushBack({ 439, 168, 36, 42 }, 0.1, 0, 0, 0, 0);
-	up.PushBack({ 521, 174, 52, 34 }, 0.1, 0, 0, 0, 0);
+	up.PushBack({ 521, 174, 52, 34 }, 0.1, 0, 0, 0, 0);*/
 
 	dead.PushBack({ 136, 899, 42, 52 }, 0.1, 0, 0, 0, 0);
 	dead.PushBack({ 237, 903, 40, 44 }, 0.1, 0, 0, 0, 0);
@@ -417,7 +422,7 @@ void j1Player::MoveCondition() {
 		if(state != DEATH && Godmode == false){
 		jumpSpeed = -1 * SPEED_Y;
 		DeathTimer = SDL_GetTicks();
-		state = DEATH;
+		//state = DEATH;
 		}
 	}
 
