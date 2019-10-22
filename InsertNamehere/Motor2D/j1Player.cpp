@@ -396,7 +396,6 @@ void j1Player::Camera() {
 
 		}
 	}
-
 }
 
 void j1Player::MoveCondition() {
