@@ -41,6 +41,7 @@
    <moveFx source="move.wav"/>
    <deathFx source="death.wav"/>
    <initialPosition x="120" y="350"/>
+   <gravity value="11"/>
   </player>
 
    <scene>

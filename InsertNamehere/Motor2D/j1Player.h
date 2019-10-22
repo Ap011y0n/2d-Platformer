@@ -11,7 +11,6 @@
 
 #define SPEED_X 7
 #define SPEED_Y 22
-#define GRAVITY 11
 
 struct SDL_Texture;
 struct Collider;
@@ -95,6 +94,7 @@ public:
 	float BarWidth = 40;
 	pugi::xml_document	player_file;
 	TileSetPlayer TileSetData;
+	int gravity;
 };
 
 #endif

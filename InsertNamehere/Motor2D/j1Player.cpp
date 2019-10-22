@@ -80,7 +80,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	position.x = config.child("initialPosition").attribute("x").as_int();
 	position.y = config.child("initialPosition").attribute("y").as_int();
-
+	gravity = config.child("gravity").attribute("value").as_int();
 	
 	return ret;
 }
@@ -154,7 +154,7 @@ void j1Player::Movement(){
 	if (Godmode == false)
 	{
 		if (state != JUMP && state != DEATH)state = IDLE;
-		if (Candown && position.y < -1 * App->render->camera.y + App->win->height)position.y += GRAVITY;
+		if (Candown && position.y < -1 * App->render->camera.y + App->win->height)position.y += gravity;
 		if (!Candown)jumpSpeed = -1 * SPEED_Y;
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) {
@@ -164,9 +164,9 @@ void j1Player::Movement(){
 			}
 			else {
 				state = JUMP;
-				if (jumpSpeed < GRAVITY) {
+				if (jumpSpeed < gravity) {
 					jumpSpeed += 0.45;
-					if (!Canjump) { position.y -= GRAVITY; }
+					if (!Canjump) { position.y -= gravity; }
 					if (Canjump) { position.y += (jumpSpeed); }
 				}
 				if (jumpSpeed > 0) { jumpSpeed = 0; }
@@ -304,9 +304,9 @@ void j1Player::CheckCollision() {
 	while (ret == true && layer_iterator != NULL) {
 		layer = layer_iterator->data;
 				if (layer->returnPropValue("Navigation") == 1 && state != DEATH) {
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + jumpSpeed + GRAVITY);
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + jumpSpeed + gravity);
 					if (layer->Get(coord.x, coord.y) != 0) Canjump = false;
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + GRAVITY);
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + gravity);
 					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
 					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
@@ -351,7 +351,7 @@ void j1Player::CheckCollision() {
 				}
 				if (layer->returnPropValue("Navigation") == 4 && Godmode == false && state != DEATH) {
 	
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + GRAVITY);
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + gravity);
 					if (layer->Get(coord.x, coord.y) != 0) {
 						if (jumpSpeed < 0) { Candown = false; }
 					}
