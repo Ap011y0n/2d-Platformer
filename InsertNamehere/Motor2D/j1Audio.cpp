@@ -21,6 +21,7 @@ j1Audio::~j1Audio()
 bool j1Audio::Awake(pugi::xml_node& config)
 {
 	music_directory = config.child("music").child_value("folder");
+	fx_directory = config.child("fx").child_value("folder");
 	volumemusic = config.child("music").child("volume").attribute("value").as_float();
 	volumefx = config.child("fx").child("volume").attribute("value").as_float();
 	LOG("Loading Audio Mixer");
@@ -148,7 +149,6 @@ unsigned int j1Audio::LoadFx(const char* path)
 		return 0;
 	p2SString tmp("%s%s", fx_directory.GetString(), path);
 	Mix_Chunk* chunk = Mix_LoadWAV(tmp.GetString());
-
 	if(chunk == NULL)
 	{
 		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
@@ -158,7 +158,6 @@ unsigned int j1Audio::LoadFx(const char* path)
 		fx.add(chunk);
 		ret = fx.count();
 	}
-
 	return ret;
 }
 

@@ -67,6 +67,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	
 
 	moveFx = config.child("moveFx").attribute("source").as_string();
+	deathFx = config.child("deathFx").attribute("source").as_string();
 
 	position.x = config.child("initialPosition").attribute("x").as_int();
 	position.y = config.child("initialPosition").attribute("y").as_int();
@@ -78,10 +79,11 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Load assets
 bool j1Player::Start()
 {
-	App->audio->LoadFx(moveFx.GetString());
 	LOG("Loading player");
-
-
+	App->audio->LoadFx(moveFx.GetString());
+	LOG("%d", App->audio->LoadFx(moveFx.GetString()));
+	App->audio->LoadFx(deathFx.GetString());
+	LOG("%d", App->audio->LoadFx(deathFx.GetString()));
 	graphics = App->tex->Load("textures/adventurerfinalsprite.png");
 
 	return true;
@@ -245,6 +247,7 @@ void j1Player::setAnimation()
 	{
 		current_animation = &dead;
 		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45);
+		App->audio->PlayFx(4, 0);
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
 			state = IDLE;
 			BarWidth = 40;

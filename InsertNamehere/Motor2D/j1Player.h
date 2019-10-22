@@ -75,6 +75,7 @@ public:
 	int playerCentre = 10;
 	float jumpSpeed = -1*SPEED_Y;
 	p2SString		moveFx;
+	p2SString		deathFx;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	float BarWidth = 40;
 };

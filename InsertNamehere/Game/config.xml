@@ -25,7 +25,7 @@
     </music>
     <fx>
       <folder>audio/fx/</folder>
-      <volume value="0.5" />
+      <volume value="20" />
     </fx>
   </audio>
   
@@ -39,6 +39,7 @@
   
   <player>
    <moveFx source="move.wav"/>
+   <deathFx source="death.wav"/>
    <initialPosition x="120" y="350"/>
   </player>
 
