@@ -9,8 +9,6 @@
 #include "p2DynArray.h"
 
 
-#define SPEED_X 7
-#define SPEED_Y 22
 
 struct SDL_Texture;
 struct Collider;

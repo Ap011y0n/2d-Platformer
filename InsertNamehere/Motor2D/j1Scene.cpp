@@ -147,6 +147,10 @@ void j1Scene::Debug() {
 		App->map->CleanUp();
 		current_level.create("maplevel1.tmx");
 		App->map->Load(current_level.GetString());
+		App->player->position.x = 120;
+		App->player->position.y = 400;
+		App->player->BarWidth = 40;
+	
 	}
 	iterator = iterator->next;
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -154,6 +158,9 @@ void j1Scene::Debug() {
 		App->map->CleanUp();
 		current_level.create("maplevel2.tmx");
 		App->map->Load(current_level.GetString());
+		App->player->position.x = 120;
+		App->player->position.y = 400;
+		App->player->BarWidth = 40;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		if (App->player->Godmode == false)
