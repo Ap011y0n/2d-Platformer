@@ -111,9 +111,7 @@ bool j1Scene::Save(pugi::xml_node& data) const
 	LOG("Saving Scene state");
 	pugi::xml_node scene = data.append_child("scenename");
 	scene.append_attribute("name") = current_level.GetString();
-	
 
-	
 	return true;
 }
 void j1Scene::Nextmap() {

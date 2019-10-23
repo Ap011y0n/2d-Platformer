@@ -23,7 +23,9 @@ enum player_state
 	CROUCH,
 	JUMP,
 	FALLING,
-	DEATH
+	DEATH,
+	DASH_L,
+	DASH_R
 };
 struct TileSetPlayer
 {
@@ -97,6 +99,8 @@ public:
 	int gravity;
 	int speedX;
 	int speedY;
+	int dashspeed;
+	float acceleration;
 };
 
 #endif

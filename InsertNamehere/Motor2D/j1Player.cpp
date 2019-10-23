@@ -92,6 +92,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	gravity = config.child("gravity").attribute("value").as_int();
 	speedX = config.child("speedX").attribute("value").as_int();
 	speedY = config.child("speedY").attribute("value").as_int();
+	acceleration = config.child("acceleration").attribute("value").as_int();
 	jumpSpeed = -1 * speedY;
 	return ret;
 }
@@ -168,13 +169,17 @@ bool j1Player::Save(pugi::xml_node& data) const
 void j1Player::Movement(){
 	if (Godmode == false)
 	{
-		if (state != JUMP && state != DEATH)state = IDLE;
+		if (state != JUMP && state != DEATH && state != DASH_L && state != DASH_R) {
+			state = IDLE;
+			
+		}
 		if (Candown && position.y < -1 * App->render->camera.y + App->win->height)position.y += gravity;
 		if (!Candown)jumpSpeed = -1 * speedY;
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) {
 			if ((!Candown) && state == JUMP) {
 				state = IDLE;
+				
 				playChannel = true;
 			}
 			else {
@@ -187,28 +192,39 @@ void j1Player::Movement(){
 				if (jumpSpeed > 0) { jumpSpeed = 0; }
 			}
 		}
-		if (Candown && state != JUMP && state != DEATH) {
+		if (Candown && state != JUMP && state != DEATH && state != DASH_L && state != DASH_R) {
 			if(state != FALLING)stopChannel = true;
 			playChannel = true;
 			state = FALLING;
 			
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
 			if (state != JUMP && state != DEATH)state = CROUCH;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH) {
-			if (Canright) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
+			if (state == BACKWARD) {
+				state = IDLE;
 				position.x += speedX;
-				flip = SDL_FLIP_NONE;
-				if (state != JUMP && state != FALLING ) {
-					state = IDLE;
-					if (state == IDLE)state = FORWARD;
-				}
+			}
+			else {
+				if (Canright) {
+					position.x += speedX;
+					flip = SDL_FLIP_NONE;
+					if (state != JUMP && state != FALLING) {
+						state = IDLE;
+						if (state == IDLE)state = FORWARD;
+					}
 
+				}
 			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH) {
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
+			if (state == FORWARD) {
+				state = IDLE;
+				position.x -= speedX;
+			}
+			else{
 			if (Canleft) {
 				position.x -= speedX;
 				flip = SDL_FLIP_HORIZONTAL;
@@ -218,8 +234,31 @@ void j1Player::Movement(){
 				}
 
 			}
+			}
+		}
+		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0) {
+			state = DASH_L;
+			if (dashspeed > 0)dashspeed -= 1;
+			else { state = IDLE; }
+			position.x -= dashspeed;
+			position.y -= gravity;
+		}
+		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0) {
+			state = DASH_R;
+			if (dashspeed > 0)dashspeed -= 1;
+			else { state = IDLE; }
+			position.x += dashspeed;
+			position.y -= gravity;
 		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) {
+		LOG("shit");
+		state = IDLE;
+	}
+	/*if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN && state == FORWARD) {
+		LOG("shit");
+		state = IDLE;
+	}*/
 	else if (Godmode == true)
 	{
 		state = IDLE;
@@ -258,11 +297,18 @@ void j1Player::setAnimation()
 		playChannel = true;
 		stopChannel = true;
 	}
+	if (state == DASH_L) {
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	if (state == DASH_R) {
+		flip = SDL_FLIP_NONE;
+	}
 	if(state == FORWARD)
 	{
 		//if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
 		if (playChannel) { App->audio->PlayFx(2, 0); playChannel = false; }
 		
+		dashspeed = acceleration;
 		current_animation = &forward;
 		if (BarWidth < 40)	BarWidth += 2;
 	}
@@ -270,6 +316,7 @@ void j1Player::setAnimation()
 	{
 		//if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
 		if (playChannel) { App->audio->PlayFx(2, 0); playChannel = false; }
+		dashspeed = acceleration;
 		current_animation = &forward;
 		if(BarWidth < 40)	BarWidth += 2;
 	}
@@ -288,7 +335,7 @@ void j1Player::setAnimation()
 		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
 		current_animation = &up;
 	}
-	if (state == DEATH) 
+	if (state == DEATH)
 	{
 		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
 		current_animation = &dead;
