@@ -457,6 +457,30 @@ void j1Player::MoveCondition() {
 	
 	App->render->DrawQuad(redbar, 255, 0, 0);
 	App->render->DrawQuad(TimerBar, 255, 255, 0);
+
+	SDL_Rect screen;
+	screen.x = -1 * App->render->camera.x;
+	screen.y = -1 * App->render->camera.y;
+	screen.w = App->win->width * App->win->GetScale();
+	screen.h = App->win->height * App->win->GetScale();
+	
+
+	if(TimerBar.w < 20 && TimerBar.w > 10)
+	{
+	
+		App->render->StartCameraShake(100, 2);
+		
+	}
+
+	if (TimerBar.w < 10 && TimerBar.w > 0)
+	{
+
+		App->render->StartCameraShake(100, 4);
+		
+	}
+	x += 10;
+	LOG("%d", x);
+App->render->DrawQuad(screen, 255, 0, 0, x);
 }
 void j1Player::LoadAnimations(const char* path) {
 	pugi::xml_parse_result result = player_file.load_file(path);

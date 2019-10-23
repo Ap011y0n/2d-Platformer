@@ -97,6 +97,7 @@ public:
 	int gravity;
 	int speedX;
 	int speedY;
+	int x = 0;
 };
 
 #endif
