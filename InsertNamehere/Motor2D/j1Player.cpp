@@ -111,7 +111,6 @@ bool j1Player::Start()
 	App->audio->LoadFx(winFx.GetString());
 	LOG("%d", App->audio->LoadFx(winFx.GetString()));
 	graphics = App->tex->Load("textures/adventurer.png");
-	
 
 	return true;
 }
@@ -135,6 +134,7 @@ bool j1Player::Update(float dt)
 	DrawHitbox();
 	Camera();
 	MoveCondition();
+
 	return true;
 }
 
@@ -334,7 +334,6 @@ void j1Player::setAnimation()
 	{
 		
 		current_animation = &dead;
-		App->render->StartCameraShake(300, 3);
 		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45);
 		playfx(4, 0);
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
@@ -342,6 +341,7 @@ void j1Player::setAnimation()
 			BarWidth = 40;
 			position.x = 120;
 			position.y = 400;
+			
 		}
 	}
 }
@@ -508,22 +508,19 @@ void j1Player::MoveCondition() {
 	screen.h = App->win->height * App->win->GetScale();
 	
 
-	if(TimerBar.w < 20 && TimerBar.w > 10)
-	{
 	
-		App->render->StartCameraShake(100, 2);
-		
-	}
-
-	if (TimerBar.w < 10 && TimerBar.w > 0)
+	if(BarWidth < 20)
 	{
-
-		App->render->StartCameraShake(100, 4);
-		
+		App->render->StartCameraShake(100, magnitud);
+		App->render->DrawQuad(screen, 255, 0, 0, opacity);
+		magnitud = 0.05f;
+		opacity = 1;
 	}
-//	x += 10;
-//	LOG("%d", x);
-//App->render->DrawQuad(screen, 255, 0, 0, x);
+
+	magnitud += 0.05f;
+	opacity += 1;
+
+	
 }
 
 void j1Player::LoadAnimations(const char* path) {

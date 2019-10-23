@@ -102,7 +102,8 @@ public:
 	int dashspeed;
 	float acceleration;
 
-	//int x = 0;
+	float magnitud = 0.0f;
+	int opacity = 0;
 
 };
 
