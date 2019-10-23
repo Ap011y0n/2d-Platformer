@@ -58,12 +58,14 @@ public:
 	void Camera();
 	void MoveCondition();
 	void LoadAnimations(const char* path);
+	void playfx(int id, int rep);
 
 
 
 public:
 
 	player_state state;
+	player_state prev_state = IDLE;
 	int DeathTimer = 0;
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
@@ -82,8 +84,6 @@ public:
 	bool Candown = true;
 	bool Godmode = false;
 	bool death = false;
-	bool playChannel = true;
-	bool stopChannel = true;
 	int playerHeight = 50;
 	int playerWidth = 20;
 	int playerCentre = 10;
@@ -101,6 +101,9 @@ public:
 	int speedY;
 	int dashspeed;
 	float acceleration;
+
+	//int x = 0;
+
 };
 
 #endif

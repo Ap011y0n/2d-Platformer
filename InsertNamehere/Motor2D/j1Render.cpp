@@ -71,6 +71,10 @@ bool j1Render::Update(float dt)
 {
 	if (fade)
 		FadeToBlack();
+
+	if (shaking)
+		UpdateCameraShake();
+
 	return true;
 }
 
@@ -123,8 +127,8 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speedX) + x * scale;
-	rect.y = (int)(camera.y * speedY) + y * scale;
+	rect.x = (int)(camera.x * speedX + camera_offset.x) + x * scale;
+	rect.y = (int)(camera.y * speedY + camera_offset.y) + y * scale;
 
 	if(section != NULL)
 	{
