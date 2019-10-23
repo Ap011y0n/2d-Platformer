@@ -84,6 +84,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	moveFx = config.child("moveFx").attribute("source").as_string();
 	deathFx = config.child("deathFx").attribute("source").as_string();
+	jumpFx = config.child("jumpFx").attribute("source").as_string();
+	winFx = config.child("winFx").attribute("source").as_string();
 
 	position.x = config.child("initialPosition").attribute("x").as_int();
 	position.y = config.child("initialPosition").attribute("y").as_int();
@@ -100,6 +102,10 @@ bool j1Player::Start()
 	LOG("%d", App->audio->LoadFx(moveFx.GetString()));
 	App->audio->LoadFx(deathFx.GetString());
 	LOG("%d", App->audio->LoadFx(deathFx.GetString()));
+	App->audio->LoadFx(jumpFx.GetString());
+	LOG("%d", App->audio->LoadFx(jumpFx.GetString()));
+	App->audio->LoadFx(winFx.GetString());
+	LOG("%d", App->audio->LoadFx(winFx.GetString()));
 	graphics = App->tex->Load("textures/adventurer.png");
 	
 
@@ -253,7 +259,7 @@ void j1Player::setAnimation()
 	if(state == FORWARD)
 	{
 		//if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
-		if (playChannel) { App->audio->PlayFx(2, 10); playChannel = false; }
+		if (playChannel) { App->audio->PlayFx(2, 0); playChannel = false; }
 		
 		current_animation = &forward;
 		if (BarWidth < 40)	BarWidth += 2;
@@ -261,7 +267,7 @@ void j1Player::setAnimation()
 	if(state == BACKWARD)
 	{
 		//if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
-		if (playChannel) { App->audio->PlayFx(2, 10); playChannel = false; }
+		if (playChannel) { App->audio->PlayFx(2, 0); playChannel = false; }
 		current_animation = &forward;
 		if(BarWidth < 40)	BarWidth += 2;
 	}
@@ -272,7 +278,7 @@ void j1Player::setAnimation()
 	}
 	if(state == JUMP)
 	{
-		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
+		if (playChannel) { App->audio->PlayFx(6, 0); playChannel = false; }
 		current_animation = &up;
 	}
 	if (state == FALLING)
@@ -331,6 +337,7 @@ void j1Player::CheckCollision() {
 				if (layer->returnPropValue("Navigation") == 2 ) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) {
+						App->audio->PlayFx(8, 0);
 						App->scene->Nextmap();
 						position.x = 120;
 						position.y = 350;
@@ -397,15 +404,21 @@ void j1Player::Camera() {
 			App->render->camera.x = -4347;
 
 		}
-		/*if (App->render->camera.y < -200) {
+		if (App->render->camera.y < -200 && App->render->camera.x  > -2700 ) {
 			App->render->camera.y = -200;
-		}*/
+		}
+		if (App->render->camera.y < -1050 && App->render->camera.x < -2700) {
+			App->render->camera.y = -1050;
+		}
 	}
 	//specific for map2
 	if (App->scene->current_level == "maplevel2.tmx")
 	{
+		if (App->render->camera.y < -200 && App->render->camera.x > -1750) {
+			App->render->camera.y = -200;
+		}
 
-		if (App->render->camera.y < -1100) {
+		if (App->render->camera.y < -1100 && App->render->camera.x < -1750) {
 			App->render->camera.y = -1100;
 		}
 		if (App->render->camera.x < -5350) {

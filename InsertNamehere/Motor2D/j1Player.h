@@ -90,6 +90,8 @@ public:
 	float jumpSpeed = -1*SPEED_Y;
 	p2SString		moveFx;
 	p2SString		deathFx;
+	p2SString		jumpFx;
+	p2SString		winFx;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	float BarWidth = 40;
 	pugi::xml_document	player_file;
