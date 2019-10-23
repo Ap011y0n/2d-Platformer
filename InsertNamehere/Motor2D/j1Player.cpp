@@ -93,6 +93,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	speedX = config.child("speedX").attribute("value").as_int();
 	speedY = config.child("speedY").attribute("value").as_int();
 	acceleration = config.child("acceleration").attribute("value").as_int();
+	dashspeed = acceleration;
 	jumpSpeed = -1 * speedY;
 	return ret;
 }
@@ -180,7 +181,7 @@ void j1Player::Movement(){
 			if ((!Candown) && state == JUMP) {
 				state = IDLE;
 				
-				playChannel = true;
+				
 			}
 			else {
 				state = JUMP;
@@ -193,8 +194,7 @@ void j1Player::Movement(){
 			}
 		}
 		if (Candown && state != JUMP && state != DEATH && state != DASH_L && state != DASH_R) {
-			if(state != FALLING)stopChannel = true;
-			playChannel = true;
+			
 			state = FALLING;
 			
 
@@ -236,29 +236,23 @@ void j1Player::Movement(){
 			}
 			}
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0) {
+		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_L;
 			if (dashspeed > 0)dashspeed -= 1;
 			else { state = IDLE; }
-			position.x -= dashspeed;
+			if (Canleft)position.x -= dashspeed;
 			position.y -= gravity;
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0) {
+		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_R;
 			if (dashspeed > 0)dashspeed -= 1;
 			else { state = IDLE; }
-			position.x += dashspeed;
+			if(Canright)position.x += dashspeed;
+			
 			position.y -= gravity;
 		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) {
-		LOG("shit");
-		state = IDLE;
-	}
-	/*if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN && state == FORWARD) {
-		LOG("shit");
-		state = IDLE;
-	}*/
+
 	else if (Godmode == true)
 	{
 		state = IDLE;
@@ -293,9 +287,9 @@ void j1Player::Movement(){
 void j1Player::setAnimation()
 {
 	if (state == IDLE) {
+		
 		App->audio->StopFx();
-		playChannel = true;
-		stopChannel = true;
+		
 	}
 	if (state == DASH_L) {
 		flip = SDL_FLIP_HORIZONTAL;
@@ -305,8 +299,8 @@ void j1Player::setAnimation()
 	}
 	if(state == FORWARD)
 	{
-		//if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
-		if (playChannel) { App->audio->PlayFx(2, 0); playChannel = false; }
+		playfx(2, 20);
+		
 		
 		dashspeed = acceleration;
 		current_animation = &forward;
@@ -314,34 +308,35 @@ void j1Player::setAnimation()
 	}
 	if(state == BACKWARD)
 	{
-		//if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
-		if (playChannel) { App->audio->PlayFx(2, 0); playChannel = false; }
+		playfx(2, 20);
+		
 		dashspeed = acceleration;
 		current_animation = &forward;
 		if(BarWidth < 40)	BarWidth += 2;
 	}
 	if (state == CROUCH)
 	{
-		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
+
 		current_animation = &crouch;
 	}
 	if(state == JUMP)
 	{
-		if (playChannel) { App->audio->PlayFx(6, 0); playChannel = false; }
+		playfx(6, 0);
+		
 		current_animation = &up;
 	}
 	if (state == FALLING)
 	{
-		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
+
 		current_animation = &up;
 	}
 	if (state == DEATH)
 	{
-		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
+		
 		current_animation = &dead;
 		App->render->StartCameraShake(300, 3);
 		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45);
-		if (playChannel) { App->audio->PlayFx(4, 0); playChannel = false; }
+		playfx(4, 0);
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
 			state = IDLE;
 			BarWidth = 40;
@@ -387,6 +382,7 @@ void j1Player::CheckCollision() {
 				if (layer->returnPropValue("Navigation") == 2 ) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) {
+						App->audio->StopFx();
 						App->audio->PlayFx(8, 0);
 						App->scene->Nextmap();
 						position.x = 120;
@@ -397,12 +393,12 @@ void j1Player::CheckCollision() {
 				if (layer->returnPropValue("Navigation") == 3 && Godmode == false && state != DEATH) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) {
-						playChannel = true;
+						
 						death = true;	
 					}
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) {
-						playChannel = true;
+						
 						death = true;
 					}
 					if (death == true){
@@ -525,10 +521,11 @@ void j1Player::MoveCondition() {
 		App->render->StartCameraShake(100, 4);
 		
 	}
-	x += 10;
-	LOG("%d", x);
-App->render->DrawQuad(screen, 255, 0, 0, x);
+//	x += 10;
+//	LOG("%d", x);
+//App->render->DrawQuad(screen, 255, 0, 0, x);
 }
+
 void j1Player::LoadAnimations(const char* path) {
 	pugi::xml_parse_result result = player_file.load_file(path);
 	if (result == NULL)
@@ -573,4 +570,12 @@ SDL_Rect TileSetPlayer::GetAnimRect(int id) const
 	rect.x = ((rect.w ) * (relative_id % num_tiles_width));
 	rect.y = ((rect.h ) * (relative_id / num_tiles_width));
 	return rect;
+}
+
+void j1Player::playfx( int id, int rep) {
+	if (prev_state != state) {
+		App->audio->StopFx();
+		App->audio->PlayFx(id, rep);
+		prev_state = state;
+	}
 }
