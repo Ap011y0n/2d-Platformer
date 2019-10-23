@@ -51,8 +51,8 @@ void j1Map::Draw()
 						if( layer->returnPropValue("Nodraw")==0  || blitColliders ){
 						
 						
-							if (pos.x >= -1 * ((App->render->camera.x)+64) *parallax && pos.y >= -1 * (App->render->camera.y+64)*parallax) {
-								if (pos.x <= -1 * (App->render->camera.x )*parallax + App->win->width && pos.y <= -1 * (App->render->camera.y) + App->win->height) {
+							if (pos.x >= -1 * ((App->render->camera.x+64)) *parallax && pos.y >= -1 * (App->render->camera.y+64)) {
+								if (pos.x <= -1 * (App->render->camera.x-64)*parallax + App->win->width && pos.y <= -1 * (App->render->camera.y-64) + App->win->height) {
 									App->render->Blit(tileset->texture, pos.x, pos.y, &r,parallax); 
 								}
 							}

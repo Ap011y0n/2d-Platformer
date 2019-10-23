@@ -145,13 +145,15 @@ void j1Scene::Debug() {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		App->map->CleanUp();
-		App->map->Load(iterator->data.GetString());
+		current_level.create("maplevel1.tmx");
+		App->map->Load(current_level.GetString());
 	}
 	iterator = iterator->next;
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		App->map->CleanUp();
-		App->map->Load(iterator->data.GetString());
+		current_level.create("maplevel2.tmx");
+		App->map->Load(current_level.GetString());
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		if (App->player->Godmode == false)
