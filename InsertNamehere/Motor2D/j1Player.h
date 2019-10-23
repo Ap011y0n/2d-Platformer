@@ -77,6 +77,7 @@ public:
 	Animation up;
 	Animation down;
 	Animation dead;
+	Animation dash;
 	iPoint position;
 	bool Canright = true;
 	bool Canleft = true;

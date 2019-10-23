@@ -40,6 +40,9 @@ j1Player::j1Player(): j1Module()
 
 	dead = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
+
+	dash = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
 	
 	/*idle.PushBack({ 28, 14, 38, 58 }, 0.1, 0, 0, 0, 0);
 	idle.PushBack({ 132, 12, 34, 60 }, 0.1, 0, 0, 0, 0);
@@ -293,9 +296,11 @@ void j1Player::setAnimation()
 	}
 	if (state == DASH_L) {
 		flip = SDL_FLIP_HORIZONTAL;
+		current_animation = &dash;
 	}
 	if (state == DASH_R) {
 		flip = SDL_FLIP_NONE;
+		current_animation = &dash;
 	}
 	if(state == FORWARD)
 	{
