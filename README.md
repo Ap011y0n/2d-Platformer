@@ -19,6 +19,7 @@
 ### D: Forward movement
 ### W: Jump
 ### S: Crouch (no need to use yet)
+### Right/left arrow: Dash
 
 ## Debug
 ### F1: First level from start
