@@ -30,7 +30,8 @@
 ### F10: God mode
 
 ## Changelog
-### 0.5: Created 2 levels from tilesets in Tiled, added player with animations loaded from .tmx, music and fx selected and implemented, debug features added, time bar added, death/win condition implemented.
+### 0.5: 
+#### Created 2 levels from tilesets in Tiled, added player with animations loaded from .tmx, music and fx selected and implemented, debug features added, time bar added, death/win condition implemented.
 
 ## Licenses
 ### Cave Assets: "Warped" by Luis Zuno https://twitter.com/ansimuz?lang=es
