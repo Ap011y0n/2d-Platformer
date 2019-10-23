@@ -304,3 +304,31 @@ void j1Render::FadeToBlack() {
 	DrawQuad(screen, 0, 0, 0);
 
 }
+
+void j1Render::StartCameraShake(int duration, float magnitude)
+{
+	//TODO 1: Store the data and start the shake
+	shake_magnitude = magnitude;
+	shake_duration = duration;
+	shaking = true;
+	shake_timer = SDL_GetTicks();
+}
+
+void j1Render::UpdateCameraShake()
+{
+	//TODO 2: Update the shake timer, stop shaking if we reach the full duration
+	// Generate a random value and set the camera offset
+
+	if (SDL_GetTicks() - shake_timer < shake_duration) {
+
+		camera_offset.x = -(int)shake_magnitude + rand() % (int)shake_magnitude;
+		camera_offset.y = -(int)shake_magnitude + rand() % (int)shake_magnitude;
+
+	}
+	else {
+		camera_offset.x = 0;
+		camera_offset.y = 0;
+		shaking = false;
+	}
+
+}

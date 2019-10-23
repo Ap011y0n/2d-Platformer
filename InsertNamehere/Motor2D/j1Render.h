@@ -48,6 +48,8 @@ public:
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	void FadeToBlack();
+	void StartCameraShake(int duration, float magnitude);
+	void UpdateCameraShake();
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
@@ -59,6 +61,14 @@ public:
 	SDL_Rect		viewport;
 	SDL_Color		background;
 	bool fade = false;
+private:
+
+	bool shaking = false;
+	int shake_duration = 0.0f;
+	int shake_timer = 0.0f;
+	float shake_magnitude = 0.0f;
+
+	SDL_Point camera_offset;
 
 };
 

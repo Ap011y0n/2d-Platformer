@@ -292,6 +292,7 @@ void j1Player::setAnimation()
 	{
 		if (stopChannel) { App->audio->StopFx(); stopChannel = false; }
 		current_animation = &dead;
+		App->render->StartCameraShake(300, 3);
 		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45);
 		if (playChannel) { App->audio->PlayFx(4, 0); playChannel = false; }
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
