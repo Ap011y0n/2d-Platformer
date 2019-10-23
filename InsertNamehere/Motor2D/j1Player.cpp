@@ -180,7 +180,7 @@ void j1Player::Movement(){
 		if (Candown && position.y < -1 * App->render->camera.y + App->win->height)position.y += gravity;
 		if (!Candown)jumpSpeed = -1 * speedY;
 
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) {
+		if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) && state != DEATH) {
 			if ((!Candown) && state == JUMP) {
 				state = IDLE;
 				
