@@ -90,7 +90,9 @@ bool j1Player::Awake(pugi::xml_node& config)
 	position.x = config.child("initialPosition").attribute("x").as_int();
 	position.y = config.child("initialPosition").attribute("y").as_int();
 	gravity = config.child("gravity").attribute("value").as_int();
-	
+	speedX = config.child("speedX").attribute("value").as_int();
+	speedY = config.child("speedY").attribute("value").as_int();
+	jumpSpeed = -1 * speedY;
 	return ret;
 }
 
@@ -168,7 +170,7 @@ void j1Player::Movement(){
 	{
 		if (state != JUMP && state != DEATH)state = IDLE;
 		if (Candown && position.y < -1 * App->render->camera.y + App->win->height)position.y += gravity;
-		if (!Candown)jumpSpeed = -1 * SPEED_Y;
+		if (!Candown)jumpSpeed = -1 * speedY;
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) {
 			if ((!Candown) && state == JUMP) {
@@ -197,7 +199,7 @@ void j1Player::Movement(){
 		}
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH) {
 			if (Canright) {
-				position.x += SPEED_X;
+				position.x += speedX;
 				flip = SDL_FLIP_NONE;
 				if (state != JUMP && state != FALLING ) {
 					state = IDLE;
@@ -208,7 +210,7 @@ void j1Player::Movement(){
 		}
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH) {
 			if (Canleft) {
-				position.x -= SPEED_X;
+				position.x -= speedX;
 				flip = SDL_FLIP_HORIZONTAL;
 				if (state != JUMP && state != FALLING) {
 					state = IDLE;
@@ -222,27 +224,27 @@ void j1Player::Movement(){
 	{
 		state = IDLE;
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				position.x -= SPEED_X;
+				position.x -= speedX;
 				flip = SDL_FLIP_HORIZONTAL;
 				state = IDLE;
 				if (state == IDLE)state = BACKWARD;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			position.x += SPEED_X;
+			position.x += speedX;
 			state = IDLE;
 			if (state == IDLE)state = FORWARD;
 			flip = SDL_FLIP_NONE;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			position.y -= SPEED_X;
+			position.y -= speedX;
 			state = IDLE;
 			if (state == IDLE)state = JUMP;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			position.y += SPEED_X;
+			position.y += speedX;
 			state = IDLE; 
 			if (state == IDLE)state = JUMP;
 		}
@@ -321,17 +323,17 @@ void j1Player::CheckCollision() {
 					if (layer->Get(coord.x, coord.y) != 0) Canjump = false;
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + gravity);
 					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y + playerHeight);
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + speedX, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y + playerHeight/2);
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + speedX, position.y + playerHeight/2);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + SPEED_X, position.y);
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + speedX, position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
-					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y + playerHeight);
+					coord = App->map->WorldToMap(position.x + playerCentre - speedX, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
-					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y + playerHeight/2);
+					coord = App->map->WorldToMap(position.x + playerCentre - speedX, position.y + playerHeight/2);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
-					coord = App->map->WorldToMap(position.x + playerCentre - SPEED_X, position.y);
+					coord = App->map->WorldToMap(position.x + playerCentre - speedX, position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
 				}
 				if (layer->returnPropValue("Navigation") == 2 ) {
@@ -358,7 +360,7 @@ void j1Player::CheckCollision() {
 					if (death == true){
 						
 					state = DEATH;
-					jumpSpeed = -1 * SPEED_Y;
+					jumpSpeed = -1 * speedY;
 					DeathTimer = SDL_GetTicks();
 					ret = false;
 					}
@@ -435,7 +437,7 @@ void j1Player::MoveCondition() {
 	if (BarWidth > 0)BarWidth -= 0.3;
 	else {
 		if(state != DEATH && Godmode == false){
-		jumpSpeed = -1 * SPEED_Y;
+		jumpSpeed = -1 * speedY;
 		DeathTimer = SDL_GetTicks();
 		state = DEATH;
 		}

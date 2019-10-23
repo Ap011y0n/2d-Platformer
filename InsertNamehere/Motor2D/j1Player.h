@@ -87,7 +87,7 @@ public:
 	int playerHeight = 50;
 	int playerWidth = 20;
 	int playerCentre = 10;
-	float jumpSpeed = -1*SPEED_Y;
+	float jumpSpeed;
 	p2SString		moveFx;
 	p2SString		deathFx;
 	p2SString		jumpFx;
@@ -97,6 +97,8 @@ public:
 	pugi::xml_document	player_file;
 	TileSetPlayer TileSetData;
 	int gravity;
+	int speedX;
+	int speedY;
 };
 
 #endif
