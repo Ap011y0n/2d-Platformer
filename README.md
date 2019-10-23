@@ -2,24 +2,25 @@
  
 ## First assigment for our videogames development subject.
 
-## Repository: https://github.com/Ap011y0n/2d-Platformer
+## Repository
+### https://github.com/Ap011y0n/2d-Platformer
 
-## Team:
+## Team
 
 ### Albert García Delerda - https://github.com/Ap011y0n
 ### Javier D. Belda González - https://github.com/JBGelsenorJ
 ### Macià Dalmau Roig- https://github.com/maciadalmau
 
-## How to play:
+## How to play
 ### Your objective is to reach the end of the level, but be careful, you can't be still for very much, there is a bar behind you that only regenerates while running (not jumping), also watch out for the dangers of your trip, such as spikes, death pits, deep underground lakes...
 
-## Controls:
+## Controls
 ### A: Backward movement
 ### D: Forward movement
 ### W: Jump
 ### S: Crouch (no need to use yet)
 
-## Debug:
+## Debug
 ### F1: First level from start
 ### F2: Second level from start
 ### F3: Start of the current level
@@ -28,10 +29,10 @@
 ### F9: Show colliders
 ### F10: God mode
 
-## Changelog: 
+## Changelog
+### 0.5: Created 2 levels from tilesets in Tiled, added player with animations loaded from .tmx, music and fx selected and implemented, debug features added, time bar added, death/win condition implemented.
 
-
-## Licenses:
+## Licenses
 ### Cave Assets: "Warped" by Luis Zuno https://twitter.com/ansimuz?lang=es
 ### Forest Assets: "Forest game assets" by Anokolisa https://twitter.com/anokolisa
 ### Mountain background: "Taiga" by vnitti https://twitter.com/vnitti_art
