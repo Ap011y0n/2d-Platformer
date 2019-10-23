@@ -38,4 +38,7 @@
 ### Player: "Animated Pixel Adventurer" by rvros https://rvros.itch.io/
 ### Background music thanks to: https://freesound.org/people/Sirkoto51/sounds/443128/
 ### Sound effects obtained from https://www.zapsplat.com
-### Using the following SDL libraries: SDL: https://www.libsdl.org/ SDL_Image: https://www.libsdl.org/projects/SDL_image/ SDL_Mixer: https://www.libsdl.org/projects/SDL_mixer/
+### Using the following SDL libraries: 
+### SDL: https://www.libsdl.org/ 
+### SDL_Image: https://www.libsdl.org/projects/SDL_image/ 
+### SDL_Mixer: https://www.libsdl.org/projects/SDL_mixer/
