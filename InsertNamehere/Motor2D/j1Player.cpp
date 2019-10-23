@@ -478,7 +478,7 @@ void j1Player::MoveCondition() {
 	SDL_Rect redbar;
 	SDL_Rect TimerBar;
 
-	if (BarWidth > 0)BarWidth -= 0.3;
+	if (BarWidth > 0)BarWidth -= 0.2;
 	else {
 		if(state != DEATH && Godmode == false){
 		jumpSpeed = -1 * speedY;
@@ -486,7 +486,6 @@ void j1Player::MoveCondition() {
 		state = DEATH;
 		}
 	}
-
 	redbar.h = 3;
 	redbar.w = 40;
 	TimerBar.h = 3;
@@ -507,18 +506,27 @@ void j1Player::MoveCondition() {
 	screen.w = App->win->width * App->win->GetScale();
 	screen.h = App->win->height * App->win->GetScale();
 	
-
 	
 	if(BarWidth < 20)
 	{
 		App->render->StartCameraShake(100, magnitud);
 		App->render->DrawQuad(screen, 255, 0, 0, opacity);
-		magnitud = 0.05f;
-		opacity = 1;
-	}
 
+	
+	}
+	if (BarWidth > 30)
+	{
+		magnitud = 0.0f;
+		opacity = 0.0f;
+	}
 	magnitud += 0.05f;
 	opacity += 1;
+	if (opacity > 60)
+	{
+		opacity = 60;
+	}
+
+
 
 	
 }
