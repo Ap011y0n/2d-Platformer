@@ -337,11 +337,11 @@ void j1Player::setAnimation()
 	}
 	if (state == DEATH)
 	{
-		
+		BarWidth = 0;
 		current_animation = &dead;
 		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45);
 		playfx(4, 0);
-		if (SDL_GetTicks() > (DeathTimer + 2000)) {
+		if (SDL_GetTicks() > (DeathTimer + 2500)) {
 			state = IDLE;
 			BarWidth = 40;
 			position.x = 120;
@@ -512,24 +512,19 @@ void j1Player::MoveCondition() {
 	screen.h = App->win->height * App->win->GetScale();
 	
 	
-	if(BarWidth < 20)
+	if (BarWidth > 20)
 	{
-		App->render->StartCameraShake(100, magnitud);
-		App->render->DrawQuad(screen, 255, 0, 0, opacity);
-
-	
-	}
-	if (BarWidth > 30)
-	{
-		magnitud = 0.0f;
+		magnitud = 1.0f;
 		opacity = 0.0f;
 	}
-	magnitud += 0.05f;
-	opacity += 1;
-	if (opacity > 60)
-	{
-		opacity = 60;
+	if (BarWidth < 20) {
+		App->render->StartCameraShake(100, magnitud);
+		App->render->DrawQuad(screen, 255, 0, 0, opacity);
+	if (magnitud < 4)magnitud += 0.05f;
+	if(opacity < 125)opacity += 1;
 	}
+	
+
 
 
 
