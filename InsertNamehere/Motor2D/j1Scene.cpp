@@ -55,10 +55,13 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_REPEAT) {
+		App->audio->volumechanger(true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_REPEAT) {
+		App->audio->volumechanger(false);
+	}
 	App->render->fade = false;
-
-	
 	Debug();
 	App->map->Draw();
 
@@ -141,9 +144,10 @@ void j1Scene::Debug() {
 		App->map->CleanUp();
 		current_level.create("maplevel1.tmx");
 		App->map->Load(current_level.GetString());
-		App->player->position.x = 120;
-		App->player->position.y = 400;
+		App->player->position.x = App->player->initialPosition.x;
+		App->player->position.y = App->player->initialPosition.y;
 		App->player->BarWidth = 40;
+		App->player->flip = SDL_FLIP_NONE;
 	
 	}
 	// Start from second map
@@ -152,17 +156,19 @@ void j1Scene::Debug() {
 		App->map->CleanUp();
 		current_level.create("maplevel2.tmx");
 		App->map->Load(current_level.GetString());
-		App->player->position.x = 120;
-		App->player->position.y = 400;
+		App->player->position.x = App->player->initialPosition.x;
+		App->player->position.y = App->player->initialPosition.y;
 		App->player->BarWidth = 40;
+		App->player->flip = SDL_FLIP_NONE;
 	}
 
 	// Start from actual map
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		App->player->position.x = 120;
-		App->player->position.y = 400;
+		App->player->position.x = App->player->initialPosition.x;
+		App->player->position.y = App->player->initialPosition.y;
 		App->player->BarWidth = 40;
+		App->player->flip = SDL_FLIP_NONE;
 	}
 	// Load last save
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)

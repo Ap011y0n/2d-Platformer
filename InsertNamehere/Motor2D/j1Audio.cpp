@@ -36,6 +36,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	}
 
 	// load support for the OGG and WAV audio formats
+
 	int flags = MIX_INIT_OGG;
 	int init = Mix_Init(flags);
 
@@ -103,7 +104,6 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 			Mix_HaltMusic();
 		}
 
-		// this call blocks until fade out is done
 		Mix_FreeMusic(music);
 	}
 
@@ -194,9 +194,24 @@ bool j1Audio::Save(pugi::xml_node& config)
 
 bool j1Audio::Load(pugi::xml_node& config)
 {
-	//volumemusic = config.child("musicVolumeModifier").attribute("value").as_float();
+	volumemusic = config.child("musicVolumeModifier").attribute("value").as_float();
 
-	//Mix_VolumeMusic(128 * volumemusic);
+	Mix_VolumeMusic(128 * volumemusic);
 
 	return true;
 }
+void j1Audio::volumechanger(bool increase) {
+
+	if (increase)
+	{
+		volumemusic += 0.3;
+		volumefx += 0.3;
+		Mix_VolumeMusic(volumemusic);
+	}
+	if (!increase) {
+		volumefx -= 0.3;
+		volumemusic -= 0.3;
+		Mix_VolumeMusic(volumemusic);
+	}
+
+};

@@ -79,6 +79,7 @@ public:
 	Animation dead;
 	Animation dash;
 	iPoint position;
+	iPoint initialPosition;
 	bool Canright = true;
 	bool Canleft = true;
 	bool Canjump = true;
@@ -93,6 +94,7 @@ public:
 	p2SString		deathFx;
 	p2SString		jumpFx;
 	p2SString		winFx;
+	p2SString		dashFx;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	float BarWidth = 40;
 	pugi::xml_document	player_file;
@@ -100,9 +102,11 @@ public:
 	int gravity;
 	int speedX;
 	int speedY;
+	int maxBarWidth;
 	int dashspeed;
+	int orientation;
 	float acceleration;
-
+	float speedBar;
 	float magnitude = 0.0f;
 	int opacity = 0;
 

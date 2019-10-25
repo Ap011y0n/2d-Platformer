@@ -42,11 +42,14 @@
    <deathFx source="death.wav"/>
    <jumpFx source="jump.wav"/>
    <winFx source="win.wav"/>
-   <initialPosition x="120" y="350"/>
+   <dashFx source="dash.wav"/>
+   <initialPosition x="120" y="400"/>
    <gravity value="11"/>
    <speedX value="7"/>
    <speedY value="22"/>
    <acceleration value="20"/>
+   <speedBar value="0.2"/>
+   <maxBarWidth value="40"/>
   </player>
 
    <scene>

@@ -43,7 +43,7 @@ public:
 
 	//Load module audio data
 	bool j1Audio::Load(pugi::xml_node& config);
-
+	void volumechanger(bool increase);
 
 private:
 
