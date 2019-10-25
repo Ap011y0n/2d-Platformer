@@ -47,6 +47,7 @@
    <speedX value="7"/>
    <speedY value="22"/>
    <acceleration value="20"/>
+   <speedBar value="0.2"/>
   </player>
 
    <scene>

@@ -96,6 +96,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	speedX = config.child("speedX").attribute("value").as_int();
 	speedY = config.child("speedY").attribute("value").as_int();
 	acceleration = config.child("acceleration").attribute("value").as_int();
+	speedBar = config.child("speedBar").attribute("value").as_float();
 	dashspeed = acceleration;
 	jumpSpeed = -1 * speedY;
 	return ret;
@@ -503,7 +504,7 @@ void j1Player::MoveCondition() {
 	screen.w = App->win->width * App->win->GetScale();
 	screen.h = App->win->height * App->win->GetScale();
 	
-	if (BarWidth > 0)BarWidth -= 0.2;
+	if (BarWidth > 0)BarWidth -= speedBar;
 	else{
 		if (state != DEATH && Godmode == false) {
 		jumpSpeed = -1 * speedY;
@@ -511,12 +512,11 @@ void j1Player::MoveCondition() {
 		state = DEATH;
 		}
 	}
-	if (BarWidth > 20)
-	{
+	if (BarWidth > 20){
 		magnitude = 1.0f;
 		opacity = 0.0f;
 	}
-	else {
+	else{
 		
 	if (magnitude < 4)magnitude += 0.05f;
 	if(opacity < 125)opacity += 1;

@@ -6,10 +6,10 @@
 	<audio />
 	<map />
 	<scene>
-		<scenename name="maplevel2.tmx" />
+		<scenename name="maplevel1.tmx" />
 	</scene>
 	<player>
-		<position pos_x="3193" pos_y="1700" />
+		<position pos_x="120" pos_y="708" />
 	</player>
 	<renderer />
 </game_state>
