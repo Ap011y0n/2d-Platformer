@@ -55,10 +55,13 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_REPEAT) {
+		App->audio->volumechanger(true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_REPEAT) {
+		App->audio->volumechanger(false);
+	}
 	App->render->fade = false;
-
-	
 	Debug();
 	App->map->Draw();
 

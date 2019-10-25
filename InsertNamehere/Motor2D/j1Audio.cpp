@@ -198,3 +198,18 @@ bool j1Audio::Load(pugi::xml_node& config)
 
 	return true;
 }
+void j1Audio::volumechanger(bool increase) {
+
+	if (increase)
+	{
+		volumemusic += 0.3;
+		volumefx += 0.3;
+		Mix_VolumeMusic(volumemusic);
+	}
+	if (!increase) {
+		volumefx -= 0.3;
+		volumemusic -= 0.3;
+		Mix_VolumeMusic(volumemusic);
+	}
+
+};

@@ -35,7 +35,7 @@ public:
 	bool channelFinished();
 	bool j1Audio::Save(pugi::xml_node& config);
 	bool j1Audio::Load(pugi::xml_node& config);
-
+	void volumechanger(bool increase);
 
 private:
 
