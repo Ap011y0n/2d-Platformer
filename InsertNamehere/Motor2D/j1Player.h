@@ -79,6 +79,7 @@ public:
 	Animation dead;
 	Animation dash;
 	iPoint position;
+	iPoint initialPosition;
 	bool Canright = true;
 	bool Canleft = true;
 	bool Canjump = true;
@@ -101,6 +102,7 @@ public:
 	int gravity;
 	int speedX;
 	int speedY;
+	int maxBarWidth;
 	int dashspeed;
 	int orientation;
 	float acceleration;

@@ -312,7 +312,7 @@ void j1Render::FadeToBlack() {
 
 void j1Render::StartCameraShake(int duration, float magnitude)
 {
-	//TODO 1: Store the data and start the shake
+	//Store the data and start the shake
 	shake_magnitude = magnitude;
 	shake_duration = duration;
 	shaking = true;
@@ -321,8 +321,8 @@ void j1Render::StartCameraShake(int duration, float magnitude)
 
 void j1Render::UpdateCameraShake()
 {
-	//TODO 2: Update the shake timer, stop shaking if we reach the full duration
-	// Generate a random value and set the camera offset
+	//Update the shake timer, stop shaking if we reach the full duration
+	//Generate a random value and set the camera offset
 
 	if (SDL_GetTicks() - shake_timer < shake_duration) {
 

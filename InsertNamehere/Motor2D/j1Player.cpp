@@ -91,13 +91,16 @@ bool j1Player::Awake(pugi::xml_node& config)
 	winFx = config.child("winFx").attribute("source").as_string();
 	dashFx = config.child("dashFx").attribute("source").as_string();
 
-	position.x = config.child("initialPosition").attribute("x").as_int();
-	position.y = config.child("initialPosition").attribute("y").as_int();
+	initialPosition.x = config.child("initialPosition").attribute("x").as_int();
+	initialPosition.y = config.child("initialPosition").attribute("y").as_int();
 	gravity = config.child("gravity").attribute("value").as_int();
 	speedX = config.child("speedX").attribute("value").as_int();
 	speedY = config.child("speedY").attribute("value").as_int();
 	acceleration = config.child("acceleration").attribute("value").as_int();
+	maxBarWidth = config.child("maxBarWidth").attribute("value").as_int();
 	speedBar = config.child("speedBar").attribute("value").as_float();
+	speedBar = config.child("speedBar").attribute("value").as_float();
+	
 	dashspeed = acceleration;
 	jumpSpeed = -1 * speedY;
 	return ret;
@@ -119,6 +122,8 @@ bool j1Player::Start()
 	LOG("%d", App->audio->LoadFx(dashFx.GetString()));
 	graphics = App->tex->Load("textures/adventurer.png");
 
+	position.x = initialPosition.x;
+	position.y = initialPosition.y;
 	return true;
 }
 
@@ -315,7 +320,7 @@ void j1Player::setAnimation()
 		
 		dashspeed = acceleration;
 		current_animation = &forward;
-		if (BarWidth < 40)	BarWidth += 2;
+		if (BarWidth < maxBarWidth)	BarWidth += 2;
 	}
 	if(state == BACKWARD)
 	{
@@ -323,7 +328,7 @@ void j1Player::setAnimation()
 		
 		dashspeed = acceleration;
 		current_animation = &forward;
-		if(BarWidth < 40)	BarWidth += 2;
+		if(BarWidth < maxBarWidth)	BarWidth += 2;
 	}
 	if (state == CROUCH)
 	{
@@ -349,9 +354,9 @@ void j1Player::setAnimation()
 		playfx(4, 0);
 		if (SDL_GetTicks() > (DeathTimer + 2500)) {
 			state = IDLE;
-			BarWidth = 40;
-			position.x = 120;
-			position.y = 400;
+			BarWidth = maxBarWidth;
+			position.x = initialPosition.x;
+			position.y = initialPosition.y;
 			
 		}
 	}
@@ -396,8 +401,8 @@ void j1Player::CheckCollision() {
 						App->audio->StopFx();
 						App->audio->PlayFx(8, 0);
 						App->scene->Nextmap();
-						position.x = 120;
-						position.y = 350;
+						position.x = initialPosition.x;
+						position.y = initialPosition.y;
 						ret = false;
 					}
 				}
@@ -490,7 +495,7 @@ void j1Player::MoveCondition() {
 	SDL_Rect TimerBar;
 
 	redbar.h = 3;
-	redbar.w = 40;
+	redbar.w = maxBarWidth;
 	TimerBar.h = 3;
 	TimerBar.w = BarWidth;
 	
