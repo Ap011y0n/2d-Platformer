@@ -89,6 +89,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	deathFx = config.child("deathFx").attribute("source").as_string();
 	jumpFx = config.child("jumpFx").attribute("source").as_string();
 	winFx = config.child("winFx").attribute("source").as_string();
+	dashFx = config.child("dashFx").attribute("source").as_string();
 
 	position.x = config.child("initialPosition").attribute("x").as_int();
 	position.y = config.child("initialPosition").attribute("y").as_int();
@@ -113,6 +114,8 @@ bool j1Player::Start()
 	LOG("%d", App->audio->LoadFx(jumpFx.GetString()));
 	App->audio->LoadFx(winFx.GetString());
 	LOG("%d", App->audio->LoadFx(winFx.GetString()));
+	App->audio->LoadFx(dashFx.GetString());
+	LOG("%d", App->audio->LoadFx(dashFx.GetString()));
 	graphics = App->tex->Load("textures/adventurer.png");
 
 	return true;
@@ -251,7 +254,7 @@ void j1Player::Movement(){
 			if (dashspeed > 0)dashspeed -= 1;
 			else { state = IDLE; }
 			if(Canright)position.x += dashspeed;
-			
+
 			position.y -= gravity;
 		}
 	}
@@ -295,10 +298,12 @@ void j1Player::setAnimation()
 		
 	}
 	if (state == DASH_L) {
+		playfx(10, 10);
 		flip = SDL_FLIP_HORIZONTAL;
 		current_animation = &dash;
 	}
 	if (state == DASH_R) {
+		playfx(10, 10);
 		flip = SDL_FLIP_NONE;
 		current_animation = &dash;
 	}
