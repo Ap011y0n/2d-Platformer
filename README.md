@@ -1,5 +1,5 @@
-# 2D-Platformer
- 
+# Forrest Dash
+
 ## First assigment for our videogames development subject.
 
 ## Repository
@@ -32,9 +32,11 @@
 
 ## Changelog
 ### 0.5: 
-#### Created 2 levels from tilesets in Tiled, added player with animations loaded from .tmx, music and fx selected and implemented, debug features added, time bar added, death/win condition implemented.
+#### Created 2 levels , added player with animations, music and fx selected and implemented, debug features added, time bar added, death/win condition implemented, dash added.
 
-## Licenses
+### Innovations: animations loaded from Tiled, time bar, colliders made in Tiled.
+
+
 ### Cave Assets: "Warped" by Luis Zuno https://twitter.com/ansimuz?lang=es
 ### Forest Assets: "Forest game assets" by Anokolisa https://twitter.com/anokolisa
 ### Mountain background: "Taiga" by vnitti https://twitter.com/vnitti_art
