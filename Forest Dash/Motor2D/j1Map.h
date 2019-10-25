@@ -129,10 +129,11 @@ private:
 public:
 	bool blitColliders = false;
 	MapData data;
-	p2SString paint = name.create("Nodraw");
-	float parallax = 1;
+	
+	
 private:
-
+	float parallax = 1;
+	p2SString paint = name.create("Nodraw");
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;

@@ -277,26 +277,22 @@ const char* j1App::GetOrganization() const
 // Load / Save
 void j1App::LoadGame()
 {
-	// we should be checking if that file actually exist
-	// from the "GetSaveGames" list
+	
 	want_to_load = true;
-	//load_game.create("%s%s", fs->GetSaveDirectory(), file);
 }
 
 // ---------------------------------------
 void j1App::SaveGame() const
 {
-	// we should be checking if that file actually exist
-	// from the "GetSaveGames" list ... should we overwrite ?
+	
 
 	want_to_save = true;
-	//save_game.create(file);
+
 }
 
 // ---------------------------------------
 void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 {
-	// need to add functionality to file_system module for this to work
 }
 
 bool j1App::LoadGameNow()
@@ -361,8 +357,6 @@ bool j1App::SavegameNow() const
 		std::stringstream stream;
 		data.save(stream);
 
-		// we are done, so write data to disk
-		//fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
 		data.save_file(save_game.GetString());
 		LOG("... finished saving", save_game.GetString());
 	}

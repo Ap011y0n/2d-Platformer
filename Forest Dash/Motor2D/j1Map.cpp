@@ -262,10 +262,11 @@ bool j1Map::Load(const char* file_name)
 			LOG("Layer ----");
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
-			for (int i = 0; i < MAX_PROPERTIES; i++) {
+			//Uncomment if want to see properties on output window (does not work with strings)
+			/*for (int i = 0; i < MAX_PROPERTIES; i++) {
 				LOG("Prop name: %s  value %d", l->property[i].name.GetString(), l->property[i].prop.ivalue);
 			}
-
+			*/
 
 			item_layer = item_layer->next;
 		}

@@ -58,11 +58,11 @@ public:
 	void Camera();
 	void MoveCondition();
 	void LoadAnimations(const char* path);
-	void playfx(int id, int rep);
+	void playfx(const int id, const int rep);
 
 
+private:
 
-public:
 
 	player_state state;
 	player_state prev_state = IDLE;
@@ -78,14 +78,11 @@ public:
 	Animation down;
 	Animation dead;
 	Animation dash;
-	iPoint position;
-	iPoint initialPosition;
+	
 	bool Canright = true;
 	bool Canleft = true;
 	bool Canjump = true;
 	bool Candown = true;
-	bool Godmode = false;
-	bool death = false;
 	int playerHeight = 50;
 	int playerWidth = 20;
 	int playerCentre = 10;
@@ -95,8 +92,6 @@ public:
 	p2SString		jumpFx;
 	p2SString		winFx;
 	p2SString		dashFx;
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	float BarWidth = 40;
 	pugi::xml_document	player_file;
 	TileSetPlayer TileSetData;
 	int gravity;
@@ -104,9 +99,15 @@ public:
 	int speedY;
 	int maxBarWidth;
 	int dashspeed;
-	int orientation;
 	float acceleration;
 	float speedBar;
+public:	
+	bool death = false;
+	bool Godmode = false;
+	iPoint position;
+	iPoint initialPosition;
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	float BarWidth = 40;
 	float magnitude = 0.0f;
 	int opacity = 0;
 

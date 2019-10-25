@@ -20,8 +20,9 @@ j1Player::j1Player(): j1Module()
 	graphics = NULL;
 	current_animation = NULL;
 	LoadAnimations("textures/animations.tmx");
-	p2List_item<Animation>* animation_iterator = animations.start;
 	// Load animations from an animations list ----------------------------------------------
+	p2List_item<Animation>* animation_iterator = animations.start;
+	
 	idle = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
 
@@ -77,15 +78,16 @@ bool j1Player::Start()
 {
 	LOG("Loading player");
 	App->audio->LoadFx(moveFx.GetString());
-	LOG("%d", App->audio->LoadFx(moveFx.GetString()));
+	LOG("effects list");
+	LOG("Move %d", App->audio->LoadFx(moveFx.GetString()));
 	App->audio->LoadFx(deathFx.GetString());
-	LOG("%d", App->audio->LoadFx(deathFx.GetString()));
+	LOG("Death %d", App->audio->LoadFx(deathFx.GetString()));
 	App->audio->LoadFx(jumpFx.GetString());
-	LOG("%d", App->audio->LoadFx(jumpFx.GetString()));
+	LOG("Jump %d", App->audio->LoadFx(jumpFx.GetString()));
 	App->audio->LoadFx(winFx.GetString());
-	LOG("%d", App->audio->LoadFx(winFx.GetString()));
+	LOG("Win %d", App->audio->LoadFx(winFx.GetString()));
 	App->audio->LoadFx(dashFx.GetString());
-	LOG("%d", App->audio->LoadFx(dashFx.GetString()));
+	LOG("Dash %d", App->audio->LoadFx(dashFx.GetString()));
 	graphics = App->tex->Load("textures/adventurer.png");
 
 	position.x = initialPosition.x;
@@ -484,8 +486,8 @@ void j1Player::MoveCondition() {
 	TimerBar.x = position.x;
 	TimerBar.y = position.y + playerHeight + 20;
 	
-	App->render->DrawQuad(redbar, 255, 0, 0);
-	App->render->DrawQuad(TimerBar, 255, 255, 0);
+	App->render->DrawQuad(redbar, 255, 0, 0, 90);
+	App->render->DrawQuad(TimerBar, 255, 255, 50);
 
 	SDL_Rect screen;
 	screen.x = -1 * App->render->camera.x;
@@ -530,13 +532,12 @@ void j1Player::LoadAnimations(const char* path) {
 	TileSetData.tex_width = player_file.child("map").child("tileset").child("image").attribute("width").as_int();
 	TileSetData.Texname.create(player_file.child("map").child("tileset").child("image").attribute("source").as_string());
 	TileSetData.num_tiles_width = TileSetData.tex_width / TileSetData.tile_width;
-
-	LOG("%d", TileSetData.firstgid);
-	LOG("%d", TileSetData.tile_width);
-	LOG("%d", TileSetData.tile_height);
-	LOG("%d", TileSetData.tex_width);
-	LOG("%s", TileSetData.Texname.GetString());
-	LOG("%d", TileSetData.num_tiles_width);
+	LOG("Tileset: %s", TileSetData.Texname.GetString());
+	LOG("firstgid %d", TileSetData.firstgid);
+	LOG("tile_width %d", TileSetData.tile_width);
+	LOG("tile_height %d", TileSetData.tile_height);
+	LOG("tex_width %d", TileSetData.tex_width);
+	LOG("num_tiles_width %d", TileSetData.num_tiles_width);
 	int i = 0;
 	pugi::xml_node tile;
 	pugi::xml_node frame;
@@ -565,7 +566,7 @@ SDL_Rect TileSetPlayer::GetAnimRect(int id) const
 }
 
 //Play audio efects only once and stop efects that were already playing
-void j1Player::playfx( int id, int rep) {
+void j1Player::playfx( const int id, const int rep) {
 	if (prev_state != state) {
 		App->audio->StopFx();
 		App->audio->PlayFx(id, rep);
