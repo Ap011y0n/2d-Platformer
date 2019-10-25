@@ -25,9 +25,9 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 	pugi::xml_node map;
 	for (map = config.child("map"); map; map = map.next_sibling("map")) {
-		p2SString* lvlname = new p2SString();
-		lvlname->create(map.attribute("name").as_string());
-		levels.add(lvlname->GetString());
+		p2SString lvlname;
+		lvlname.create(map.attribute("name").as_string());
+		levels.add(lvlname.GetString());
 	}
 	
 	bool ret = true;
@@ -65,12 +65,13 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
+	p2SString title("Forest Dash");
+	/*p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
 					App->map->data.width, App->map->data.height,
 					App->map->data.tile_width, App->map->data.tile_height,
 					App->map->data.tilesets.count(),
 					map_coordinates.x, map_coordinates.y);
-
+	*/
 	App->win->SetTitle(title.GetString());
 	return true;
 }
@@ -89,6 +90,8 @@ bool j1Scene::PostUpdate()
 // Called before quitting
 bool j1Scene::CleanUp()
 {
+	
+	App->map->CleanUp();
 	LOG("Freeing scene");
 
 	return true;
@@ -130,16 +133,9 @@ void j1Scene::Nextmap() {
 	
 }
 
+//Function that groups all debug functionality ------------------------------------------------
 void j1Scene::Debug() {
-	p2List_item<p2SString>* iterator = levels.start;
-
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{App->render->fade = true; App->LoadGame();
-}
-
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->SaveGame();
-
+	// Start from first map
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		App->map->CleanUp();
@@ -150,7 +146,7 @@ void j1Scene::Debug() {
 		App->player->BarWidth = 40;
 	
 	}
-	iterator = iterator->next;
+	// Start from second map
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		App->map->CleanUp();
@@ -160,25 +156,40 @@ void j1Scene::Debug() {
 		App->player->position.y = 400;
 		App->player->BarWidth = 40;
 	}
+
+	// Start from actual map
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
 		App->player->position.x = 120;
 		App->player->position.y = 400;
 		App->player->BarWidth = 40;
 	}
+	// Load last save
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	{
+		App->render->fade = true; App->LoadGame();
+	}
+
+	// Save current state
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		App->SaveGame();
+
+	// View colliders
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+		if (App->map->blitColliders) App->map->blitColliders = false;
+		else if (!App->map->blitColliders) App->map->blitColliders = true;
+	}
+	
+	// Activate God Mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		if (App->player->Godmode == false)
 		{
 			App->player->Godmode = true;
 		}
-		else if (App->player->Godmode == true )
+		else if (App->player->Godmode == true)
 		{
 			App->player->Godmode = false;
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-		if (App->map->blitColliders) App->map->blitColliders = false;
-		else if (!App->map->blitColliders) App->map->blitColliders = true;
-	}
 }

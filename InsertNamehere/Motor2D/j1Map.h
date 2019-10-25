@@ -84,7 +84,6 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
-	//p2List<Collider*> colliders;
 	p2SString			music;
 };
 
@@ -110,7 +109,10 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	//Convert map coord to world
 	iPoint MapToWorld(int x, int y) const;
+
+	//Convert world coord to map coord
 	iPoint WorldToMap(int x, int y) const;
 
 private:
@@ -120,7 +122,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties* properties);
-	/*bool LoadTilesetColliders(pugi::xml_node& tileset_node);*/
+
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

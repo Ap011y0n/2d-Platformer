@@ -17,7 +17,7 @@ j1Audio::j1Audio() : j1Module()
 j1Audio::~j1Audio()
 {}
 
-// Called before render is available
+
 bool j1Audio::Awake(pugi::xml_node& config)
 {
 	music_directory = config.child("music").child_value("folder");
@@ -35,7 +35,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	// load support for the JPG and PNG image formats
+	// load support for the OGG and WAV audio formats
 	int flags = MIX_INIT_OGG;
 	int init = Mix_Init(flags);
 

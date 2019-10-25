@@ -13,11 +13,11 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 	name.create("map");
 }
 
-// Destructor
+// Destructor ----------------------------------------------
 j1Map::~j1Map()
 {}
 
-// Called before render is available
+// Called before render is available ----------------------------------------------
 bool j1Map::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Map Parser");
@@ -26,15 +26,18 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+//Blit map
 void j1Map::Draw()
 {
 	if(map_loaded == false)
 		return;
 	p2List_item<MapLayer*>* layer_iterator = this->data.layers.start;
 	MapLayer* layer = this->data.layers.start->data;
+	//iterate all layers so we can blit its tiles ----------------------------------------------
 	while (layer_iterator != NULL) {
 		layer = layer_iterator->data;
 		parallax = layer->returnPropfValue("Parallax");
+		
 		for(int y = 0; y < data.height; ++y)
 		{
 			for(int x = 0; x < data.width; ++x)
@@ -47,10 +50,8 @@ void j1Map::Draw()
 					{
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
-						
 						if( layer->returnPropValue("Nodraw")==0  || blitColliders ){
-						
-						
+						//Blit every tile inside camera limits and colliders if blitcolliders is active ----------------------------------------------
 							if (pos.x >= -1 * ((App->render->camera.x+64)) *parallax && pos.y >= -1 * (App->render->camera.y+32)) {
 								if (pos.x <= -1 * (App->render->camera.x)*parallax + App->win->width && pos.y <= -1 * (App->render->camera.y-32) + App->win->height) {
 									App->render->Blit(tileset->texture, pos.x, pos.y, &r,parallax); 
@@ -64,6 +65,8 @@ void j1Map::Draw()
 		layer_iterator = layer_iterator->next;
 		}
 	}
+
+//Return a tileset depending on which tile id we give ----------------------------------------------
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
 	p2List_item<TileSet*>* tileset_iterator = this->data.tilesets.start;
@@ -84,6 +87,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return tileset;
 }
 
+//Convert map coord to world ----------------------------------------------
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
@@ -107,6 +111,7 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
+//Convert world coord to map coord ----------------------------------------------
 iPoint j1Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0,0);
@@ -144,12 +149,12 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	return rect;
 }
 
-// Called before quitting
+// Called before quitting ----------------------------------------------
 bool j1Map::CleanUp()
 {
 	LOG("Unloading map");
 
-	// Remove all tilesets
+	// Remove all tilesets ----------------------------------------------
 	p2List_item<TileSet*>* item;
 	item = data.tilesets.start;
 
@@ -161,7 +166,7 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 
-	// Remove all layers
+	// Remove all layers ----------------------------------------------
 	p2List_item<MapLayer*>* item2;
 	item2 = data.layers.start;
 
@@ -172,13 +177,13 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
-	// Clean up the pugui tree
+	// Clean up the pugui tree ----------------------------------------------
 	map_file.reset();
 
 	return true;
 }
 
-// Load new map
+// Load new map, and fill some lists with data extracted from functions below ----------------------------------------------
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
@@ -214,10 +219,6 @@ bool j1Map::Load(const char* file_name)
 		{
 			ret = LoadTilesetImage(tileset, set);
 		}
-		//if (ret == true)
-		//{
-		//	ret = LoadTilesetColliders(tileset);
-		//}
 
 		data.tilesets.add(set);
 	}
@@ -263,7 +264,6 @@ bool j1Map::Load(const char* file_name)
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			for (int i = 0; i < MAX_PROPERTIES; i++) {
 				LOG("Prop name: %s  value %d", l->property[i].name.GetString(), l->property[i].prop.ivalue);
-				//LOG("Prop name: %s  value %f", l->property[i].name.GetString(), l->property[i].prop.fvalue);
 			}
 
 
@@ -276,7 +276,7 @@ bool j1Map::Load(const char* file_name)
 	return ret;
 }
 
-// Load map general properties
+// Load map general properties ----------------------------------------------
 bool j1Map::LoadMap()
 {
 	bool ret = true;
@@ -343,6 +343,7 @@ bool j1Map::LoadMap()
 	return ret;
 }
 
+//Load tileset data from a node ----------------------------------------------
 bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
@@ -368,6 +369,7 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
+//Load an image for every tileset from a node ----------------------------------------------
 bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
@@ -404,6 +406,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
+//Load layer data from a node ----------------------------------------------
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
@@ -437,7 +440,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-// Load a group of properties from a node and fill a list with it
+// Load a group of properties from a node and fill an array with it ----------------------------------------------
 bool j1Map::LoadProperties(pugi::xml_node& node,Properties property[])
 {
 	LOG("Loading properties");
@@ -494,37 +497,4 @@ float MapLayer::returnPropfValue(const char* propName) {
 
 	return value;
 }
-//bool j1Map::LoadTilesetColliders(pugi::xml_node& tileset_node)
-//{
-//	bool ret = true;
-//	pugi::xml_node collider;
-//	Collider* coll = new Collider();
-//
-//	for (collider = tileset_node.child("tile"); collider && ret; collider = tileset_node.next_sibling("tile")) {
-//		if (collider == NULL)
-//		{
-//			LOG("Error parsing tileset xml file: Cannot find 'tileset' tag.");
-//			ret = false;
-//		}
-//		else {
-//			coll->id = collider.attribute("id").as_int();
-//			coll->type.create(collider.child("objectgroup").child("object").attribute("name").as_string());
-//			coll->x = collider.child("objectgroup").child("object").attribute("x").as_int();
-//			coll->y = collider.child("objectgroup").child("object").attribute("y").as_int();
-//			coll->w = collider.child("objectgroup").child("object").attribute("width").as_int();
-//			coll->h = collider.child("objectgroup").child("object").attribute("height").as_int();
-//
-//			LOG("Collider id %d", coll->id);
-//			LOG("Collider type %s", coll->type);
-//			LOG("Collider x %d", coll->x);
-//			LOG("Collider y %d", coll->y);
-//			LOG("Collider y %d", coll->w);
-//			LOG("Collider y %d", coll->h);
-//		}
-//		data.colliders.add(coll);
-//	}
-//
-//
-//	return ret;
-//}
 

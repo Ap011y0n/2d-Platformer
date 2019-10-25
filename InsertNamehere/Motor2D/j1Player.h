@@ -53,7 +53,7 @@ public:
 	bool Save(pugi::xml_node&) const;
 	void Movement();
 	void CheckCollision();
-	void setAnimation();
+	void StateMachine();
 	void DrawHitbox();
 	void Camera();
 	void MoveCondition();
