@@ -483,14 +483,6 @@ void j1Player::MoveCondition() {
 	SDL_Rect redbar;
 	SDL_Rect TimerBar;
 
-	if (BarWidth > 0)BarWidth -= 0.2;
-	else {
-		if(state != DEATH && Godmode == false){
-		jumpSpeed = -1 * speedY;
-		DeathTimer = SDL_GetTicks();
-		state = DEATH;
-		}
-	}
 	redbar.h = 3;
 	redbar.w = 40;
 	TimerBar.h = 3;
@@ -511,24 +503,25 @@ void j1Player::MoveCondition() {
 	screen.w = App->win->width * App->win->GetScale();
 	screen.h = App->win->height * App->win->GetScale();
 	
-	
+	if (BarWidth > 0)BarWidth -= 0.2;
+	else{
+		if (state != DEATH && Godmode == false) {
+		jumpSpeed = -1 * speedY;
+		DeathTimer = SDL_GetTicks();
+		state = DEATH;
+		}
+	}
 	if (BarWidth > 20)
 	{
-		magnitud = 1.0f;
+		magnitude = 1.0f;
 		opacity = 0.0f;
 	}
-	if (BarWidth < 20) {
-		App->render->StartCameraShake(100, magnitud);
-		App->render->DrawQuad(screen, 255, 0, 0, opacity);
-	if (magnitud < 4)magnitud += 0.05f;
+	else {
+	if (magnitude < 4)magnitude += 0.05f;
 	if(opacity < 125)opacity += 1;
 	}
-	
-
-
-
-
-	
+	App->render->StartCameraShake(100, magnitude);
+	App->render->DrawQuad(screen, 255, 0, 0, opacity);
 }
 
 void j1Player::LoadAnimations(const char* path) {
