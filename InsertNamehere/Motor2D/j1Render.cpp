@@ -47,7 +47,8 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera.x = 0;
 		camera.y = 0;
 	}
-
+	camera_offset.x = 0;
+	camera_offset.y = 0;
 	return ret;
 }
 

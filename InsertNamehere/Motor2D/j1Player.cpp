@@ -517,11 +517,13 @@ void j1Player::MoveCondition() {
 		opacity = 0.0f;
 	}
 	else {
+		
 	if (magnitude < 4)magnitude += 0.05f;
 	if(opacity < 125)opacity += 1;
-	}
 	App->render->StartCameraShake(100, magnitude);
 	App->render->DrawQuad(screen, 255, 0, 0, opacity);
+	}
+	
 }
 
 void j1Player::LoadAnimations(const char* path) {
