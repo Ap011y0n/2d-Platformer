@@ -102,8 +102,9 @@ public:
 	int speedX;
 	int speedY;
 	int dashspeed;
+	int orientation;
 	float acceleration;
-
+	float speedBar;
 	float magnitude = 0.0f;
 	int opacity = 0;
 

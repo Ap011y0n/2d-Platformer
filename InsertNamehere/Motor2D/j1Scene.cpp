@@ -148,6 +148,7 @@ void j1Scene::Debug() {
 		App->player->position.x = 120;
 		App->player->position.y = 400;
 		App->player->BarWidth = 40;
+		App->player->flip = SDL_FLIP_NONE;
 	
 	}
 	iterator = iterator->next;
@@ -159,12 +160,14 @@ void j1Scene::Debug() {
 		App->player->position.x = 120;
 		App->player->position.y = 400;
 		App->player->BarWidth = 40;
+		App->player->flip = SDL_FLIP_NONE;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
 		App->player->position.x = 120;
 		App->player->position.y = 400;
 		App->player->BarWidth = 40;
+		App->player->flip = SDL_FLIP_NONE;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		if (App->player->Godmode == false)
