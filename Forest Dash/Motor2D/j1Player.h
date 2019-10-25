@@ -83,9 +83,9 @@ private:
 	bool Canleft = true;
 	bool Canjump = true;
 	bool Candown = true;
-	int playerHeight = 50;
-	int playerWidth = 20;
-	int playerCentre = 10;
+	int playerHeight;
+	int playerWidth;
+	int playerCentre;
 	float jumpSpeed;
 	p2SString		moveFx;
 	p2SString		deathFx;
@@ -97,7 +97,6 @@ private:
 	int gravity;
 	int speedX;
 	int speedY;
-	int maxBarWidth;
 	int dashspeed;
 	float acceleration;
 	float speedBar;
@@ -110,6 +109,7 @@ public:
 	float BarWidth = 40;
 	float magnitude = 0.0f;
 	int opacity = 0;
+	int maxBarWidth;
 
 };
 

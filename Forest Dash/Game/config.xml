@@ -50,6 +50,9 @@
    <acceleration value="20"/>
    <speedBar value="0.2"/>
    <maxBarWidth value="40"/>
+   <playerHeight value="50"/>
+   <playerWidth value="20"/>
+   <playerCentre value="10"/>
   </player>
 
    <scene>

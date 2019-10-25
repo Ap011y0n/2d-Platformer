@@ -103,7 +103,7 @@ bool j1Scene::CleanUp()
 bool j1Scene::Load(pugi::xml_node& data)
 {
 	LOG("Loading Scene state");
-	App->player->BarWidth = 40;
+	App->player->BarWidth = App->player->maxBarWidth;
 	App->map->CleanUp();
 	current_level.create(data.child("scenename").attribute("name").as_string());
 	App->map->Load(current_level.GetString());
@@ -124,7 +124,7 @@ bool j1Scene::Save(pugi::xml_node& data) const
 void j1Scene::Nextmap() {
 
 	App->map->CleanUp();
-	App->player->BarWidth = 40;
+	App->player->BarWidth = App->player->maxBarWidth;
 	p2List_item<p2SString>* iterator;
 	for (iterator = levels.start; iterator->data != current_level.GetString(); iterator = iterator->next) {
 		LOG("%s  %s", iterator->data.GetString(), current_level.GetString());
@@ -147,7 +147,7 @@ void j1Scene::Debug() {
 		App->map->Load(current_level.GetString());
 		App->player->position.x = App->player->initialPosition.x;
 		App->player->position.y = App->player->initialPosition.y;
-		App->player->BarWidth = 40;
+		App->player->BarWidth = App->player->maxBarWidth;
 		App->player->flip = SDL_FLIP_NONE;
 	
 	}
@@ -159,7 +159,7 @@ void j1Scene::Debug() {
 		App->map->Load(current_level.GetString());
 		App->player->position.x = App->player->initialPosition.x;
 		App->player->position.y = App->player->initialPosition.y;
-		App->player->BarWidth = 40;
+		App->player->BarWidth = App->player->maxBarWidth;
 		App->player->flip = SDL_FLIP_NONE;
 	}
 
@@ -168,7 +168,7 @@ void j1Scene::Debug() {
 	{
 		App->player->position.x = App->player->initialPosition.x;
 		App->player->position.y = App->player->initialPosition.y;
-		App->player->BarWidth = 40;
+		App->player->BarWidth = App->player->maxBarWidth;
 		App->player->flip = SDL_FLIP_NONE;
 	}
 	// Load last save

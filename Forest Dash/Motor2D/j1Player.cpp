@@ -66,7 +66,9 @@ bool j1Player::Awake(pugi::xml_node& config)
 	acceleration = config.child("acceleration").attribute("value").as_int();
 	maxBarWidth = config.child("maxBarWidth").attribute("value").as_int();
 	speedBar = config.child("speedBar").attribute("value").as_float();
-	speedBar = config.child("speedBar").attribute("value").as_float();
+	playerHeight = config.child("playerHeight").attribute("value").as_int();
+	playerWidth = config.child("playerWidth").attribute("value").as_int();
+	playerCentre = config.child("playerCentre").attribute("value").as_int();
 	
 	dashspeed = acceleration;
 	jumpSpeed = -1 * speedY;
