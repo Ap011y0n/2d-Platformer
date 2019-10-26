@@ -37,7 +37,7 @@
 ### 0.5: 
 #### Created 2 levels , added player with animations, music and fx selected and implemented, debug features added, time bar added, death/win condition implemented, dash added.
 
-### Innovations: animations loaded from Tiled, time bar, colliders made in Tiled.
+### Innovations: animations loaded from Tiled, time bar, colliders made in Tiled, volume for music and fx can be manipulated and saved.
 
 
 ### Cave Assets: "Warped" by Luis Zuno https://twitter.com/ansimuz?lang=es
