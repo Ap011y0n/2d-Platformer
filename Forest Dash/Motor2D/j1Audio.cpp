@@ -22,8 +22,9 @@ bool j1Audio::Awake(pugi::xml_node& config)
 {
 	music_directory = config.child("music").child_value("folder");
 	fx_directory = config.child("fx").child_value("folder");
-	volumemusic = config.child("music").child("volume").attribute("value").as_float();
-	volumefx = config.child("fx").child("volume").attribute("value").as_float();
+	volumemusic = config.child("music").child("volumemusic").attribute("value").as_float();
+	volumefx = config.child("fx").child("volumefx").attribute("value").as_float();
+
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
@@ -88,6 +89,7 @@ bool j1Audio::CleanUp()
 bool j1Audio::PlayMusic(const char* path, float fade_time)
 {
 	Mix_VolumeMusic(128 * volumemusic);
+	LOG("%i", volumemusic);
 	bool ret = true;
 
 	if(!active)
@@ -171,7 +173,7 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 
 	if(id > 0 && id <= fx.count())
 	{
-		Mix_VolumeChunk(fx[id - 1], volumefx);
+		Mix_VolumeChunk(fx[id - 1], 128*volumefx);
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
 	}
 
@@ -186,32 +188,48 @@ bool j1Audio::channelFinished() {
 		return ret;
 }
 
-bool j1Audio::Save(pugi::xml_node& config) 
+bool j1Audio::Save(pugi::xml_node& data) const
 {
-	config.append_child("musicVolumeModifier").append_attribute("value") = volumemusic;
+	pugi::xml_node music = data.append_child("volumemusic");
+	pugi::xml_node fx = data.append_child("volumefx");
+	music.append_attribute("value") = volumemusic;
+	fx.append_attribute("value") = volumefx;
 	return true;
 }
 
-bool j1Audio::Load(pugi::xml_node& config)
+bool j1Audio::Load(pugi::xml_node& data)
 {
-	volumemusic = config.child("musicVolumeModifier").attribute("value").as_float();
-
-	Mix_VolumeMusic(128 * volumemusic);
-
+	volumemusic = data.child("volumemusic").attribute("value").as_float();
+	volumefx = data.child("volumefx").attribute("value").as_float();
 	return true;
 }
-void j1Audio::volumechanger(bool increase) {
-
+void j1Audio::musicvolume(float value, bool increase) {
 	if (increase)
 	{
-		volumemusic += 0.3;
-		volumefx += 0.3;
-		Mix_VolumeMusic(volumemusic);
+		volumemusic += value;
+		if (volumemusic > 1)
+			volumemusic = 1;
 	}
-	if (!increase) {
-		volumefx -= 0.3;
-		volumemusic -= 0.3;
-		Mix_VolumeMusic(volumemusic);
+	if (!increase)
+	{
+		volumemusic -= value;
+		if (volumemusic < 0)
+			volumemusic = 0;
 	}
+	Mix_VolumeMusic(128 * volumemusic);
+}
 
-};
+void j1Audio::fxvolume(float value, bool increase) {
+	if (increase)
+	{
+		volumefx += value;
+		if (volumefx > 1)
+			volumefx = 1;
+	}
+	if (!increase)
+	{
+		volumefx -= value;
+		if (volumefx < 0)
+			volumefx = 0;
+	}
+}

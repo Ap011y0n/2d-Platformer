@@ -3,13 +3,16 @@
 	<input />
 	<window />
 	<textures />
-	<audio />
+	<audio>
+		<volumemusic value="1" />
+		<volumefx value="1" />
+	</audio>
 	<map />
 	<scene>
-		<scenename name="maplevel2.tmx" />
+		<scenename name="maplevel1.tmx" />
 	</scene>
 	<player>
-		<position pos_x="386" pos_y="708" />
+		<position pos_x="120" pos_y="708" />
 	</player>
 	<renderer />
 </game_state>

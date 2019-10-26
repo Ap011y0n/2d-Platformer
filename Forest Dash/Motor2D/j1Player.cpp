@@ -132,6 +132,7 @@ bool j1Player::PostUpdate(float dt)
 bool j1Player::Load(pugi::xml_node& data)
 {
 	LOG("Loading player state");
+
 	position.x = data.child("position").attribute("pos_x").as_int();
 	position.y = data.child("position").attribute("pos_y").as_int();
 

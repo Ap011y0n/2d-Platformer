@@ -39,20 +39,20 @@ public:
 	bool channelFinished();
 
 	//Save module audio data
-	bool j1Audio::Save(pugi::xml_node& config);
+	bool j1Audio::Save(pugi::xml_node& config)const;
 
 	//Load module audio data
 	bool j1Audio::Load(pugi::xml_node& config);
-	void volumechanger(bool increase);
-
+	void musicvolume(float value, bool increase);
+	void fxvolume(float value, bool increase);
 private:
 
 	_Mix_Music*			music = NULL;
 	p2List<Mix_Chunk*>	fx;
 	p2SString			music_directory;
 	p2SString			fx_directory;
-	float volumemusic;
-	float volumefx;
+	float volumemusic = 0;
+	float volumefx = 0;
 };
 
 #endif // __j1AUDIO_H__

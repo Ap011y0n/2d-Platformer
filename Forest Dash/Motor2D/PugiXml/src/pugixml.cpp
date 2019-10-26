@@ -5024,7 +5024,7 @@ namespace pugi
 
 	PUGI__FN xml_node xml_node::append_child(xml_node_type type_)
 	{
-		if (!impl::allow_insert_child(type(), type_)) return xml_node();
+ 		if (!impl::allow_insert_child(type(), type_)) return xml_node();
 		
 		xml_node n(impl::allocate_node(impl::get_allocator(_root), type_));
 		if (!n) return xml_node();
