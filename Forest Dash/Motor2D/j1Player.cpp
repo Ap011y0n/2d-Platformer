@@ -20,6 +20,7 @@ j1Player::j1Player(): j1Module()
 	graphics = NULL;
 	current_animation = NULL;
 	LoadAnimations("textures/animations.tmx");
+
 	// Load animations from an animations list ----------------------------------------------
 	p2List_item<Animation>* animation_iterator = animations.start;
 	
@@ -94,6 +95,7 @@ bool j1Player::Start()
 
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
+
 	return true;
 }
 

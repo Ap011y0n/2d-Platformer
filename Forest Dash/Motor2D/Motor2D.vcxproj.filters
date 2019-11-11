@@ -37,6 +37,9 @@
     <ClCompile Include="j1Player.cpp">
       <Filter>Main ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Slime.cpp">
+      <Filter>Main ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -95,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Main ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Slime.h">
+      <Filter>Main ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
