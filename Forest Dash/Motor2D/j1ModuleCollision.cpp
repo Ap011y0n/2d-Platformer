@@ -2,6 +2,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "p2Log.h"
+#include "j1Player.h"
 #include "j1ModuleCollision.h"
 
 j1ModuleCollision::j1ModuleCollision()

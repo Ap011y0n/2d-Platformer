@@ -11,6 +11,7 @@
 #include "j1Audio.h"
 #include "Animation.h"
 #include "j1ModuleCollision.h"
+#include "j1Particles.h"
 
 
 j1Player::j1Player(): j1Module()
@@ -286,6 +287,13 @@ void j1Player::Movement(){
 			state = IDLE; 
 			if (state == IDLE)state = JUMP;
 		}
+	}
+
+	//Particles
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		LOG("Arrow");
+		App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT);
 	}
 }
 
@@ -591,3 +599,4 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		LOG("Damage");
 	}
 }
+

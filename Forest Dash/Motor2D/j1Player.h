@@ -84,6 +84,7 @@ private:
 	bool Canleft = true;
 	bool Canjump = true;
 	bool Candown = true;
+	bool shoot = false;
 	int playerHeight;
 	int playerWidth;
 	int playerCentre;
