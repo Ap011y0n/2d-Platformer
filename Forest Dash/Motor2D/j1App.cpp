@@ -13,6 +13,7 @@
 #include "j1Map.h"
 #include "j1Player.h"
 #include "j1Slime.h"
+#include "j1Particles.h"
 #include "j1App.h"
 #include "j1ModuleCollision.h"
 
@@ -33,6 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	player = new j1Player();
 	slime = new j1Slime();
 	collision = new j1ModuleCollision();
+	particles = new j1Particles();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -45,7 +47,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(slime);
 	AddModule(collision);
-
+	AddModule(particles);
 	// render last to swap buffer
 	AddModule(render);
 }
