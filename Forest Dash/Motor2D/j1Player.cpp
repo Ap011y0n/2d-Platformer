@@ -10,7 +10,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
-
+#include "j1ModuleCollision.h"
 
 
 j1Player::j1Player(): j1Module()
@@ -96,6 +96,12 @@ bool j1Player::Start()
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
 
+	SDL_Rect r;
+	r.h = playerHeight;
+	r.w = playerWidth;
+	r.x = position.x + playerCentre;
+	r.y = position.y;
+	ColliderPlayer = App->collision->AddCollider(r, COLLIDER_PLAYER, this);
 	return true;
 }
 
@@ -421,14 +427,15 @@ void j1Player::CheckCollision() {
 
 // Blits a rect to make an idea of player position
 void j1Player::DrawHitbox() {
-	SDL_Rect hitbox;
+	/*SDL_Rect hitbox;
 	hitbox.h = playerHeight;
 	hitbox.w = playerWidth;
 	hitbox.x = position.x + playerCentre;
 	hitbox.y = position.y;
 	if(App->map->blitColliders)	App->render->DrawQuad(hitbox, 0, 225, 0, 70);
-
-}
+	*/
+	ColliderPlayer->SetPos(position.x + playerCentre, position.y);
+}				
 // Function to make the camera follow the player ----------------------------------------------
 void j1Player::Camera() {
 	if (state != DEATH){
@@ -576,5 +583,11 @@ void j1Player::playfx( const int id, const int rep) {
 		App->audio->StopFx();
 		App->audio->PlayFx(id, rep);
 		prev_state = state;
+	}
+}
+
+void j1Player::OnCollision(Collider* c1, Collider* c2) {
+	if (c1 == ColliderPlayer && c2->type == COLLIDER_ENEMY) {
+		LOG("Damage");
 	}
 }

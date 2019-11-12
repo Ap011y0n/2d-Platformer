@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
+#include "j1ModuleCollision.h"
 
 
 
@@ -49,7 +50,12 @@ bool j1Slime::Start()
 
 	position.x = 690;
 	position.y = 525;
-
+	SDL_Rect r;
+	r.w = 60;
+	r.h = 60;
+	r.x = 690;
+	r.y = 525;
+	App->collision->AddCollider(r, COLLIDER_ENEMY, this);
 	return true;
 }
 
@@ -145,4 +151,8 @@ SDL_Rect TileSetSlime::GetAnimRect(int id) const
 	rect.x = ((rect.w) * (relative_id % num_tiles_width));
 	rect.y = ((rect.h) * (relative_id / num_tiles_width));
 	return rect;
+}
+
+void j1Slime::OnCollision(Collider* c1, Collider* c2) {
+
 }

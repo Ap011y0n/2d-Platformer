@@ -59,6 +59,7 @@ public:
 	void MoveCondition();
 	void LoadAnimations(const char* path);
 	void playfx(const int id, const int rep);
+	void OnCollision(Collider* c1, Collider* c2);
 
 
 private:
@@ -110,6 +111,7 @@ public:
 	float magnitude = 0.0f;
 	int opacity = 0;
 	int maxBarWidth;
+	Collider *ColliderPlayer;
 
 };
 

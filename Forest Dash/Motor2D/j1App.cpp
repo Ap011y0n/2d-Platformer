@@ -14,6 +14,7 @@
 #include "j1Player.h"
 #include "j1Slime.h"
 #include "j1App.h"
+#include "j1ModuleCollision.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -28,8 +29,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
+	map = new j1Map();
 	player = new j1Player();
 	slime = new j1Slime();
+	collision = new j1ModuleCollision();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -41,6 +44,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(player);
 	AddModule(slime);
+	AddModule(collision);
 
 	// render last to swap buffer
 	AddModule(render);

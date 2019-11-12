@@ -40,6 +40,9 @@
     <ClCompile Include="j1Slime.cpp">
       <Filter>Main ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1ModuleCollision.cpp">
+      <Filter>Main ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -100,6 +103,9 @@
       <Filter>Main ========\Tools</Filter>
     </ClInclude>
     <ClInclude Include="j1Slime.h">
+      <Filter>Main ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1ModuleCollision.h">
       <Filter>Main ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
