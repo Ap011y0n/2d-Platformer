@@ -1,5 +1,5 @@
-#ifndef __j1Particles_H__
-#define __j1Particles_H__
+#ifndef __j1PARTICLES_H__
+#define __j1PARTICLES_H__
 
 #include "j1Module.h"
 #include "Animation.h"

@@ -1,5 +1,5 @@
-#ifndef __j1SLIME_H__
-#define __j1SLIME_H__
+#ifndef __j1WIZARD_H__
+#define __j1WIZARD_H__
 
 #include "PugiXml/src/pugixml.hpp"
 #include "j1Module.h"
@@ -12,7 +12,7 @@ struct SDL_Texture;
 struct Collider;
 struct Anim;
 
-struct TileSetSlime
+struct TileSetWizard
 {
 	SDL_Rect GetAnimRect(int id) const;
 	int tile_width;
@@ -23,12 +23,12 @@ struct TileSetSlime
 	p2SString Texname;
 };
 
-class j1Slime : public j1Module
+class j1Wizard : public j1Module
 {
 public:
 
-	j1Slime();
-	~j1Slime();
+	j1Wizard();
+	~j1Wizard();
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
@@ -50,7 +50,7 @@ private:
 
 	pugi::xml_document	slime_file;
 
-	TileSetSlime TileSetData;
+	TileSetWizard TileSetData;
 
 public:
 

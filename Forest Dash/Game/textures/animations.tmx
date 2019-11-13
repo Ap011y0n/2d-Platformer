@@ -4,57 +4,57 @@
   <image source="adventurer.png" width="800" height="1060"/>
   <tile id="0">
    <animation>
-    <frame tileid="0" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="1" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="2" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="3" duration="200" pivotx="-30" pivoty="-5"/>
+    <frame tileid="0" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="1" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="2" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="3" duration="400" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
   <tile id="1">
    <animation>
-    <frame tileid="8" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="9" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="10" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="11" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="12" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="13" duration="200" pivotx="-30" pivoty="-5"/>
+    <frame tileid="8" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="9" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="10" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="11" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="12" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="13" duration="400" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
   <tile id="2">
    <animation>
-    <frame tileid="16" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="17" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="18" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="19" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="20" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="21" duration="200" pivotx="-30" pivoty="-5"/>
+    <frame tileid="16" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="17" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="18" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="19" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="20" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="21" duration="400" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
   <tile id="3">
    <animation>
-    <frame tileid="4" duration="250" pivotx="-30" pivoty="-5"/>
-    <frame tileid="5" duration="250" pivotx="-30" pivoty="-5"/>
-    <frame tileid="6" duration="250" pivotx="-30" pivoty="-5"/>
-    <frame tileid="7" duration="250" pivotx="-30" pivoty="-5"/>
+    <frame tileid="4" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="5" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="6" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="7" duration="400" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
   <tile id="4">
    <animation>
-    <frame tileid="97" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="98" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="99" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="100" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="101" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="102" duration="200" pivotx="-30" pivoty="-5"/>
+    <frame tileid="97" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="98" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="99" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="100" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="101" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="102" duration="400" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
   <tile id="5">
    <animation>
-    <frame tileid="106" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="107" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="108" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="109" duration="200" pivotx="-30" pivoty="-5"/>
-    <frame tileid="110" duration="200" pivotx="-30" pivoty="-5"/>
+    <frame tileid="106" duration="300" pivotx="-30" pivoty="-5"/>
+    <frame tileid="107" duration="300" pivotx="-30" pivoty="-5"/>
+    <frame tileid="108" duration="300" pivotx="-30" pivoty="-5"/>
+    <frame tileid="109" duration="300" pivotx="-30" pivoty="-5"/>
+    <frame tileid="110" duration="300" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
  </tileset>

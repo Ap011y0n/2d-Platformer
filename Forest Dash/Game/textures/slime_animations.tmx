@@ -4,8 +4,8 @@
   <image source="slime.png" width="810" height="540"/>
   <tile id="0">
    <animation>
-    <frame tileid="0" duration="200" pivotx="0" pivoty="0"/>
-    <frame tileid="1" duration="200" pivotx="0" pivoty="0"/>
+    <frame tileid="0" duration="400" pivotx="0" pivoty="0"/>
+    <frame tileid="1" duration="400" pivotx="0" pivoty="0"/>
    </animation>
   </tile>
  </tileset>

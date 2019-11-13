@@ -52,6 +52,9 @@
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Main ========\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="j1Wizard.cpp">
+      <Filter>Main ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Main ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Wizard.h">
+      <Filter>Main ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

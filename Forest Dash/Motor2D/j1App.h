@@ -17,7 +17,7 @@ class j1Scene;
 class j1Map;
 class j1Player;
 class j1Slime;
-class j1Slime;
+class j1Wizard;
 class j1ModuleCollision;
 class j1Particles;
 
@@ -92,6 +92,7 @@ public:
 	j1Map*				map;
 	j1Player*			player;
 	j1Slime*			slime;
+	j1Wizard*			wizard;
 	j1ModuleCollision*  collision;
 	j1Particles*		particles;
 private:
