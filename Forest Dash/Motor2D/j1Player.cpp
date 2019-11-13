@@ -13,6 +13,7 @@
 #include "math.h"
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
+#include "j1Slime.h"
 
 
 j1Player::j1Player(): j1Module()
@@ -128,7 +129,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	//MoveCondition(dt);
+	MoveCondition(dt);
 
 	return true;
 }
@@ -168,7 +169,7 @@ void j1Player::Movement(float dt){
 	if (Godmode == false)
 	{
 		//Set gravity to player
-		if (Candown && position.y < -1 * App->render->camera.y + App->win->height && dt < 0.9)
+		if (Candown && position.y < -1 * App->render->camera.y + App->win->height && dt < 0.5)
 			position.y += (gravity * 70 * dt);
 		//Reset jump force if on floor
 		if (!Candown)
@@ -627,6 +628,22 @@ void j1Player::playfx( const int id, const int rep) {
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == ColliderPlayer && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
+		if (position.x <= App->slime->position.x)
+		{
+			position.x -= 30;
+			state = DEATH;
+			jumpSpeed = -speedY * (70 * App->collision->deltatime);
+			DeathTimer = SDL_GetTicks();
+		}
+		else
+		{
+			position.x += 30;
+			state = DEATH;
+			jumpSpeed = -speedY * (70 * App->collision->deltatime);
+			DeathTimer = SDL_GetTicks();
+		}
+
 	}
+
 }
 

@@ -99,7 +99,7 @@ bool j1ModuleCollision::Update(float dt)
 {
 
 	DebugDraw();
-
+	deltatime = dt;
 	return true;
 }
 

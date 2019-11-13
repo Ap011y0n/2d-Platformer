@@ -51,8 +51,8 @@ bool j1Slime::Start()
 	position.x = 690;
 	position.y = 525;
 	SDL_Rect r;
-	r.w = 60;
-	r.h = 60;
+	r.w = 40;
+	r.h = 40;
 	r.x = 690;
 	r.y = 525;
 	App->collision->AddCollider(r, COLLIDER_ENEMY, this);

@@ -43,7 +43,7 @@
    <jumpFx source="jump.wav"/>
    <winFx source="win.wav"/>
    <dashFx source="dash.wav"/>
-   <initialPosition x="120" y="400"/>
+   <initialPosition x="60" y="180"/>
    <gravity value="11"/>
    <speedX value="7"/>
    <speedY value="22"/>
