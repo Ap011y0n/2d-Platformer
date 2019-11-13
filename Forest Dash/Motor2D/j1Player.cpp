@@ -129,7 +129,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	//MoveCondition(dt);
+	MoveCondition(dt);
 
 	return true;
 }
@@ -169,7 +169,7 @@ void j1Player::Movement(float dt){
 	if (Godmode == false)
 	{
 		//Set gravity to player
-		if (Candown && position.y < -1 * App->render->camera.y + App->win->height && dt < 0.9)
+		if (Candown && position.y < -1 * App->render->camera.y + App->win->height && dt < 0.5)
 			position.y += (gravity * 70 * dt);
 		//Reset jump force if on floor
 		if (!Candown)
