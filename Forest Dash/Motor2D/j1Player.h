@@ -1,5 +1,5 @@
-#ifndef __ModulePlayer_H__
-#define __ModulePlayer_H__
+#ifndef __j1PlAYER_H__
+#define __j1PlAYER_H__
 
 #include "PugiXml/src/pugixml.hpp"
 #include "j1Module.h"
