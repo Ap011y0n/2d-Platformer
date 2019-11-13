@@ -128,7 +128,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	MoveCondition(dt);
+	//MoveCondition(dt);
 
 	return true;
 }
@@ -312,9 +312,14 @@ void j1Player::Movement(float dt){
 			yvec = yvec * convert;
 		}
 		else {
-			float convert = 20 / xvec;
-			xvec = xvec * convert;
-			yvec = yvec * convert;
+			if (xvec != 0) {
+				float convert = 20 / xvec;
+				xvec = xvec * convert;
+				yvec = yvec * convert;
+			}
+			else {
+				yvec = yvec * 20;
+			}
 		}
 		LOG("Depurated %f, %f", xvec, yvec);
 		LOG("Depurated %d, %d", (int)xvec, (int)yvec);
