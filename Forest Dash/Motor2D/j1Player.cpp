@@ -13,6 +13,7 @@
 #include "math.h"
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
+#include "j1Slime.h"
 
 
 j1Player::j1Player(): j1Module()
@@ -627,8 +628,22 @@ void j1Player::playfx( const int id, const int rep) {
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == ColliderPlayer && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
-	/*	position.x -= 10;*/
-		state = DEATH;
+		if (position.x <= App->slime->position.x)
+		{
+			position.x -= 30;
+			state = DEATH;
+			jumpSpeed = -speedY * (70 * App->collision->deltatime);
+			DeathTimer = SDL_GetTicks();
+		}
+		else
+		{
+			position.x += 30;
+			state = DEATH;
+			jumpSpeed = -speedY * (70 * App->collision->deltatime);
+			DeathTimer = SDL_GetTicks();
+		}
+
+		
 	}
 }
 
