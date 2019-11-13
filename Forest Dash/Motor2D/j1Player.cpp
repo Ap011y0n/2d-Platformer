@@ -170,7 +170,7 @@ void j1Player::Movement(float dt){
 	{
 		//Set gravity to player
 		if (Candown && position.y < -1 * App->render->camera.y + App->win->height && dt < 0.5)
-			position.y += (gravity * 70 * dt);
+			position.y += (int)(gravity * DT_CONVERTER * dt);
 		//Reset jump force if on floor
 		if (!Candown)
 			jumpSpeed = -1 * speedY;
@@ -188,10 +188,10 @@ void j1Player::Movement(float dt){
 			}
 			else {
 				state = JUMP;
-				if (jumpSpeed < (gravity * 70 * dt)) {
-					jumpSpeed += (0.45* 70 * dt);
-					if (!Canjump) { position.y -= (gravity * 70 * dt); }
-					if (Canjump) { position.y += ((jumpSpeed)* 70 * dt);}
+				if (jumpSpeed < (gravity * DT_CONVERTER * dt)) {
+					jumpSpeed += (0.45* DT_CONVERTER * dt);
+					if (!Canjump) { position.y -= (int)(gravity * DT_CONVERTER * dt); }
+					if (Canjump) { position.y += ((jumpSpeed)* DT_CONVERTER * dt);}
 				}
 		// Cap falling speed to avoid conflicts with collisions
 				if (jumpSpeed > 0) { jumpSpeed = 0; }
@@ -212,11 +212,11 @@ void j1Player::Movement(float dt){
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
 			if (state == BACKWARD) {
 				state = IDLE;
-				position.x += (speedX * 70 * dt);
+				position.x += (speedX * DT_CONVERTER * dt);
 			}
 			else {
 				if (Canright) {
-					position.x += (speedX * 70 * dt);
+					position.x += (speedX * DT_CONVERTER * dt);
 					flip = SDL_FLIP_NONE;
 					if (state != JUMP && state != FALLING) {
 						state = IDLE;
@@ -231,11 +231,11 @@ void j1Player::Movement(float dt){
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
 			if (state == FORWARD) {
 				state = IDLE;
-				position.x -= (speedX * 70 * dt);
+				position.x -= (speedX * DT_CONVERTER * dt);
 			}
 			else{
 			if (Canleft) {
-				position.x -= (speedX * 70 * dt);
+				position.x -= (speedX * DT_CONVERTER * dt);
 				flip = SDL_FLIP_HORIZONTAL;
 				if (state != JUMP && state != FALLING) {
 					state = IDLE;
@@ -248,18 +248,18 @@ void j1Player::Movement(float dt){
 	// Dash: add acceleration when presing left or rigth arrows
 		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_L;
-			if (dashspeed > 0)dashspeed -= (1 * 70 * dt);
+			if (dashspeed > 0)dashspeed -= (1 * DT_CONVERTER * dt);
 			else { state = IDLE; }
-			if (Canleft)position.x -= dashspeed * (70 * dt);
-			position.y -= gravity * ((70 * dt));
+			if (Canleft)position.x -= dashspeed * (DT_CONVERTER * dt);
+			position.y -= gravity * ((DT_CONVERTER * dt));
 		}
 		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_R;
-			if (dashspeed > 0)dashspeed -= 1 * (70 * dt);
+			if (dashspeed > 0)dashspeed -= 1 * (DT_CONVERTER * dt);
 			else { state = IDLE; }
-			if(Canright)position.x += dashspeed *(70 * dt);
+			if(Canright)position.x += dashspeed *(DT_CONVERTER * dt);
 
-			position.y -= (gravity * (70 * dt));
+			position.y -= (gravity * (DT_CONVERTER * dt));
 		}
 	}
 
@@ -268,27 +268,27 @@ void j1Player::Movement(float dt){
 	{
 		state = IDLE;
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				position.x -= (speedX * (70 * dt));
+				position.x -= (speedX * (DT_CONVERTER * dt));
 				flip = SDL_FLIP_HORIZONTAL;
 				state = IDLE;
 				if (state == IDLE)state = BACKWARD;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			position.x += (speedX * 70 * dt);
+			position.x += (speedX * DT_CONVERTER * dt);
 			state = IDLE;
 			if (state == IDLE)state = FORWARD;
 			flip = SDL_FLIP_NONE;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			position.y -= (speedX * 70 * dt);
+			position.y -= (speedX * DT_CONVERTER * dt);
 			state = IDLE;
 			if (state == IDLE)state = JUMP;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			position.y += (speedX * 70 * dt);
+			position.y += (speedX * DT_CONVERTER * dt);
 			state = IDLE; 
 			if (state == IDLE)state = JUMP;
 		}
@@ -379,7 +379,7 @@ void j1Player::StateMachine(float dt)
 	{
 		BarWidth = 0;
 		current_animation = &dead;
-		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45* (70 * dt));
+		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45* (DT_CONVERTER * dt));
 		playfx(4, 0);
 		if (SDL_GetTicks() > (DeathTimer + 2500)) {
 			state = IDLE;
@@ -409,21 +409,21 @@ void j1Player::CheckCollision(float dt) {
 		layer = layer_iterator->data;
 	// Map colliders, limit movement
 				if (layer->returnPropValue("Navigation") == 1 && state != DEATH) {
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + ((jumpSpeed + gravity)* 70 * dt));
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + jumpSpeed + gravity * DT_CONVERTER * dt);
 					if (layer->Get(coord.x, coord.y) != 0) Canjump = false;
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + (gravity* 70 * dt));
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + (gravity* DT_CONVERTER * dt));
 					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * 70 * dt), position.y + playerHeight);
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * DT_CONVERTER * dt), position.y + playerHeight);
+					if (layer->Get(coord.x, coord.y) != 0) Canright = false;						
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * DT_CONVERTER * dt), position.y + playerHeight / 2);
+					if (layer->Get(coord.x, coord.y) != 0) Canright = false;						 
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * DT_CONVERTER * dt), position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * 70 * dt), position.y + playerHeight / 2);
-					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * 70 * dt), position.y);
-					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
-					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * 70 * dt), position.y + playerHeight);
+					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * DT_CONVERTER * dt), position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
-					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * 70 * dt), position.y + playerHeight / 2);
+					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * DT_CONVERTER * dt), position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
-					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * 70 * dt), position.y);
+					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * DT_CONVERTER * dt), position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
 				}
 		// Scene change colliders, when colliding change scene
@@ -453,7 +453,7 @@ void j1Player::CheckCollision(float dt) {
 					if (death == true){
 						
 					state = DEATH;
-					jumpSpeed = -speedY* (70 * dt);
+					jumpSpeed = -speedY* (DT_CONVERTER * dt);
 					DeathTimer = SDL_GetTicks();
 					ret = false;
 					}
@@ -546,7 +546,7 @@ void j1Player::MoveCondition(float dt) {
 	screen.w = App->win->width * App->win->GetScale();
 	screen.h = App->win->height * App->win->GetScale();
 	
-	if (BarWidth > 0)BarWidth -= speedBar * (70 * dt);
+	if (BarWidth > 0)BarWidth -= speedBar * (DT_CONVERTER * dt);
 	else{
 		if (state != DEATH && Godmode == false) {
 		jumpSpeed = -speedY* (70 * dt);
@@ -561,8 +561,8 @@ void j1Player::MoveCondition(float dt) {
 
 //if bar width is lower than a preset value, camera starts turning red and shaking
 	else {
-	if (magnitude < 4)magnitude += 0.05f* (70 * dt);
-	if(opacity < 125)opacity += 1 * (70 * dt);
+	if (magnitude < 4)magnitude += 0.05f* (DT_CONVERTER * dt);
+	if(opacity < 125)opacity += 1 * (DT_CONVERTER * dt);
 	App->render->StartCameraShake(100, magnitude);
 	App->render->DrawQuad(screen, 255, 0, 0, opacity);
 	}
@@ -632,14 +632,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			position.x -= 30;
 			state = DEATH;
-			jumpSpeed = -speedY * (70 * App->collision->deltatime);
+			jumpSpeed = -speedY * (DT_CONVERTER * App->collision->deltatime);
 			DeathTimer = SDL_GetTicks();
 		}
 		else
 		{
 			position.x += 30;
 			state = DEATH;
-			jumpSpeed = -speedY * (70 * App->collision->deltatime);
+			jumpSpeed = -speedY * (DT_CONVERTER * App->collision->deltatime);
 			DeathTimer = SDL_GetTicks();
 		}
 
