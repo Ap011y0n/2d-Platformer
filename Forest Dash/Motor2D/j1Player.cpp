@@ -627,6 +627,8 @@ void j1Player::playfx( const int id, const int rep) {
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == ColliderPlayer && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
+	/*	position.x -= 10;*/
+		state = DEATH;
 	}
 }
 
