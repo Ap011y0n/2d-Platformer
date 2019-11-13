@@ -117,9 +117,10 @@ bool j1Player::CleanUp()
 // Update: draw background ----------------------------------------------
 bool j1Player::Update(float dt)
 {
+
 	current_animation = &idle;
 	CheckCollision();
-	Movement();
+	Movement(dt);
 	StateMachine();
 	SDL_Rect* r = &current_animation->GetCurrentFrame();
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
@@ -160,7 +161,8 @@ bool j1Player::Save(pugi::xml_node& data) const
 }
 
 // Receive inputs and set movement and states ----------------------------------------------
-void j1Player::Movement(){
+void j1Player::Movement(float dt){
+	gravity = gravity;
 	if (Godmode == false)
 	{
 		//Set gravity to player
@@ -184,9 +186,9 @@ void j1Player::Movement(){
 			else {
 				state = JUMP;
 				if (jumpSpeed < gravity) {
-					jumpSpeed += 0.45;
+					jumpSpeed += 0.45 * (80 * dt);
 					if (!Canjump) { position.y -= gravity; }
-					if (Canjump) { position.y += (jumpSpeed); }
+					if (Canjump) { position.y += (jumpSpeed) * (80 * dt); }
 				}
 		// Cap falling speed to avoid conflicts with collisions
 				if (jumpSpeed > 0) { jumpSpeed = 0; }
@@ -207,11 +209,11 @@ void j1Player::Movement(){
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
 			if (state == BACKWARD) {
 				state = IDLE;
-				position.x += speedX;
+				position.x += speedX * (int)(80 * dt);
 			}
 			else {
 				if (Canright) {
-					position.x += speedX;
+					position.x += speedX * (int)(80 * dt);
 					flip = SDL_FLIP_NONE;
 					if (state != JUMP && state != FALLING) {
 						state = IDLE;
@@ -226,11 +228,11 @@ void j1Player::Movement(){
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
 			if (state == FORWARD) {
 				state = IDLE;
-				position.x -= speedX;
+				position.x -= speedX * (int)(80 * dt);;
 			}
 			else{
 			if (Canleft) {
-				position.x -= speedX;
+				position.x -= speedX * (int)(80 * dt);
 				flip = SDL_FLIP_HORIZONTAL;
 				if (state != JUMP && state != FALLING) {
 					state = IDLE;

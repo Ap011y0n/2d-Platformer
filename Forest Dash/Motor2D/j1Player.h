@@ -51,7 +51,7 @@ public:
 	bool CleanUp();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
-	void Movement();
+	void Movement(float dt);
 	void CheckCollision();
 	void StateMachine();
 	void DrawHitbox();

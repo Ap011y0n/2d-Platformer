@@ -46,6 +46,12 @@
     <ClCompile Include="j1Particles.cpp">
       <Filter>Main ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Timer.cpp">
+      <Filter>Main ========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1PerfTimer.cpp">
+      <Filter>Main ========\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -113,6 +119,12 @@
     </ClInclude>
     <ClInclude Include="j1Particles.h">
       <Filter>Main ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Timer.h">
+      <Filter>Main ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1PerfTimer.h">
+      <Filter>Main ========\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
