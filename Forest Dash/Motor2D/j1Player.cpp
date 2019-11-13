@@ -249,14 +249,14 @@ void j1Player::Movement(float dt){
 			state = DASH_L;
 			if (dashspeed > 0)dashspeed -= (1 * 70 * dt);
 			else { state = IDLE; }
-			if (Canleft)position.x -= dashspeed;
+			if (Canleft)position.x -= dashspeed * (70 * dt);
 			position.y -= gravity * ((70 * dt));
 		}
 		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_R;
 			if (dashspeed > 0)dashspeed -= 1 * (70 * dt);
 			else { state = IDLE; }
-			if(Canright)position.x += dashspeed;
+			if(Canright)position.x += dashspeed *(70 * dt);
 
 			position.y -= (gravity * (70 * dt));
 		}
