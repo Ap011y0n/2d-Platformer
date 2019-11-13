@@ -6,6 +6,7 @@
 #include "j1Audio.h"
 #include "SDL/include/SDL_timer.h"
 #include <math.h>
+#include "j1Slime.h"
 
 j1Particles::j1Particles()
 {
@@ -143,17 +144,16 @@ void j1Particles::OnCollision(Collider* c1, Collider* c2)
 		// Always destroy particles that collide
 		if (active[i] != nullptr && active[i]->collider == c1)
 		{
-			/*if (c1->type == COLLIDER_PLAYER_SHOT && c2->type == COLLIDER_WALL)
-			{
-				App->audio->PlayFx(4, 0);
-				
+			if (c1->type == COLLIDER_PLAYER_SHOT && c2->type == COLLIDER_ENEMY) {
+				LOG("hi");
+				App->slime->CleanUp();
 			}
 
-			if (c1->type == COLLIDER_ENEMY_SHOT && c2->type == COLLIDER_PLAYER)
-			{
+			//if (c1->type == COLLIDER_ENEMY_SHOT && c2->type == COLLIDER_PLAYER)
+			//{
 
-				
-			}*/
+			//	
+			//}
 			break;
 		}
 	}

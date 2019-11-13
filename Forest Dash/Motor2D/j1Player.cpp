@@ -643,7 +643,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			DeathTimer = SDL_GetTicks();
 		}
 
-		
 	}
+
 }
 
