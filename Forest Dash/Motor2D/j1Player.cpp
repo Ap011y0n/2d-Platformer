@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
+#include "math.h"
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
 
@@ -292,8 +293,29 @@ void j1Player::Movement(){
 	//Particles
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		LOG("Arrow");
-		App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT);
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+		iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
+		iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
+		float yvec = (vec.y / sqrt(pow(vec.x,2)+ pow(vec.y, 2)));
+		float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
+		LOG("Raw %d, %d", vec.y, vec.x);
+		LOG("Normal %f, %f", xvec, yvec);
+		
+		if (xvec < 0) {
+			float convert = -20 / xvec;
+			xvec = xvec * convert;
+			yvec = yvec * convert;
+		}
+		else {
+			float convert = 20 / xvec;
+			xvec = xvec * convert;
+			yvec = yvec * convert;
+		}
+		LOG("Depurated %f, %f", xvec, yvec);
+		LOG("Depurated %d, %d", (int)xvec, (int)yvec);
+		App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5 , (int)xvec, (int)yvec);
 	}
 }
 

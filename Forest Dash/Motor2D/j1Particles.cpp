@@ -63,7 +63,7 @@ bool j1Particles::Start()
 	arrow.anim.PushBack({ 1796, 26, 60, 13 }, 0.1, 0, 0, 0, 0);
 	arrow.anim.PushBack({ 1860, 26, 60, 13 }, 0.1, 0, 0, 0, 0);
 	arrow.life = 2000;
-	arrow.speed.x = 8;
+	
 	arrow.anim.loop = true;
 
 	return true;
@@ -116,7 +116,7 @@ bool j1Particles::Update(float dt)
 	return true;
 }
 
-void j1Particles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay)
+void j1Particles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int SpeedX, int SpeedY)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -126,6 +126,8 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, COLLIDER_T
 			p->born = SDL_GetTicks() + delay;
 			p->position.x = x;
 			p->position.y = y;
+			p->speed.x = SpeedX;
+			p->speed.y = SpeedY;
 			if (collider_type != COLLIDER_NONE)
 				p->collider = App->collision->AddCollider(p->anim.GetCurrentFrame(), collider_type, this);
 			active[i] = p;

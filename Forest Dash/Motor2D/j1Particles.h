@@ -8,7 +8,7 @@
 #include "p2Log.h"
 #include "j1ModuleCollision.h"
 
-#define MAX_ACTIVE_PARTICLES 1
+#define MAX_ACTIVE_PARTICLES 10
 
 struct SDL_Texture;
 struct Collider;
@@ -56,7 +56,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 
 	// Add particle
-	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0);
+	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int SpeedX = 1, int SpeedY = 1);
 
 private:
 	// Create particle
