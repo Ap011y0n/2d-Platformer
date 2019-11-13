@@ -222,7 +222,7 @@ void j1App::FinishUpdate()
 	if (delay > 0){
 	SDL_Delay(1 * 1000 / framerate - last_frame_ms);
 	}
-	LOG("We waited for %d milliseconds and got back in %f", (int)delaytimer.ReadMs(), delaytimer.ReadMs());
+//	LOG("We waited for %d milliseconds and got back in %f", (int)delaytimer.ReadMs(), delaytimer.ReadMs());
 	//Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
 
 }

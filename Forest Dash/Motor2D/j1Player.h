@@ -52,11 +52,11 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 	void Movement(float dt);
-	void CheckCollision();
-	void StateMachine();
+	void CheckCollision(float dt);
+	void StateMachine(float dt);
 	void DrawHitbox();
 	void Camera();
-	void MoveCondition();
+	void MoveCondition(float dt);
 	void LoadAnimations(const char* path);
 	void playfx(const int id, const int rep);
 	void OnCollision(Collider* c1, Collider* c2);
@@ -102,6 +102,7 @@ private:
 	int dashspeed;
 	float acceleration;
 	float speedBar;
+
 public:	
 	bool death = false;
 	bool Godmode = false;
