@@ -72,6 +72,7 @@
     <frame tileid="120" duration="400" pivotx="-30" pivoty="-5"/>
     <frame tileid="121" duration="400" pivotx="-30" pivoty="-5"/>
     <frame tileid="122" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="123" duration="400" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
  </tileset>
