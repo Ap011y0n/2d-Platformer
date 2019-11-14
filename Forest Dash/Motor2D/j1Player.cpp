@@ -446,7 +446,7 @@ void j1Player::StateMachine(float dt)
 	}
 	if (state == AIMING)
 	{
-		aimbarw ++;
+		aimbarw += (int)( DT_CONVERTER * dt);
 		AimTimer = SDL_GetTicks();
 		current_animation = &aiming;
 
