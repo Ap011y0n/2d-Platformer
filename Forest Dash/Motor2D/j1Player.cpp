@@ -47,6 +47,8 @@ j1Player::j1Player(): j1Module()
 
 	aiming = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
+
+	aiming.loop = false;
 	
 }
 
@@ -98,7 +100,7 @@ bool j1Player::Start()
 	LOG("Win %d", App->audio->LoadFx(winFx.GetString()));
 	App->audio->LoadFx(dashFx.GetString());
 	LOG("Dash %d", App->audio->LoadFx(dashFx.GetString()));
-	graphics = App->tex->Load("textures/adventurer.png");
+	graphics = App->tex->Load("textures/adventurertex.png");
 
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
@@ -311,7 +313,7 @@ void j1Player::Movement(float dt){
 		aimbar.x = position.x;
 		aimbar.y = position.y + playerHeight - 50;
 		App->render->DrawQuad(aimbar, 0, 0, 255, 90);
-		if (aimbar.w >= 50)
+		if (aimbar.w >= 40)
 		{
 			aimbarw = 0;
 			int x, y;
@@ -363,7 +365,8 @@ void j1Player::Movement(float dt){
 
 			LOG("Depurated %f, %f", xvec, yvec);
 			LOG("Depurated %d, %d", (int)xvec, (int)yvec);
-			App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+			App->particles->AddParticle(App->particles->arrow, position.x + 70, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+			aiming.Reset();
 		}
 	}
 
@@ -376,6 +379,7 @@ void j1Player::StateMachine(float dt)
 	if (state == IDLE) {
 		App->audio->StopFx();
 		aimbarw = 0;
+		aiming.Reset();
 	}
 	if (state == DASH_L) {
 		if (!CandashL) {
