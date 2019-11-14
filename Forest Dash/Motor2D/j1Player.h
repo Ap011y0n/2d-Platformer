@@ -26,6 +26,7 @@ enum player_state
 	DEATH,
 	DASH_L,
 	DASH_R,
+	AIMING,
 	ADJUST
 };
 struct TileSetPlayer
@@ -80,6 +81,7 @@ private:
 	Animation down;
 	Animation dead;
 	Animation dash;
+	Animation aiming;
 	
 	bool Canright = true;
 	bool Canleft = true;

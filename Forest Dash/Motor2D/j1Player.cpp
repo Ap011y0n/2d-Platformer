@@ -22,7 +22,7 @@ j1Player::j1Player(): j1Module()
 
 	graphics = NULL;
 	current_animation = NULL;
-	LoadAnimations("textures/animations.tmx");
+	LoadAnimations("textures/adventurer_animations.tmx");
 
 	// Load animations from an animations list ----------------------------------------------
 	p2List_item<Animation>* animation_iterator = animations.start;
@@ -43,6 +43,9 @@ j1Player::j1Player(): j1Module()
 	animation_iterator = animation_iterator->next;
 
 	dash = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
+
+	aiming = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
 	
 }
@@ -420,6 +423,11 @@ void j1Player::StateMachine(float dt)
 			position.y = initialPosition.y;
 			
 		}
+	}
+	if (state == AIMING)
+	{
+
+		current_animation = &aiming;
 	}
 }
 
