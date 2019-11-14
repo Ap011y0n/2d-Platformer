@@ -132,7 +132,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-//	MoveCondition(dt);
+	MoveCondition(dt);
 
 	return true;
 }
@@ -167,7 +167,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 }
 
 // Receive inputs and set movement and states ----------------------------------------------
-void j1Player::Movement(float dt){
+void j1Player::Movement(float dt) {
 
 	if (Godmode == false)
 	{
@@ -185,18 +185,18 @@ void j1Player::Movement(float dt){
 
 		//Jump code
 		if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) && state != DEATH) {
-		// Check if can move down
+			// Check if can move down
 			if ((!Candown) && state == JUMP) {
-				state = IDLE;	
+				state = IDLE;
 			}
 			else {
 				state = JUMP;
 				if (jumpSpeed < (gravity * DT_CONVERTER * dt)) {
 					jumpSpeed += (0.45* DT_CONVERTER * dt);
 					if (!Canjump) { position.y -= (int)(gravity * DT_CONVERTER * dt); }
-					if (Canjump) { position.y += (int)((jumpSpeed)* DT_CONVERTER * dt);}
+					if (Canjump) { position.y += (int)((jumpSpeed)* DT_CONVERTER * dt); }
 				}
-		// Cap falling speed to avoid conflicts with collisions
+				// Cap falling speed to avoid conflicts with collisions
 				if (jumpSpeed > 0) { jumpSpeed = 0; }
 			}
 		}
@@ -234,28 +234,28 @@ void j1Player::Movement(float dt){
 			}
 		}
 
-	// Move to left direction if won't collide with anything or if it's not moving to right
+		// Move to left direction if won't collide with anything or if it's not moving to right
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
 			if (state == FORWARD) {
 				state = IDLE;
 				position.x -= (int)(speedX * DT_CONVERTER * dt);
 			}
-			else{
-			if (Canleft) {
-				position.x -= (int)(speedX * DT_CONVERTER * dt);
-				flip = SDL_FLIP_HORIZONTAL;
-				if (state != JUMP && state != FALLING) {
-					state = IDLE;
-					if (state == IDLE)state = BACKWARD;
-				}
+			else {
+				if (Canleft) {
+					position.x -= (int)(speedX * DT_CONVERTER * dt);
+					flip = SDL_FLIP_HORIZONTAL;
+					if (state != JUMP && state != FALLING) {
+						state = IDLE;
+						if (state == IDLE)state = BACKWARD;
+					}
 
-			}
+				}
 			}
 		}
-	// Dash: add acceleration when presing left or rigth arrows
+		// Dash: add acceleration when presing left or rigth arrows
 		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_L;
-			
+
 			if (dashspeed > 0) { dashspeed -= (int)(DT_CONVERTER * dt); }
 			else { state = IDLE; }
 			if (Canleft && CandashL)position.x -= (int)(dashspeed * DT_CONVERTER * dt);
@@ -263,10 +263,10 @@ void j1Player::Movement(float dt){
 		}
 		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_R;
-		
+
 			if (dashspeed > 0) { dashspeed -= (int)(DT_CONVERTER * dt); }
 			else { state = IDLE; }
-			if(Canright && CandashR)position.x += (int)(dashspeed *DT_CONVERTER * dt);
+			if (Canright && CandashR)position.x += (int)(dashspeed *DT_CONVERTER * dt);
 
 			position.y -= (int)(gravity * DT_CONVERTER * dt);
 		}
@@ -277,10 +277,10 @@ void j1Player::Movement(float dt){
 	{
 		state = IDLE;
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				position.x -= (int)(speedX * (DT_CONVERTER * dt));
-				flip = SDL_FLIP_HORIZONTAL;
-				state = IDLE;
-				if (state == IDLE)state = BACKWARD;
+			position.x -= (int)(speedX * (DT_CONVERTER * dt));
+			flip = SDL_FLIP_HORIZONTAL;
+			state = IDLE;
+			if (state == IDLE)state = BACKWARD;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
@@ -298,64 +298,80 @@ void j1Player::Movement(float dt){
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			position.y += (int)(speedX * DT_CONVERTER * dt);
-			state = IDLE; 
+			state = IDLE;
 			if (state == IDLE)state = JUMP;
 		}
 	}
 
 	//Particles
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-		iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
-		iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
-		float angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
-		LOG("%f", angle);
-		float yvec = (vec.y / sqrt(pow(vec.x,2)+ pow(vec.y, 2)));
-		float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
-		LOG("Raw %d, %d", vec.x, vec.y);
-		LOG("Normal %f, %f", xvec, yvec);
-		
-		if(abs(xvec) > abs(yvec)){
-		if (xvec < 0) {
-			float convert = -20 / xvec;
-			xvec = xvec * convert;
-			yvec = yvec * convert;
-		}
-		else {
-			if (xvec > 0) {
-				float convert = 20 / xvec;
-				xvec = xvec * convert;
-				yvec = yvec * convert;
-			}
-			else {
-				yvec = yvec * 20;
-			}
-		}
-	}
-		else {
-			if (yvec < 0) {
-				float convert = -20 / yvec;
-				xvec = xvec * convert;
-				yvec = yvec * convert;
-			}
-			else {
-				if (yvec > 0) {
-					float convert = 20 / yvec;
+		state = AIMING;
+		SDL_Rect aimbar;
+		aimbar.h = 3;
+		aimbar.w = aimbarw;
+		aimbar.x = position.x;
+		aimbar.y = position.y + playerHeight - 50;
+		App->render->DrawQuad(aimbar, 0, 0, 255, 90);
+		if (aimbar.w >= 50)
+		{
+			aimbarw = 0;
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+			iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
+			iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
+			float angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
+			LOG("%f", angle);
+			float yvec = (vec.y / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
+			float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
+			LOG("Raw %d, %d", vec.x, vec.y);
+			LOG("Normal %f, %f", xvec, yvec);
+
+			if (abs(xvec) > abs(yvec)) {
+				if (xvec < 0) {
+					float convert = -20 / xvec;
 					xvec = xvec * convert;
 					yvec = yvec * convert;
 				}
 				else {
-					xvec = xvec * 20;
+					if (xvec > 0) {
+						float convert = 20 / xvec;
+						xvec = xvec * convert;
+						yvec = yvec * convert;
+					}
+					else {
+						yvec = yvec * 20;
+					}
 				}
 			}
+			else {
+				if (yvec < 0) {
+					float convert = -20 / yvec;
+					xvec = xvec * convert;
+					yvec = yvec * convert;
+				}
+				else {
+					if (yvec > 0) {
+						float convert = 20 / yvec;
+						xvec = xvec * convert;
+						yvec = yvec * convert;
+					}
+					else {
+						xvec = xvec * 20;
+					}
+				}
+			}
+
+
+
+			LOG("Depurated %f, %f", xvec, yvec);
+			LOG("Depurated %d, %d", (int)xvec, (int)yvec);
+			App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle, dt);
+
 		}
-	
-		LOG("Depurated %f, %f", xvec, yvec);
-		LOG("Depurated %d, %d", (int)xvec, (int)yvec);
-		App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5 , (int)xvec, (int)yvec, angle, dt);
+
+
 	}
 }
 
@@ -364,9 +380,9 @@ void j1Player::StateMachine(float dt)
 {
 	if (state == IDLE) {
 		App->audio->StopFx();
+		aimbarw = 0;
 	}
 	if (state == DASH_L) {
-		LOG("%d", dashspeed);
 
 		if (dashspeed < 0) {
 			dashspeed = 0;
@@ -376,7 +392,6 @@ void j1Player::StateMachine(float dt)
 		current_animation = &dash;
 	}
 	if (state == DASH_R) {
-		LOG("%d", dashspeed);
 		if (dashspeed < 0) {
 			dashspeed = 0;
 		}
@@ -431,8 +446,10 @@ void j1Player::StateMachine(float dt)
 	}
 	if (state == AIMING)
 	{
-
+		aimbarw ++;
+		AimTimer = SDL_GetTicks();
 		current_animation = &aiming;
+
 	}
 }
 
