@@ -258,7 +258,7 @@ void j1Player::Movement(float dt) {
 		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_L;
 
-			if (dashspeed > 0) { dashspeed -= (int)(DT_CONVERTER * dt); }
+			if (dashspeed > 0) { dashspeed -= (DT_CONVERTER * dt); }
 			else { state = IDLE; }
 			if (Canleft && CandashL)position.x -= (int)(dashspeed * DT_CONVERTER * dt);
 			position.y -= (int)(gravity * (DT_CONVERTER * dt));
@@ -266,10 +266,9 @@ void j1Player::Movement(float dt) {
 		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_R;
 
-			if (dashspeed > 0) { dashspeed -= (int)(DT_CONVERTER * dt); }
+			if (dashspeed > 0) { dashspeed -=  DT_CONVERTER * dt; }
 			else { state = IDLE; }
-			if (Canright && CandashR)position.x += (int)(dashspeed *DT_CONVERTER * dt);
-
+			if (Canright && CandashR)position.x += (int)(dashspeed* DT_CONVERTER * dt);
 			position.y -= (int)(gravity * DT_CONVERTER * dt);
 		}
 	}
@@ -369,8 +368,10 @@ void j1Player::Movement(float dt) {
 
 			LOG("Depurated %f, %f", xvec, yvec);
 			LOG("Depurated %d, %d", (int)xvec, (int)yvec);
-
-			App->particles->AddParticle(App->particles->arrow, position.x + 70, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+			if(flip = SDL_FLIP_NONE)
+			App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+			if (flip = SDL_FLIP_HORIZONTAL)
+				App->particles->AddParticle(App->particles->arrow, position.x-10, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
 			aiming.Reset();
 
 		}

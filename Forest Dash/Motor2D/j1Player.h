@@ -107,7 +107,7 @@ private:
 	int gravity;
 	int speedX;
 	int speedY;
-	int dashspeed;
+	float dashspeed;
 	float acceleration;
 	float speedBar;
 
