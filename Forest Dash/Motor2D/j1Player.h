@@ -70,6 +70,7 @@ private:
 	player_state state;
 	player_state prev_state = IDLE;
 	int DeathTimer = 0;
+	int AimTimer = 0;
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	p2List<Animation> animations;
@@ -117,6 +118,7 @@ public:
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	float BarWidth = 40;
+	float aimbarw = 0;
 	float magnitude = 0.0f;
 	int opacity = 0;
 	int maxBarWidth;

@@ -302,59 +302,72 @@ void j1Player::Movement(float dt){
 	}
 
 	//Particles
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-		iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
-		iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
-		float angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
-		LOG("%f", angle);
-		float yvec = (vec.y / sqrt(pow(vec.x,2)+ pow(vec.y, 2)));
-		float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
-		LOG("Raw %d, %d", vec.x, vec.y);
-		LOG("Normal %f, %f", xvec, yvec);
-		
-		if(abs(xvec) > abs(yvec)){
-		if (xvec < 0) {
-			float convert = -20 / xvec;
-			xvec = xvec * convert;
-			yvec = yvec * convert;
-		}
-		else {
-			if (xvec > 0) {
-				float convert = 20 / xvec;
-				xvec = xvec * convert;
-				yvec = yvec * convert;
-			}
-			else {
-				yvec = yvec * 20;
-			}
-		}
-	}
-		else {
-			if (yvec < 0) {
-				float convert = -20 / yvec;
-				xvec = xvec * convert;
-				yvec = yvec * convert;
-			}
-			else {
-				if (yvec > 0) {
-					float convert = 20 / yvec;
+		state = AIMING;
+		SDL_Rect aimbar;
+		aimbar.h = 3;
+		aimbar.w = aimbarw;
+		aimbar.x = position.x;
+		aimbar.y = position.y + playerHeight - 50;
+		App->render->DrawQuad(aimbar, 0, 0, 255, 90);
+		if (aimbar.w >= 50)
+		{
+			aimbarw = 0;
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+			iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
+			iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
+			float angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
+			LOG("%f", angle);
+			float yvec = (vec.y / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
+			float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
+			LOG("Raw %d, %d", vec.x, vec.y);
+			LOG("Normal %f, %f", xvec, yvec);
+
+			if (abs(xvec) > abs(yvec)) {
+				if (xvec < 0) {
+					float convert = -20 / xvec;
 					xvec = xvec * convert;
 					yvec = yvec * convert;
 				}
 				else {
-					xvec = xvec * 20;
+					if (xvec > 0) {
+						float convert = 20 / xvec;
+						xvec = xvec * convert;
+						yvec = yvec * convert;
+					}
+					else {
+						yvec = yvec * 20;
+					}
 				}
 			}
+			else {
+				if (yvec < 0) {
+					float convert = -20 / yvec;
+					xvec = xvec * convert;
+					yvec = yvec * convert;
+				}
+				else {
+					if (yvec > 0) {
+						float convert = 20 / yvec;
+						xvec = xvec * convert;
+						yvec = yvec * convert;
+					}
+					else {
+						xvec = xvec * 20;
+					}
+				}
+			}
+
+			LOG("Depurated %f, %f", xvec, yvec);
+			LOG("Depurated %d, %d", (int)xvec, (int)yvec);
+			App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
 		}
-	
-		LOG("Depurated %f, %f", xvec, yvec);
-		LOG("Depurated %d, %d", (int)xvec, (int)yvec);
-		App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5 , (int)xvec, (int)yvec, angle);
 	}
+
+		
 }
 
 //Depending of the state set on Movement(), play fx, change facing direction and other interaction ----------------------------------------------
@@ -362,6 +375,7 @@ void j1Player::StateMachine(float dt)
 {
 	if (state == IDLE) {
 		App->audio->StopFx();
+		aimbarw = 0;
 	}
 	if (state == DASH_L) {
 		if (!CandashL) {
@@ -426,8 +440,10 @@ void j1Player::StateMachine(float dt)
 	}
 	if (state == AIMING)
 	{
-
+		aimbarw ++;
+		AimTimer = SDL_GetTicks();
 		current_animation = &aiming;
+
 	}
 }
 
