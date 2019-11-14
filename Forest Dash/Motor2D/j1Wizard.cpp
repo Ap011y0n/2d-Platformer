@@ -72,7 +72,7 @@ bool j1Wizard::CleanUp()
 bool j1Wizard::Update(float dt)
 {
 	current_animation = &idle;
-	SDL_Rect* r = &current_animation->GetCurrentFrame();
+	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 

@@ -128,7 +128,7 @@ bool j1Player::Update(float dt)
 	CheckCollision(dt);
 	Movement(dt);
 	StateMachine(dt);
-	SDL_Rect* r = &current_animation->GetCurrentFrame();
+	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
@@ -194,7 +194,7 @@ void j1Player::Movement(float dt){
 				if (jumpSpeed < (gravity * DT_CONVERTER * dt)) {
 					jumpSpeed += (0.45* DT_CONVERTER * dt);
 					if (!Canjump) { position.y -= (int)(gravity * DT_CONVERTER * dt); }
-					if (Canjump) { position.y += ((jumpSpeed)* DT_CONVERTER * dt);}
+					if (Canjump) { position.y += (int)((jumpSpeed)* DT_CONVERTER * dt);}
 				}
 		// Cap falling speed to avoid conflicts with collisions
 				if (jumpSpeed > 0) { jumpSpeed = 0; }
@@ -223,7 +223,7 @@ void j1Player::Movement(float dt){
 			}
 			else {
 				if (Canright) {
-					position.x += (speedX * DT_CONVERTER * dt);
+					position.x += (int)(speedX * DT_CONVERTER * dt);
 					flip = SDL_FLIP_NONE;
 					if (state != JUMP && state != FALLING) {
 						state = IDLE;
@@ -238,11 +238,11 @@ void j1Player::Movement(float dt){
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
 			if (state == FORWARD) {
 				state = IDLE;
-				position.x -= (speedX * DT_CONVERTER * dt);
+				position.x -= (int)(speedX * DT_CONVERTER * dt);
 			}
 			else{
 			if (Canleft) {
-				position.x -= (speedX * DT_CONVERTER * dt);
+				position.x -= (int)(speedX * DT_CONVERTER * dt);
 				flip = SDL_FLIP_HORIZONTAL;
 				if (state != JUMP && state != FALLING) {
 					state = IDLE;
@@ -253,20 +253,22 @@ void j1Player::Movement(float dt){
 			}
 		}
 	// Dash: add acceleration when presing left or rigth arrows
-		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH && CandashL) {
+		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_L;
-			if (dashspeed > 0)dashspeed -= (1 * DT_CONVERTER * dt);
+			
+			if (dashspeed > 0) { dashspeed -= (int)(DT_CONVERTER * dt); }
 			else { state = IDLE; }
-			if (Canleft)position.x -= dashspeed * (DT_CONVERTER * dt);
-			position.y -= gravity * ((DT_CONVERTER * dt));
+			if (Canleft && CandashL)position.x -= (int)(dashspeed * DT_CONVERTER * dt);
+			position.y -= (int)(gravity * (DT_CONVERTER * dt));
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH && CandashR) {
+		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH) {
 			state = DASH_R;
-			if (dashspeed > 0)dashspeed -= 1 * (DT_CONVERTER * dt);
+		
+			if (dashspeed > 0) { dashspeed -= (int)(DT_CONVERTER * dt); }
 			else { state = IDLE; }
-			if(Canright)position.x += dashspeed *(DT_CONVERTER * dt);
+			if(Canright && CandashR)position.x += (int)(dashspeed *DT_CONVERTER * dt);
 
-			position.y -= (gravity * (DT_CONVERTER * dt));
+			position.y -= (int)(gravity * DT_CONVERTER * dt);
 		}
 	}
 
@@ -275,27 +277,27 @@ void j1Player::Movement(float dt){
 	{
 		state = IDLE;
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				position.x -= (speedX * (DT_CONVERTER * dt));
+				position.x -= (int)(speedX * (DT_CONVERTER * dt));
 				flip = SDL_FLIP_HORIZONTAL;
 				state = IDLE;
 				if (state == IDLE)state = BACKWARD;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			position.x += (speedX * DT_CONVERTER * dt);
+			position.x += (int)(speedX * DT_CONVERTER * dt);
 			state = IDLE;
 			if (state == IDLE)state = FORWARD;
 			flip = SDL_FLIP_NONE;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			position.y -= (speedX * DT_CONVERTER * dt);
+			position.y -= (int)(speedX * DT_CONVERTER * dt);
 			state = IDLE;
 			if (state == IDLE)state = JUMP;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			position.y += (speedX * DT_CONVERTER * dt);
+			position.y += (int)(speedX * DT_CONVERTER * dt);
 			state = IDLE; 
 			if (state == IDLE)state = JUMP;
 		}
@@ -353,7 +355,7 @@ void j1Player::Movement(float dt){
 	
 		LOG("Depurated %f, %f", xvec, yvec);
 		LOG("Depurated %d, %d", (int)xvec, (int)yvec);
-		App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5 , (int)xvec, (int)yvec, angle);
+		App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5 , (int)xvec, (int)yvec, angle, dt);
 	}
 }
 
@@ -364,16 +366,19 @@ void j1Player::StateMachine(float dt)
 		App->audio->StopFx();
 	}
 	if (state == DASH_L) {
-		if (!CandashL) {
-			state = IDLE;
+		LOG("%d", dashspeed);
+
+		if (dashspeed < 0) {
+			dashspeed = 0;
 		}
 		playfx(10, 10);
 		flip = SDL_FLIP_HORIZONTAL;
 		current_animation = &dash;
 	}
 	if (state == DASH_R) {
-		if (!CandashR) {
-			state = IDLE;
+		LOG("%d", dashspeed);
+		if (dashspeed < 0) {
+			dashspeed = 0;
 		}
 		playfx(10, 10);
 		flip = SDL_FLIP_NONE;
@@ -452,29 +457,37 @@ void j1Player::CheckCollision(float dt) {
 		layer = layer_iterator->data;
 	// Map colliders, limit movement
 				if (layer->returnPropValue("Navigation") == 1 && state != DEATH) {
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + (jumpSpeed + gravity) * DT_CONVERTER * dt);
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + (int)((jumpSpeed + gravity) * DT_CONVERTER * dt));
 					if (layer->Get(coord.x, coord.y) != 0) Canjump = false;
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + (playerHeight + gravity* DT_CONVERTER * dt));
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + (int)(gravity* DT_CONVERTER * dt));
 					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + (int)(playerHeight + 3 * DT_CONVERTER * dt));
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + (int)(3 * DT_CONVERTER * dt));
 					if (layer->Get(coord.x, coord.y) != 0) adjust = false;
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * DT_CONVERTER * dt), position.y + playerHeight);
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (int)(speedX * DT_CONVERTER * dt), position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;						
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * DT_CONVERTER * dt), position.y + playerHeight / 2);
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (int)(speedX * DT_CONVERTER * dt), position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;						 
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * DT_CONVERTER * dt), position.y);
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (int)(speedX * DT_CONVERTER * dt), position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;
-					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * DT_CONVERTER * dt), position.y + playerHeight);
+					coord = App->map->WorldToMap(position.x + playerCentre - (int)(speedX * DT_CONVERTER * dt), position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
-					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * DT_CONVERTER * dt), position.y + playerHeight / 2);
+					coord = App->map->WorldToMap(position.x + playerCentre - (int)(speedX * DT_CONVERTER * dt), position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
-					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * DT_CONVERTER * dt), position.y);
+					coord = App->map->WorldToMap(position.x + playerCentre - (int)(speedX * DT_CONVERTER * dt), position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
 					
-					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (dashspeed * DT_CONVERTER * dt), position.y + playerHeight / 2);
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (int)(dashspeed * DT_CONVERTER * dt), position.y + playerHeight / 2);
+					if (layer->Get(coord.x, coord.y) != 0) CandashR = false;
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (int)(dashspeed * DT_CONVERTER * dt), position.y + playerHeight);
+					if (layer->Get(coord.x, coord.y) != 0) CandashR = false;
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (int)(dashspeed * DT_CONVERTER * dt), position.y);
 					if (layer->Get(coord.x, coord.y) != 0) CandashR = false;
 				
-					coord = App->map->WorldToMap(position.x + playerCentre - (dashspeed * DT_CONVERTER * dt), position.y + playerHeight / 2);
+					coord = App->map->WorldToMap(position.x + playerCentre - (int)(dashspeed * DT_CONVERTER * dt), position.y + playerHeight / 2);
+					if (layer->Get(coord.x, coord.y) != 0) CandashL = false;
+					coord = App->map->WorldToMap(position.x + playerCentre - (int)(dashspeed * DT_CONVERTER * dt), position.y + playerHeight);
+					if (layer->Get(coord.x, coord.y) != 0) CandashL = false;
+					coord = App->map->WorldToMap(position.x + playerCentre - (int)(dashspeed * DT_CONVERTER * dt), position.y);
 					if (layer->Get(coord.x, coord.y) != 0) CandashL = false;
 					
 				}
