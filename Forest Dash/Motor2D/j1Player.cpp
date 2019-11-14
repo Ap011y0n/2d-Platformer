@@ -105,7 +105,7 @@ bool j1Player::Start()
 	r.w = playerWidth;
 	r.x = position.x + playerCentre;
 	r.y = position.y;
-	ColliderPlayer = App->collision->AddCollider(r, COLLIDER_PLAYER, this);
+	ColliderPlayer = App->collision->AddCollider(&r, COLLIDER_PLAYER, this);
 	return true;
 }
 

@@ -39,7 +39,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-
+	LOG("Start scene");
 	current_level = levels.start->data;
 	App->map->Load(current_level.GetString());
 	App->audio->PlayMusic(App->map->data.music.GetString());

@@ -41,6 +41,7 @@ bool j1Input::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Input::Start()
 {
+	LOG("Start input");
 	SDL_StopTextInput();
 	return true;
 }

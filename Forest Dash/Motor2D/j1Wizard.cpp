@@ -45,7 +45,7 @@ bool j1Wizard::Awake(pugi::xml_node& config)
 // Load assets ----------------------------------------------
 bool j1Wizard::Start()
 {
-
+	LOG("Start Wizard");
 	graphics = App->tex->Load("textures/wizardtexture.png");
 
 	position.x = 690;
@@ -55,7 +55,7 @@ bool j1Wizard::Start()
 	r.h = 60;
 	r.x = 690;
 	r.y = 525;
-	App->collision->AddCollider(r, COLLIDER_ENEMY, this);
+	App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
 	return true;
 }
 

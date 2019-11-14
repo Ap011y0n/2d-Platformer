@@ -45,7 +45,7 @@ bool j1Slime::Awake(pugi::xml_node& config)
 // Load assets ----------------------------------------------
 bool j1Slime::Start()
 {
-
+	LOG("Start Slime");
 	graphics = App->tex->Load("textures/slime.png");
 
 	position.x = 690;
@@ -55,7 +55,7 @@ bool j1Slime::Start()
 	r.h = 40;
 	r.x = 690;
 	r.y = 525;
-	App->collision->AddCollider(r, COLLIDER_ENEMY, this);
+	App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
 	return true;
 }
 

@@ -50,7 +50,7 @@ public:
 	//update_status PostUpdate();
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
+	Collider* AddCollider(SDL_Rect* rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	void DebugDraw();
 	float deltatime;
 private:
