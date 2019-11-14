@@ -129,7 +129,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	MoveCondition(dt);
+//	MoveCondition(dt);
 
 	return true;
 }
@@ -302,18 +302,21 @@ void j1Player::Movement(float dt){
 		iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 		iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
 		iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
+		float angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
+		LOG("%f", angle);
 		float yvec = (vec.y / sqrt(pow(vec.x,2)+ pow(vec.y, 2)));
 		float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
-		LOG("Raw %d, %d", vec.y, vec.x);
+		LOG("Raw %d, %d", vec.x, vec.y);
 		LOG("Normal %f, %f", xvec, yvec);
 		
+		if(abs(xvec) > abs(yvec)){
 		if (xvec < 0) {
 			float convert = -20 / xvec;
 			xvec = xvec * convert;
 			yvec = yvec * convert;
 		}
 		else {
-			if (xvec != 0) {
+			if (xvec > 0) {
 				float convert = 20 / xvec;
 				xvec = xvec * convert;
 				yvec = yvec * convert;
@@ -322,9 +325,28 @@ void j1Player::Movement(float dt){
 				yvec = yvec * 20;
 			}
 		}
+	}
+		else {
+			if (yvec < 0) {
+				float convert = -20 / yvec;
+				xvec = xvec * convert;
+				yvec = yvec * convert;
+			}
+			else {
+				if (yvec > 0) {
+					float convert = 20 / yvec;
+					xvec = xvec * convert;
+					yvec = yvec * convert;
+				}
+				else {
+					xvec = xvec * 20;
+				}
+			}
+		}
+	
 		LOG("Depurated %f, %f", xvec, yvec);
 		LOG("Depurated %d, %d", (int)xvec, (int)yvec);
-		App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5 , (int)xvec, (int)yvec);
+		App->particles->AddParticle(App->particles->arrow, position.x + 15, position.y + 15, COLLIDER_PLAYER_SHOT, 0.5 , (int)xvec, (int)yvec, angle);
 	}
 }
 

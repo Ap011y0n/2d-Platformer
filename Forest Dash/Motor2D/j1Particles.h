@@ -23,6 +23,7 @@ struct Particle
 	iPoint speed;
 	Uint32 born = 0;
 	Uint32 life = 0;
+	int angle = 0;
 	bool fx_played = false;
 
 	Particle();
@@ -56,7 +57,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 
 	// Add particle
-	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int SpeedX = 1, int SpeedY = 1);
+	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int SpeedX = 1, int SpeedY = 1, int angle = 0);
 
 private:
 	// Create particle
