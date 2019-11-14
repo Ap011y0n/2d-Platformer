@@ -134,7 +134,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	MoveCondition(dt);
+	/*MoveCondition(dt)*/;
 
 	return true;
 }
@@ -314,7 +314,7 @@ void j1Player::Movement(float dt) {
 		aimbar.w = aimbarw;
 		aimbar.x = position.x;
 		aimbar.y = position.y + playerHeight - 50;
-		App->render->DrawQuad(aimbar, 0, 0, 255, 90);
+		App->render->DrawQuad(aimbar, 0, 0, 255, 255);
 		if (aimbar.w >= 40)
 		{
 			aimbarw = 0;
@@ -370,7 +370,7 @@ void j1Player::Movement(float dt) {
 			LOG("Depurated %f, %f", xvec, yvec);
 			LOG("Depurated %d, %d", (int)xvec, (int)yvec);
 
-			App->particles->AddParticle(App->particles->arrow, position.x + 70, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+			App->particles->AddParticle(App->particles->arrow, position.x + 40, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
 			aiming.Reset();
 
 		}
