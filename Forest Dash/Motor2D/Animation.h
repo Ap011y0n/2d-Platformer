@@ -34,9 +34,9 @@ public:
 
 	}
 
-	SDL_Rect& GetCurrentFrame()
+	SDL_Rect& GetCurrentFrame(float dt)
 	{
-		current_frame += speed[(int)current_frame];;
+		current_frame += speed[(int)current_frame]*30*dt;
 		if (current_frame >= last_frame)
 		{
 			current_frame = (loop) ? 0.0f : last_frame - 1;
