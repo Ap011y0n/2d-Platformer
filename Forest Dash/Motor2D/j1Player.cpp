@@ -176,7 +176,7 @@ void j1Player::Movement(float dt){
 			jumpSpeed = -1 * speedY;
 
 		//Set idle state if state is not dead nor jumping or dashing
-		if (state != JUMP && state != DEATH && state != DASH_L && state != DASH_R) {
+		if (state != JUMP && state != DEATH && state != DASH_L && state != DASH_R && !adjust) {
 			state = IDLE;
 		}
 
@@ -202,7 +202,11 @@ void j1Player::Movement(float dt){
 			state = FALLING;
 
 		}
+		if (!Candown && adjust && state != JUMP && state != DEATH && state != DASH_L && state != DASH_R) {
+			position.y += (int)(3 * DT_CONVERTER * dt);
+			state = ADJUST;
 
+		}
 		//Crouch wen in floor
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
 			if (state != JUMP && state != DEATH)state = CROUCH;
@@ -246,14 +250,14 @@ void j1Player::Movement(float dt){
 			}
 		}
 	// Dash: add acceleration when presing left or rigth arrows
-		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH) {
+		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH && CandashL) {
 			state = DASH_L;
 			if (dashspeed > 0)dashspeed -= (1 * DT_CONVERTER * dt);
 			else { state = IDLE; }
 			if (Canleft)position.x -= dashspeed * (DT_CONVERTER * dt);
 			position.y -= gravity * ((DT_CONVERTER * dt));
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH) {
+		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH && CandashR) {
 			state = DASH_R;
 			if (dashspeed > 0)dashspeed -= 1 * (DT_CONVERTER * dt);
 			else { state = IDLE; }
@@ -357,11 +361,17 @@ void j1Player::StateMachine(float dt)
 		App->audio->StopFx();
 	}
 	if (state == DASH_L) {
+		if (!CandashL) {
+			state = IDLE;
+		}
 		playfx(10, 10);
 		flip = SDL_FLIP_HORIZONTAL;
 		current_animation = &dash;
 	}
 	if (state == DASH_R) {
+		if (!CandashR) {
+			state = IDLE;
+		}
 		playfx(10, 10);
 		flip = SDL_FLIP_NONE;
 		current_animation = &dash;
@@ -421,6 +431,9 @@ void j1Player::CheckCollision(float dt) {
 	Canjump = true;
 	Candown = true;
 	death = false;
+	adjust = true;
+	CandashL = true;
+	CandashR = true;
 
 	bool ret = true;
 	iPoint coord;
@@ -431,10 +444,12 @@ void j1Player::CheckCollision(float dt) {
 		layer = layer_iterator->data;
 	// Map colliders, limit movement
 				if (layer->returnPropValue("Navigation") == 1 && state != DEATH) {
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + jumpSpeed + gravity * DT_CONVERTER * dt);
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + (jumpSpeed + gravity) * DT_CONVERTER * dt);
 					if (layer->Get(coord.x, coord.y) != 0) Canjump = false;
-					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight + (gravity* DT_CONVERTER * dt));
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + (playerHeight + gravity* DT_CONVERTER * dt));
 					if (layer->Get(coord.x, coord.y) != 0) Candown = false;
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + (int)(playerHeight + 3 * DT_CONVERTER * dt));
+					if (layer->Get(coord.x, coord.y) != 0) adjust = false;
 					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * DT_CONVERTER * dt), position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) Canright = false;						
 					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (speedX * DT_CONVERTER * dt), position.y + playerHeight / 2);
@@ -447,6 +462,13 @@ void j1Player::CheckCollision(float dt) {
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
 					coord = App->map->WorldToMap(position.x + playerCentre - (speedX * DT_CONVERTER * dt), position.y);
 					if (layer->Get(coord.x, coord.y) != 0) Canleft = false;
+					
+					coord = App->map->WorldToMap(position.x + playerWidth + playerCentre + (dashspeed * DT_CONVERTER * dt), position.y + playerHeight / 2);
+					if (layer->Get(coord.x, coord.y) != 0) CandashR = false;
+				
+					coord = App->map->WorldToMap(position.x + playerCentre - (dashspeed * DT_CONVERTER * dt), position.y + playerHeight / 2);
+					if (layer->Get(coord.x, coord.y) != 0) CandashL = false;
+					
 				}
 		// Scene change colliders, when colliding change scene
 				if (layer->returnPropValue("Navigation") == 2 ) {

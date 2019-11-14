@@ -11,8 +11,12 @@
 	<scene>
 		<scenename name="maplevel1.tmx" />
 	</scene>
+	<slime />
+	<wizard />
 	<player>
-		<position pos_x="120" pos_y="708" />
+		<position pos_x="892" pos_y="460" />
 	</player>
+	<:anonymous />
+	<particles />
 	<renderer />
 </game_state>

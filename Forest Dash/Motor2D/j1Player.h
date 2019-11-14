@@ -25,7 +25,8 @@ enum player_state
 	FALLING,
 	DEATH,
 	DASH_L,
-	DASH_R
+	DASH_R,
+	ADJUST
 };
 struct TileSetPlayer
 {
@@ -82,9 +83,13 @@ private:
 	
 	bool Canright = true;
 	bool Canleft = true;
+	bool CandashR = true;
+	bool CandashL = true;
 	bool Canjump = true;
 	bool Candown = true;
 	bool shoot = false;
+	bool adjust = false;
+
 	int playerHeight;
 	int playerWidth;
 	int playerCentre;
