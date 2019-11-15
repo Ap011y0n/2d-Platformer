@@ -55,6 +55,9 @@
     <ClCompile Include="j1Wizard.cpp">
       <Filter>Main ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Main ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -130,6 +133,9 @@
       <Filter>Main ========\Tools</Filter>
     </ClInclude>
     <ClInclude Include="j1Wizard.h">
+      <Filter>Main ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
       <Filter>Main ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
