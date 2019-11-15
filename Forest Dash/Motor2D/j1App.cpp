@@ -17,6 +17,7 @@
 #include "j1Particles.h"
 #include "j1App.h"
 #include "j1ModuleCollision.h"
+#include "j1Pathfinding.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -38,6 +39,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	wizard = new j1Wizard();
 	collision = new j1ModuleCollision();
 	particles = new j1Particles();
+	pathfinding = new j1PathFinding();
 	
 
 	// Ordered for awake / Start / Update
@@ -53,6 +55,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(collision);
 	AddModule(particles);
+	AddModule(pathfinding);
 	// render last to swap buffer
 	AddModule(render);
 
