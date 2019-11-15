@@ -60,9 +60,12 @@ private:
 
 	TileSetSlime TileSetData;
 	slime_state state;
+
 public:
 
+	Collider* colliderSlime;
 	bool slimeDead = false;
+	int deathTimerSlime = 0;
 	iPoint position;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

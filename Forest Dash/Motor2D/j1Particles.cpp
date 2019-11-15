@@ -146,14 +146,15 @@ void j1Particles::OnCollision(Collider* c1, Collider* c2)
 		// Always destroy particles that collide
 		if (active[i] != nullptr && active[i]->collider == c1)
 		{
-			if (c1->type == COLLIDER_PLAYER_SHOT && c2->type == COLLIDER_ENEMY) {
-				LOG("collision with arrow with slime");
+			if (c1->type == COLLIDER_PLAYER_SHOT && c2->type == COLLIDER_ENEMY) 
+			{
 				App->slime->slimeDead = true;
+				App->slime->deathTimerSlime = SDL_GetTicks();
 			}
 			if (c1->type == COLLIDER_PLAYER_SHOT && c2->type == COLLIDER_WIZARD)
 			{
-				LOG("collision with arrow with wizard");
 				App->wizard->wizarDead = true;
+				App->wizard->deathTimerWizard = SDL_GetTicks();
 			}
 			break;
 		}

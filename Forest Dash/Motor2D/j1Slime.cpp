@@ -65,7 +65,7 @@ bool j1Slime::Start()
 	r.x = position.x;
 	r.y = position.y;
 
-	App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
+	colliderSlime = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
 
 	return true;
 }
@@ -122,8 +122,15 @@ void j1Slime::setAnimation()
 	}
 	if (state == SLIME_DEATH)
 	{
-		LOG("SLIME DEATH");
+		
 		current_animation = &death;
+
+		if (SDL_GetTicks() > (deathTimerSlime + 2500)) {
+			
+			CleanUp();
+			colliderSlime->to_delete = true;
+
+		}
 	}
 
 }

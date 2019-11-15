@@ -14,6 +14,7 @@
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
 #include "j1Slime.h"
+#include "j1Wizard.h"
 
 
 j1Player::j1Player(): j1Module()
@@ -694,6 +695,7 @@ void j1Player::playfx( const int id, const int rep) {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
+	
 	if (c1 == ColliderPlayer && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
 		if (position.x <= App->slime->position.x)
@@ -710,6 +712,26 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			jumpSpeed = -speedY * (DT_CONVERTER * App->collision->deltatime);
 			DeathTimer = SDL_GetTicks();
 		}
+		
+
+	}
+	if (c1 == ColliderPlayer && c2->type == COLLIDER_WIZARD) {
+		
+		if (position.x <= App->wizard->position.x)
+		{
+			position.x -= 30;
+			state = DEATH;
+			jumpSpeed = -speedY * (DT_CONVERTER * App->collision->deltatime);
+			DeathTimer = SDL_GetTicks();
+		}
+		else
+		{
+			position.x += 30;
+			state = DEATH;
+			jumpSpeed = -speedY * (DT_CONVERTER * App->collision->deltatime);
+			DeathTimer = SDL_GetTicks();
+		}
+
 
 	}
 

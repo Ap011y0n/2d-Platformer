@@ -61,7 +61,7 @@ bool j1Wizard::Start()
 	r.x = position.x;
 	r.y = position.y;
 	
-	App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
+	colliderWizard = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
 	return true;
 }
 
@@ -117,8 +117,15 @@ void j1Wizard::setAnimation()
 	}
 	if (state == WD_DEATH)
 	{
-		LOG("WIZARD DEATH");
+		
 		current_animation = &death;
+
+		if (SDL_GetTicks() > (deathTimerWizard + 2500)) {
+
+			CleanUp();
+			colliderWizard->to_delete = true;
+
+		}
 	}
 
 }

@@ -61,9 +61,12 @@ private:
 
 	TileSetWizard TileSetData;
 	wizard_state state;
+
 public:
 
+	Collider* colliderWizard;
 	bool wizarDead = false;
+	int deathTimerWizard = 0;
 	iPoint position;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
