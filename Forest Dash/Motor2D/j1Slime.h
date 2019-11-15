@@ -12,6 +12,12 @@ struct SDL_Texture;
 struct Collider;
 struct Anim;
 
+enum slime_state
+{
+	SLIME_IDLE = 0,
+	SLIME_DEATH,
+};
+
 struct TileSetSlime
 {
 	SDL_Rect GetAnimRect(int id) const;
@@ -42,18 +48,21 @@ public:
 
 private:
 
+	void setAnimation();
+
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
-
 	p2List<Animation> animations;
 	Animation idle;
+	Animation death;
 
 	pugi::xml_document	slime_file;
 
 	TileSetSlime TileSetData;
-
+	slime_state state;
 public:
 
+	bool dead = false;
 	iPoint position;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

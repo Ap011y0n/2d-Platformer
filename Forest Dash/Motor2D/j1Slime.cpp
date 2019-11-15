@@ -11,6 +11,7 @@
 #include "j1Audio.h"
 #include "Animation.h"
 #include "j1ModuleCollision.h"
+#include "j1Particles.h"
 
 
 
@@ -21,12 +22,19 @@ j1Slime::j1Slime() : j1Module()
 	graphics = NULL;
 	current_animation = NULL;
 	LoadAnimations("textures/slime_animations.tmx");
+	state = SLIME_IDLE;
 
 	// Load animations from an animations list ----------------------------------------------
 	p2List_item<Animation>* animation_iterator = animations.start;
 
 	idle = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
+
+	death = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
+	death.loop = false;
+
+	
 }
 
 j1Slime::~j1Slime()
@@ -46,7 +54,7 @@ bool j1Slime::Awake(pugi::xml_node& config)
 bool j1Slime::Start()
 {
 	LOG("Start Slime");
-	graphics = App->tex->Load("textures/slime.png");
+	graphics = App->tex->Load("textures/slimetex.png");
 
 	position.x = 690;
 	position.y = 525;
@@ -56,6 +64,7 @@ bool j1Slime::Start()
 	r.x = 690;
 	r.y = 525;
 	App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
+
 	return true;
 }
 
@@ -71,8 +80,10 @@ bool j1Slime::CleanUp()
 // Update: draw background ----------------------------------------------
 bool j1Slime::Update(float dt)
 {
-	current_animation = &idle;
+	setAnimation();
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
+
+	if(dead) state = SLIME_DEATH;
 
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 
@@ -98,6 +109,21 @@ bool j1Slime::Save(pugi::xml_node& data) const
 {
 	
 	return true;
+}
+
+void j1Slime::setAnimation()
+{
+	if(state == SLIME_IDLE)
+	{
+		current_animation = &idle;
+		death.Reset();
+	}
+	if (state == SLIME_DEATH)
+	{
+		LOG("slime death");
+		current_animation = &death;
+	}
+
 }
 
 // Load animations from tiled  ----------------------------------------------
@@ -154,5 +180,7 @@ SDL_Rect TileSetSlime::GetAnimRect(int id) const
 }
 
 void j1Slime::OnCollision(Collider* c1, Collider* c2) {
+
+	
 
 }

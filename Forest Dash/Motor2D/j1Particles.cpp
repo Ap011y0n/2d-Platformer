@@ -147,7 +147,7 @@ void j1Particles::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c1->type == COLLIDER_PLAYER_SHOT && c2->type == COLLIDER_ENEMY) {
 				LOG("hi");
-				App->slime->CleanUp();
+				App->slime->dead = true;
 			}
 
 			//if (c1->type == COLLIDER_ENEMY_SHOT && c2->type == COLLIDER_PLAYER)
