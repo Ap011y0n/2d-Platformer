@@ -57,12 +57,14 @@ bool j1Slime::Start()
 	graphics = App->tex->Load("textures/slimetex.png");
 
 	position.x = 690;
-	position.y = 525;
+	position.y = 540;
+	
 	SDL_Rect r;
 	r.w = 40;
-	r.h = 40;
-	r.x = 690;
-	r.y = 525;
+	r.h = 50;
+	r.x = position.x;
+	r.y = position.y;
+
 	App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
 
 	return true;
@@ -80,11 +82,11 @@ bool j1Slime::CleanUp()
 // Update: draw background ----------------------------------------------
 bool j1Slime::Update(float dt)
 {
+	if (slimeDead) state = SLIME_DEATH;
+	
 	setAnimation();
+
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
-
-	if(dead) state = SLIME_DEATH;
-
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 
 	return true;
@@ -120,7 +122,7 @@ void j1Slime::setAnimation()
 	}
 	if (state == SLIME_DEATH)
 	{
-		LOG("slime death");
+		LOG("SLIME DEATH");
 		current_animation = &death;
 	}
 

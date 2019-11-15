@@ -62,7 +62,7 @@ private:
 	slime_state state;
 public:
 
-	bool dead = false;
+	bool slimeDead = false;
 	iPoint position;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

@@ -21,12 +21,16 @@ j1Wizard::j1Wizard() : j1Module()
 	graphics = NULL;
 	current_animation = NULL;
 	LoadAnimations("textures/wizard_animations.tmx");
-
+	state = WD_IDLE;
 	// Load animations from an animations list ----------------------------------------------
 	p2List_item<Animation>* animation_iterator = animations.start;
 
 	idle = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
+
+	death = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
+	death.loop = false;
 }
 
 j1Wizard::~j1Wizard()
@@ -50,12 +54,14 @@ bool j1Wizard::Start()
 
 	position.x = 690;
 	position.y = 300;
+
 	SDL_Rect r;
-	r.w = 60;
-	r.h = 60;
-	r.x = 690;
-	r.y = 525;
-	App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
+	r.w = 40;
+	r.h = 70;
+	r.x = position.x;
+	r.y = position.y;
+	
+	App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
 	return true;
 }
 
@@ -71,9 +77,11 @@ bool j1Wizard::CleanUp()
 // Update: draw background ----------------------------------------------
 bool j1Wizard::Update(float dt)
 {
-	current_animation = &idle;
-	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
+	if (wizarDead) state = WD_DEATH;
 
+	setAnimation();
+
+	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 
 	return true;
@@ -98,6 +106,21 @@ bool j1Wizard::Save(pugi::xml_node& data) const
 {
 
 	return true;
+}
+
+void j1Wizard::setAnimation()
+{
+	if (state == WD_IDLE)
+	{
+		current_animation = &idle;
+		death.Reset();
+	}
+	if (state == WD_DEATH)
+	{
+		LOG("WIZARD DEATH");
+		current_animation = &death;
+	}
+
 }
 
 // Load animations from tiled  ----------------------------------------------

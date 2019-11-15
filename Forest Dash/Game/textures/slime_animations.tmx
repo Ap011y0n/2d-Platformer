@@ -4,21 +4,21 @@
   <image source="slimetex.png" width="810" height="540"/>
   <tile id="0">
    <animation>
-    <frame tileid="0" duration="400"/>
-    <frame tileid="1" duration="400"/>
+    <frame tileid="0" duration="400" pivotx="-15" pivoty="-10"/>
+    <frame tileid="1" duration="400" pivotx="-15" pivoty="-10"/>
    </animation>
   </tile>
   <tile id="1">
    <animation>
-    <frame tileid="9" duration="400"/>
-    <frame tileid="10" duration="400"/>
-    <frame tileid="11" duration="400"/>
-    <frame tileid="12" duration="400"/>
-    <frame tileid="13" duration="400"/>
-    <frame tileid="14" duration="400"/>
-    <frame tileid="15" duration="400"/>
-    <frame tileid="16" duration="400"/>
-    <frame tileid="17" duration="400"/>
+    <frame tileid="9" duration="400" pivotx="-15" pivoty="-10"/>
+    <frame tileid="10" duration="400" pivotx="-15" pivoty="-10"/>
+    <frame tileid="11" duration="400" pivotx="-15" pivoty="-10"/>
+    <frame tileid="12" duration="400" pivotx="-15" pivoty="-10"/>
+    <frame tileid="13" duration="400" pivotx="-15" pivoty="-10"/>
+    <frame tileid="14" duration="400" pivotx="-15" pivoty="-10"/>
+    <frame tileid="15" duration="400" pivotx="-15" pivoty="-10"/>
+    <frame tileid="16" duration="400" pivotx="-15" pivoty="-10"/>
+    <frame tileid="17" duration="400" pivotx="-15" pivoty="-10"/>
    </animation>
   </tile>
  </tileset>

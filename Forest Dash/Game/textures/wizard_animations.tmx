@@ -4,20 +4,31 @@
   <image source="wizardtexture.png" width="1000" height="510"/>
   <tile id="0">
    <animation>
-    <frame tileid="0" duration="400"/>
-    <frame tileid="1" duration="400"/>
-    <frame tileid="2" duration="400"/>
-    <frame tileid="3" duration="400"/>
-    <frame tileid="4" duration="400"/>
-    <frame tileid="5" duration="400"/>
-    <frame tileid="6" duration="400"/>
-    <frame tileid="7" duration="400"/>
+    <frame tileid="0" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="1" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="2" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="3" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="4" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="5" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="6" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="7" duration="400" pivotx="-25" pivoty="-15"/>
+   </animation>
+  </tile>
+  <tile id="1">
+   <animation>
+    <frame tileid="20" duration="100" pivotx="-25" pivoty="-15"/>
+    <frame tileid="22" duration="100" pivotx="-25" pivoty="-15"/>
+    <frame tileid="23" duration="100" pivotx="-25" pivoty="-15"/>
+    <frame tileid="24" duration="100" pivotx="-25" pivoty="-15"/>
+    <frame tileid="25" duration="100" pivotx="-25" pivoty="-15"/>
+    <frame tileid="26" duration="100" pivotx="-25" pivoty="-15"/>
+    <frame tileid="27" duration="100" pivotx="-25" pivoty="-15"/>
    </animation>
   </tile>
  </tileset>
  <layer name="Capa de Patrones 1" width="5" height="5">
   <data encoding="csv">
-1,0,0,0,0,
+1,2,0,0,0,
 0,0,0,0,0,
 0,0,0,0,0,
 0,0,0,0,0,
