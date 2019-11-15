@@ -314,7 +314,7 @@ void j1Player::Movement(float dt) {
 		aimbar.x = position.x;
 		aimbar.y = position.y + playerHeight - 50;
 		App->render->DrawQuad(aimbar, 0, 0, 255, 255);
-		if (aimbar.w >= 40)
+		if (aimbar.w >= 60)
 		{
 			aimbarw = 0;
 			int x, y;
@@ -368,12 +368,13 @@ void j1Player::Movement(float dt) {
 
 			LOG("Depurated %f, %f", xvec, yvec);
 			LOG("Depurated %d, %d", (int)xvec, (int)yvec);
-			if(flip = SDL_FLIP_NONE)
-			App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
-			if (flip = SDL_FLIP_HORIZONTAL)
-				App->particles->AddParticle(App->particles->arrow, position.x-10, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+			if (flip == SDL_FLIP_NONE) {
+				App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+			}
+			else if (flip == SDL_FLIP_HORIZONTAL)
+			App->particles->AddParticle(App->particles->arrow, position.x-10, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
 
-
+			aiming.Reset();
 		}
 
 
