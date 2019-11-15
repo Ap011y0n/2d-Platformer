@@ -83,6 +83,7 @@ private:
 	Animation dead;
 	Animation dash;
 	Animation aiming;
+	SDL_Rect aimbar;
 	
 	bool Canright = true;
 	bool Canleft = true;

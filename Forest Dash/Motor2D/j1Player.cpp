@@ -134,7 +134,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	/*MoveCondition(dt)*/;
+	MoveCondition(dt);
 
 	return true;
 }
@@ -170,12 +170,14 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 // Receive inputs and set movement and states ----------------------------------------------
 void j1Player::Movement(float dt) {
-
+	
 	if (Godmode == false)
 	{
 		//Set gravity to player
-		if (Candown && position.y < -1 * App->render->camera.y + App->win->height && dt < 0.5)
+		if (Candown && position.y < -1 * App->render->camera.y + App->win->height && dt < 0.05){
 			position.y += (int)(gravity * DT_CONVERTER * dt);
+			
+		}
 		//Reset jump force if on floor
 		if (!Candown)
 			jumpSpeed = -1 * speedY;
@@ -305,7 +307,7 @@ void j1Player::Movement(float dt) {
 	}
 
 	//Particles
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
 	{
 		state = AIMING;
 		SDL_Rect aimbar;
@@ -314,11 +316,20 @@ void j1Player::Movement(float dt) {
 		aimbar.x = position.x;
 		aimbar.y = position.y + playerHeight - 50;
 		App->render->DrawQuad(aimbar, 0, 0, 255, 255);
-		if (aimbar.w >= 60)
+
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		
+
+		if (x < position.x)
+			flip = SDL_FLIP_HORIZONTAL;
+		if (x > position.x)
+			flip = SDL_FLIP_NONE;
+
+		if (aimbar.w >= 50)
 		{
 			aimbarw = 0;
-			int x, y;
-			App->input->GetMousePosition(x, y);
+			
 			iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 			iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
 			iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
@@ -328,46 +339,12 @@ void j1Player::Movement(float dt) {
 			float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
 			LOG("Raw %d, %d", vec.x, vec.y);
 			LOG("Normal %f, %f", xvec, yvec);
-
-			if (abs(xvec) > abs(yvec)) {
-				if (xvec < 0) {
-					float convert = -20 / xvec;
-					xvec = xvec * convert;
-					yvec = yvec * convert;
-				}
-				else {
-					if (xvec > 0) {
-						float convert = 20 / xvec;
-						xvec = xvec * convert;
-						yvec = yvec * convert;
-					}
-					else {
-						yvec = yvec * 20;
-					}
-				}
-			}
-			else {
-				if (yvec < 0) {
-					float convert = -20 / yvec;
-					xvec = xvec * convert;
-					yvec = yvec * convert;
-				}
-				else {
-					if (yvec > 0) {
-						float convert = 20 / yvec;
-						xvec = xvec * convert;
-						yvec = yvec * convert;
-					}
-					else {
-						xvec = xvec * 20;
-					}
-				}
-			}
-
-
-
+			xvec = xvec * 30;
+			yvec = yvec * 30;
+			
 			LOG("Depurated %f, %f", xvec, yvec);
 			LOG("Depurated %d, %d", (int)xvec, (int)yvec);
+			
 			if (flip == SDL_FLIP_NONE) {
 				App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
 			}
@@ -377,7 +354,9 @@ void j1Player::Movement(float dt) {
 			aiming.Reset();
 		}
 
-
+		if (App->input->GetMouseButtonDown(1) == KEY_UP)
+		{
+		}
 	}
 }
 
