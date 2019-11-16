@@ -62,7 +62,7 @@ public:
 	void MoveCondition(float dt);
 	void LoadAnimations(const char* path);
 	void playfx(const int id, const int rep);
-//	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* c1, Collider* c2);
 
 
 private:
