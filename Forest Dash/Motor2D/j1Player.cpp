@@ -15,6 +15,8 @@
 #include "j1Particles.h"
 #include "j1Slime.h"
 #include "j1entityManager.h"
+#include "j1Wizard.h"
+
 
 
 j1Player::j1Player(): j1Entity(Types::player)
@@ -149,8 +151,6 @@ bool j1Player::CleanUp()
 // Update: draw background ----------------------------------------------
 bool j1Player::Update(float dt)
 {
-	LOG("Update");
-	
 	current_animation = &idle;
 	CheckCollision(dt);
 	Movement(dt);
@@ -717,9 +717,10 @@ void j1Player::playfx( const int id, const int rep) {
 		prev_state = state;
 	}
 }
-/*
+
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c1 == ColliderPlayer && c2->type == COLLIDER_ENEMY) {
+	
+	if (c1 == EntityCollider && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
 		if (position.x <= App->slime->position.x)
 		{
@@ -735,9 +736,28 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			jumpSpeed = -speedY * (DT_CONVERTER * App->collision->deltatime);
 			DeathTimer = SDL_GetTicks();
 		}
+		
+
+	}
+	if (c1 == EntityCollider && c2->type == COLLIDER_WIZARD) {
+		
+		if (position.x <= App->wizard->position.x)
+		{
+			position.x -= 30;
+			state = DEATH;
+			jumpSpeed = -speedY * (DT_CONVERTER * App->collision->deltatime);
+			DeathTimer = SDL_GetTicks();
+		}
+		else
+		{
+			position.x += 30;
+			state = DEATH;
+			jumpSpeed = -speedY * (DT_CONVERTER * App->collision->deltatime);
+			DeathTimer = SDL_GetTicks();
+		}
+
 
 	}
 
 }
 
-*/

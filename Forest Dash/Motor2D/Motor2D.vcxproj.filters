@@ -1,171 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="j1Window.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Audio.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1App.cpp">
-      <Filter>Main ========</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Input.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Main.cpp">
-      <Filter>Main ========</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Render.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Textures.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="p2Log.cpp">
-      <Filter>Defined Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Scene.cpp">
-      <Filter>Main ========\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="PugiXml\src\pugixml.cpp">
-      <Filter>Main ========\Tools\PuguiXML</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Map.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Player.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Slime.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1ModuleCollision.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Particles.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Timer.cpp">
-      <Filter>Main ========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="j1PerfTimer.cpp">
-      <Filter>Main ========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Wizard.cpp">
-      <Filter>Main ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Entity.cpp">
-      <Filter>Main ========\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="J1EntityManager.cpp">
-      <Filter>Main ========\Entities</Filter>
-    </ClCompile>
+    <ClCompile Include="j1Entity.cpp" />
+    <ClCompile Include="J1EntityManager.cpp" />
+    <ClCompile Include="j1Main.cpp" />
+    <ClCompile Include="j1App.cpp" />
+    <ClCompile Include="j1Audio.cpp" />
+    <ClCompile Include="j1Input.cpp" />
+    <ClCompile Include="j1Map.cpp" />
+    <ClCompile Include="j1Particles.cpp" />
+    <ClCompile Include="j1Pathfinding.cpp" />
+    <ClCompile Include="j1PerfTimer.cpp" />
+    <ClCompile Include="j1Player.cpp" />
+    <ClCompile Include="j1Scene.cpp" />
+    <ClCompile Include="j1ModuleCollision.cpp" />
+    <ClCompile Include="j1Timer.cpp" />
+    <ClCompile Include="j1Wizard.cpp" />
+    <ClCompile Include="p2Log.cpp" />
+    <ClCompile Include="j1Render.cpp" />
+    <ClCompile Include="j1Textures.cpp" />
+    <ClCompile Include="j1Window.cpp" />
+    <ClCompile Include="PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="j1Slime.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="j1Window.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Audio.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1App.h">
-      <Filter>Main ========</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Input.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Module.h">
-      <Filter>Main ========</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Render.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Textures.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Defs.h">
-      <Filter>Defined Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="p2List.h">
-      <Filter>Defined Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Log.h">
-      <Filter>Defined Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="p2SString.h">
-      <Filter>Defined Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Point.h">
-      <Filter>Defined Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="p2DynArray.h">
-      <Filter>Defined Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Scene.h">
-      <Filter>Main ========\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="PugiXml\src\pugiconfig.hpp">
-      <Filter>Main ========\Tools\PuguiXML</Filter>
-    </ClInclude>
-    <ClInclude Include="PugiXml\src\pugixml.hpp">
-      <Filter>Main ========\Tools\PuguiXML</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Map.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Player.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Main ========\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Slime.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1ModuleCollision.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Particles.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Timer.h">
-      <Filter>Main ========\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="j1PerfTimer.h">
-      <Filter>Main ========\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Wizard.h">
-      <Filter>Main ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Entity.h">
-      <Filter>Main ========\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="J1EntityManager.h">
-      <Filter>Main ========\Entities</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Main ========">
-      <UniqueIdentifier>{cb944693-b9d0-484c-bad2-02d5a7cdbec6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main ========\Tools">
-      <UniqueIdentifier>{42c748be-4a37-49de-970f-5be811d06b38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main ========\Tools\PuguiXML">
-      <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main ========\Scenes">
-      <UniqueIdentifier>{e07660eb-d36f-4cc9-af59-324d31c2f2f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main ========\Modules">
-      <UniqueIdentifier>{244722d1-90ce-423d-8e7a-556211865a32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Defined Classes">
-      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main ========\Entities">
-      <UniqueIdentifier>{5209838e-5d60-4448-bb95-06d943404910}</UniqueIdentifier>
-    </Filter>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="j1Entity.h" />
+    <ClInclude Include="J1EntityManager.h" />
+    <ClInclude Include="j1Map.h" />
+    <ClInclude Include="j1Particles.h" />
+    <ClInclude Include="j1Pathfinding.h" />
+    <ClInclude Include="j1PerfTimer.h" />
+    <ClInclude Include="j1Player.h" />
+    <ClInclude Include="j1Scene.h" />
+    <ClInclude Include="j1ModuleCollision.h" />
+    <ClInclude Include="j1Timer.h" />
+    <ClInclude Include="p2DynArray.h" />
+    <ClInclude Include="j1Audio.h" />
+    <ClInclude Include="j1Input.h" />
+    <ClInclude Include="p2Log.h" />
+    <ClInclude Include="j1App.h" />
+    <ClInclude Include="p2Defs.h" />
+    <ClInclude Include="p2List.h" />
+    <ClInclude Include="j1Module.h" />
+    <ClInclude Include="p2Point.h" />
+    <ClInclude Include="j1Render.h" />
+    <ClInclude Include="j1Textures.h" />
+    <ClInclude Include="j1Window.h" />
+    <ClInclude Include="p2SString.h" />
+    <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
+    <ClInclude Include="PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="j1Slime.h" />
+    <ClInclude Include="j1Wizard.h" />
   </ItemGroup>
 </Project>

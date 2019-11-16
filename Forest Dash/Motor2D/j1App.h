@@ -22,7 +22,7 @@ class j1ModuleCollision;
 class j1Particles;
 class j1EntityManager;
 class j1Entity;
-
+class j1PathFinding;
 
 class j1App
 {
@@ -98,6 +98,7 @@ public:
 	j1ModuleCollision*  collision;
 	j1Particles*		particles;
 	j1EntityManager*	EntityManager;
+	j1PathFinding*		pathfinding;
 
 private:
 

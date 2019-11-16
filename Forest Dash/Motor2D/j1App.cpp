@@ -19,6 +19,8 @@
 #include "j1ModuleCollision.h"
 #include "j1EntityManager.h"
 #include "j1Entity.h"
+#include "j1Pathfinding.h"
+
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -40,6 +42,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	collision = new j1ModuleCollision();
 	particles = new j1Particles();
 	EntityManager = new j1EntityManager();
+	pathfinding = new j1PathFinding();
+
 	
 
 
@@ -54,11 +58,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(slime); 
 	AddModule(wizard);
-
 	AddModule(collision);
 	AddModule(particles);
 	AddModule(EntityManager);
-
+	AddModule(pathfinding);
 	// render last to swap buffer
 
 

@@ -12,6 +12,12 @@ struct SDL_Texture;
 struct Collider;
 struct Anim;
 
+enum wizard_state
+{
+	WD_IDLE = 0,
+	WD_DEATH,
+};
+
 struct TileSetWizard
 {
 	SDL_Rect GetAnimRect(int id) const;
@@ -38,22 +44,29 @@ public:
 	bool Save(pugi::xml_node&) const;
 	void LoadAnimations(const char* path);
 	void OnCollision(Collider* c1, Collider* c2);
-
+	
 
 private:
+
+	void setAnimation();
 
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 
 	p2List<Animation> animations;
 	Animation idle;
+	Animation death;
 
 	pugi::xml_document	slime_file;
 
 	TileSetWizard TileSetData;
+	wizard_state state;
 
 public:
 
+	Collider* colliderWizard;
+	bool wizarDead = false;
+	int deathTimerWizard = 0;
 	iPoint position;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
