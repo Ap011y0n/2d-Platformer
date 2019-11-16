@@ -14,9 +14,10 @@
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
 #include "j1Slime.h"
+#include "j1entityManager.h"
 
 
-j1Player::j1Player(): j1Module()
+j1Player::j1Player(): j1Entity(Types::player)
 {
 	name.create("player");
 
@@ -58,9 +59,11 @@ j1Player::~j1Player()
 // Read player variables from config.xml ----------------------------------------------
 bool j1Player::Awake(pugi::xml_node& config)
 {
+	LOG("Awake :)");
 	bool ret = true;
-	
 
+
+	/*
 	moveFx = config.child("moveFx").attribute("source").as_string();
 	deathFx = config.child("deathFx").attribute("source").as_string();
 	jumpFx = config.child("jumpFx").attribute("source").as_string();
@@ -78,7 +81,26 @@ bool j1Player::Awake(pugi::xml_node& config)
 	playerHeight = config.child("playerHeight").attribute("value").as_int();
 	playerWidth = config.child("playerWidth").attribute("value").as_int();
 	playerCentre = config.child("playerCentre").attribute("value").as_int();
-	
+	*/
+
+	moveFx = "move.wav";
+	deathFx = "death.wav";
+	jumpFx = "jump.wav";
+	winFx = "win.wav";
+	dashFx = "dash.wav";
+	initialPosition.x = 100;
+	initialPosition.y = 500;
+	gravity = 11;
+	speedX = 7;
+	speedY = 22;
+	acceleration = 20;
+	speedBar = 0.2;
+	maxBarWidth = 40;
+	playerHeight = 50;
+	playerWidth = 20;
+	playerCentre = 10;
+
+	LOG("Pos y %d", initialPosition.y);
 	dashspeed = acceleration;
 	jumpSpeed = -1 * speedY;
 	
@@ -88,7 +110,9 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Load assets ----------------------------------------------
 bool j1Player::Start()
 {
+	
 	LOG("Loading player");
+	
 	App->audio->LoadFx(moveFx.GetString());
 	LOG("effects list");
 	LOG("Move %d", App->audio->LoadFx(moveFx.GetString()));
@@ -110,7 +134,7 @@ bool j1Player::Start()
 	r.w = playerWidth;
 	r.x = position.x + playerCentre;
 	r.y = position.y;
-	ColliderPlayer = App->collision->AddCollider(&r, COLLIDER_PLAYER, this);
+	EntityCollider = App->collision->AddCollider(&r, COLLIDER_PLAYER, this);
 	return true;
 }
 
@@ -125,7 +149,8 @@ bool j1Player::CleanUp()
 // Update: draw background ----------------------------------------------
 bool j1Player::Update(float dt)
 {
-
+	LOG("Update");
+	
 	current_animation = &idle;
 	CheckCollision(dt);
 	Movement(dt);
@@ -541,7 +566,7 @@ void j1Player::DrawHitbox() {
 	hitbox.y = position.y;
 	if(App->map->blitColliders)	App->render->DrawQuad(hitbox, 0, 225, 0, 70);
 	
-	ColliderPlayer->SetPos(position.x + playerCentre, position.y);
+	EntityCollider->SetPos(position.x + playerCentre, position.y);
 }				
 // Function to make the camera follow the player ----------------------------------------------
 void j1Player::Camera() {
@@ -664,7 +689,7 @@ void j1Player::LoadAnimations(const char* path) {
 		Animation* set = new Animation();
 		for (frame = tile.child("animation").child("frame"); frame; frame = frame.next_sibling("frame")) {
 			set->PushBack(TileSetData.GetAnimRect(frame.attribute("tileid").as_int()),(frame.attribute("duration").as_float())/2000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int(),0,0);
-			LOG("Animation %d, %d, %d, %d", frame.attribute("tileid").as_int(), (frame.attribute("duration").as_float()) / 1000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int());
+			LOG("Animation %d, %f, %d, %d", frame.attribute("tileid").as_int(), (frame.attribute("duration").as_float()) / 1000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int());
 		}
 		animations.add(*set);
 
@@ -692,7 +717,7 @@ void j1Player::playfx( const int id, const int rep) {
 		prev_state = state;
 	}
 }
-
+/*
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == ColliderPlayer && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
@@ -715,3 +740,4 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 }
 
+*/

@@ -55,6 +55,12 @@
     <ClCompile Include="j1Wizard.cpp">
       <Filter>Main ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Entity.cpp">
+      <Filter>Main ========\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="J1EntityManager.cpp">
+      <Filter>Main ========\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -132,6 +138,12 @@
     <ClInclude Include="j1Wizard.h">
       <Filter>Main ========\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="j1Entity.h">
+      <Filter>Main ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="J1EntityManager.h">
+      <Filter>Main ========\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Main ========">
@@ -151,6 +163,9 @@
     </Filter>
     <Filter Include="Defined Classes">
       <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main ========\Entities">
+      <UniqueIdentifier>{5209838e-5d60-4448-bb95-06d943404910}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

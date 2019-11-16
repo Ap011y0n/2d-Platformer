@@ -36,8 +36,8 @@
   <map>
     <folder>maps/</folder>
   </map>
-  
-  <player>
+
+  <entity>
    <moveFx source="move.wav"/>
    <deathFx source="death.wav"/>
    <jumpFx source="jump.wav"/>
@@ -53,7 +53,7 @@
    <playerHeight value="50"/>
    <playerWidth value="20"/>
    <playerCentre value="10"/>
-  </player>
+  </entity>
 
    <scene>
      <map name="maplevel1.tmx"/>

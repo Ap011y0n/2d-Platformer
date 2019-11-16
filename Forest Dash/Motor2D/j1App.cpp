@@ -17,6 +17,8 @@
 #include "j1Particles.h"
 #include "j1App.h"
 #include "j1ModuleCollision.h"
+#include "j1EntityManager.h"
+#include "j1Entity.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -33,28 +35,32 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
-	player = new j1Player();
 	slime = new j1Slime();
 	wizard = new j1Wizard();
 	collision = new j1ModuleCollision();
 	particles = new j1Particles();
+	EntityManager = new j1EntityManager();
 	
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(win);
+	AddModule(render);
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
 	AddModule(slime); 
 	AddModule(wizard);
-	AddModule(player);
+
 	AddModule(collision);
 	AddModule(particles);
+	AddModule(EntityManager);
+
 	// render last to swap buffer
-	AddModule(render);
+
 
 	PERF_PEEK(ptimer);
 }

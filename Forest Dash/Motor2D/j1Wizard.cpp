@@ -52,7 +52,7 @@ bool j1Wizard::Start()
 	position.y = 300;
 	SDL_Rect r;
 	r.w = 60;
-	r.h = 60;
+	r.h = 60;	
 	r.x = 690;
 	r.y = 525;
 	App->collision->AddCollider(&r, COLLIDER_ENEMY, this);

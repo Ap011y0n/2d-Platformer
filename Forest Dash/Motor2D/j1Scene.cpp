@@ -10,6 +10,8 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Slime.h"
+#include "J1EntityManager.h"
+#include "J1Entity.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -44,6 +46,8 @@ bool j1Scene::Start()
 	App->map->Load(current_level.GetString());
 	App->audio->PlayMusic(App->map->data.music.GetString());
 	LOG("%s", current_level.GetString());
+
+	App->EntityManager->CreateEntity(j1Entity::Types::player);
 	return true;
 }
 
@@ -108,7 +112,7 @@ bool j1Scene::CleanUp()
 bool j1Scene::Load(pugi::xml_node& data)
 {
 	LOG("Loading Scene state");
-	App->player->BarWidth = App->player->maxBarWidth;
+//	App->player->BarWidth = App->player->maxBarWidth;
 	App->map->CleanUp();
 	current_level.create(data.child("scenename").attribute("name").as_string());
 	App->map->Load(current_level.GetString());
@@ -129,7 +133,7 @@ bool j1Scene::Save(pugi::xml_node& data) const
 void j1Scene::Nextmap() {
 
 	App->map->CleanUp();
-	App->player->BarWidth = App->player->maxBarWidth;
+//	App->player->BarWidth = App->player->maxBarWidth;
 	p2List_item<p2SString>* iterator;
 	for (iterator = levels.start; iterator->data != current_level.GetString(); iterator = iterator->next) {
 		LOG("%s  %s", iterator->data.GetString(), current_level.GetString());
@@ -146,7 +150,7 @@ void j1Scene::Nextmap() {
 void j1Scene::Debug() {
 	// Start from first map
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
+	/*{
 		App->map->CleanUp();
 		current_level.create("maplevel1.tmx");
 		App->map->Load(current_level.GetString());
@@ -155,27 +159,27 @@ void j1Scene::Debug() {
 		App->player->BarWidth = App->player->maxBarWidth;
 		App->player->flip = SDL_FLIP_NONE;
 	
-	}
+	}*/
 	// Start from second map
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		App->map->CleanUp();
-		current_level.create("maplevel2.tmx");
-		App->map->Load(current_level.GetString());
-		App->player->position.x = App->player->initialPosition.x;
-		App->player->position.y = App->player->initialPosition.y;
-		App->player->BarWidth = App->player->maxBarWidth;
-		App->player->flip = SDL_FLIP_NONE;
-	}
+	//{
+	//	App->map->CleanUp();
+	//	current_level.create("maplevel2.tmx");
+	//	App->map->Load(current_level.GetString());
+	//	App->player->position.x = App->player->initialPosition.x;
+	//	App->player->position.y = App->player->initialPosition.y;
+	//	App->player->BarWidth = App->player->maxBarWidth;
+	//	App->player->flip = SDL_FLIP_NONE;
+	//}
 
 	// Start from actual map
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-	{
-		App->player->position.x = App->player->initialPosition.x;
-		App->player->position.y = App->player->initialPosition.y;
-		App->player->BarWidth = App->player->maxBarWidth;
-		App->player->flip = SDL_FLIP_NONE;
-	}
+	//{
+	//	App->player->position.x = App->player->initialPosition.x;
+	//	App->player->position.y = App->player->initialPosition.y;
+	//	App->player->BarWidth = App->player->maxBarWidth;
+	//	App->player->flip = SDL_FLIP_NONE;
+	//}
 	// Load last save
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
@@ -193,15 +197,15 @@ void j1Scene::Debug() {
 	}
 	
 	// Activate God Mode
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		if (App->player->Godmode == false)
-		{
-			App->player->Godmode = true;
-		}
-		else if (App->player->Godmode == true)
-		{
-			App->player->Godmode = false;
-		}
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+	//	if (App->player->Godmode == false)
+	//	{
+	//		App->player->Godmode = true;
+	//	}
+	//	else if (App->player->Godmode == true)
+	//	{
+	//		App->player->Godmode = false;
+	//	}
+	//}
 
 }

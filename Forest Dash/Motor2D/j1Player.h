@@ -3,6 +3,7 @@
 
 #include "PugiXml/src/pugixml.hpp"
 #include "j1Module.h"
+#include "j1Entity.h"
 #include "Animation.h"
 #include "p2List.h"
 #include "p2Point.h"
@@ -41,7 +42,7 @@ struct TileSetPlayer
 };
 
 
-class j1Player : public j1Module
+class j1Player : public j1Entity
 {
 public:
 	j1Player();
@@ -61,7 +62,7 @@ public:
 	void MoveCondition(float dt);
 	void LoadAnimations(const char* path);
 	void playfx(const int id, const int rep);
-	void OnCollision(Collider* c1, Collider* c2);
+//	void OnCollision(Collider* c1, Collider* c2);
 
 
 private:
@@ -72,8 +73,7 @@ private:
 	int DeathTimer = 0;
 	int AimTimer = 0;
 	SDL_Texture* graphics = nullptr;
-	Animation* current_animation = nullptr;
-	p2List<Animation> animations;
+	
 	Animation idle;
 	Animation forward;
 	Animation backward;
@@ -85,19 +85,12 @@ private:
 	Animation aiming;
 	SDL_Rect aimbar;
 	
-	bool Canright = true;
-	bool Canleft = true;
-	bool CandashR = true;
-	bool CandashL = true;
-	bool Canjump = true;
-	bool Candown = true;
-	bool shoot = false;
-	bool adjust = false;
+	
 
 	int playerHeight;
 	int playerWidth;
 	int playerCentre;
-	float jumpSpeed;
+	
 	p2SString		moveFx;
 	p2SString		deathFx;
 	p2SString		jumpFx;
@@ -105,9 +98,7 @@ private:
 	p2SString		dashFx;
 	pugi::xml_document	player_file;
 	TileSetPlayer TileSetData;
-	int gravity;
-	int speedX;
-	int speedY;
+	
 	float dashspeed;
 	float acceleration;
 	float speedBar;
@@ -115,7 +106,6 @@ private:
 public:	
 	bool death = false;
 	bool Godmode = false;
-	iPoint position;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	float BarWidth = 40;
@@ -123,7 +113,7 @@ public:
 	float magnitude = 0.0f;
 	int opacity = 0;
 	int maxBarWidth;
-	Collider *ColliderPlayer;
+
 
 };
 

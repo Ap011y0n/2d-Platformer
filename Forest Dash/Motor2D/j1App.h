@@ -20,6 +20,9 @@ class j1Slime;
 class j1Wizard;
 class j1ModuleCollision;
 class j1Particles;
+class j1EntityManager;
+class j1Entity;
+
 
 class j1App
 {
@@ -90,11 +93,12 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Map*				map;
-	j1Player*			player;
 	j1Slime*			slime;
 	j1Wizard*			wizard;
 	j1ModuleCollision*  collision;
 	j1Particles*		particles;
+	j1EntityManager*	EntityManager;
+
 private:
 
 	p2List<j1Module*>	modules;
