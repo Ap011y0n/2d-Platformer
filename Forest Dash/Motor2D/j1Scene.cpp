@@ -44,17 +44,19 @@ bool j1Scene::Start()
 {
 	LOG("Start scene");
 	current_level = levels.start->data;
-	App->map->Load(current_level.GetString());
-	App->audio->PlayMusic(App->map->data.music.GetString());
-	LOG("%s", current_level.GetString());
+	/*App->map->Load(current_level.GetString());*/
 
+	if (App->map->Load(current_level.GetString()) == true)
+	{
+		App->audio->PlayMusic(App->map->data.music.GetString());
+		LOG("%s", current_level.GetString());
 		int w, h;
 		uchar* data = NULL;
 		if (App->map->CreateWalkabilityMap(w, h, &data))
 			App->pathfinding->SetMap(w, h, data);
 
 		RELEASE_ARRAY(data);
-
+	}
 		debug_tex = App->tex->Load("maps/Colision.png");
 
 	App->EntityManager->CreateEntity(j1Entity::Types::player);

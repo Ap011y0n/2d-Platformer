@@ -508,7 +508,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	{
 		MapLayer* layer = item->data;
 
-		if (layer->returnPropValue("Navigation") == 0)
+		if (layer->returnPropValue("Navigation") == 1)
 			continue;
 
 		uchar* map = new uchar[layer->width * layer->height];
