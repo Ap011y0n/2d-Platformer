@@ -159,7 +159,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	MoveCondition(dt);
+	/*MoveCondition(dt);*/
 
 	return true;
 }
@@ -332,7 +332,7 @@ void j1Player::Movement(float dt) {
 	}
 
 	//Particles
-	if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+	/*if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
 	{
 		state = AIMING;
 		SDL_Rect aimbar;
@@ -382,7 +382,7 @@ void j1Player::Movement(float dt) {
 		if (App->input->GetMouseButtonDown(1) == KEY_UP)
 		{
 		}
-	}
+	}*/
 }
 
 //Depending of the state set on Movement(), play fx, change facing direction and other interaction ----------------------------------------------

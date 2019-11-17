@@ -12,6 +12,7 @@
 #include "j1Slime.h"
 #include "J1EntityManager.h"
 #include "J1Entity.h"
+#include "j1Pathfinding.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -47,6 +48,15 @@ bool j1Scene::Start()
 	App->audio->PlayMusic(App->map->data.music.GetString());
 	LOG("%s", current_level.GetString());
 
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+
+		debug_tex = App->tex->Load("maps/Colision.png");
+
 	App->EntityManager->CreateEntity(j1Entity::Types::player);
 	return true;
 }
@@ -54,7 +64,28 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	// debug pathfing ------------------
+	static iPoint origin;
+	static bool origin_selected = false;
 
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		if (origin_selected == true)
+		{
+			App->pathfinding->CreatePath(origin, p);
+			origin_selected = false;
+		}
+		else
+		{
+			origin = p;
+			origin_selected = true;
+		}
+	}
 	return true;
 }
 

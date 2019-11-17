@@ -54,6 +54,8 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
+	iPoint j1Render::ScreenToWorld(int x, int y) const;
+
 public:
 
 	SDL_Renderer*	renderer;
