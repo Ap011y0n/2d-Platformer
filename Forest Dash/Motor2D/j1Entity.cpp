@@ -4,7 +4,6 @@
 #include "j1Textures.h"
 #include "j1Input.h"
 #include "j1Render.h"
-#include "j1Player.h"
 #include "p2Log.h"
 #include "j1Window.h"
 #include "j1Map.h"
@@ -15,6 +14,9 @@
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
 #include "j1Slime.h"
+#include "j1Wizard.h"
+#include "j1Player.h"
+
 
 j1Entity::j1Entity(Types type) : type(type)
 {

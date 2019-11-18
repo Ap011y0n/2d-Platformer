@@ -15,6 +15,10 @@
 #include "j1Particles.h"
 #include "j1Entity.h"
 #include "j1Player.h"
+#include "j1Wizard.h"
+#include "j1Slime.h"
+
+
 
 j1EntityManager::j1EntityManager() {
 	name.create("entity");
@@ -37,7 +41,12 @@ bool j1EntityManager::Start() {
 
 }
 bool j1EntityManager::Update(float dt) {
-	entities.end->data->Update(dt);
+	p2List_item<j1Entity*>* entities_list = entities.start;
+	while (entities_list) {
+		entities_list->data->Update(dt);
+		entities_list = entities_list->next;
+	}
+
 	return true;
 }
 bool j1EntityManager::PostUpdate(float dt) {
@@ -56,10 +65,12 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type)
 
 	switch (type) {
 	case j1Entity::Types::player: ret = new j1Player(); break;
-//	case j1Entity::Types::player: ret = new Player(); break;
+	case j1Entity::Types::wizard: ret = new j1Wizard(); break;
+	case j1Entity::Types::slime: ret = new j1Slime(); break;
+
 	}
 	if (ret != nullptr){
-		
+
 		entities.add(ret);
 		entities.end->data->Awake(node);
 		entities.end->data->Start();

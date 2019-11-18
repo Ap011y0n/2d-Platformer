@@ -14,7 +14,7 @@
 
 
 
-j1Wizard::j1Wizard() : j1Module()
+j1Wizard::j1Wizard() : j1Entity(Types::wizard)
 {
 	name.create("wizard");
 

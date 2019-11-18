@@ -508,7 +508,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	{
 		MapLayer* layer = item->data;
 
-		if (layer->returnPropValue("Navigation") == 1)
+		if (layer->returnPropValue("Navigation") != 1)
 			continue;
 
 		uchar* map = new uchar[layer->width * layer->height];
@@ -521,11 +521,10 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 				int i = (y * layer->width) + x;
 
 				int tile_id = layer->Get(x, y);
-				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
-
-				if (tileset != NULL)
+				
+				if (tile_id != 0)
 				{
-					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+					map[i] = 0;
 					/*TileType* ts = tileset->GetTileType(tile_id);
 					if(ts != NULL)
 					{

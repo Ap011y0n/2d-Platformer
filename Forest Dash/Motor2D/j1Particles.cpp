@@ -148,13 +148,13 @@ void j1Particles::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c1->type == COLLIDER_PLAYER_SHOT && c2->type == COLLIDER_ENEMY) 
 			{
-				App->slime->slimeDead = true;
-				App->slime->deathTimerSlime = SDL_GetTicks();
+//				App->slime->slimeDead = true;
+//				App->slime->deathTimerSlime = SDL_GetTicks();
 			}
 			if (c1->type == COLLIDER_PLAYER_SHOT && c2->type == COLLIDER_WIZARD)
 			{
-				App->wizard->wizarDead = true;
-				App->wizard->deathTimerWizard = SDL_GetTicks();
+//				App->wizard->wizarDead = true;
+//				App->wizard->deathTimerWizard = SDL_GetTicks();
 			}
 			break;
 		}

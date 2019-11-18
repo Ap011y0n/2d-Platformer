@@ -4,6 +4,7 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "j1Module.h"
 #include "Animation.h"
+#include "j1Entity.h"
 #include "p2List.h"
 #include "p2Point.h"
 #include "p2DynArray.h"
@@ -29,7 +30,7 @@ struct TileSetSlime
 	p2SString Texname;
 };
 
-class j1Slime : public j1Module
+class j1Slime : public j1Entity
 {
 public:
 

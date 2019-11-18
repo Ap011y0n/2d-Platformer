@@ -332,7 +332,7 @@ void j1Player::Movement(float dt) {
 	}
 
 	//Particles
-	/*if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
 		state = AIMING;
 		SDL_Rect aimbar;
@@ -379,10 +379,10 @@ void j1Player::Movement(float dt) {
 			aiming.Reset();
 		}
 
-		if (App->input->GetMouseButtonDown(1) == KEY_UP)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 		{
 		}
-	}*/
+	}
 }
 
 //Depending of the state set on Movement(), play fx, change facing direction and other interaction ----------------------------------------------
@@ -722,7 +722,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	
 	if (c1 == EntityCollider && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
-		if (position.x <= App->slime->position.x)
+/*		if (position.x <= App->slime->position.x)
 		{
 			position.x -= 30;
 			state = DEATH;
@@ -737,10 +737,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			DeathTimer = SDL_GetTicks();
 		}
 		
-
+		*/
 	}
 	if (c1 == EntityCollider && c2->type == COLLIDER_WIZARD) {
-		
+		/*
 		if (position.x <= App->wizard->position.x)
 		{
 			position.x -= 30;
@@ -755,7 +755,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			jumpSpeed = -speedY * (DT_CONVERTER * App->collision->deltatime);
 			DeathTimer = SDL_GetTicks();
 		}
-
+*/
 
 	}
 

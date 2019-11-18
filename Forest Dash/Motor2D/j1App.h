@@ -15,9 +15,6 @@ class j1Textures;
 class j1Audio;
 class j1Scene;
 class j1Map;
-class j1Player;
-class j1Slime;
-class j1Wizard;
 class j1ModuleCollision;
 class j1Particles;
 class j1EntityManager;
@@ -93,8 +90,6 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Map*				map;
-	j1Slime*			slime;
-	j1Wizard*			wizard;
 	j1ModuleCollision*  collision;
 	j1Particles*		particles;
 	j1EntityManager*	EntityManager;

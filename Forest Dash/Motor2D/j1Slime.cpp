@@ -15,7 +15,7 @@
 
 
 
-j1Slime::j1Slime() : j1Module()
+j1Slime::j1Slime() : j1Entity(Types::slime)
 {
 	name.create("slime");
 

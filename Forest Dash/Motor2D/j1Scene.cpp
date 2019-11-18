@@ -60,6 +60,9 @@ bool j1Scene::Start()
 		debug_tex = App->tex->Load("maps/Colision.png");
 
 	App->EntityManager->CreateEntity(j1Entity::Types::player);
+	App->EntityManager->CreateEntity(j1Entity::Types::wizard);
+	App->EntityManager->CreateEntity(j1Entity::Types::slime);
+
 	return true;
 }
 
@@ -75,7 +78,7 @@ bool j1Scene::PreUpdate(float dt)
 	iPoint p = App->render->ScreenToWorld(x, y);
 	p = App->map->WorldToMap(p.x, p.y);
 
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (origin_selected == true)
 		{

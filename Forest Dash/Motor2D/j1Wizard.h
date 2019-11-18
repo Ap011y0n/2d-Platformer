@@ -3,6 +3,7 @@
 
 #include "PugiXml/src/pugixml.hpp"
 #include "j1Module.h"
+#include "j1Entity.h"
 #include "Animation.h"
 #include "p2List.h"
 #include "p2Point.h"
@@ -29,7 +30,7 @@ struct TileSetWizard
 	p2SString Texname;
 };
 
-class j1Wizard : public j1Module
+class j1Wizard : public j1Entity
 {
 public:
 
