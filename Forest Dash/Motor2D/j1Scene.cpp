@@ -106,7 +106,9 @@ bool j1Scene::Update(float dt)
 	Debug();
 	App->map->Draw();
 
-	int x, y;
+	int x=0, y=0;
+	App->input->GetMousePosition(x, y);
+
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 	//p2SString title("Forest Dash");
 	//Uncomment if want to display map info in game title
@@ -114,7 +116,7 @@ bool j1Scene::Update(float dt)
 					App->map->data.width, App->map->data.height,
 				App->map->data.tile_width, App->map->data.tile_height,
 					App->map->data.tilesets.count(),map_coordinates.x, map_coordinates.y);
-	App->input->GetMousePosition(x, y);
+	
 	iPoint p = App->render->ScreenToWorld(x, y);
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
