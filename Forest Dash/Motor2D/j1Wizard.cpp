@@ -14,7 +14,7 @@
 
 
 
-j1Wizard::j1Wizard() : j1Entity(Types::wizard)
+j1Wizard::j1Wizard(int posx, int posy) : j1Entity(Types::wizard)
 {
 	name.create("wizard");
 
@@ -31,6 +31,14 @@ j1Wizard::j1Wizard() : j1Entity(Types::wizard)
 	death = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
 	death.loop = false;
+
+	position.x = posx;
+	position.y = posy;
+
+	r.w = 40;
+	r.h = 70;
+	r.x = position.x;
+	r.y = position.y;
 }
 
 j1Wizard::~j1Wizard()
@@ -52,14 +60,7 @@ bool j1Wizard::Start()
 	LOG("Start Wizard");
 	graphics = App->tex->Load("textures/wizardtexture.png");
 
-	position.x = 690;
-	position.y = 300;
 
-	SDL_Rect r;
-	r.w = 40;
-	r.h = 70;
-	r.x = position.x;
-	r.y = position.y;
 	
 	colliderWizard = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
 

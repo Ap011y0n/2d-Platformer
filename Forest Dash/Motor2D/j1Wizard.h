@@ -34,7 +34,7 @@ class j1Wizard : public j1Entity
 {
 public:
 
-	j1Wizard();
+	j1Wizard(int posx, int posy);
 	~j1Wizard();
 	bool Awake(pugi::xml_node& config);
 	bool Start();
@@ -71,6 +71,8 @@ public:
 	iPoint position;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	SDL_Rect r;
+
 
 };
 

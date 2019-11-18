@@ -34,7 +34,7 @@ class j1Slime : public j1Entity
 {
 public:
 
-	j1Slime();
+	j1Slime(int posx, int posy);
 	~j1Slime();
 	bool Awake(pugi::xml_node& config);
 	bool Start();
@@ -70,7 +70,7 @@ public:
 	iPoint position;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
-
+	SDL_Rect r;
 };
 
 #endif

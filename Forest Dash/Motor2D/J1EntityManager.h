@@ -24,7 +24,7 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	j1Entity* CreateEntity(j1Entity::Types type);
+	j1Entity* CreateEntity(j1Entity::Types type, int posx = 0, int posy = 0);
 public:
 	p2List<j1Entity*> entities;
 	pugi::xml_node node;

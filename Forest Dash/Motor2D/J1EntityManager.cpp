@@ -32,7 +32,7 @@ j1EntityManager::~j1EntityManager() {
 
 bool j1EntityManager::Awake(pugi::xml_node& config) {
 	node = config;
-
+	LOG("%d", node.child("initialPosition").attribute("x").as_int());
 	return true;
 }
 
@@ -58,17 +58,17 @@ bool j1EntityManager::CleanUp() {
 
 }
 
-j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type)
+j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy)
 {
 	/*static_assert(j1Entity::Types::unknown == 5, "code needs update");*/
 	j1Entity* ret = nullptr;
 
 	switch (type) {
 	case j1Entity::Types::player: ret = new j1Player(); break;
-	case j1Entity::Types::wizard: ret = new j1Wizard(); break;
-	case j1Entity::Types::slime: ret = new j1Slime(); break;
-
+	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy); break;
+	case j1Entity::Types::slime: ret = new j1Slime(posx, posy); break;
 	}
+	LOG("%d", node.child("initialPosition").attribute("x").as_int());
 	if (ret != nullptr){
 
 		entities.add(ret);

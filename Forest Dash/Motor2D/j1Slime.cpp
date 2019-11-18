@@ -15,7 +15,7 @@
 
 
 
-j1Slime::j1Slime() : j1Entity(Types::slime)
+j1Slime::j1Slime(int posx, int posy) : j1Entity(Types::slime)
 {
 	name.create("slime");
 
@@ -34,7 +34,13 @@ j1Slime::j1Slime() : j1Entity(Types::slime)
 	animation_iterator = animation_iterator->next;
 	death.loop = false;
 
-	
+	position.x = posx;
+	position.y = posy;
+
+	r.w = 40;
+	r.h = 50;
+	r.x = position.x;
+	r.y = position.y;
 }
 
 j1Slime::~j1Slime()
@@ -56,14 +62,7 @@ bool j1Slime::Start()
 	LOG("Start Slime");
 	graphics = App->tex->Load("textures/slimetex.png");
 
-	position.x = 690;
-	position.y = 540;
 	
-	SDL_Rect r;
-	r.w = 40;
-	r.h = 50;
-	r.x = position.x;
-	r.y = position.y;
 
 	colliderSlime = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
 
