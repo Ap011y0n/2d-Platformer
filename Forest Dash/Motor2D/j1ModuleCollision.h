@@ -46,7 +46,7 @@ public:
 	j1ModuleCollision();
 	~j1ModuleCollision();
 
-	bool PreUpdate();
+	bool PreUpdate(float dt);
 	bool Update(float dt);
 	//update_status PostUpdate();
 	bool CleanUp();

@@ -37,7 +37,7 @@ public:
 	}
 
 	// Called each loop iteration
-	virtual bool PreUpdate()
+	virtual bool PreUpdate(float dt = 0)
 	{
 		return true;
 	}
@@ -49,7 +49,7 @@ public:
 	}
 
 	// Called each loop iteration
-	virtual bool PostUpdate()
+	virtual bool PostUpdate(float dt = 0)
 	{
 		return true;
 	}

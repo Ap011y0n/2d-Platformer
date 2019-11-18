@@ -64,7 +64,7 @@ bool j1Scene::Start()
 }
 
 // Called each loop iteration
-bool j1Scene::PreUpdate()
+bool j1Scene::PreUpdate(float dt)
 {
 	// debug pathfing ------------------
 	static iPoint origin;
@@ -135,7 +135,7 @@ bool j1Scene::Update(float dt)
 }
 
 // Called each loop iteration
-bool j1Scene::PostUpdate()
+bool j1Scene::PostUpdate(float dt)
 {
 	bool ret = true;
 

@@ -256,7 +256,7 @@ bool j1App::PreUpdate()
 			continue;
 		}
 
-		ret = item->data->PreUpdate();
+		ret = item->data->PreUpdate(dt);
 	}
 
 	return ret;
@@ -302,7 +302,7 @@ bool j1App::PostUpdate()
 			continue;
 		}
 
-		ret = item->data->PostUpdate();
+		ret = item->data->PostUpdate(dt);
 	}
 
 	return ret;

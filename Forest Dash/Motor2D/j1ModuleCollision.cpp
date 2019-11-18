@@ -59,7 +59,7 @@ j1ModuleCollision::~j1ModuleCollision()
 
 
 
-bool j1ModuleCollision::PreUpdate()
+bool j1ModuleCollision::PreUpdate(float dt)
 {
 	// Remove all colliders scheduled for deletion
 	for(uint i = 0; i < MAX_COLLIDERS; ++i)
