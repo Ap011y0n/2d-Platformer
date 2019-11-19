@@ -2,21 +2,28 @@
 <game_state>
 	<input />
 	<window />
+	<renderer />
 	<textures />
 	<audio>
-		<volumemusic value="1" />
-		<volumefx value="1" />
+		<volumemusic value="0.300000012" />
+		<volumefx value="0.300000012" />
 	</audio>
 	<map />
 	<scene>
 		<scenename name="maplevel1.tmx" />
 	</scene>
-	<slime />
-	<wizard />
-	<player>
-		<position pos_x="892" pos_y="460" />
-	</player>
 	<:anonymous />
 	<particles />
-	<renderer />
+	<entity>
+		<player1>
+			<position pos_x="286" pos_y="716" />
+		</player1>
+		<wizard1>
+			<position pos_x="690" pos_y="367" />
+		</wizard1>
+		<slime1>
+			<position pos_x="623" pos_y="540" />
+		</slime1>
+	</entity>
+	<pathfinding />
 </game_state>

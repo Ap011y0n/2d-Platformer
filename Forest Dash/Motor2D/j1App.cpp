@@ -198,9 +198,9 @@ void j1App::FinishUpdate()
 	if(want_to_save == true)
 		SavegameNow();
 
-	if(want_to_load == true)
+	if(want_to_load == true){
 		LoadGameNow();
-
+}
 	// Framerate calculations --
 
 	if (last_sec_frame_time.Read() > 1000)
@@ -373,7 +373,7 @@ void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 bool j1App::LoadGameNow()
 {
 	bool ret = false;
-
+	
 	pugi::xml_document data;
 	pugi::xml_node root;
 	load_game.create("save_game.xml");

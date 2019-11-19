@@ -14,9 +14,9 @@
 
 
 
-j1Wizard::j1Wizard(int posx, int posy) : j1Entity(Types::wizard)
+j1Wizard::j1Wizard(int posx, int posy, char* tag) : j1Entity(Types::wizard)
 {
-	name.create("wizard");
+	name.create(tag);
 
 	graphics = NULL;
 	current_animation = NULL;
@@ -82,7 +82,7 @@ bool j1Wizard::Update(float dt)
 	if (wizarDead) state = WD_DEATH;
 
 	setAnimation();
-
+	position.y++;
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 
@@ -96,19 +96,19 @@ bool j1Wizard::PostUpdate(float dt)
 
 }
 
-// Load Game State ----------------------------------------------
-bool j1Wizard::Load(pugi::xml_node& data)
-{
-
-	return true;
-}
-
-// Save Game State ----------------------------------------------
-bool j1Wizard::Save(pugi::xml_node& data) const
-{
-
-	return true;
-}
+//// Load Game State ----------------------------------------------
+//bool j1Wizard::Load(pugi::xml_node& data)
+//{
+//
+//	return true;
+//}
+//
+//// Save Game State ----------------------------------------------
+//bool j1Wizard::Save(pugi::xml_node& data) const
+//{
+//
+//	return true;
+//}
 
 void j1Wizard::setAnimation()
 {

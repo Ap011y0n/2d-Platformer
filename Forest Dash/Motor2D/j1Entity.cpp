@@ -31,11 +31,23 @@ bool j1Entity::CleanUp() {
 	return true;
 }
 
-bool j1Entity::Load(pugi::xml_node&) {
+bool j1Entity::Load(pugi::xml_node& data) {
+	LOG("Loading %s state",name.GetString());
+
+	position.x = data.child(name.GetString()).child("position").attribute("pos_x").as_int();
+	position.y = data.child(name.GetString()).child("position").attribute("pos_y").as_int();
 	return true;
 }
 
-bool j1Entity::Save(pugi::xml_node&) const {
+bool j1Entity::Save(pugi::xml_node& data) const {
+	LOG("Saving %s state", name.GetString());
+
+	pugi::xml_node entity = data.append_child(name.GetString());
+
+	entity.append_child("position");
+
+	entity.child("position").append_attribute("pos_x") = position.x;
+	entity.child("position").append_attribute("pos_y") = position.y;
 	return true;
 }
 

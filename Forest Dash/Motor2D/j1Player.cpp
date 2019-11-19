@@ -19,9 +19,9 @@
 
 
 
-j1Player::j1Player(): j1Entity(Types::player)
+j1Player::j1Player(int posx, int posy, char* tag) : j1Entity(Types::player)
 {
-	name.create("player");
+	name.create(tag);
 
 	graphics = NULL;
 	current_animation = NULL;
@@ -172,18 +172,17 @@ bool j1Player::PostUpdate(float dt)
 }
 
 // Load Game State ----------------------------------------------
-bool j1Player::Load(pugi::xml_node& data)
+/*bool j1Player::Load(pugi::xml_node& data)
 {
 	LOG("Loading player state");
 
-	position.x = data.child("position").attribute("pos_x").as_int();
-	position.y = data.child("position").attribute("pos_y").as_int();
+	
 
 	return true;
-}
+}*/
 
 // Save Game State ----------------------------------------------
-bool j1Player::Save(pugi::xml_node& data) const
+/*bool j1Player::Save(pugi::xml_node& data) const
 {
 	LOG("Saving player state");
 	pugi::xml_node adventurer = data.append_child("position");
@@ -191,7 +190,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 	adventurer.append_attribute("pos_x") = position.x;
 	adventurer.append_attribute("pos_y") = position.y;
 	return true;
-}
+}*/
 
 // Receive inputs and set movement and states ----------------------------------------------
 void j1Player::Movement(float dt) {

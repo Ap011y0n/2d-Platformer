@@ -15,9 +15,9 @@
 
 
 
-j1Slime::j1Slime(int posx, int posy) : j1Entity(Types::slime)
+j1Slime::j1Slime(int posx, int posy, char* tag) : j1Entity(Types::slime)
 {
-	name.create("slime");
+	name.create(tag);
 
 	graphics = NULL;
 	current_animation = NULL;
@@ -84,7 +84,8 @@ bool j1Slime::Update(float dt)
 	if (slimeDead) state = SLIME_DEATH;
 	
 	setAnimation();
-
+	position.x--;
+	flip = SDL_FLIP_HORIZONTAL;
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 
@@ -99,18 +100,18 @@ bool j1Slime::PostUpdate(float dt)
 }
 
 // Load Game State ----------------------------------------------
-bool j1Slime::Load(pugi::xml_node& data)
-{
-	
-	return true;
-}
-
-// Save Game State ----------------------------------------------
-bool j1Slime::Save(pugi::xml_node& data) const
-{
-	
-	return true;
-}
+//bool j1Slime::Load(pugi::xml_node& data)
+//{
+//	
+//	return true;
+//}
+//
+//// Save Game State ----------------------------------------------
+//bool j1Slime::Save(pugi::xml_node& data) const
+//{
+//	
+//	return true;
+//}
 
 void j1Slime::setAnimation()
 {

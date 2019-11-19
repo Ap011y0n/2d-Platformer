@@ -59,9 +59,9 @@ bool j1Scene::Start()
 	}
 		debug_tex = App->tex->Load("maps/Colision.png");
 
-	App->EntityManager->CreateEntity(j1Entity::Types::player);
-	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300);
-	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 540);
+	App->EntityManager->CreateEntity(j1Entity::Types::player, 0, 0, "player");
+	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300, "wizard1");
+	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 540, "slime1");
 
 	return true;
 }
@@ -200,46 +200,47 @@ void j1Scene::Nextmap() {
 void j1Scene::Debug() {
 	// Start from first map
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	/*{
-		App->map->CleanUp();
-		current_level.create("maplevel1.tmx");
+	{
+		//App->map->CleanUp();
+		//current_level.create("maplevel1.tmx");
+		//App->map->Load(current_level.GetString());
+		//App->player->position.x = App->player->initialPosition.x;
+		//App->player->position.y = App->player->initialPosition.y;
+		//App->player->BarWidth = App->player->maxBarWidth;
+		//App->player->flip = SDL_FLIP_NONE;
+	
+	}
+	// Start from second map
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		/*App->map->CleanUp();
+		current_level.create("maplevel2.tmx");
 		App->map->Load(current_level.GetString());
 		App->player->position.x = App->player->initialPosition.x;
 		App->player->position.y = App->player->initialPosition.y;
 		App->player->BarWidth = App->player->maxBarWidth;
-		App->player->flip = SDL_FLIP_NONE;
-	
-	}*/
-	// Start from second map
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	//{
-	//	App->map->CleanUp();
-	//	current_level.create("maplevel2.tmx");
-	//	App->map->Load(current_level.GetString());
-	//	App->player->position.x = App->player->initialPosition.x;
-	//	App->player->position.y = App->player->initialPosition.y;
-	//	App->player->BarWidth = App->player->maxBarWidth;
-	//	App->player->flip = SDL_FLIP_NONE;
-	//}
+		App->player->flip = SDL_FLIP_NONE;*/
+	}
 
 	// Start from actual map
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-	//{
-	//	App->player->position.x = App->player->initialPosition.x;
-	//	App->player->position.y = App->player->initialPosition.y;
-	//	App->player->BarWidth = App->player->maxBarWidth;
-	//	App->player->flip = SDL_FLIP_NONE;
-	//}
+	{
+		/*App->player->position.x = App->player->initialPosition.x;
+		App->player->position.y = App->player->initialPosition.y;
+		App->player->BarWidth = App->player->maxBarWidth;
+		App->player->flip = SDL_FLIP_NONE;*/
+	}
 	// Load last save
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
-		App->render->fade = true; App->LoadGame();
+		App->render->fade = true; 
+		App->LoadGame();
 	}
 
 	// Save current state
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN){
 		App->SaveGame();
-
+	}
 	// View colliders
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		if (App->map->blitColliders) App->map->blitColliders = false;
@@ -247,15 +248,15 @@ void j1Scene::Debug() {
 	}
 	
 	// Activate God Mode
-	//if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-	//	if (App->player->Godmode == false)
-	//	{
-	//		App->player->Godmode = true;
-	//	}
-	//	else if (App->player->Godmode == true)
-	//	{
-	//		App->player->Godmode = false;
-	//	}
-	//}
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+	/*	if (App->player->Godmode == false)
+		{
+			App->player->Godmode = true;
+		}
+		else if (App->player->Godmode == true)
+		{
+			App->player->Godmode = false;
+		}*/
+	}
 
 }

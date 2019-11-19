@@ -45,15 +45,15 @@ struct TileSetPlayer
 class j1Player : public j1Entity
 {
 public:
-	j1Player();
+	j1Player(int posx, int posy, char* tag);
 	~j1Player();
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
+//	bool Load(pugi::xml_node&);
+//	bool Save(pugi::xml_node&) const;
 	void Movement(float dt);
 	void CheckCollision(float dt);
 	void StateMachine(float dt);

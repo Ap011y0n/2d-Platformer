@@ -34,15 +34,15 @@ class j1Wizard : public j1Entity
 {
 public:
 
-	j1Wizard(int posx, int posy);
+	j1Wizard(int posx, int posy, char* tag);
 	~j1Wizard();
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
+	//bool Load(pugi::xml_node&);
+	//bool Save(pugi::xml_node&) const;
 	void LoadAnimations(const char* path);
 	void OnCollision(Collider* c1, Collider* c2);
 	
@@ -68,7 +68,6 @@ public:
 	Collider* colliderWizard;
 	bool wizarDead = false;
 	int deathTimerWizard = 0;
-	iPoint position;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	SDL_Rect r;
