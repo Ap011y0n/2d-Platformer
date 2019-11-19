@@ -22,14 +22,14 @@
   </tile>
   <tile id="2">
    <animation>
-    <frame tileid="16" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="17" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="18" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="19" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="20" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="21" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="22" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="23" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="16" duration="600" pivotx="-30" pivoty="-5"/>
+    <frame tileid="17" duration="600" pivotx="-30" pivoty="-5"/>
+    <frame tileid="18" duration="600" pivotx="-30" pivoty="-5"/>
+    <frame tileid="19" duration="600" pivotx="-30" pivoty="-5"/>
+    <frame tileid="20" duration="600" pivotx="-30" pivoty="-5"/>
+    <frame tileid="21" duration="600" pivotx="-30" pivoty="-5"/>
+    <frame tileid="22" duration="600" pivotx="-30" pivoty="-5"/>
+    <frame tileid="23" duration="600" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
   <tile id="3">
@@ -54,13 +54,11 @@
   </tile>
   <tile id="5">
    <animation>
-    <frame tileid="104" duration="400" pivotx="-30" pivoty="-20"/>
-    <frame tileid="105" duration="400" pivotx="-30" pivoty="-20"/>
-    <frame tileid="106" duration="400" pivotx="-30" pivoty="-20"/>
-    <frame tileid="107" duration="400" pivotx="-30" pivoty="-20"/>
-    <frame tileid="108" duration="400" pivotx="-30" pivoty="-20"/>
-    <frame tileid="109" duration="400" pivotx="-30" pivoty="-20"/>
-    <frame tileid="110" duration="400" pivotx="-30" pivoty="-20"/>
+    <frame tileid="106" duration="600" pivotx="-30" pivoty="0"/>
+    <frame tileid="107" duration="600" pivotx="-30" pivoty="0"/>
+    <frame tileid="108" duration="600" pivotx="-30" pivoty="0"/>
+    <frame tileid="109" duration="600" pivotx="-30" pivoty="0"/>
+    <frame tileid="110" duration="600" pivotx="-30" pivoty="0"/>
    </animation>
   </tile>
   <tile id="6">

@@ -15,14 +15,14 @@
 	<:anonymous />
 	<particles />
 	<entity>
-		<player1>
-			<position pos_x="286" pos_y="716" />
-		</player1>
+		<player>
+			<position pos_x="0" pos_y="267" />
+		</player>
 		<wizard1>
-			<position pos_x="690" pos_y="367" />
+			<position pos_x="609" pos_y="367" />
 		</wizard1>
 		<slime1>
-			<position pos_x="623" pos_y="540" />
+			<position pos_x="542" pos_y="540" />
 		</slime1>
 	</entity>
 	<pathfinding />

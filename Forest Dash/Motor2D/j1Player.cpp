@@ -41,6 +41,7 @@ j1Player::j1Player(int posx, int posy, char* tag) : j1Entity(Types::player)
 
 	crouch = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
+	crouch.loop = false;
 
 	dead = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
@@ -50,7 +51,6 @@ j1Player::j1Player(int posx, int posy, char* tag) : j1Entity(Types::player)
 
 	aiming = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
-
 	aiming.loop = false;
 	
 }
@@ -390,6 +390,9 @@ void j1Player::StateMachine(float dt)
 	if (state == IDLE) {
 		App->audio->StopFx();
 		aimbarw = 0;
+		up.Reset();
+		crouch.Reset();
+		dash.Reset();
 		aiming.Reset();
 	}
 	if (state == DASH_L) {

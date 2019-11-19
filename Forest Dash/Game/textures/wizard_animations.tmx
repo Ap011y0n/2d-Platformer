@@ -4,44 +4,44 @@
   <image source="wizardtexture.png" width="1000" height="510"/>
   <tile id="0">
    <animation>
-    <frame tileid="0" duration="400"/>
-    <frame tileid="1" duration="400"/>
-    <frame tileid="2" duration="400"/>
-    <frame tileid="3" duration="400"/>
-    <frame tileid="4" duration="400"/>
-    <frame tileid="5" duration="400"/>
-    <frame tileid="6" duration="400"/>
-    <frame tileid="7" duration="400"/>
+    <frame tileid="0" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="1" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="2" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="3" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="4" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="5" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="6" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="7" duration="400" pivotx="-25" pivoty="-15"/>
    </animation>
   </tile>
   <tile id="1">
    <animation>
-    <frame tileid="20" duration="400"/>
-    <frame tileid="22" duration="400"/>
-    <frame tileid="23" duration="400"/>
-    <frame tileid="24" duration="400"/>
-    <frame tileid="25" duration="400"/>
-    <frame tileid="26" duration="400"/>
-    <frame tileid="27" duration="400"/>
+    <frame tileid="20" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="22" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="23" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="24" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="25" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="26" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="27" duration="400" pivotx="-25" pivoty="-15"/>
    </animation>
   </tile>
   <tile id="2">
    <animation>
-    <frame tileid="10" duration="400"/>
-    <frame tileid="11" duration="400"/>
-    <frame tileid="12" duration="400"/>
-    <frame tileid="13" duration="400"/>
-    <frame tileid="14" duration="400"/>
-    <frame tileid="15" duration="400"/>
-    <frame tileid="12" duration="400"/>
-    <frame tileid="11" duration="400"/>
+    <frame tileid="10" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="11" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="12" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="13" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="14" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="15" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="12" duration="400" pivotx="-25" pivoty="-15"/>
+    <frame tileid="11" duration="400" pivotx="-25" pivoty="-15"/>
    </animation>
   </tile>
   <tile id="3">
    <animation>
-    <frame tileid="13" duration="100"/>
-    <frame tileid="14" duration="100"/>
-    <frame tileid="15" duration="100"/>
+    <frame tileid="13" duration="100" pivotx="-25" pivoty="-15"/>
+    <frame tileid="14" duration="100" pivotx="-25" pivoty="-15"/>
+    <frame tileid="15" duration="100" pivotx="-25" pivoty="-15"/>
    </animation>
   </tile>
  </tileset>
