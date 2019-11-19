@@ -125,6 +125,8 @@ void j1Wizard::Movement()
 		position.x--;
 	}
 
+	colliderWizard->SetPos(position.x, position.y);
+
 }
 
 void j1Wizard::setAnimation()

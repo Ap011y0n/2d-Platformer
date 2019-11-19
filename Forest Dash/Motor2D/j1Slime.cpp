@@ -93,7 +93,8 @@ bool j1Slime::Update(float dt)
 	flip = SDL_FLIP_HORIZONTAL;
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
-
+	
+	
 	return true;
 }
 
@@ -128,7 +129,8 @@ void j1Slime::Movement()
 		state = SLIME_FORWARD;
 		position.x--;
 	}
-	
+
+	colliderSlime->SetPos(position.x, position.y);
 }
 
 void j1Slime::setAnimation()
