@@ -32,6 +32,10 @@ j1Wizard::j1Wizard(int posx, int posy, char* tag) : j1Entity(Types::wizard)
 	animation_iterator = animation_iterator->next;
 	death.loop = false;
 
+	forward = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
+	forward.loop = true;
+
 	position.x = posx;
 	position.y = posy;
 
@@ -64,6 +68,7 @@ bool j1Wizard::Start()
 	
 	colliderWizard = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
 
+	startMoving = SDL_GetTicks();
 	return true;
 }
 
@@ -79,10 +84,10 @@ bool j1Wizard::CleanUp()
 // Update: draw background ----------------------------------------------
 bool j1Wizard::Update(float dt)
 {
-	if (wizarDead) state = WD_DEATH;
 
+	Movement();
 	setAnimation();
-	position.y++;
+
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 
@@ -110,6 +115,18 @@ bool j1Wizard::PostUpdate(float dt)
 //	return true;
 //}
 
+void j1Wizard::Movement()
+{
+	if (wizarDead) state = WD_DEATH;
+
+	if (SDL_GetTicks() > (startMoving + 2500))
+	{
+		state = WD_FORWARD;
+		position.x--;
+	}
+
+}
+
 void j1Wizard::setAnimation()
 {
 	if (state == WD_IDLE)
@@ -129,7 +146,10 @@ void j1Wizard::setAnimation()
 
 		}
 	}
-
+	if (state == WD_FORWARD)
+	{
+		current_animation = &forward;
+	}
 }
 
 // Load animations from tiled  ----------------------------------------------

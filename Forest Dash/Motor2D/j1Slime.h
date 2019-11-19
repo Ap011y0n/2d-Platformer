@@ -17,6 +17,7 @@ enum slime_state
 {
 	SLIME_IDLE = 0,
 	SLIME_DEATH,
+	SLIME_FORWARD
 };
 
 struct TileSetSlime
@@ -48,14 +49,16 @@ public:
 
 
 private:
-
+	void Movement();
 	void setAnimation();
+	
 
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	p2List<Animation> animations;
 	Animation idle;
 	Animation death;
+	Animation forward;
 
 	pugi::xml_document	slime_file;
 
@@ -67,6 +70,7 @@ public:
 	Collider* colliderSlime;
 	bool slimeDead = false;
 	int deathTimerSlime = 0;
+	int startMoving = 0;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	SDL_Rect r;

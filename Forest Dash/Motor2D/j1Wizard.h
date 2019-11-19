@@ -17,6 +17,7 @@ enum wizard_state
 {
 	WD_IDLE = 0,
 	WD_DEATH,
+	WD_FORWARD
 };
 
 struct TileSetWizard
@@ -50,6 +51,7 @@ public:
 private:
 
 	void setAnimation();
+	void Movement();
 
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
@@ -57,6 +59,7 @@ private:
 	p2List<Animation> animations;
 	Animation idle;
 	Animation death;
+	Animation forward;
 
 	pugi::xml_document	slime_file;
 
@@ -68,6 +71,7 @@ public:
 	Collider* colliderWizard;
 	bool wizarDead = false;
 	int deathTimerWizard = 0;
+	int startMoving = 0;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	SDL_Rect r;

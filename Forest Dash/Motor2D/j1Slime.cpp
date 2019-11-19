@@ -34,6 +34,10 @@ j1Slime::j1Slime(int posx, int posy, char* tag) : j1Entity(Types::slime)
 	animation_iterator = animation_iterator->next;
 	death.loop = false;
 
+	forward = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
+
+	initialPosition.x = posx;
 	position.x = posx;
 	position.y = posy;
 
@@ -41,6 +45,8 @@ j1Slime::j1Slime(int posx, int posy, char* tag) : j1Entity(Types::slime)
 	r.h = 50;
 	r.x = position.x;
 	r.y = position.y;
+
+	
 }
 
 j1Slime::~j1Slime()
@@ -63,28 +69,27 @@ bool j1Slime::Start()
 	graphics = App->tex->Load("textures/slimetex.png");
 
 	
-
+	
 	colliderSlime = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
 
+	startMoving = SDL_GetTicks();
 	return true;
 }
 
 // Unload assets ----------------------------------------------
 bool j1Slime::CleanUp()
 {
-
 	App->tex->UnLoad(graphics);
-
+	
 	return true;
 }
 
 // Update: draw background ----------------------------------------------
 bool j1Slime::Update(float dt)
-{
-	if (slimeDead) state = SLIME_DEATH;
-	
+{	
+	Movement();
 	setAnimation();
-	position.x--;
+
 	flip = SDL_FLIP_HORIZONTAL;
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
@@ -113,6 +118,19 @@ bool j1Slime::PostUpdate(float dt)
 //	return true;
 //}
 
+
+void j1Slime::Movement()
+{
+	if (slimeDead) state = SLIME_DEATH;
+
+	if (SDL_GetTicks() > (startMoving + 2500))
+	{
+		state = SLIME_FORWARD;
+		position.x--;
+	}
+	
+}
+
 void j1Slime::setAnimation()
 {
 	if(state == SLIME_IDLE)
@@ -131,6 +149,10 @@ void j1Slime::setAnimation()
 			colliderSlime->to_delete = true;
 
 		}
+	}
+	if (state == SLIME_FORWARD)
+	{
+		current_animation = &forward;
 	}
 
 }
