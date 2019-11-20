@@ -237,28 +237,37 @@ void j1Wizard::Pathfinding(float dt) {
 		{
 			App->render->Blit(App->scene->debug_tex, nextPoint.x, nextPoint.y);
 		}
-		if (nextPoint.x < position.x && App->pathfinding->IsWalkable(position) == true && App->pathfinding->IsWalkable(nextPoint) == true)
-		{
-			flip = SDL_RendererFlip::SDL_FLIP_NONE;
-			speedX = -70 * dt;
-		}
-		else if (nextPoint.x > position.x && App->pathfinding->IsWalkable(position) == true && App->pathfinding->IsWalkable(nextPoint) == true)
-		{
-			flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
-			speedX = 70 * dt;
-		}
-		
-		if (nextPoint.y < position.y && App->pathfinding->IsWalkable(position) == true && App->pathfinding->IsWalkable(nextPoint) == true)
-		{
-			speedY = -70 * dt;
-		}
-		else if (nextPoint.y > position.y && App->pathfinding->IsWalkable(position) == true && App->pathfinding->IsWalkable(nextPoint) == true)
-		{
-			speedY = 70 * dt;
-		}
-	}
 
-	position.x += speedX;
-	position.y += speedY;
+		if (App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->EntityManager->GetPlayer()->position.x, App->EntityManager->GetPlayer()->position.y)) > -1)
+		{
+			if (nextPoint.x < position.x)
+			{
+				flip = SDL_RendererFlip::SDL_FLIP_NONE;
+				speedX = -40 * dt;
+			}
+			else if (nextPoint.x > position.x)
+			{
+				flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+				speedX = 40 * dt;
+			}
+
+			if (nextPoint.y < position.y)
+			{
+				speedY = -40 * dt;
+			}
+			else if (nextPoint.y > position.y)
+			{
+				speedY = 40 * dt;
+			}
+		}
+		else
+		{
+			current_animation = &idle;
+			speedX = 0;
+			speedY = 0;
+		}
+		position.x += speedX;
+		position.y += speedY;
+	}
 }
 

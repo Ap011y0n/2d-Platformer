@@ -222,10 +222,10 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 					open.list.add(Adjacent_list.list[i]);
 				}
 				else { // If it is already in the open list, check if it is a better path (compare G)
+					Adjacent_list.list[i].CalculateF(destination);
 					if (Adjacent_list.list[i].g < open.Find(Adjacent_list.list[i].pos)->data.g) {
 						// If it is a better path, Update the parent
 						//open.Find(Adjacent_list.list[i].pos)->data.parent = Adjacent_list.list[i].parent;
-						Adjacent_list.list[i].CalculateF(destination);
 						open.list.del(open.Find(Adjacent_list.list[i].pos));
 						open.list.add(Adjacent_list.list[i]);
 
