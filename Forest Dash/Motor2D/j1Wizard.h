@@ -64,7 +64,7 @@ private:
 
 	TileSetWizard TileSetData;
 	wizard_state state;
-
+	const p2DynArray<iPoint>* path;
 public:
 
 	bool wizarDead = false;

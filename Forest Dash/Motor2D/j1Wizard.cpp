@@ -10,10 +10,11 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
+#include "j1Pathfinding.h"
 #include "j1ModuleCollision.h"
 #include "J1EntityManager.h"
 
-
+#include "Brofiler/Brofiler.h"
 
 j1Wizard::j1Wizard(int posx, int posy) : j1Entity(Types::wizard)
 {
@@ -78,12 +79,31 @@ bool j1Wizard::Start()
 // Update: draw background ----------------------------------------------
 bool j1Wizard::Update(float dt)
 {
-
+	BROFILER_CATEGORY("Wizard", Profiler::Color::Orchid);
 	Movement();
 	setAnimation();
 
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
+
 	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
+	static iPoint origin;
+	static bool origin_selected = false;
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+
+		if (origin_selected == true)
+		{
+			App->pathfinding->CreatePath(origin, p);
+			origin_selected = false;
+		
+		}
+		else
+		{
+			origin = App->map->WorldToMap(position.x ,position.y);
+			origin_selected = true;
+		}
 
 	return true;
 }
@@ -116,7 +136,6 @@ void j1Wizard::Movement()
 	if (SDL_GetTicks() > (startMoving + 2500))
 	{
 		state = WD_FORWARD;
-		position.x--;
 	}
 
 	EntityCollider->SetPos(position.x, position.y);
