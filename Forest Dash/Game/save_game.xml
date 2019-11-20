@@ -16,16 +16,16 @@
 	<particles />
 	<entity>
 		<Entity type="player">
-			<position pos_x="304" pos_y="717" />
+			<position pos_x="310" pos_y="716" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="531" pos_y="448" />
+			<position pos_x="690" pos_y="300" />
+		</Entity>
+		<Entity type="wizard">
+			<position pos_x="4200" pos_y="450" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="682" pos_y="540" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="150" pos_y="500" />
+			<position pos_x="581" pos_y="540" />
 		</Entity>
 	</entity>
 	<pathfinding />

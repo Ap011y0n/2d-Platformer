@@ -58,7 +58,7 @@ bool j1Wizard::Start()
 {
 	LOG("Start Wizard");
 	App->EntityManager->wizardTex;
-
+	to_delete = false;
 
 	
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
@@ -80,6 +80,8 @@ bool j1Wizard::Update(float dt)
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 
 	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
+	
+	if (App->EntityManager->GetPlayer()->position.x > position.x - 200 && App->EntityManager->GetPlayer()->position.x < position.x + 200)
 	Pathfinding(dt);
 
 
@@ -200,6 +202,10 @@ SDL_Rect TileSetWizard::GetAnimRect(int id) const
 
 void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 
+	if (c2->type == COLLIDER_PLAYER_SHOT) {
+		c1->to_delete = true;
+		to_delete = true;
+	}
 }
 
 void j1Wizard::Pathfinding(float dt) {
@@ -209,7 +215,7 @@ void j1Wizard::Pathfinding(float dt) {
 	static bool origin_selected = false;
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
+	iPoint p = App->EntityManager->GetPlayer()->position;
 	p = App->map->WorldToMap(p.x, p.y);
 
 	if (origin_selected == true)

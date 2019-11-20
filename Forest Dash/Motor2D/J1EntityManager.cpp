@@ -51,6 +51,7 @@ bool j1EntityManager::Update(float dt)
 		entities_list->data->Update(dt);
 		entities_list = entities_list->next;
 	}
+	DeleteEntity();
 
 	return true;
 }
@@ -74,7 +75,6 @@ bool j1EntityManager::EntityCleanUp() {
 
 	while (entities_list != NULL)
 	{
-
 		entities_list->data->CleanUp();
 		RELEASE(entities_list->data);
 		entities_list = entities_list->next;
@@ -156,4 +156,15 @@ j1Entity* j1EntityManager::GetPlayer() {
 		entities_list = entities_list->next;
 	}
 	return NULL;
+}
+
+void j1EntityManager::DeleteEntity() {
+
+	p2List_item<j1Entity*>* entities_list = entities.start;
+	while (entities_list) {
+		if (entities_list->data->to_delete == true)
+			entities.del(entities_list);
+
+		entities_list = entities_list->next;
+	}
 }
