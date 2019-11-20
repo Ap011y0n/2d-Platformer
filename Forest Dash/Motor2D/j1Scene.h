@@ -39,10 +39,10 @@ public:
 	void Debug();
 	p2SString current_level;
 	p2List<p2SString> levels;
-	
+	SDL_Texture* debug_tex;
 	
 private:
-	SDL_Texture* debug_tex;
+
 };
 
 #endif // __j1SCENE_H__

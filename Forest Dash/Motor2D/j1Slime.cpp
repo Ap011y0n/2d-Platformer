@@ -122,8 +122,11 @@ void j1Slime::Movement()
 
 	if (SDL_GetTicks() > (startMoving + 2500))
 	{
+		if (position.x > 150)
+		{
 		state = SLIME_FORWARD;
 		position.x--;
+		}
 	}
 
 	EntityCollider->SetPos(position.x, position.y);

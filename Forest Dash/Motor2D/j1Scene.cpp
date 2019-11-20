@@ -127,13 +127,6 @@ bool j1Scene::Update(float dt)
 
 	App->render->Blit(debug_tex, p.x, p.y);
 
-	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		App->render->Blit(debug_tex, pos.x, pos.y);
-	}
 
 	//App->win->SetTitle(title.GetString());
 

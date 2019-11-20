@@ -104,6 +104,15 @@ bool j1Wizard::Update(float dt)
 			origin = App->map->WorldToMap(position.x ,position.y);
 			origin_selected = true;
 		}
+		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			position = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			if (App->collision->debug)
+			{
+			App->render->Blit(App->scene->debug_tex, position.x, position.y);
+			}
+		}
 
 	return true;
 }
