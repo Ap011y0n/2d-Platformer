@@ -63,7 +63,7 @@ bool j1Slime::Start()
 {
 	LOG("Start Slime");
 	App->EntityManager->slimeTex;
-
+	to_delete = false;
 	
 	
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
@@ -209,6 +209,10 @@ SDL_Rect TileSetSlime::GetAnimRect(int id) const
 
 void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 
-	
+
+	if (c2->type == COLLIDER_PLAYER_SHOT) {
+		c1->to_delete = true;
+		to_delete = true;
+	}
 
 }

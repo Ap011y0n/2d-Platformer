@@ -26,7 +26,7 @@ public:
 	bool EntityCleanUp();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&)const;
-
+	void DeleteEntity();
 	j1Entity* GetPlayer();
 	j1Entity* CreateEntity(j1Entity::Types type, int posx = 0, int posy = 0);
 public:

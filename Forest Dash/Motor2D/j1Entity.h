@@ -64,6 +64,7 @@ public:
 	iPoint position;
 	Collider *EntityCollider;
 	bool Godmode = false;
+	bool to_delete = false;
 
 };
 

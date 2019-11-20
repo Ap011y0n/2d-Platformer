@@ -67,7 +67,7 @@ bool j1Player::Start()
 {
 	LOG("Awake :)");
 	bool ret = true;
-
+	to_delete = false;
 
 	/*
 	moveFx = config.child("moveFx").attribute("source").as_string();
