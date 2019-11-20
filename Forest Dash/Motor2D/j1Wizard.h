@@ -46,7 +46,7 @@ public:
 	//bool Save(pugi::xml_node&) const;
 	void LoadAnimations(const char* path);
 	void OnCollision(Collider* c1, Collider* c2);
-	
+	void Pathfinding(float dt);
 
 private:
 
@@ -73,8 +73,6 @@ public:
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	SDL_Rect r;
-
-
 };
 
 #endif
