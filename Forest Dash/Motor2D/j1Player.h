@@ -45,13 +45,13 @@ struct TileSetPlayer
 class j1Player : public j1Entity
 {
 public:
-	j1Player(int posx, int posy, char* tag);
+	j1Player(int posx, int posy);
 	~j1Player();
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);
-	bool CleanUp();
+//	bool CleanUp();
 //	bool Load(pugi::xml_node&);
 //	bool Save(pugi::xml_node&) const;
 	void Movement(float dt);
@@ -72,7 +72,6 @@ private:
 	player_state prev_state = IDLE;
 	int DeathTimer = 0;
 	int AimTimer = 0;
-	SDL_Texture* graphics = nullptr;
 	
 	Animation idle;
 	Animation forward;

@@ -19,11 +19,12 @@
 
 
 
-j1Player::j1Player(int posx, int posy, char* tag) : j1Entity(Types::player)
+j1Player::j1Player(int posx, int posy) : j1Entity(Types::player)
 {
-	name.create(tag);
+	name.create("player");
+	initialPosition.x = posx;
+	initialPosition.y = posy;
 
-	graphics = NULL;
 	current_animation = NULL;
 	LoadAnimations("textures/adventurer_animations.tmx");
 
@@ -90,8 +91,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	jumpFx = "jump.wav";
 	winFx = "win.wav";
 	dashFx = "dash.wav";
-	initialPosition.x = 100;
-	initialPosition.y = 500;
+
 	gravity = 11;
 	speedX = 7;
 	speedY = 22;
@@ -126,7 +126,8 @@ bool j1Player::Start()
 	LOG("Win %d", App->audio->LoadFx(winFx.GetString()));
 	App->audio->LoadFx(dashFx.GetString());
 	LOG("Dash %d", App->audio->LoadFx(dashFx.GetString()));
-	graphics = App->tex->Load("textures/adventurertex.png");
+	App->EntityManager->playerTex;
+
 
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
@@ -141,13 +142,14 @@ bool j1Player::Start()
 }
 
 // Unload assets ----------------------------------------------
-bool j1Player::CleanUp()
+/*bool j1Player::CleanUp()
 {
+	j1Entity::CleanUp();
 
 	App->tex->UnLoad(graphics);
 	return true;
 }
-
+*/
 // Update: draw background ----------------------------------------------
 bool j1Player::Update(float dt)
 {
@@ -156,7 +158,7 @@ bool j1Player::Update(float dt)
 	Movement(dt);
 	StateMachine(dt);
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
-	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
+	App->render->Blit(App->EntityManager->playerTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
 	/*MoveCondition(dt);*/

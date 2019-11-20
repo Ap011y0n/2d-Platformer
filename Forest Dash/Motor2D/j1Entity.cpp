@@ -16,6 +16,8 @@
 #include "j1Slime.h"
 #include "j1Wizard.h"
 #include "j1Player.h"
+#include "J1EntityManager.h"
+
 
 
 j1Entity::j1Entity(Types type) : type(type)
@@ -28,26 +30,28 @@ j1Entity::~j1Entity() {
 
 
 bool j1Entity::CleanUp() {
+
+	EntityCollider->to_delete = true;
 	return true;
 }
 
 bool j1Entity::Load(pugi::xml_node& data) {
 	LOG("Loading %s state",name.GetString());
-
-	position.x = data.child(name.GetString()).child("position").attribute("pos_x").as_int();
-	position.y = data.child(name.GetString()).child("position").attribute("pos_y").as_int();
-	return true;
+/*
+	position.x = data.child("position").attribute("pos_x").as_int();
+	position.y = data.child("position").attribute("pos_y").as_int();
+	*/return true;
 }
 
 bool j1Entity::Save(pugi::xml_node& data) const {
 	LOG("Saving %s state", name.GetString());
 
-	pugi::xml_node entity = data.append_child(name.GetString());
+	data.append_child(name.GetString());
 
-	entity.append_child("position");
+	data.append_child("position");
 
-	entity.child("position").append_attribute("pos_x") = position.x;
-	entity.child("position").append_attribute("pos_y") = position.y;
+	data.child("position").append_attribute("pos_x") = position.x;
+	data.child("position").append_attribute("pos_y") = position.y;
 	return true;
 }
 

@@ -26,10 +26,13 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&)const;
 
-	j1Entity* CreateEntity(j1Entity::Types type, int posx = 0, int posy = 0, char* tag = "noname");
+	j1Entity* CreateEntity(j1Entity::Types type, int posx = 0, int posy = 0);
 public:
 	p2List<j1Entity*> entities;
 	pugi::xml_node node;
+	SDL_Texture* playerTex = nullptr;
+	SDL_Texture* slimeTex = nullptr;
+	SDL_Texture* wizardTex = nullptr;
 };
 
 #endif

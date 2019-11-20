@@ -63,7 +63,7 @@ protected:
 public:
 	iPoint position;
 	Collider *EntityCollider;
-	
+
 };
 
 #endif

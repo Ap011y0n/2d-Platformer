@@ -37,6 +37,9 @@ bool j1EntityManager::Awake(pugi::xml_node& config) {
 }
 
 bool j1EntityManager::Start() {
+	playerTex = App->tex->Load("textures/adventurertex.png");
+	slimeTex = App->tex->Load("textures/slimetex.png");
+	wizardTex = App->tex->Load("textures/wizardtexture.png");
 	return true;
 
 }
@@ -54,11 +57,16 @@ bool j1EntityManager::PostUpdate(float dt) {
 
 }
 bool j1EntityManager::CleanUp() {
-
+	//Crear funcion de clean up de solo las entities meter lo de abajo y descomentar esto
+	/*App->tex->UnLoad(App->EntityManager->playerTex);
+	App->tex->UnLoad(App->EntityManager->slimeTex);
+	App->tex->UnLoad(App->EntityManager->wizardTex);
+	*/
 	p2List_item<j1Entity*>* entities_list = entities.start;
 
 	while (entities_list != NULL)
 	{
+
 		entities_list->data->CleanUp();
 		RELEASE(entities_list->data);
 		entities_list = entities_list->next;
@@ -68,15 +76,15 @@ bool j1EntityManager::CleanUp() {
 
 }
 
-j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy, char* tag)
+j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy)
 {
 	/*static_assert(j1Entity::Types::unknown == 5, "code needs update");*/
 	j1Entity* ret = nullptr;
 
 	switch (type) {
-	case j1Entity::Types::player: ret = new j1Player(posx, posy, tag); break;
-	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy, tag); break;
-	case j1Entity::Types::slime: ret = new j1Slime(posx, posy, tag); break;
+	case j1Entity::Types::player: ret = new j1Player(posx, posy); break;
+	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy); break;
+	case j1Entity::Types::slime: ret = new j1Slime(posx, posy); break;
 	}
 	LOG("%d", node.child("initialPosition").attribute("x").as_int());
 	if (ret != nullptr){
@@ -89,11 +97,17 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy
 }
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
-//	CleanUp();
-	
+	CleanUp();
+	pugi::xml_node entity;
+
+	for (entity = data.child("Entity"); entity; entity = entity.next_sibling("Entity"))
+	{
+		CreateEntity(j1Entity::Types::slime, entity.child("position").attribute("pos_x").as_int(), entity.child("position").attribute("pos_y").as_int());
+	}
+
 		p2List_item<j1Entity*>* entities_list = entities.start;
 	while (entities_list) {
-		entities_list->data->Load(data);
+		entities_list->data->Load(entity);
 		entities_list = entities_list->next;
 	}
 
@@ -103,7 +117,8 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 {
 	p2List_item<j1Entity*>* entities_list = entities.start;
 	while (entities_list) {
-		entities_list->data->Save(data);
+		pugi::xml_node entity = data.append_child("Entity");
+		entities_list->data->Save(entity);
 		entities_list = entities_list->next;
 	}
 	

@@ -12,14 +12,15 @@
 #include "Animation.h"
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
+#include "J1EntityManager.h"
 
 
 
-j1Slime::j1Slime(int posx, int posy, char* tag) : j1Entity(Types::slime)
+
+j1Slime::j1Slime(int posx, int posy) : j1Entity(Types::slime)
 {
-	name.create(tag);
+	name.create("slime");
 
-	graphics = NULL;
 	current_animation = NULL;
 	LoadAnimations("textures/slime_animations.tmx");
 	state = SLIME_IDLE;
@@ -66,23 +67,18 @@ bool j1Slime::Awake(pugi::xml_node& config)
 bool j1Slime::Start()
 {
 	LOG("Start Slime");
-	graphics = App->tex->Load("textures/slimetex.png");
+	App->EntityManager->slimeTex;
 
 	
 	
-	colliderSlime = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
+	EntityCollider = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
 
 	startMoving = SDL_GetTicks();
 	return true;
 }
 
 // Unload assets ----------------------------------------------
-bool j1Slime::CleanUp()
-{
-	App->tex->UnLoad(graphics);
-	
-	return true;
-}
+
 
 // Update: draw background ----------------------------------------------
 bool j1Slime::Update(float dt)
@@ -92,7 +88,7 @@ bool j1Slime::Update(float dt)
 
 	flip = SDL_FLIP_HORIZONTAL;
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
-	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
+	App->render->Blit(App->EntityManager->slimeTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	
 	
 	return true;
@@ -130,7 +126,7 @@ void j1Slime::Movement()
 		position.x--;
 	}
 
-	colliderSlime->SetPos(position.x, position.y);
+	EntityCollider->SetPos(position.x, position.y);
 }
 
 void j1Slime::setAnimation()
@@ -148,7 +144,7 @@ void j1Slime::setAnimation()
 		if (SDL_GetTicks() > (deathTimerSlime + 2500)) {
 			
 			CleanUp();
-			colliderSlime->to_delete = true;
+			EntityCollider->to_delete = true;
 
 		}
 	}

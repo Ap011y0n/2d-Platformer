@@ -12,18 +12,21 @@
 	<scene>
 		<scenename name="maplevel1.tmx" />
 	</scene>
-	<:anonymous />
+	<collision />
 	<particles />
 	<entity>
-		<player>
-			<position pos_x="0" pos_y="267" />
-		</player>
-		<wizard1>
-			<position pos_x="609" pos_y="367" />
-		</wizard1>
-		<slime1>
-			<position pos_x="542" pos_y="540" />
-		</slime1>
+		<Entity>
+			<slime />
+			<position pos_x="221" pos_y="714" />
+		</Entity>
+		<Entity>
+			<slime />
+			<position pos_x="685" pos_y="300" />
+		</Entity>
+		<Entity>
+			<slime />
+			<position pos_x="686" pos_y="540" />
+		</Entity>
 	</entity>
 	<pathfinding />
 </game_state>

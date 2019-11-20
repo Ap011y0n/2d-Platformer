@@ -35,13 +35,13 @@ class j1Wizard : public j1Entity
 {
 public:
 
-	j1Wizard(int posx, int posy, char* tag);
+	j1Wizard(int posx, int posy);
 	~j1Wizard();
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);
-	bool CleanUp();
+//	bool CleanUp();
 	//bool Load(pugi::xml_node&);
 	//bool Save(pugi::xml_node&) const;
 	void LoadAnimations(const char* path);
@@ -53,7 +53,6 @@ private:
 	void setAnimation();
 	void Movement();
 
-	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 
 	p2List<Animation> animations;
@@ -68,7 +67,6 @@ private:
 
 public:
 
-	Collider* colliderWizard;
 	bool wizarDead = false;
 	int deathTimerWizard = 0;
 	int startMoving = 0;

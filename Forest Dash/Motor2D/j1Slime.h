@@ -35,13 +35,13 @@ class j1Slime : public j1Entity
 {
 public:
 
-	j1Slime(int posx, int posy, char* tag);
+	j1Slime(int posx, int posy);
 	~j1Slime();
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);
-	bool CleanUp();
+//	bool CleanUp();
 	//bool Load(pugi::xml_node&);
 	//bool Save(pugi::xml_node&) const;
 	void LoadAnimations(const char* path);
@@ -53,7 +53,6 @@ private:
 	void setAnimation();
 	
 
-	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	p2List<Animation> animations;
 	Animation idle;
@@ -67,7 +66,6 @@ private:
 
 public:
 
-	Collider* colliderSlime;
 	bool slimeDead = false;
 	int deathTimerSlime = 0;
 	int startMoving = 0;

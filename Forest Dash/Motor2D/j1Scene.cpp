@@ -59,9 +59,10 @@ bool j1Scene::Start()
 	}
 		debug_tex = App->tex->Load("maps/Colision.png");
 
-	App->EntityManager->CreateEntity(j1Entity::Types::player, 0, 0, "player");
-	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300, "wizard1");
-	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 540, "slime1");
+	App->EntityManager->CreateEntity(j1Entity::Types::player, 100, 500);
+	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300);
+	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 540);
+	App->EntityManager->CreateEntity(j1Entity::Types::slime, 150, 500);
 
 	return true;
 }

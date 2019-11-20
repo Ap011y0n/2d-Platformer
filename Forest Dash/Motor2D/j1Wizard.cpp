@@ -11,14 +11,14 @@
 #include "j1Audio.h"
 #include "Animation.h"
 #include "j1ModuleCollision.h"
+#include "J1EntityManager.h"
 
 
 
-j1Wizard::j1Wizard(int posx, int posy, char* tag) : j1Entity(Types::wizard)
+j1Wizard::j1Wizard(int posx, int posy) : j1Entity(Types::wizard)
 {
-	name.create(tag);
+	name.create("wizard");
 
-	graphics = NULL;
 	current_animation = NULL;
 	LoadAnimations("textures/wizard_animations.tmx");
 	state = WD_IDLE;
@@ -62,24 +62,18 @@ bool j1Wizard::Awake(pugi::xml_node& config)
 bool j1Wizard::Start()
 {
 	LOG("Start Wizard");
-	graphics = App->tex->Load("textures/wizardtexture.png");
+	App->EntityManager->wizardTex;
 
 
 	
-	colliderWizard = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
+	EntityCollider = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
 
 	startMoving = SDL_GetTicks();
 	return true;
 }
 
 // Unload assets ----------------------------------------------
-bool j1Wizard::CleanUp()
-{
 
-	App->tex->UnLoad(graphics);
-
-	return true;
-}
 
 // Update: draw background ----------------------------------------------
 bool j1Wizard::Update(float dt)
@@ -89,7 +83,7 @@ bool j1Wizard::Update(float dt)
 	setAnimation();
 
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
-	App->render->Blit(graphics, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
+	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 
 	return true;
 }
@@ -125,7 +119,7 @@ void j1Wizard::Movement()
 		position.x--;
 	}
 
-	colliderWizard->SetPos(position.x, position.y);
+	EntityCollider->SetPos(position.x, position.y);
 
 }
 
@@ -144,7 +138,7 @@ void j1Wizard::setAnimation()
 		if (SDL_GetTicks() > (deathTimerWizard + 2500)) {
 
 			CleanUp();
-			colliderWizard->to_delete = true;
+			EntityCollider->to_delete = true;
 
 		}
 	}

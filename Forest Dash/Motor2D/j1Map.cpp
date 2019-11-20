@@ -7,6 +7,8 @@
 #include "j1Window.h"
 #include "j1Audio.h"
 #include <math.h>
+#include "Brofiler/Brofiler.h"
+
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -29,6 +31,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 //Blit map
 void j1Map::Draw()
 {
+	BROFILER_CATEGORY("Map_Draw", Profiler::Color::DarkKhaki)
+
 	if(map_loaded == false)
 		return;
 	p2List_item<MapLayer*>* layer_iterator = this->data.layers.start;
