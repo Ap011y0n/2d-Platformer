@@ -85,34 +85,8 @@ bool j1Wizard::Update(float dt)
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 
 	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
-	static iPoint origin;
-	static bool origin_selected = false;
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
+	Pathfinding(dt);
 
-		if (origin_selected == true)
-		{
-			App->pathfinding->CreatePath(origin, p);
-			origin_selected = false;
-		
-		}
-		else
-		{
-			origin = App->map->WorldToMap(position.x ,position.y);
-			origin_selected = true;
-		}
-		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-		for (uint i = 0; i < path->Count(); ++i)
-		{
-			position = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			if (App->collision->debug)
-			{
-			App->render->Blit(App->scene->debug_tex, position.x, position.y);
-			}
-		}
-		position.x++;
 
 	return true;
 }
@@ -232,3 +206,58 @@ SDL_Rect TileSetWizard::GetAnimRect(int id) const
 void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 
 }
+
+void j1Wizard::Pathfinding(float dt) {
+	speedX = 0;
+	speedY = 0;
+	static iPoint origin;
+	static bool origin_selected = false;
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+
+	if (origin_selected == true)
+	{
+		App->pathfinding->CreatePath(origin, p);
+		origin_selected = false;
+
+	}
+	else
+	{
+		origin = App->map->WorldToMap(position.x, position.y);
+		origin_selected = true;
+	}
+	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint nextPoint = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		if (App->collision->debug)
+		{
+			App->render->Blit(App->scene->debug_tex, nextPoint.x, nextPoint.y);
+		}
+		if (nextPoint.x < position.x && App->pathfinding->IsWalkable(position) == true && App->pathfinding->IsWalkable(nextPoint) == true)
+		{
+			flip = SDL_RendererFlip::SDL_FLIP_NONE;
+			speedX = -70 * dt;
+		}
+		else if (nextPoint.x > position.x && App->pathfinding->IsWalkable(position) == true && App->pathfinding->IsWalkable(nextPoint) == true)
+		{
+			flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+			speedX = 70 * dt;
+		}
+		
+		if (nextPoint.y < position.y && App->pathfinding->IsWalkable(position) == true && App->pathfinding->IsWalkable(nextPoint) == true)
+		{
+			speedY = -70 * dt;
+		}
+		else if (nextPoint.y > position.y && App->pathfinding->IsWalkable(position) == true && App->pathfinding->IsWalkable(nextPoint) == true)
+		{
+			speedY = 70 * dt;
+		}
+	}
+
+	position.x += speedX;
+	position.y += speedY;
+}
+
