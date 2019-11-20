@@ -15,17 +15,17 @@
 	<collision />
 	<particles />
 	<entity>
-		<Entity>
-			<slime />
-			<position pos_x="221" pos_y="714" />
+		<Entity type="player">
+			<position pos_x="304" pos_y="717" />
 		</Entity>
-		<Entity>
-			<slime />
-			<position pos_x="685" pos_y="300" />
+		<Entity type="wizard">
+			<position pos_x="531" pos_y="448" />
 		</Entity>
-		<Entity>
-			<slime />
-			<position pos_x="686" pos_y="540" />
+		<Entity type="slime">
+			<position pos_x="682" pos_y="540" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="150" pos_y="500" />
 		</Entity>
 	</entity>
 	<pathfinding />

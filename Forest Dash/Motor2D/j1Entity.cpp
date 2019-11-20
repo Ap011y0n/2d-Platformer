@@ -46,10 +46,9 @@ bool j1Entity::Load(pugi::xml_node& data) {
 bool j1Entity::Save(pugi::xml_node& data) const {
 	LOG("Saving %s state", name.GetString());
 
-	data.append_child(name.GetString());
-
 	data.append_child("position");
 
+	data.append_attribute("type") = name.GetString();
 	data.child("position").append_attribute("pos_x") = position.x;
 	data.child("position").append_attribute("pos_y") = position.y;
 	return true;

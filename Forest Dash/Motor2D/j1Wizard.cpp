@@ -88,6 +88,7 @@ bool j1Wizard::Update(float dt)
 	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	Pathfinding(dt);
 
+
 	return true;
 }
 
