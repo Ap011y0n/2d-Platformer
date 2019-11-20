@@ -13,6 +13,7 @@
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
 #include "J1EntityManager.h"
+#include "Brofiler/Brofiler.h"
 
 
 
@@ -83,6 +84,7 @@ bool j1Slime::Start()
 // Update: draw background ----------------------------------------------
 bool j1Slime::Update(float dt)
 {	
+	BROFILER_CATEGORY("Update_Slime", Profiler::Color::Green);
 	Movement();
 	setAnimation();
 

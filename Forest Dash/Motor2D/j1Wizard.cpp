@@ -13,7 +13,6 @@
 #include "j1Pathfinding.h"
 #include "j1ModuleCollision.h"
 #include "J1EntityManager.h"
-
 #include "Brofiler/Brofiler.h"
 
 j1Wizard::j1Wizard(int posx, int posy) : j1Entity(Types::wizard)
@@ -79,7 +78,7 @@ bool j1Wizard::Start()
 // Update: draw background ----------------------------------------------
 bool j1Wizard::Update(float dt)
 {
-	BROFILER_CATEGORY("Wizard", Profiler::Color::Orchid);
+	BROFILER_CATEGORY("Update_Wizard", Profiler::Color::Orchid);
 	Movement();
 	setAnimation();
 

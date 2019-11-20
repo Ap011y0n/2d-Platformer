@@ -17,7 +17,7 @@
 #include "j1Player.h"
 #include "j1Wizard.h"
 #include "j1Slime.h"
-
+#include "Brofiler/Brofiler.h"
 
 
 j1EntityManager::j1EntityManager() {
@@ -43,7 +43,10 @@ bool j1EntityManager::Start() {
 	return true;
 
 }
-bool j1EntityManager::Update(float dt) {
+bool j1EntityManager::Update(float dt) 
+{
+	BROFILER_CATEGORY("Update_EntityManager", Profiler::Color::Yellow);
+
 	p2List_item<j1Entity*>* entities_list = entities.start;
 	while (entities_list) {
 		entities_list->data->Update(dt);

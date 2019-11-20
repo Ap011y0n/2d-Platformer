@@ -16,7 +16,7 @@
 #include "j1Slime.h"
 #include "j1entityManager.h"
 #include "j1Wizard.h"
-
+#include "Brofiler/Brofiler.h"
 
 
 j1Player::j1Player(int posx, int posy) : j1Entity(Types::player)
@@ -153,6 +153,8 @@ bool j1Player::Start()
 // Update: draw background ----------------------------------------------
 bool j1Player::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Player", Profiler::Color::SaddleBrown);
+
 	current_animation = &idle;
 	CheckCollision(dt);
 	Movement(dt);
