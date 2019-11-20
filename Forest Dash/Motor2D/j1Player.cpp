@@ -53,6 +53,9 @@ j1Player::j1Player(int posx, int posy) : j1Entity(Types::player)
 	aiming = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
 	aiming.loop = false;
+
+	bow = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
 	
 }
 
@@ -133,7 +136,11 @@ bool j1Player::Start()
 	r.w = playerWidth;
 	r.x = position.x + playerCentre;
 	r.y = position.y;
+
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_PLAYER, this);
+
+	charging = false;
+
 	return true;
 }
 
@@ -149,6 +156,8 @@ bool j1Player::Start()
 // Update: draw background ----------------------------------------------
 bool j1Player::Update(float dt)
 {
+	charging = false;
+
 	BROFILER_CATEGORY("Update_Player", Profiler::Color::SaddleBrown);
 
 	current_animation = &idle;
@@ -161,6 +170,12 @@ bool j1Player::Update(float dt)
 	Camera();
 	/*MoveCondition(dt);*/
 
+	current_animation_bow = &bow;
+	SDL_Rect* rec = &current_animation_bow->GetCurrentFrame(dt);
+
+	if(charging)
+	App->render->Blit(App->EntityManager->playerTex, position.x + (current_animation_bow->pivotx[current_animation_bow->returnCurrentFrame()]), position.y + (current_animation_bow->pivoty[current_animation_bow->returnCurrentFrame()]), rec, 1.0f, 1.0f, flip_bow, angle);
+	
 	return true;
 }
 
@@ -333,6 +348,7 @@ void j1Player::Movement(float dt) {
 	//Particles
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
+		charging = true;
 		state = AIMING;
 		SDL_Rect aimbar;
 		aimbar.h = 3;
@@ -357,7 +373,7 @@ void j1Player::Movement(float dt) {
 			iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 			iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
 			iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
-			float angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
+			angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
 			LOG("%f", angle);
 			float yvec = (vec.y / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
 			float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
@@ -369,6 +385,7 @@ void j1Player::Movement(float dt) {
 			LOG("Depurated %f, %f", xvec, yvec);
 			LOG("Depurated %d, %d", (int)xvec, (int)yvec);
 			
+			//Blit arrow
 			if (flip == SDL_FLIP_NONE) {
 				App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
 			}
@@ -394,6 +411,7 @@ void j1Player::StateMachine(float dt)
 		crouch.Reset();
 		dash.Reset();
 		aiming.Reset();
+		bow.Reset();
 	}
 	if (state == DASH_L) {
 
@@ -462,6 +480,7 @@ void j1Player::StateMachine(float dt)
 		aimbarw += (int)( DT_CONVERTER * dt);
 		AimTimer = SDL_GetTicks();
 		current_animation = &aiming;
+		
 
 	}
 }

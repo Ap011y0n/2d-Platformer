@@ -72,7 +72,9 @@ private:
 	player_state prev_state = IDLE;
 	int DeathTimer = 0;
 	int AimTimer = 0;
-	
+	bool charging = false;
+	float angle;
+
 	Animation idle;
 	Animation forward;
 	Animation backward;
@@ -82,10 +84,9 @@ private:
 	Animation dead;
 	Animation dash;
 	Animation aiming;
+	Animation bow;
 	SDL_Rect aimbar;
 	
-	
-
 	int playerHeight;
 	int playerWidth;
 	int playerCentre;
@@ -107,6 +108,7 @@ public:
 
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	SDL_RendererFlip flip_bow = SDL_FLIP_NONE;
 	float BarWidth = 40;
 	float aimbarw = 0;
 	float magnitude = 0.0f;

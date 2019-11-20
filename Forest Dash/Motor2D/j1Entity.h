@@ -49,6 +49,7 @@ protected:
 	int speedX;
 	int speedY;
 	Animation* current_animation = nullptr;
+	Animation* current_animation_bow = nullptr;
 	p2List<Animation> animations;
 	bool Canright = true;
 	bool Canleft = true;

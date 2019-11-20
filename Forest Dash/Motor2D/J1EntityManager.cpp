@@ -38,7 +38,7 @@ bool j1EntityManager::Awake(pugi::xml_node& config) {
 bool j1EntityManager::Start() {
 	playerTex = App->tex->Load("textures/adventurertex.png");
 	slimeTex = App->tex->Load("textures/slimetex.png");
-	wizardTex = App->tex->Load("textures/wizardtexture.png");
+	wizardTex = App->tex->Load("textures/wizardtex.png");
 	return true;
 
 }
