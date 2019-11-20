@@ -113,6 +113,7 @@ bool j1Wizard::Update(float dt)
 			App->render->Blit(App->scene->debug_tex, position.x, position.y);
 			}
 		}
+		position.x++;
 
 	return true;
 }

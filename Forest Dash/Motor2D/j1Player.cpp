@@ -126,7 +126,7 @@ bool j1Player::Start()
 	LOG("Win %d", App->audio->LoadFx(winFx.GetString()));
 	App->audio->LoadFx(dashFx.GetString());
 	LOG("Dash %d", App->audio->LoadFx(dashFx.GetString()));
-	App->EntityManager->playerTex;
+	
 
 
 	position.x = initialPosition.x;

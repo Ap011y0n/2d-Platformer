@@ -58,10 +58,16 @@ bool j1EntityManager::PostUpdate(float dt) {
 }
 bool j1EntityManager::CleanUp() {
 	//Crear funcion de clean up de solo las entities meter lo de abajo y descomentar esto
-	/*App->tex->UnLoad(App->EntityManager->playerTex);
+	App->tex->UnLoad(App->EntityManager->playerTex);
 	App->tex->UnLoad(App->EntityManager->slimeTex);
 	App->tex->UnLoad(App->EntityManager->wizardTex);
-	*/
+	
+	return true;
+
+}
+
+bool j1EntityManager::EntityCleanUp() {
+
 	p2List_item<j1Entity*>* entities_list = entities.start;
 
 	while (entities_list != NULL)
@@ -97,12 +103,26 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy
 }
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
-	CleanUp();
+	EntityCleanUp();
 	pugi::xml_node entity;
 
 	for (entity = data.child("Entity"); entity; entity = entity.next_sibling("Entity"))
 	{
-		CreateEntity(j1Entity::Types::slime, entity.child("position").attribute("pos_x").as_int(), entity.child("position").attribute("pos_y").as_int());
+		j1Entity::Types id;
+		p2SString type(entity.attribute("type").as_string());
+		if (type == "player")
+		{
+			id = j1Entity::Types::player;
+		}
+		if (type == "slime")
+		{
+			id = j1Entity::Types::slime;
+		}
+		if (type == "wizard")
+		{
+			id = j1Entity::Types::wizard;
+		}
+		CreateEntity(id, entity.child("position").attribute("pos_x").as_int(), entity.child("position").attribute("pos_y").as_int());
 	}
 
 		p2List_item<j1Entity*>* entities_list = entities.start;
