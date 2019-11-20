@@ -51,12 +51,7 @@ j1Wizard::~j1Wizard()
 }
 
 // Read player variables from config.xml ----------------------------------------------
-bool j1Wizard::Awake(pugi::xml_node& config)
-{
-	bool ret = true;
 
-	return ret;
-}
 
 // Load assets ----------------------------------------------
 bool j1Wizard::Start()

@@ -63,6 +63,7 @@ protected:
 public:
 	iPoint position;
 	Collider *EntityCollider;
+	bool Godmode = false;
 
 };
 

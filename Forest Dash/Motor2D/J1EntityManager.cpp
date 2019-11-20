@@ -31,8 +31,7 @@ j1EntityManager::~j1EntityManager() {
 }
 
 bool j1EntityManager::Awake(pugi::xml_node& config) {
-	node = config;
-	LOG("%d", node.child("initialPosition").attribute("x").as_int());
+	
 	return true;
 }
 
@@ -95,11 +94,10 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy
 	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy); break;
 	case j1Entity::Types::slime: ret = new j1Slime(posx, posy); break;
 	}
-	LOG("%d", node.child("initialPosition").attribute("x").as_int());
+	
 	if (ret != nullptr){
 
 		entities.add(ret);
-		entities.end->data->Awake(node);
 		entities.end->data->Start();
 	}
 	return ret;
@@ -146,4 +144,16 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 	}
 	
 	return true;
+}
+
+j1Entity* j1EntityManager::GetPlayer() {
+	
+	p2List_item<j1Entity*>* entities_list = entities.start;
+	while (entities_list) {
+		if (entities_list->data->name == "player") {
+			return entities_list->data;
+		}
+		entities_list = entities_list->next;
+	}
+	return NULL;
 }

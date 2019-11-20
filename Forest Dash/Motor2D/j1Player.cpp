@@ -60,7 +60,10 @@ j1Player::~j1Player()
 {}
 
 // Read player variables from config.xml ----------------------------------------------
-bool j1Player::Awake(pugi::xml_node& config)
+
+
+// Load assets ----------------------------------------------
+bool j1Player::Start()
 {
 	LOG("Awake :)");
 	bool ret = true;
@@ -105,14 +108,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	LOG("Pos y %d", initialPosition.y);
 	dashspeed = acceleration;
 	jumpSpeed = -1 * speedY;
-	
-	return ret;
-}
 
-// Load assets ----------------------------------------------
-bool j1Player::Start()
-{
-	
 	LOG("Loading player");
 	
 	App->audio->LoadFx(moveFx.GetString());

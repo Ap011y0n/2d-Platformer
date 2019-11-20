@@ -27,6 +27,7 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&)const;
 
+	j1Entity* GetPlayer();
 	j1Entity* CreateEntity(j1Entity::Types type, int posx = 0, int posy = 0);
 public:
 	p2List<j1Entity*> entities;
