@@ -65,7 +65,7 @@ private:
 
 	TileSetWizard TileSetData;
 	wizard_state state;
-
+	const p2DynArray<iPoint>* path;
 public:
 
 	Collider* colliderWizard;
