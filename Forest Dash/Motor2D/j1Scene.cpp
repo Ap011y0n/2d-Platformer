@@ -60,7 +60,7 @@ bool j1Scene::Start()
 	}
 
 	EntitiesMap1();
-		debug_tex = App->tex->Load("maps/Colision.png");
+		debug_tex = App->tex->Load("textures/bullside.png");
 
 	
 
