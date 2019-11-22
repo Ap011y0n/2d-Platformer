@@ -78,14 +78,11 @@ bool j1Wizard::Update(float dt)
 	Movement();
 	setAnimation();
 
-	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
-
-	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	
 	if (App->EntityManager->GetPlayer()->position.x > position.x - 300 && App->EntityManager->GetPlayer()->position.x < position.x + 300)
 	Pathfinding(dt);
-
-
+	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
+	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	return true;
 }
 
@@ -265,19 +262,19 @@ void j1Wizard::Pathfinding(float dt) {
 		}
 		else
 		{
-			if (SDL_GetTicks() > (collided + 100) && App->EntityManager->GetPlayer()->position.x < position.x)
+			if (SDL_GetTicks() > (collided + 500) && App->EntityManager->GetPlayer()->position.x < position.x)
 			{
 				position.x -= 20;
 			}
-			if (SDL_GetTicks() > (collided + 100) && App->EntityManager->GetPlayer()->position.x < position.x)
+			if (SDL_GetTicks() > (collided + 500) && App->EntityManager->GetPlayer()->position.x < position.x)
 			{
 				position.x += 20;
 			}
-			if (SDL_GetTicks() > (collided + 100) && App->EntityManager->GetPlayer()->position.y < position.y)
+			if (SDL_GetTicks() > (collided + 500) && App->EntityManager->GetPlayer()->position.y < position.y)
 			{
 				position.y -= 20;
 			}
-			if (SDL_GetTicks() > (collided + 100) && App->EntityManager->GetPlayer()->position.y < position.y)
+			if (SDL_GetTicks() > (collided + 500) && App->EntityManager->GetPlayer()->position.y < position.y)
 			{
 				position.y += 20;
 			}
