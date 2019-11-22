@@ -64,6 +64,7 @@ bool j1Wizard::Start()
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
 
 	startMoving = SDL_GetTicks();
+	collided = SDL_GetTicks();
 	return true;
 }
 
@@ -81,7 +82,7 @@ bool j1Wizard::Update(float dt)
 
 	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	
-	if (App->EntityManager->GetPlayer()->position.x > position.x - 200 && App->EntityManager->GetPlayer()->position.x < position.x + 200)
+	if (App->EntityManager->GetPlayer()->position.x > position.x - 300 && App->EntityManager->GetPlayer()->position.x < position.x + 300)
 	Pathfinding(dt);
 
 
@@ -113,7 +114,7 @@ void j1Wizard::Movement()
 {
 	if (wizarDead) state = WD_DEATH;
 
-	if (SDL_GetTicks() > (startMoving + 2500))
+	if (SDL_GetTicks() > (startMoving + 1000))
 	{
 		state = WD_FORWARD;
 	}
@@ -229,7 +230,9 @@ void j1Wizard::Pathfinding(float dt) {
 		origin = App->map->WorldToMap(position.x, position.y);
 		origin_selected = true;
 	}
+
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+
 	for (uint i = 0; i < path->Count(); ++i)
 	{
 		iPoint nextPoint = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
@@ -238,7 +241,7 @@ void j1Wizard::Pathfinding(float dt) {
 			App->render->Blit(App->scene->debug_tex, nextPoint.x, nextPoint.y);
 		}
 
-		if (App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->EntityManager->GetPlayer()->position.x, App->EntityManager->GetPlayer()->position.y)) > -1)
+		if (App->pathfinding->CreatePath(App->map->WorldToMap(position.x +10, position.y + 10), App->map->WorldToMap(App->EntityManager->GetPlayer()->position.x, App->EntityManager->GetPlayer()->position.y)) > -1)
 		{
 			if (nextPoint.x < position.x)
 			{
@@ -262,6 +265,22 @@ void j1Wizard::Pathfinding(float dt) {
 		}
 		else
 		{
+			if (SDL_GetTicks() > (collided + 100) && App->EntityManager->GetPlayer()->position.x < position.x)
+			{
+				position.x -= 20;
+			}
+			if (SDL_GetTicks() > (collided + 100) && App->EntityManager->GetPlayer()->position.x < position.x)
+			{
+				position.x += 20;
+			}
+			if (SDL_GetTicks() > (collided + 100) && App->EntityManager->GetPlayer()->position.y < position.y)
+			{
+				position.y -= 20;
+			}
+			if (SDL_GetTicks() > (collided + 100) && App->EntityManager->GetPlayer()->position.y < position.y)
+			{
+				position.y += 20;
+			}
 			current_animation = &idle;
 			speedX = 0;
 			speedY = 0;
