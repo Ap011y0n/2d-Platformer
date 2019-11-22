@@ -63,7 +63,7 @@ bool j1Wizard::Start()
 	
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
 
-	startMoving = SDL_GetTicks();
+	
 	collided = SDL_GetTicks();
 	return true;
 }
@@ -111,11 +111,6 @@ void j1Wizard::Movement()
 {
 	if (wizarDead) state = WD_DEATH;
 
-	if (SDL_GetTicks() > (startMoving + 1000))
-	{
-		state = WD_FORWARD;
-	}
-
 	EntityCollider->SetPos(position.x, position.y);
 
 }
@@ -142,6 +137,7 @@ void j1Wizard::setAnimation()
 	if (state == WD_FORWARD)
 	{
 		current_animation = &forward;
+		state = WD_IDLE;
 	}
 }
 
@@ -240,6 +236,7 @@ void j1Wizard::Pathfinding(float dt) {
 
 		if (App->pathfinding->CreatePath(App->map->WorldToMap(position.x +10, position.y + 10), App->map->WorldToMap(App->EntityManager->GetPlayer()->position.x, App->EntityManager->GetPlayer()->position.y)) > -1)
 		{
+			state = WD_FORWARD;
 			if (nextPoint.x < position.x)
 			{
 				flip = SDL_RendererFlip::SDL_FLIP_NONE;
@@ -262,6 +259,7 @@ void j1Wizard::Pathfinding(float dt) {
 		}
 		else
 		{
+
 			if (SDL_GetTicks() > (collided + 500) && App->EntityManager->GetPlayer()->position.x < position.x)
 			{
 				position.x -= 20;
@@ -278,10 +276,11 @@ void j1Wizard::Pathfinding(float dt) {
 			{
 				position.y += 20;
 			}
-			current_animation = &idle;
+			
 			speedX = 0;
 			speedY = 0;
 		}
+
 		position.x += speedX;
 		position.y += speedY;
 	}
