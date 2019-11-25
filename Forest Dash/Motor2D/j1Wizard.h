@@ -20,16 +20,6 @@ enum wizard_state
 	WD_FORWARD
 };
 
-struct TileSetWizard
-{
-	SDL_Rect GetAnimRect(int id) const;
-	int tile_width;
-	int tile_height;
-	int firstgid;
-	int num_tiles_width;
-	int tex_width;
-	p2SString Texname;
-};
 
 class j1Wizard : public j1Entity
 {
@@ -44,25 +34,22 @@ public:
 //	bool CleanUp();
 	//bool Load(pugi::xml_node&);
 	//bool Save(pugi::xml_node&) const;
-	void LoadAnimations(const char* path);
+	//void LoadAnimations(const char* path);
 	void OnCollision(Collider* c1, Collider* c2);
 	void Pathfinding(float dt);
 
 private:
 
-	void setAnimation();
+	void setAnimation(float);
 	void Movement();
 
 	Animation* current_animation = nullptr;
 
-	p2List<Animation> animations;
 	Animation idle;
 	Animation death;
 	Animation forward;
-
-	pugi::xml_document	slime_file;
-
-	TileSetWizard TileSetData;
+	int move;
+	bool patrol;
 	wizard_state state;
 	const p2DynArray<iPoint>* path;
 public:

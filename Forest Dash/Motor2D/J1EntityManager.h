@@ -8,7 +8,6 @@
 #include "p2DynArray.h"
 #include "j1Entity.h"
 
-#define DT_CONVERTER 60
 
 struct SDL_Texture;
 
@@ -35,6 +34,7 @@ public:
 	SDL_Texture* playerTex = nullptr;
 	SDL_Texture* slimeTex = nullptr;
 	SDL_Texture* wizardTex = nullptr;
+
 };
 
 #endif

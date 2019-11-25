@@ -99,7 +99,7 @@ bool j1Particles::Update(float dt)
 		if (p == nullptr)
 			continue;
 
-		if (p->Update() == false)
+		if (p->Update(dt) == false)
 		{
 			delete p;
 			active[i] = nullptr;
@@ -110,7 +110,7 @@ bool j1Particles::Update(float dt)
 			if (p->fx_played == false)
 			{
 				p->fx_played = true;
-				//App->audio->PlayFx(p->fx);
+				App->audio->PlayFx(p->fx);
 			}
 		}
 	}
@@ -182,7 +182,7 @@ Particle::~Particle()
 		collider->to_delete = true;
 }
 
-bool Particle::Update()
+bool Particle::Update(float dt)
 {
 	bool ret = true;
 
@@ -195,8 +195,8 @@ bool Particle::Update()
 		if (anim.Finished())
 			ret = false;
 
-	position.x += speed.x;
-	position.y += speed.y;
+	position.x += speed.x * DT_CONVERTER* dt;
+	position.y += speed.y * DT_CONVERTER* dt;
 	collider->SetPos(position.x, position.y);
 
 	return ret;

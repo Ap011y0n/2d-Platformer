@@ -15,7 +15,16 @@ struct Collider;
 struct Anim;
 
 
-
+struct TileSetPlayer
+{
+	SDL_Rect GetAnimRect(int id) const;
+	int tile_width;
+	int tile_height;
+	int firstgid;
+	int num_tiles_width;
+	int tex_width;
+	p2SString Texname;
+};
 
 class j1Entity : public j1Module
 {
@@ -40,6 +49,7 @@ public:
 	bool Save(pugi::xml_node& data) const;
 
 	void LoadAnimations(const char* path);
+	void DrawHitbox();
 	void playfx(const int id, const int rep);
 	//void OnCollision(Collider* c1, Collider* c2);
 
@@ -66,7 +76,8 @@ public:
 	Collider *EntityCollider;
 	bool Godmode = false;
 	bool to_delete = false;
-
+	pugi::xml_document	entity_file;
+	TileSetPlayer TileSetData;
 };
 
 #endif

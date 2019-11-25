@@ -30,16 +30,7 @@ enum player_state
 	AIMING,
 	ADJUST
 };
-struct TileSetPlayer
-{
-	SDL_Rect GetAnimRect(int id) const;
-	int tile_width;
-	int tile_height;
-	int firstgid;
-	int num_tiles_width;
-	int tex_width;
-	p2SString Texname;
-};
+
 
 
 class j1Player : public j1Entity
@@ -57,10 +48,10 @@ public:
 	void Movement(float dt);
 	void CheckCollision(float dt);
 	void StateMachine(float dt);
-	void DrawHitbox();
+//	void DrawHitbox();
 	void Camera();
 	void MoveCondition(float dt);
-	void LoadAnimations(const char* path);
+//	void LoadAnimations(const char* path);
 	void playfx(const int id, const int rep);
 	void OnCollision(Collider* c1, Collider* c2);
 
@@ -96,8 +87,8 @@ private:
 	p2SString		jumpFx;
 	p2SString		winFx;
 	p2SString		dashFx;
-	pugi::xml_document	player_file;
-	TileSetPlayer TileSetData;
+
+
 	
 	float dashspeed;
 	float acceleration;

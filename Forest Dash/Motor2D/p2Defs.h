@@ -65,4 +65,7 @@ inline const char* const PATH(const char* folder, const char* file)
 #define PERF_START(timer) timer.Start()
 #define PERF_PEEK(timer) LOG("%s took %f ms", __FUNCTION__, timer.ReadMs())
 
+//dt multiplier
+#define DT_CONVERTER 60
+
 #endif

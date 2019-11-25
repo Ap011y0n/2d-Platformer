@@ -31,7 +31,9 @@ j1EntityManager::~j1EntityManager() {
 }
 
 bool j1EntityManager::Awake(pugi::xml_node& config) {
-	
+	node = config;
+	LOG("Awake NODE %d", node.child("initialPosition").attribute("x").as_int());
+
 	return true;
 }
 
@@ -55,12 +57,14 @@ bool j1EntityManager::Update(float dt)
 
 	return true;
 }
+
 bool j1EntityManager::PostUpdate(float dt) {
 	return true;
 
 }
+
 bool j1EntityManager::CleanUp() {
-	//Crear funcion de clean up de solo las entities meter lo de abajo y descomentar esto
+	
 	App->tex->UnLoad(App->EntityManager->playerTex);
 	App->tex->UnLoad(App->EntityManager->slimeTex);
 	App->tex->UnLoad(App->EntityManager->wizardTex);
@@ -86,9 +90,9 @@ bool j1EntityManager::EntityCleanUp() {
 
 j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy)
 {
-	/*static_assert(j1Entity::Types::unknown == 5, "code needs update");*/
+	//static_assert(j1Entity::Types::unknown == 5, "code needs update");
 	j1Entity* ret = nullptr;
-
+//	LOG("Create %d", node.child("initialPosition").attribute("x").as_int());
 	switch (type) {
 	case j1Entity::Types::player: ret = new j1Player(posx, posy); break;
 	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy); break;
@@ -159,7 +163,7 @@ j1Entity* j1EntityManager::GetPlayer() {
 }
 
 void j1EntityManager::DeleteEntity() {
-
+	
 	p2List_item<j1Entity*>* entities_list = entities.start;
 	while (entities_list) {
 		if (entities_list->data->to_delete == true)

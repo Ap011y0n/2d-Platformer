@@ -60,7 +60,8 @@ bool j1Wizard::Start()
 	App->EntityManager->wizardTex;
 	to_delete = false;
 
-	
+	move = position.x;
+	patrol = true;
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
 
 	
@@ -76,12 +77,13 @@ bool j1Wizard::Update(float dt)
 {
 	BROFILER_CATEGORY("Update_Wizard", Profiler::Color::Orchid);
 	Movement();
-	setAnimation();
+	setAnimation(dt);
 
 	
 	if (App->EntityManager->GetPlayer()->position.x > position.x - 300 && App->EntityManager->GetPlayer()->position.x < position.x + 300)
 	Pathfinding(dt);
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
+	DrawHitbox();
 	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	return true;
 }
@@ -111,14 +113,28 @@ void j1Wizard::Movement()
 {
 	if (wizarDead) state = WD_DEATH;
 
-	EntityCollider->SetPos(position.x, position.y);
+	
 
 }
 
-void j1Wizard::setAnimation()
+void j1Wizard::setAnimation(float dt)
 {
 	if (state == WD_IDLE)
 	{
+		if(position.x < move){
+			patrol = true;
+		}
+		if (position.x > move+200) {
+			patrol = false;
+		}
+		if(patrol){
+			position.x += 1 * (int)(DT_CONVERTER*dt);
+			flip = SDL_FLIP_HORIZONTAL;
+		}
+		if (!patrol) {
+			flip = SDL_FLIP_NONE;
+			position.x -= 1 * (int)(DT_CONVERTER*dt);
+		}
 		current_animation = &idle;
 		death.Reset();
 	}
@@ -142,57 +158,8 @@ void j1Wizard::setAnimation()
 }
 
 // Load animations from tiled  ----------------------------------------------
-void j1Wizard::LoadAnimations(const char* path)
-{
-	pugi::xml_parse_result result = slime_file.load_file(path);
-	if (result == NULL)
-	{
-		LOG("Could not load map xml file %s. pugi error: %s", path, result.description());
-
-	}
-
-	TileSetData.firstgid = slime_file.child("map").child("tileset").attribute("firstgid").as_int();
-	TileSetData.tile_width = slime_file.child("map").child("tileset").attribute("tilewidth").as_int();
-	TileSetData.tile_height = slime_file.child("map").child("tileset").attribute("tileheight").as_int();
-	TileSetData.tex_width = slime_file.child("map").child("tileset").child("image").attribute("width").as_int();
-	TileSetData.Texname.create(slime_file.child("map").child("tileset").child("image").attribute("source").as_string());
-	TileSetData.num_tiles_width = TileSetData.tex_width / TileSetData.tile_width;
-	LOG("Tileset: %s", TileSetData.Texname.GetString());
-	LOG("firstgid %d", TileSetData.firstgid);
-	LOG("tile_width %d", TileSetData.tile_width);
-	LOG("tile_height %d", TileSetData.tile_height);
-	LOG("tex_width %d", TileSetData.tex_width);
-	LOG("num_tiles_width %d", TileSetData.num_tiles_width);
-
-	int i = 0;
-	pugi::xml_node tile;
-	pugi::xml_node frame;
-
-	for (tile = slime_file.child("map").child("tileset").child("tile"); tile; tile = tile.next_sibling("tile"))
-	{
-		Animation* set = new Animation();
-		for (frame = tile.child("animation").child("frame"); frame; frame = frame.next_sibling("frame"))
-		{
-			set->PushBack(TileSetData.GetAnimRect(frame.attribute("tileid").as_int()), (frame.attribute("duration").as_float()) / 2000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int(), 0, 0);
-			LOG("Animation %d, %d, %d, %d", frame.attribute("tileid").as_int(), (frame.attribute("duration").as_float()) / 1000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int());
-		}
-		animations.add(*set);
-
-	}
-
-}
 
 //Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
-SDL_Rect TileSetWizard::GetAnimRect(int id) const
-{
-	int relative_id = id;
-	SDL_Rect rect;
-	rect.w = tile_width;
-	rect.h = tile_height;
-	rect.x = ((rect.w) * (relative_id % num_tiles_width));
-	rect.y = ((rect.h) * (relative_id / num_tiles_width));
-	return rect;
-}
 
 void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 

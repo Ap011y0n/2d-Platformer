@@ -43,7 +43,7 @@ public:
 //	bool CleanUp();
 	//bool Load(pugi::xml_node&);
 	//bool Save(pugi::xml_node&) const;
-	void LoadAnimations(const char* path);
+//	void LoadAnimations(const char* path);
 	void OnCollision(Collider* c1, Collider* c2);
 
 
@@ -53,7 +53,6 @@ private:
 	
 
 	Animation* current_animation = nullptr;
-	p2List<Animation> animations;
 	Animation idle;
 	Animation death;
 	Animation forward;

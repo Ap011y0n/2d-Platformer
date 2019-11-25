@@ -481,7 +481,7 @@ void j1Player::StateMachine(float dt)
 	}
 	if (state == AIMING)
 	{
-		aimbarw += (int)( DT_CONVERTER * dt);
+		aimbarw += ( 1 * DT_CONVERTER *dt);
 		AimTimer = SDL_GetTicks();
 		current_animation = &aiming;
 		
@@ -583,16 +583,7 @@ void j1Player::CheckCollision(float dt) {
 }
 
 // Blits a rect to make an idea of player position
-void j1Player::DrawHitbox() {
-	SDL_Rect hitbox;
-	hitbox.h = playerHeight;
-	hitbox.w = playerWidth;
-	hitbox.x = position.x + playerCentre;
-	hitbox.y = position.y;
-	if(App->map->blitColliders)	App->render->DrawQuad(hitbox, 0, 225, 0, 70);
-	
-	EntityCollider->SetPos(position.x + playerCentre, position.y);
-}				
+			
 // Function to make the camera follow the player ----------------------------------------------
 void j1Player::Camera() {
 	if (state != DEATH){
@@ -688,51 +679,9 @@ void j1Player::MoveCondition(float dt) {
 }
 
 // Load animations from tiled  ----------------------------------------------
-void j1Player::LoadAnimations(const char* path) {
-	pugi::xml_parse_result result = player_file.load_file(path);
-	if (result == NULL)
-	{
-		LOG("Could not load map xml file %s. pugi error: %s", path, result.description());
-	
-	}
-	TileSetData.firstgid = player_file.child("map").child("tileset").attribute("firstgid").as_int();
-	TileSetData.tile_width = player_file.child("map").child("tileset").attribute("tilewidth").as_int();
-	TileSetData.tile_height = player_file.child("map").child("tileset").attribute("tileheight").as_int();
-	TileSetData.tex_width = player_file.child("map").child("tileset").child("image").attribute("width").as_int();
-	TileSetData.Texname.create(player_file.child("map").child("tileset").child("image").attribute("source").as_string());
-	TileSetData.num_tiles_width = TileSetData.tex_width / TileSetData.tile_width;
-	LOG("Tileset: %s", TileSetData.Texname.GetString());
-	LOG("firstgid %d", TileSetData.firstgid);
-	LOG("tile_width %d", TileSetData.tile_width);
-	LOG("tile_height %d", TileSetData.tile_height);
-	LOG("tex_width %d", TileSetData.tex_width);
-	LOG("num_tiles_width %d", TileSetData.num_tiles_width);
-	int i = 0;
-	pugi::xml_node tile;
-	pugi::xml_node frame;
-	for (tile = player_file.child("map").child("tileset").child("tile"); tile; tile = tile.next_sibling("tile")) {
-		Animation* set = new Animation();
-		for (frame = tile.child("animation").child("frame"); frame; frame = frame.next_sibling("frame")) {
-			set->PushBack(TileSetData.GetAnimRect(frame.attribute("tileid").as_int()),(frame.attribute("duration").as_float())/2000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int(),0,0);
-			LOG("Animation %d, %f, %d, %d", frame.attribute("tileid").as_int(), (frame.attribute("duration").as_float()) / 1000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int());
-		}
-		animations.add(*set);
 
-	}
-	
-}
 
 //Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
-SDL_Rect TileSetPlayer::GetAnimRect(int id) const
-{
-	int relative_id = id;
-	SDL_Rect rect;
-	rect.w = tile_width;
-	rect.h = tile_height;
-	rect.x = ((rect.w ) * (relative_id % num_tiles_width));
-	rect.y = ((rect.h ) * (relative_id / num_tiles_width));
-	return rect;
-}
 
 //Play audio efects only once and stop efects that were already playing
 void j1Player::playfx( const int id, const int rep) {

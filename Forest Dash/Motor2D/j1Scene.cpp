@@ -294,11 +294,11 @@ void j1Scene::Debug() {
 }
 
 void j1Scene::EntitiesMap1() {
+	App->EntityManager->CreateEntity(j1Entity::Types::slime, 150, 500);
 	App->EntityManager->CreateEntity(j1Entity::Types::player, 100, 500);
 	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300);
 	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 4200, 450);
 	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 540);
-	App->EntityManager->CreateEntity(j1Entity::Types::slime, 150, 500);
 }
 
 void j1Scene::EntitiesMap2() {
