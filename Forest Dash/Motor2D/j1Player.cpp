@@ -361,30 +361,34 @@ void j1Player::Movement(float dt) {
 		App->input->GetMousePosition(x, y);
 		
 
-		if (x < position.x)
+		
+		iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+		iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
+		iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
+		
+		angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
+	//	LOG("%f", angle);
+		float yvec = (vec.y / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
+		float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
+		//LOG("Raw %d, %d", vec.x, vec.y);
+		LOG("Normal %f, %f", xvec, yvec);
+
+		if (xvec < 0)
 			flip = SDL_FLIP_HORIZONTAL;
-		if (x > position.x)
+		if (xvec > 0)
 			flip = SDL_FLIP_NONE;
+
+
+		xvec = xvec * 30;
+		yvec = yvec * 30;
+
+	//	LOG("Depurated %f, %f", xvec, yvec);
+	//	LOG("Depurated %d, %d", (int)xvec, (int)yvec);
 
 		if (aimbar.w >= 50)
 		{
 			aimbarw = 0;
-			
-			iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-			iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
-			iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
-			angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
-			LOG("%f", angle);
-			float yvec = (vec.y / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
-			float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
-			LOG("Raw %d, %d", vec.x, vec.y);
-			LOG("Normal %f, %f", xvec, yvec);
-			xvec = xvec * 30;
-			yvec = yvec * 30;
-			
-			LOG("Depurated %f, %f", xvec, yvec);
-			LOG("Depurated %d, %d", (int)xvec, (int)yvec);
-			
+		
 			//Blit arrow
 			if (flip == SDL_FLIP_NONE) {
 				App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);

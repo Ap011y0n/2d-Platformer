@@ -282,6 +282,14 @@ void j1Scene::Debug() {
 			App->EntityManager->GetPlayer()->Godmode = false;
 		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+		if(App->framerate == 30){
+		App->framerate = 10000;
+		}
+		else{
+			App->framerate = 30;
+		}
+	}
 
 }
 

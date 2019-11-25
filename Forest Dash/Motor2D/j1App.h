@@ -94,6 +94,8 @@ public:
 	j1Particles*		particles;
 	j1EntityManager*	EntityManager;
 	j1PathFinding*		pathfinding;
+	uint32				framerate = 0u;
+
 
 private:
 
@@ -118,7 +120,6 @@ private:
 	j1Timer				last_sec_frame_time;
 	uint32				last_sec_frame_count = 0u;
 	uint32				prev_last_sec_frame_count = 0u;
-	uint32				framerate = 0u;
 	float				dt;
 };
 
