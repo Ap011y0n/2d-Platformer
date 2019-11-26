@@ -80,7 +80,7 @@ bool j1Wizard::Update(float dt)
 	setAnimation(dt);
 
 	
-	if (App->EntityManager->GetPlayer()->position.x > position.x - 400 && App->EntityManager->GetPlayer()->position.x < position.x + 400)
+	if (App->EntityManager->GetPlayer()->position.x > position.x - 400 && App->EntityManager->GetPlayer()->position.x < position.x + 400 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
 	Pathfinding(dt);
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	DrawHitbox();
