@@ -113,28 +113,26 @@ void j1Wizard::Movement()
 {
 	if (wizarDead) state = WD_DEATH;
 
-	
-
 }
 
 void j1Wizard::setAnimation(float dt)
 {
 	if (state == WD_IDLE)
 	{
-		if(position.x < move){
+	/*	if(position.x < move){
 			patrol = true;
 		}
 		if (position.x > move+200) {
 			patrol = false;
 		}
 		if(patrol){
-			position.x += 1 * (int)(DT_CONVERTER*dt);
+			position.x += 2 * (int)(DT_CONVERTER*dt);
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 		if (!patrol) {
 			flip = SDL_FLIP_NONE;
-			position.x -= 1 * (int)(DT_CONVERTER*dt);
-		}
+			position.x -= 2 * (int)(DT_CONVERTER*dt);
+		}*/
 		current_animation = &idle;
 		death.Reset();
 	}
@@ -169,7 +167,7 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 	}
 }
 
-void j1Wizard::Pathfinding(float dt) {
+bool j1Wizard::Pathfinding(float dt) {
 	speedX = 0;
 	speedY = 0;
 	static iPoint origin;
@@ -177,22 +175,49 @@ void j1Wizard::Pathfinding(float dt) {
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->EntityManager->GetPlayer()->position;
-	p = App->map->WorldToMap(p.x, p.y);
+	p = App->map->WorldToMap(p.x+30, p.y+30);
 
-	if (origin_selected == true)
-	{
-		App->pathfinding->CreatePath(origin, p);
-		origin_selected = false;
+	origin = App->map->WorldToMap(position.x+30, position.y+30);
+	App->pathfinding->CreatePath(origin, p);
 
-	}
-	else
-	{
-		origin = App->map->WorldToMap(position.x, position.y);
-		origin_selected = true;
-	}
-
+	state = WD_FORWARD;
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+	if (path->At(1) != NULL){
+	if (App->EntityManager->GetPlayer()->position.x < position.x) {
+		if (path->At(1)->x < origin.x) {
+			position.x -= 2 * DT_CONVERTER * dt;
+			flip = SDL_FLIP_NONE;
+		}
+	}
+	if (App->EntityManager->GetPlayer()->position.x > position.x) {
+		if (path->At(1)->x > origin.x) {
+			position.x += 2* DT_CONVERTER * dt;
+			flip = SDL_FLIP_HORIZONTAL;
+		}
+	}
+	if (App->EntityManager->GetPlayer()->position.y < position.y) {
+		if (path->At(1)->y < origin.y) {
+			position.y -= 2 * DT_CONVERTER * dt;
+		}
+	}
+	if (App->EntityManager->GetPlayer()->position.y > position.y) {
+		if (path->At(1)->y > origin.y) {
+			position.y += 2 * DT_CONVERTER * dt;
+		}
+	}
 
+}
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint nextPoint = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		if (App->collision->debug)
+		{
+			App->render->Blit(App->scene->debug_tex, nextPoint.x, nextPoint.y);
+		}
+	}
+	
+		/*
+			const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 	for (uint i = 0; i < path->Count(); ++i)
 	{
 		iPoint nextPoint = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
@@ -251,5 +276,7 @@ void j1Wizard::Pathfinding(float dt) {
 		position.x += speedX;
 		position.y += speedY;
 	}
+	*/
+	return true;
 }
 
