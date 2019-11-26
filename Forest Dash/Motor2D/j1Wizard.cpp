@@ -80,7 +80,7 @@ bool j1Wizard::Update(float dt)
 	setAnimation(dt);
 
 	
-	if (App->EntityManager->GetPlayer()->position.x > position.x - 300 && App->EntityManager->GetPlayer()->position.x < position.x + 300)
+	if (App->EntityManager->GetPlayer()->position.x > position.x - 400 && App->EntityManager->GetPlayer()->position.x < position.x + 400)
 	Pathfinding(dt);
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	DrawHitbox();
@@ -182,31 +182,28 @@ bool j1Wizard::Pathfinding(float dt) {
 
 	state = WD_FORWARD;
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-	if (path->At(1) != NULL){
-	if (App->EntityManager->GetPlayer()->position.x < position.x) {
+	if (path->At(1) != NULL)
+	{
+
 		if (path->At(1)->x < origin.x) {
 			position.x -= 2 * DT_CONVERTER * dt;
 			flip = SDL_FLIP_NONE;
 		}
-	}
-	if (App->EntityManager->GetPlayer()->position.x > position.x) {
+
 		if (path->At(1)->x > origin.x) {
 			position.x += 2* DT_CONVERTER * dt;
 			flip = SDL_FLIP_HORIZONTAL;
 		}
-	}
-	if (App->EntityManager->GetPlayer()->position.y < position.y) {
+
 		if (path->At(1)->y < origin.y) {
 			position.y -= 2 * DT_CONVERTER * dt;
 		}
-	}
-	if (App->EntityManager->GetPlayer()->position.y > position.y) {
+
 		if (path->At(1)->y > origin.y) {
 			position.y += 2 * DT_CONVERTER * dt;
 		}
-	}
 
-}
+	}
 	for (uint i = 0; i < path->Count(); ++i)
 	{
 		iPoint nextPoint = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
