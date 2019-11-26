@@ -202,7 +202,6 @@ bool j1Wizard::Pathfinding(float dt) {
 		if (path->At(1)->y > origin.y) {
 			position.y += 2 * DT_CONVERTER * dt;
 		}
-
 	}
 	for (uint i = 0; i < path->Count(); ++i)
 	{
