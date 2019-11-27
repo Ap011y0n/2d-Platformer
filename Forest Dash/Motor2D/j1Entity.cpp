@@ -31,6 +31,15 @@ j1Entity::~j1Entity() {
 
 bool j1Entity::CleanUp() {
 
+	p2List_item<Animation>* item;
+	item = animations.start;
+	while (item != NULL)
+	{
+		RELEASE(item);
+		item = item->next;
+	}
+	animations.clear();
+
 	EntityCollider->to_delete = true;
 	return true;
 }

@@ -122,8 +122,7 @@ bool j1Scene::Update(float dt)
 					App->map->data.tilesets.count(),map_coordinates.x, map_coordinates.y);
 	
 	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
+	
 
 	App->render->Blit(debug_tex, p.x, p.y);
 

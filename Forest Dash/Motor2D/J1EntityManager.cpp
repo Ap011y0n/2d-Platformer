@@ -22,7 +22,7 @@
 
 j1EntityManager::j1EntityManager() {
 	name.create("entity");
-
+	
 }
 
 
@@ -32,6 +32,7 @@ j1EntityManager::~j1EntityManager() {
 
 bool j1EntityManager::Awake(pugi::xml_node& config) {
 	node = config;
+
 	LOG("Awake NODE %d", node.child("initialPosition").attribute("x").as_int());
 
 	return true;
@@ -92,7 +93,8 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy
 {
 	//static_assert(j1Entity::Types::unknown == 5, "code needs update");
 	j1Entity* ret = nullptr;
-//	LOG("Create %d", node.child("initialPosition").attribute("x").as_int());
+
+	LOG("Awake NODE %d", node.child("initialPosition").attribute("x").as_int());
 	switch (type) {
 	case j1Entity::Types::player: ret = new j1Player(posx, posy); break;
 	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy); break;
@@ -102,6 +104,7 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy
 	if (ret != nullptr){
 
 		entities.add(ret);
+		entities.end->data->Awake(node);
 		entities.end->data->Start();
 	}
 	return ret;

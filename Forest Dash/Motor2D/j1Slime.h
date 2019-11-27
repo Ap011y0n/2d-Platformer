@@ -37,6 +37,7 @@ public:
 
 	j1Slime(int posx, int posy);
 	~j1Slime();
+	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);

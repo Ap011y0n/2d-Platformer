@@ -38,7 +38,7 @@ class j1Player : public j1Entity
 public:
 	j1Player(int posx, int posy);
 	~j1Player();
-
+	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);

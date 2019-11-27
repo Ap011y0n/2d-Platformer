@@ -64,6 +64,65 @@ j1Player::~j1Player()
 
 // Read player variables from config.xml ----------------------------------------------
 
+bool j1Player::Awake(pugi::xml_node& config)
+
+{
+
+	LOG("Awake :)");
+
+	bool ret = true;
+
+	
+	moveFx = config.child("moveFx").attribute("source").as_string();
+	deathFx = config.child("deathFx").attribute("source").as_string();
+	jumpFx = config.child("jumpFx").attribute("source").as_string();
+	winFx = config.child("winFx").attribute("source").as_string();
+	dashFx = config.child("dashFx").attribute("source").as_string();
+
+	initialPosition.x = config.child("initialPosition").attribute("x").as_int();
+	initialPosition.y = config.child("initialPosition").attribute("y").as_int();
+	gravity = config.child("gravity").attribute("value").as_int();
+	speedX = config.child("speedX").attribute("value").as_int();
+	speedY = config.child("speedY").attribute("value").as_int();
+	acceleration = config.child("acceleration").attribute("value").as_int();
+	maxBarWidth = config.child("maxBarWidth").attribute("value").as_int();
+	speedBar = config.child("speedBar").attribute("value").as_float();
+	playerHeight = config.child("playerHeight").attribute("value").as_int();
+	playerWidth = config.child("playerWidth").attribute("value").as_int();
+	playerCentre = config.child("playerCentre").attribute("value").as_int();
+	
+
+
+	/*
+	moveFx = "move.wav";
+	deathFx = "death.wav";
+	jumpFx = "jump.wav";
+	winFx = "win.wav";
+	dashFx = "dash.wav";
+
+
+	gravity = 11;
+	speedX = 7;
+	speedY = 22;
+	acceleration = 20;
+	speedBar = 0.2;
+	maxBarWidth = 40;
+	playerHeight = 50;
+	playerWidth = 20;
+	playerCentre = 10;
+
+*/
+	LOG("Pos y %d", initialPosition.y);
+
+	dashspeed = acceleration;
+
+	jumpSpeed = -1 * speedY;
+
+	
+
+	return ret;
+
+}
 
 // Load assets ----------------------------------------------
 bool j1Player::Start()
@@ -91,7 +150,7 @@ bool j1Player::Start()
 	playerWidth = config.child("playerWidth").attribute("value").as_int();
 	playerCentre = config.child("playerCentre").attribute("value").as_int();
 	*/
-
+	/*
 	moveFx = "move.wav";
 	deathFx = "death.wav";
 	jumpFx = "jump.wav";
@@ -107,11 +166,11 @@ bool j1Player::Start()
 	playerHeight = 50;
 	playerWidth = 20;
 	playerCentre = 10;
-
+	
 	LOG("Pos y %d", initialPosition.y);
 	dashspeed = acceleration;
 	jumpSpeed = -1 * speedY;
-
+*/
 	LOG("Loading player");
 	
 	App->audio->LoadFx(moveFx.GetString());

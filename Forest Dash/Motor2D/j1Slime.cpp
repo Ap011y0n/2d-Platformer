@@ -57,6 +57,19 @@ j1Slime::~j1Slime()
 }
 
 
+bool j1Slime::Awake(pugi::xml_node& config)
+
+{
+
+	bool ret = true;
+
+
+
+	return ret;
+
+}
+
+
 
 // Load assets ----------------------------------------------
 bool j1Slime::Start()

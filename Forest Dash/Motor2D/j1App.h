@@ -95,6 +95,7 @@ public:
 	j1EntityManager*	EntityManager;
 	j1PathFinding*		pathfinding;
 	uint32				framerate = 0u;
+	pugi::xml_document	config_file;
 
 
 private:
