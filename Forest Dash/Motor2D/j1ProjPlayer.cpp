@@ -119,15 +119,16 @@ bool j1ProjPlayer::Start()
 	to_delete = false;
 
 	SDL_Rect r;
-	r.w = 40;
-	r.h = 50;
+	r.w = 10;
+	r.h = 10;
 	r.x = position.x;
 	r.y = position.y;
 	
-		EntityCollider = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
+	
 	
 
-	//EntityCollider = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
+
+	EntityCollider = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
 
 	
 	return true;
@@ -139,12 +140,18 @@ bool j1ProjPlayer::Start()
 // Update: draw background ----------------------------------------------
 bool j1ProjPlayer::Update(float dt)
 {
+	
 	BROFILER_CATEGORY("Update_Projectile", Profiler::Color::CornflowerBlue);
 	Movement(dt);
 	setAnimation();
+	
 	DrawHitbox();
 	//flip = SDL_FLIP_HORIZONTAL;
-	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
+
+
+	
+
+
 	//App->render->Blit(App->EntityManager->icespiketex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f /*flip*/);
 	App->render->Blit(App->EntityManager->icespiketex, position.x, position.y, &(anim.GetCurrentFrame(dt)), 1, 1, SDL_FLIP_NONE, angle);
 	if(fx_played == false)
@@ -186,7 +193,7 @@ bool j1ProjPlayer::Movement(float dt)
 	if (life > 0)
 	{
 		if ((SDL_GetTicks() - born) > life) {
-			EntityCollider->to_delete = true;
+		//	EntityCollider->to_delete = true;
 			to_delete = true;
 
 			return ret;
@@ -198,7 +205,7 @@ bool j1ProjPlayer::Movement(float dt)
 
 	position.x += speed.x * DT_CONVERTER* dt;
 	position.y += speed.y * DT_CONVERTER* dt;
-	EntityCollider->SetPos(position.x, position.y);
+//	EntityCollider->SetPos(position.x, position.y);
 	ret = true;
 	return ret;
 
@@ -256,10 +263,10 @@ void j1ProjPlayer::setAnimation()
 
 void j1ProjPlayer::OnCollision(Collider* c1, Collider* c2) {
 
-	/*
-	if (c2->type == COLLIDER_PLAYER_SHOT) {
+	
+	if (c1->type == COLLIDER_PLAYER_SHOT) {
 		c1->to_delete = true;
 		to_delete = true;
 	}
-	*/
+	
 }
