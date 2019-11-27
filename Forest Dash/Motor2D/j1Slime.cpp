@@ -129,16 +129,6 @@ void j1Slime::Movement()
 {
 	if (slimeDead) state = SLIME_DEATH;
 
-	if (SDL_GetTicks() > (startMoving + 2500))
-	{
-		if (position.x > 150)
-		{
-		state = SLIME_FORWARD;
-		position.x--;
-		}
-	}
-
-
 }
 
 void j1Slime::setAnimation()
@@ -150,13 +140,16 @@ void j1Slime::setAnimation()
 	}
 	if (state == SLIME_DEATH)
 	{
-		
 		current_animation = &death;
+
+		if (!playedSlimeDeathFx)
+			App->audio->PlayFx(App->audio->slimeDeathFx);
+		playedSlimeDeathFx = true;
 
 		if (SDL_GetTicks() > (deathTimerSlime + 2500)) {
 			
-			CleanUp();
 			EntityCollider->to_delete = true;
+			to_delete = true;
 
 		}
 	}
@@ -215,8 +208,9 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 
 
 	if (c2->type == COLLIDER_PLAYER_SHOT) {
-		c1->to_delete = true;
-		to_delete = true;
+		
+		slimeDead = true;
+		deathTimerSlime = SDL_GetTicks();
 	}
 
 }

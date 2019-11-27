@@ -48,6 +48,8 @@ private:
 	Animation death;
 	Animation forward;
 
+	bool playedSlimeDeathFx = false;
+
 	pugi::xml_document	slime_file;
 	slime_state state;
 

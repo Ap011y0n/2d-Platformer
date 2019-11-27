@@ -625,6 +625,10 @@ void j1Player::CheckCollision(float dt) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) {
 						
+						//Play winFx
+						if (!playedWinFx)
+							App->audio->PlayFx(App->audio->winFx);
+							playedWinFx = true;
 						
 						App->scene->Nextmap();
 						position.x = initialPosition.x;

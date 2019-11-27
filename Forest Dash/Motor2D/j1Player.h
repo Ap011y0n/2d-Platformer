@@ -65,6 +65,7 @@ private:
 	bool playedJumpFx = false;
 	bool playeDeadFx = false;
 	bool playeDashFx = false;
+	bool playedWinFx = false;
 
 	Animation idle;
 	Animation forward;

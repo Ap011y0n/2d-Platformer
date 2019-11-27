@@ -41,6 +41,7 @@ public:
 	int winFx;
 	int deathFx;
 	int wizarDeathFx;
+	int slimeDeathFx;
 
 private:
 
