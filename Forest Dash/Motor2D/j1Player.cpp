@@ -24,7 +24,7 @@ j1Player::j1Player(int posx, int posy) : j1Entity(Types::player)
 	name.create("player");
 	initialPosition.x = posx;
 	initialPosition.y = posy;
-
+	LOG("Initial position %d, %d", posx, posy);
 	current_animation = NULL;
 	LoadAnimations("textures/adventurer_animations.tmx");
 
@@ -79,8 +79,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	winFx = config.child("winFx").attribute("source").as_string();
 	dashFx = config.child("dashFx").attribute("source").as_string();
 
-	initialPosition.x = config.child("initialPosition").attribute("x").as_int();
-	initialPosition.y = config.child("initialPosition").attribute("y").as_int();
+	//initialPosition.x = config.child("initialPosition").attribute("x").as_int();
+	//initialPosition.y = config.child("initialPosition").attribute("y").as_int();
 	gravity = config.child("gravity").attribute("value").as_int();
 	speedX = config.child("speedX").attribute("value").as_int();
 	speedY = config.child("speedY").attribute("value").as_int();
