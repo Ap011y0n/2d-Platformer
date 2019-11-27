@@ -36,6 +36,8 @@ public:
 		player,
 		slime,
 		wizard,
+		projectile_player,
+		unknown
 	};
 
 	Types type;

@@ -90,7 +90,7 @@ bool j1EntityManager::EntityCleanUp() {
 
 j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy)
 {
-	//static_assert(j1Entity::Types::unknown == 5, "code needs update");
+	//static_assert(j1Entity::Types::unknown != (j1Entity::Types)(4), "code needs update");
 	j1Entity* ret = nullptr;
 
 	LOG("Awake NODE %d", node.child("initialPosition").attribute("x").as_int());
@@ -98,6 +98,7 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy
 	case j1Entity::Types::player: ret = new j1Player(posx, posy); break;
 	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy); break;
 	case j1Entity::Types::slime: ret = new j1Slime(posx, posy); break;
+	case j1Entity::Types::projectile_player: ret = new j1Slime(posx, posy); break;
 	}
 	
 	if (ret != nullptr){

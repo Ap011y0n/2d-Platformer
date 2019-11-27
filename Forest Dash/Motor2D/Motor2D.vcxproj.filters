@@ -60,6 +60,9 @@
     <ClCompile Include="j1Entity.cpp">
       <Filter>Modules\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="j1ProjPlayer.cpp">
+      <Filter>Modules\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h" />
@@ -140,6 +143,9 @@
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="j1Entity.h">
+      <Filter>Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1ProjPlayer.h">
       <Filter>Modules\Entities</Filter>
     </ClInclude>
   </ItemGroup>
