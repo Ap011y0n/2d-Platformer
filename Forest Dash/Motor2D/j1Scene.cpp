@@ -59,7 +59,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	EntitiesMap1();
+	CreateEntities();
 		debug_tex = App->tex->Load("textures/bullside.png");
 
 	
@@ -139,14 +139,7 @@ bool j1Scene::PostUpdate(float dt)
 	
 	if (changeEntities) {
 		App->EntityManager->EntityCleanUp();
-		if (current_level == "maplevel1.tmx")
-		{
-			EntitiesMap1();
-		}
-		else 
-		{
-			EntitiesMap2();
-		}
+		CreateEntities();
 		changeEntities = false;
 	}
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -221,8 +214,6 @@ void j1Scene::Debug() {
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		App->EntityManager->EntityCleanUp();
-		EntitiesMap1();
 
 		App->map->CleanUp();
 		current_level.create("maplevel1.tmx");
@@ -232,6 +223,10 @@ void j1Scene::Debug() {
 		if (App->map->CreateWalkabilityMap(w, h, &data))
 			App->pathfinding->SetMap(w, h, data);
 		RELEASE_ARRAY(data);
+
+		App->EntityManager->EntityCleanUp();
+		CreateEntities();
+
 		//App->player->position.x = App->player->initialPosition.x;
 		//App->player->position.y = App->player->initialPosition.y;
 		//App->player->BarWidth = App->player->maxBarWidth;
@@ -241,8 +236,7 @@ void j1Scene::Debug() {
 	// Start from second map
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->EntityManager->EntityCleanUp();
-		EntitiesMap2();
+		
 
 		App->map->CleanUp();
 		current_level.create("maplevel2.tmx");
@@ -252,6 +246,9 @@ void j1Scene::Debug() {
 		if (App->map->CreateWalkabilityMap(w, h, &data))
 			App->pathfinding->SetMap(w, h, data);
 		RELEASE_ARRAY(data);
+
+		App->EntityManager->EntityCleanUp();
+		CreateEntities();
 		/*App->player->position.x = App->player->initialPosition.x;
 		App->player->position.y = App->player->initialPosition.y;
 		App->player->BarWidth = App->player->maxBarWidth;
@@ -262,14 +259,7 @@ void j1Scene::Debug() {
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
 		App->EntityManager->EntityCleanUp();
-		if (current_level == "maplevel1.tmx")
-		{
-			EntitiesMap1();
-		}
-		else
-		{
-			EntitiesMap2();
-		}
+		CreateEntities();
 		/*App->player->position.x = App->player->initialPosition.x;
 		App->player->position.y = App->player->initialPosition.y;
 		App->player->BarWidth = App->player->maxBarWidth;
@@ -315,16 +305,52 @@ void j1Scene::Debug() {
 
 }
 
-void j1Scene::EntitiesMap1() {
-	App->EntityManager->CreateEntity(j1Entity::Types::slime, 150, 500);
+bool j1Scene::CreateEntities() {
+
+	bool ret = true;
+	p2List_item<MapLayer*>* layer_iterator = App->map->data.layers.start;
+	MapLayer* layer = App->map->data.layers.start->data;
+
+	while (ret == true && layer_iterator != NULL) {
+		layer = layer_iterator->data;
+		LOG("%s, %d", layer->name.GetString(), layer->returnPropValue("Navigation"));
+		if (layer->returnPropValue("Navigation") == 4) {
+
+			for (int y = 0; y < App->map->data.height; ++y)
+			{
+				for (int x = 0; x < App->map->data.width; ++x)
+				{
+					int tile_id = layer->Get(x, y);
+
+					if (tile_id != 0)
+					{
+						switch (tile_id) {
+						case 0:
+							break;
+						case 2077:
+							App->EntityManager->CreateEntity(j1Entity::Types::wizard, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
+							break;
+						case 2076:
+							App->EntityManager->CreateEntity(j1Entity::Types::slime, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+
+		layer_iterator = layer_iterator->next;
+	}
+
+
+	
 	App->EntityManager->CreateEntity(j1Entity::Types::player, 100, 500);
+	/*
+	App->EntityManager->CreateEntity(j1Entity::Types::slime, 150, 500);
 	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300);
 	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 4200, 450);
-	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 540);
+	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 540);*/
+	return ret;
 }
 
-void j1Scene::EntitiesMap2() {
-	App->EntityManager->CreateEntity(j1Entity::Types::player, 100, 500);
-	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 300);
-	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300);
-}

@@ -37,8 +37,7 @@ public:
 	bool Save(pugi::xml_node&) const;
 	void Nextmap();
 	void Debug();
-	void EntitiesMap1();
-	void EntitiesMap2();
+	bool CreateEntities();
 	p2SString current_level;
 	p2List<p2SString> levels;
 	SDL_Texture* debug_tex;
