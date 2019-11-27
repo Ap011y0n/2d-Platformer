@@ -284,6 +284,7 @@ bool j1Map::Load(const char* file_name)
 // Load map general properties ----------------------------------------------
 bool j1Map::LoadMap()
 {
+
 	bool ret = true;
 	pugi::xml_node map = map_file.child("map");
 

@@ -45,7 +45,7 @@ bool j1Scene::Start()
 	LOG("Start scene");
 	current_level = levels.start->data;
 	changeEntities = false;
-	/*App->map->Load(current_level.GetString());*/
+	//App->map->Load(current_level.GetString());
 
 	if (App->map->Load(current_level.GetString()) == true)
 	{
@@ -171,6 +171,12 @@ bool j1Scene::Load(pugi::xml_node& data)
 	App->map->CleanUp();
 	current_level.create(data.child("scenename").attribute("name").as_string());
 	App->map->Load(current_level.GetString());
+	
+	int w, h;
+	uchar* datamap = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &datamap))
+		App->pathfinding->SetMap(w, h, datamap);
+	RELEASE_ARRAY(datamap);
 	App->audio->PlayMusic(App->map->data.music.GetString());
 
 	return true;
@@ -186,6 +192,9 @@ bool j1Scene::Save(pugi::xml_node& data) const
 	return true;
 }
 void j1Scene::Nextmap() {
+	
+
+
 	changeEntities = true;
 	App->map->CleanUp();
 //	App->player->BarWidth = App->player->maxBarWidth;
@@ -198,6 +207,11 @@ void j1Scene::Nextmap() {
 	current_level = iterator->data;
 	
 	App->map->Load(current_level.GetString());
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+		App->pathfinding->SetMap(w, h, data);
+	RELEASE_ARRAY(data);
 	
 }
 
@@ -213,7 +227,11 @@ void j1Scene::Debug() {
 		App->map->CleanUp();
 		current_level.create("maplevel1.tmx");
 		App->map->Load(current_level.GetString());
-
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+		RELEASE_ARRAY(data);
 		//App->player->position.x = App->player->initialPosition.x;
 		//App->player->position.y = App->player->initialPosition.y;
 		//App->player->BarWidth = App->player->maxBarWidth;
@@ -229,6 +247,11 @@ void j1Scene::Debug() {
 		App->map->CleanUp();
 		current_level.create("maplevel2.tmx");
 		App->map->Load(current_level.GetString());
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+		RELEASE_ARRAY(data);
 		/*App->player->position.x = App->player->initialPosition.x;
 		App->player->position.y = App->player->initialPosition.y;
 		App->player->BarWidth = App->player->maxBarWidth;
@@ -303,4 +326,5 @@ void j1Scene::EntitiesMap1() {
 void j1Scene::EntitiesMap2() {
 	App->EntityManager->CreateEntity(j1Entity::Types::player, 100, 500);
 	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 300);
+	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300);
 }
