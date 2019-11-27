@@ -32,22 +32,19 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
-	//Stop FX channel
-	void StopFx();
+public:
 
-	//Check if an fx stopped playing
-	bool channelFinished();
+	//Player FX
+	int moveFx;
+	int jumpFx;
+	int dashFx;
+	int winFx;
+	int deathFx;
+	int wizarDeathFx;
 
-	//Save module audio data
-	bool j1Audio::Save(pugi::xml_node& config)const;
-
-	//Load module audio data
-	bool j1Audio::Load(pugi::xml_node& config);
-	void musicvolume(float value, bool increase);
-	void fxvolume(float value, bool increase);
 private:
 
-	_Mix_Music*			music = NULL;
+	_Mix_Music* music = NULL;
 	p2List<Mix_Chunk*>	fx;
 	p2SString			music_directory;
 	p2SString			fx_directory;

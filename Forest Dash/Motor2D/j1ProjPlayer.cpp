@@ -154,11 +154,7 @@ bool j1ProjPlayer::Update(float dt)
 
 	//App->render->Blit(App->EntityManager->icespiketex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f /*flip*/);
 	App->render->Blit(App->EntityManager->icespiketex, position.x, position.y, &(anim.GetCurrentFrame(dt)), 1, 1, SDL_FLIP_NONE, angle);
-	if(fx_played == false)
-	{
-		fx_played = true;
-		App->audio->PlayFx(fx);
-	}
+	
 
 	return true;
 }

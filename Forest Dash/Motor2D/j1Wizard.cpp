@@ -135,27 +135,23 @@ void j1Wizard::setAnimation(float dt)
 {
 	if (state == WD_IDLE)
 	{
-	/*	if(position.x < move){
-			patrol = true;
-		}
-		if (position.x > move+200) {
-			patrol = false;
-		}
-		if(patrol){
-			position.x += 2 * (int)(DT_CONVERTER*dt);
-			flip = SDL_FLIP_HORIZONTAL;
-		}
-		if (!patrol) {
-			flip = SDL_FLIP_NONE;
-			position.x -= 2 * (int)(DT_CONVERTER*dt);
-		}*/
 		current_animation = &idle;
+		
+		//Reset Animations
 		death.Reset();
+
+		//Reset Fx
+		playedWizarDeathFx = false;
 	}
 	if (state == WD_DEATH)
 	{
-		
 		current_animation = &death;
+
+		if (!playedWizarDeathFx)
+			App->audio->PlayFx(App->audio->wizarDeathFx);
+			playedWizarDeathFx = true;
+		
+
 		if (SDL_GetTicks() > (deathTimerWizard + 2500)) {
 			
 			EntityCollider->to_delete = true;
@@ -167,6 +163,9 @@ void j1Wizard::setAnimation(float dt)
 	{
 		current_animation = &forward;
 		state = WD_IDLE;
+
+		//Reset Fx
+		playedWizarDeathFx = false;
 	}
 }
 

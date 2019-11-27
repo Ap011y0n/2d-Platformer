@@ -18,30 +18,32 @@ j1Audio::~j1Audio()
 {}
 
 
-bool j1Audio::Awake(pugi::xml_node& config)
+
+bool j1Audio::Awake(pugi::xml_node & config)
 {
+	
 	music_directory = config.child("music").child_value("folder");
-	fx_directory = config.child("fx").child_value("folder");
+	//fx_directory = config.child("fx").child_value("folder");
 	volumemusic = config.child("music").child("volumemusic").attribute("value").as_float();
-	volumefx = config.child("fx").child("volumefx").attribute("value").as_float();
+	//volumefx = config.child("fx").child("volumefx").attribute("value").as_float();
+	
 
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
 
-	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
+	if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
 		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		active = false;
 		ret = true;
 	}
 
-	// load support for the OGG and WAV audio formats
-
+	// load support for the JPG and PNG image formats
 	int flags = MIX_INIT_OGG;
 	int init = Mix_Init(flags);
 
-	if((init & flags) != flags)
+	if ((init & flags) != flags)
 	{
 		LOG("Could not initialize Mixer lib. Mix_Init: %s", Mix_GetError());
 		active = false;
@@ -49,12 +51,19 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	}
 
 	//Initialize SDL_mixer
-	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		active = false;
 		ret = true;
 	}
+
+	moveFx = LoadFx("audio/fx/move.wav");
+	jumpFx = LoadFx("audio/fx/jump.wav");
+	dashFx = LoadFx("audio/fx/dash.wav");
+	winFx = LoadFx("audio/fx/win.wav");
+	deathFx = LoadFx("audio/fx/death.wav");
+	wizarDeathFx = LoadFx("audio/fx/wizard_death.wav");
 
 	return ret;
 }
@@ -147,11 +156,12 @@ unsigned int j1Audio::LoadFx(const char* path)
 {
 	unsigned int ret = 0;
 
-	if(!active)
+	if (!active)
 		return 0;
-	p2SString tmp("%s%s", fx_directory.GetString(), path);
-	Mix_Chunk* chunk = Mix_LoadWAV(tmp.GetString());
-	if(chunk == NULL)
+
+	Mix_Chunk* chunk = Mix_LoadWAV(path);
+
+	if (chunk == NULL)
 	{
 		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
 	}
@@ -160,6 +170,7 @@ unsigned int j1Audio::LoadFx(const char* path)
 		fx.add(chunk);
 		ret = fx.count();
 	}
+
 	return ret;
 }
 
@@ -168,17 +179,18 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 {
 	bool ret = false;
 
-	if(!active)
+	if (!active)
 		return false;
 
-	if(id > 0 && id <= fx.count())
+	if (id > 0 && id <= fx.count())
 	{
-		Mix_VolumeChunk(fx[id - 1], 128*volumefx);
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
 	}
 
 	return ret;
 }
+
+/*
 void j1Audio::StopFx() {
 	Mix_HaltChannel(-1);
 
@@ -232,4 +244,4 @@ void j1Audio::fxvolume(float value, bool increase) {
 		if (volumefx < 0)
 			volumefx = 0;
 	}
-}
+}*/

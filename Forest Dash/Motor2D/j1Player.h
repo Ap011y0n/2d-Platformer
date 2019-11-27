@@ -52,7 +52,6 @@ public:
 	void Camera();
 	void MoveCondition(float dt);
 //	void LoadAnimations(const char* path);
-	void playfx(const int id, const int rep);
 	void OnCollision(Collider* c1, Collider* c2);
 
 
@@ -61,10 +60,11 @@ private:
 
 	player_state state;
 	player_state prev_state = IDLE;
-	int DeathTimer = 0;
-	int AimTimer = 0;
+
 	bool charging = false;
-	float angle;
+	bool playedJumpFx = false;
+	bool playeDeadFx = false;
+	bool playeDashFx = false;
 
 	Animation idle;
 	Animation forward;
@@ -78,6 +78,8 @@ private:
 	Animation bow;
 	SDL_Rect aimbar;
 	
+	int DeathTimer = 0;
+	int AimTimer = 0;
 	int playerHeight;
 	int playerWidth;
 	int playerCentre;
@@ -88,22 +90,25 @@ private:
 	p2SString		winFx;
 	p2SString		dashFx;
 
-
-	
 	float dashspeed;
 	float acceleration;
 	float speedBar;
+	float angle;
+
 	Animation* current_animation_bow = nullptr;
 
 public:	
+	
 	bool death = false;
 
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	SDL_RendererFlip flip_bow = SDL_FLIP_NONE;
+	
 	float BarWidth = 40;
 	float aimbarw = 0;
 	float magnitude = 0.0f;
+	
 	int opacity = 0;
 	int maxBarWidth;
 

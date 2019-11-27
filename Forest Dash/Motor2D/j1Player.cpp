@@ -72,13 +72,6 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	bool ret = true;
 
-	
-	moveFx = config.child("moveFx").attribute("source").as_string();
-	deathFx = config.child("deathFx").attribute("source").as_string();
-	jumpFx = config.child("jumpFx").attribute("source").as_string();
-	winFx = config.child("winFx").attribute("source").as_string();
-	dashFx = config.child("dashFx").attribute("source").as_string();
-
 	//initialPosition.x = config.child("initialPosition").attribute("x").as_int();
 	//initialPosition.y = config.child("initialPosition").attribute("y").as_int();
 	gravity = config.child("gravity").attribute("value").as_int();
@@ -91,27 +84,6 @@ bool j1Player::Awake(pugi::xml_node& config)
 	playerWidth = config.child("playerWidth").attribute("value").as_int();
 	playerCentre = config.child("playerCentre").attribute("value").as_int();
 	
-
-
-	/*
-	moveFx = "move.wav";
-	deathFx = "death.wav";
-	jumpFx = "jump.wav";
-	winFx = "win.wav";
-	dashFx = "dash.wav";
-
-
-	gravity = 11;
-	speedX = 7;
-	speedY = 22;
-	acceleration = 20;
-	speedBar = 0.2;
-	maxBarWidth = 40;
-	playerHeight = 50;
-	playerWidth = 20;
-	playerCentre = 10;
-
-*/
 	LOG("Pos y %d", initialPosition.y);
 
 	dashspeed = acceleration;
@@ -132,11 +104,6 @@ bool j1Player::Start()
 	to_delete = false;
 
 	/*
-	moveFx = config.child("moveFx").attribute("source").as_string();
-	deathFx = config.child("deathFx").attribute("source").as_string();
-	jumpFx = config.child("jumpFx").attribute("source").as_string();
-	winFx = config.child("winFx").attribute("source").as_string();
-	dashFx = config.child("dashFx").attribute("source").as_string();
 
 	initialPosition.x = config.child("initialPosition").attribute("x").as_int();
 	initialPosition.y = config.child("initialPosition").attribute("y").as_int();
@@ -151,11 +118,6 @@ bool j1Player::Start()
 	playerCentre = config.child("playerCentre").attribute("value").as_int();
 	*/
 	/*
-	moveFx = "move.wav";
-	deathFx = "death.wav";
-	jumpFx = "jump.wav";
-	winFx = "win.wav";
-	dashFx = "dash.wav";
 
 	gravity = 11;
 	speedX = 7;
@@ -172,18 +134,6 @@ bool j1Player::Start()
 	jumpSpeed = -1 * speedY;
 */
 	LOG("Loading player");
-	
-	App->audio->LoadFx(moveFx.GetString());
-	LOG("effects list");
-	LOG("Move %d", App->audio->LoadFx(moveFx.GetString()));
-	App->audio->LoadFx(deathFx.GetString());
-	LOG("Death %d", App->audio->LoadFx(deathFx.GetString()));
-	App->audio->LoadFx(jumpFx.GetString());
-	LOG("Jump %d", App->audio->LoadFx(jumpFx.GetString()));
-	App->audio->LoadFx(winFx.GetString());
-	LOG("Win %d", App->audio->LoadFx(winFx.GetString()));
-	App->audio->LoadFx(dashFx.GetString());
-	LOG("Dash %d", App->audio->LoadFx(dashFx.GetString()));
 	
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
@@ -467,68 +417,133 @@ void j1Player::Movement(float dt) {
 void j1Player::StateMachine(float dt)
 {
 	if (state == IDLE) {
-		App->audio->StopFx();
+		
 		aimbarw = 0;
+
+		//Reset Animations
 		up.Reset();
 		crouch.Reset();
 		dash.Reset();
 		aiming.Reset();
 		bow.Reset();
+
+		//Reset FX
+		playedJumpFx = false;
+		playeDeadFx = false;
+		playeDashFx = false;
 	}
 	if (state == DASH_L) {
 
 		if (dashspeed < 0) {
 			dashspeed = 0;
 		}
-		playfx(10, 10);
+		
 		flip = SDL_FLIP_HORIZONTAL;
 		current_animation = &dash;
+
+		//Play dashFx
+		if (!playeDashFx) {
+			App->audio->PlayFx(App->audio->dashFx);
+			playeDashFx = true;
+		}
+
+		//Reset FX
+		playedJumpFx = false;
+		playeDeadFx = false;
 	}
 	if (state == DASH_R) {
 		if (dashspeed < 0) {
 			dashspeed = 0;
 		}
-		playfx(10, 10);
+		
 		flip = SDL_FLIP_NONE;
 		current_animation = &dash;
+
+		//Play dashFx
+		if (!playeDashFx) {
+			App->audio->PlayFx(App->audio->dashFx);
+			playeDashFx = true;
+		}
+
+		//Reset FX
+		playedJumpFx = false;
+		playeDeadFx = false;
 	}
 	if(state == FORWARD)
 	{
-		playfx(2, 20);
+		
 		dashspeed = acceleration;
 		current_animation = &forward;
 		if (BarWidth < maxBarWidth)	BarWidth += 2;
+
+		//Reset FX
+		playedJumpFx = false;
+		playeDeadFx = false;
+		playeDashFx = false;
 	}
 	if(state == BACKWARD)
 	{
-		playfx(2, 20);
+		
 		
 		dashspeed = acceleration;
 		current_animation = &forward;
 		if(BarWidth < maxBarWidth)	BarWidth += 2;
+
+		//Reset FX
+		playedJumpFx = false;
+		playeDeadFx = false;
+		playeDashFx = false;
 	}
 	if (state == CROUCH)
 	{
 
 		current_animation = &crouch;
+
+		//Reset FX
+		playedJumpFx = false;
+		playeDeadFx = false;
+		playeDashFx = false;
 	}
 	if(state == JUMP)
 	{
-		playfx(6, 0);
 		
 		current_animation = &up;
+
+		//Play jumpFx
+		if (!playedJumpFx) {
+			App->audio->PlayFx(App->audio->jumpFx);
+			playedJumpFx = true;
+		}
+
+		//Reset FX
+		playeDeadFx = false;
+		playeDashFx = false;
 	}
 	if (state == FALLING)
 	{
-
 		current_animation = &up;
+
+		//Reset FX
+		playedJumpFx = false;
+		playeDeadFx = false;
+		playeDashFx = false;
+
 	}
 	if (state == DEATH)
 	{
 		BarWidth = 0;
 		current_animation = &dead;
 		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45* (DT_CONVERTER * dt));
-		playfx(4, 0);
+		
+		//Play death FX
+		if (!playeDeadFx)
+			App->audio->PlayFx(App->audio->deathFx);
+		playeDeadFx = true;
+
+		//Reset FX
+		playedJumpFx = false;
+		playeDashFx = false;
+
 		if (SDL_GetTicks() > (DeathTimer + 2500)) {
 			state = IDLE;
 			BarWidth = maxBarWidth;
@@ -543,7 +558,10 @@ void j1Player::StateMachine(float dt)
 		AimTimer = SDL_GetTicks();
 		current_animation = &aiming;
 		
-
+		//Reset FX
+		playedJumpFx = false;
+		playeDeadFx = false;
+		playeDashFx = false;
 	}
 }
 
@@ -606,8 +624,8 @@ void j1Player::CheckCollision(float dt) {
 				if (layer->returnPropValue("Navigation") == 2 ) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) {
-						App->audio->StopFx();
-						App->audio->PlayFx(8, 0);
+						
+						
 						App->scene->Nextmap();
 						position.x = initialPosition.x;
 						position.y = initialPosition.y;
@@ -740,15 +758,6 @@ void j1Player::MoveCondition(float dt) {
 
 
 //Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
-
-//Play audio efects only once and stop efects that were already playing
-void j1Player::playfx( const int id, const int rep) {
-	if (prev_state != state) {
-		App->audio->StopFx();
-		App->audio->PlayFx(id, rep);
-		prev_state = state;
-	}
-}
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	

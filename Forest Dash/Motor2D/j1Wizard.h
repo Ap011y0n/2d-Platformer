@@ -50,8 +50,12 @@ private:
 	Animation forward;
 
 	int move;
+
 	bool patrol;
+	bool playedWizarDeathFx = false;
+	
 	wizard_state state;
+	
 	const p2DynArray<iPoint>* path;
 
 public:
