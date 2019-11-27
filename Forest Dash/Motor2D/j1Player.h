@@ -93,6 +93,7 @@ private:
 	float dashspeed;
 	float acceleration;
 	float speedBar;
+	Animation* current_animation_bow = nullptr;
 
 public:	
 	bool death = false;

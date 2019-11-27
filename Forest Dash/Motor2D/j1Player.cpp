@@ -448,11 +448,12 @@ void j1Player::Movement(float dt) {
 		
 			//Blit arrow
 			if (flip == SDL_FLIP_NONE) {
-				App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+				//App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+				App->EntityManager->CreateEntity(j1Entity::Types::projectile_player, position.x +25, position.y + 25, (int)xvec, (int)yvec, angle);
 			}
 			else if (flip == SDL_FLIP_HORIZONTAL)
-			App->particles->AddParticle(App->particles->arrow, position.x-10, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
-
+				//App->particles->AddParticle(App->particles->arrow, position.x-10, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+				App->EntityManager->CreateEntity(j1Entity::Types::projectile_player,position.x - 10, position.y + 25, (int)xvec, (int)yvec, angle);
 			aiming.Reset();
 		}
 

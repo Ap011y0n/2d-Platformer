@@ -16,6 +16,8 @@
 #include "j1Player.h"
 #include "j1Wizard.h"
 #include "j1Slime.h"
+#include "j1ProjPlayer.h"
+
 #include "Brofiler/Brofiler.h"
 
 
@@ -41,6 +43,7 @@ bool j1EntityManager::Start() {
 	playerTex = App->tex->Load("textures/adventurertex.png");
 	slimeTex = App->tex->Load("textures/slimetex.png");
 	wizardTex = App->tex->Load("textures/wizardtex.png");
+	icespiketex = App->tex->Load("textures/icepick.png");
 	return true;
 
 }
@@ -88,7 +91,7 @@ bool j1EntityManager::EntityCleanUp() {
 
 }
 
-j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy)
+j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy, int speedx, int speedy, float angle)
 {
 	//static_assert(j1Entity::Types::unknown != (j1Entity::Types)(4), "code needs update");
 	j1Entity* ret = nullptr;
@@ -98,7 +101,7 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy
 	case j1Entity::Types::player: ret = new j1Player(posx, posy); break;
 	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy); break;
 	case j1Entity::Types::slime: ret = new j1Slime(posx, posy); break;
-	case j1Entity::Types::projectile_player: ret = new j1Slime(posx, posy); break;
+	case j1Entity::Types::projectile_player: ret = new j1ProjPlayer(posx, posy, speedx, speedy, angle); break;
 	}
 	
 	if (ret != nullptr){
@@ -130,6 +133,7 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 		{
 			id = j1Entity::Types::wizard;
 		}
+
 		CreateEntity(id, entity.child("position").attribute("pos_x").as_int(), entity.child("position").attribute("pos_y").as_int());
 	}
 

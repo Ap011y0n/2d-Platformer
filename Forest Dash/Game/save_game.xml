@@ -19,16 +19,16 @@
 			<position pos_x="150" pos_y="500" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="241" pos_y="716" />
+			<position pos_x="100" pos_y="717" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="543" pos_y="441" />
+			<position pos_x="690" pos_y="300" />
 		</Entity>
 		<Entity type="wizard">
 			<position pos_x="4200" pos_y="450" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="675" pos_y="540" />
+			<position pos_x="549" pos_y="540" />
 		</Entity>
 	</entity>
 	<pathfinding />

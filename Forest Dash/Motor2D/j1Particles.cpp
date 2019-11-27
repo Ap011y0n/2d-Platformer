@@ -32,7 +32,7 @@ bool j1Particles::Start()
 	LOG("Loading particles");
 
 	// Load spritesheet
-	graphics = App->tex->Load("textures/icepick.png");
+	
 
 	// Arrow
 	arrow.anim.PushBack({ 4, 26, 62, 13 }, 0.1, 0, 0, 0, 0);

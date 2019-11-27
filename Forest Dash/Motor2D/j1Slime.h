@@ -20,16 +20,6 @@ enum slime_state
 	SLIME_FORWARD
 };
 
-struct TileSetSlime
-{
-	SDL_Rect GetAnimRect(int id) const;
-	int tile_width;
-	int tile_height;
-	int firstgid;
-	int num_tiles_width;
-	int tex_width;
-	p2SString Texname;
-};
 
 class j1Slime : public j1Entity
 {
@@ -59,8 +49,6 @@ private:
 	Animation forward;
 
 	pugi::xml_document	slime_file;
-
-	TileSetSlime TileSetData;
 	slime_state state;
 
 public:

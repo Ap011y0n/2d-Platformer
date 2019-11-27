@@ -209,16 +209,7 @@ void j1Slime::setAnimation()
 //}
 
 //Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
-SDL_Rect TileSetSlime::GetAnimRect(int id) const
-{
-	int relative_id = id;
-	SDL_Rect rect;
-	rect.w = tile_width;
-	rect.h = tile_height;
-	rect.x = ((rect.w) * (relative_id % num_tiles_width));
-	rect.y = ((rect.h) * (relative_id / num_tiles_width));
-	return rect;
-}
+
 
 void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 
