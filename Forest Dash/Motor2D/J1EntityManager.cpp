@@ -10,7 +10,6 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
-#include "math.h"
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
 #include "j1Entity.h"

@@ -185,8 +185,6 @@ bool j1Player::Start()
 	App->audio->LoadFx(dashFx.GetString());
 	LOG("Dash %d", App->audio->LoadFx(dashFx.GetString()));
 	
-
-
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
 

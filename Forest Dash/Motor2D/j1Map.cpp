@@ -529,6 +529,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 				if (tile_id != 0)
 				{
 					map[i] = 0;
+
 					/*TileType* ts = tileset->GetTileType(tile_id);
 					if(ts != NULL)
 					{
