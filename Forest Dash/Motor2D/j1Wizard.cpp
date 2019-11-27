@@ -66,6 +66,10 @@ bool j1Wizard::Start()
 
 	
 	collided = SDL_GetTicks();
+	
+	pathFinding = true;
+
+	
 	return true;
 }
 
@@ -81,7 +85,7 @@ bool j1Wizard::Update(float dt)
 
 	
 	if (App->EntityManager->GetPlayer()->position.x > position.x - 400 && App->EntityManager->GetPlayer()->position.x < position.x + 400 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
-	Pathfinding(dt);
+	if(pathFinding)Pathfinding(dt);
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	DrawHitbox();
 	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
@@ -140,11 +144,10 @@ void j1Wizard::setAnimation(float dt)
 	{
 		
 		current_animation = &death;
-
 		if (SDL_GetTicks() > (deathTimerWizard + 2500)) {
-
-			CleanUp();
+			
 			EntityCollider->to_delete = true;
+			to_delete = true;
 
 		}
 	}
@@ -157,13 +160,18 @@ void j1Wizard::setAnimation(float dt)
 
 // Load animations from tiled  ----------------------------------------------
 
+
 //Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
+
 
 void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c2->type == COLLIDER_PLAYER_SHOT) {
-		c1->to_delete = true;
-		to_delete = true;
+		
+		pathFinding = false;
+		wizarDead = true;
+		deathTimerWizard = SDL_GetTicks();
+		
 	}
 }
 

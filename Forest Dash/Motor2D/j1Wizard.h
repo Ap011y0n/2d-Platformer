@@ -48,13 +48,16 @@ private:
 	Animation idle;
 	Animation death;
 	Animation forward;
+
 	int move;
 	bool patrol;
 	wizard_state state;
 	const p2DynArray<iPoint>* path;
+
 public:
 
 	bool wizarDead = false;
+	bool pathFinding = false;
 	int deathTimerWizard = 0;
 	int startMoving = 0;
 	int collided;
