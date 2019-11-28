@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 class j1Entity;
@@ -46,6 +47,9 @@ public:
 	p2SString current_level;
 	p2List<p2SString> levels;
 	SDL_Texture* debug_tex;
+	SDL_Texture* flag_tex;
+	Animation* current_animation;
+	Animation flag;
 	bool checkpoint = false;
 	
 };

@@ -17,6 +17,14 @@
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
+
+	flag.PushBack({ 28, 40, 30, 62 }, 0.2, 0, 0, 0, 0);
+	flag.PushBack({ 98, 40, 25, 62 }, 0.2, 0, 0, 0, 0);
+	flag.PushBack({ 169, 38, 28, 64 }, 0.2, 0, 0, 0, 0);
+	flag.PushBack({ 28, 128, 32, 62 }, 0.2, 0, 0, 0, 0);
+	flag.PushBack({ 98, 130, 27, 60 }, 0.2, 0, 0, 0, 0);
+	flag.PushBack({ 169, 130, 26, 60 }, 0.2, 0, 0, 0, 0);
+
 }
 
 // Destructor
@@ -62,9 +70,10 @@ bool j1Scene::Start()
 
 	CreateEntities();
 		debug_tex = App->tex->Load("textures/bullside.png");
-
 	
-
+	flag_tex = App->tex->Load("textures/flag.png");
+	
+	
 	return true;
 }
 
@@ -126,9 +135,13 @@ bool j1Scene::Update(float dt)
 	
 
 	App->render->Blit(debug_tex, p.x, p.y);
-
+	App->render->Blit(debug_tex, p.x, p.y);
 
 	//App->win->SetTitle(title.GetString());
+	current_animation = &flag;
+	SDL_Rect r = current_animation->GetCurrentFrame(dt);
+	
+	App->render->Blit(flag_tex, 3240 + current_animation->pivotx[current_animation->returnCurrentFrame()], 520 - r.h + current_animation->pivoty[current_animation->returnCurrentFrame()], &r);
 
 	return true;
 }
