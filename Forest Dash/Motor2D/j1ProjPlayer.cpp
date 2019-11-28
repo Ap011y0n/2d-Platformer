@@ -6,7 +6,7 @@
 #include "j1ProjPlayer.h"
 #include "p2Log.h"
 #include "j1Window.h"
-//#include "j1Map.h"
+#include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
@@ -124,10 +124,6 @@ bool j1ProjPlayer::Start()
 	r.x = position.x;
 	r.y = position.y;
 	
-	
-	
-
-
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
 
 	
@@ -144,7 +140,7 @@ bool j1ProjPlayer::Update(float dt)
 	BROFILER_CATEGORY("Update_Projectile", Profiler::Color::CornflowerBlue);
 	Movement(dt);
 	setAnimation();
-	
+
 	DrawHitbox();
 	//flip = SDL_FLIP_HORIZONTAL;
 
@@ -162,7 +158,7 @@ bool j1ProjPlayer::Update(float dt)
 
 bool j1ProjPlayer::PostUpdate(float dt)
 {
-	
+	CheckCollision(dt);
 	return true;
 
 }
@@ -265,4 +261,23 @@ void j1ProjPlayer::OnCollision(Collider* c1, Collider* c2) {
 		to_delete = true;
 	}
 	
+}
+
+void j1ProjPlayer::CheckCollision(float dt) {
+	p2List_item<MapLayer*>* layer_iterator = App->map->data.layers.start;
+	MapLayer* layer = App->map->data.layers.start->data;
+	bool ret = true;
+
+	while (ret == true && layer_iterator != NULL) {
+		layer = layer_iterator->data;
+		if (layer->returnPropValue("Navigation") == 1) {
+			iPoint coord = App->map->WorldToMap(position.x, position.y);
+			if (layer->Get(coord.x, coord.y) != 0) {
+				EntityCollider->to_delete = true;
+				to_delete = true;
+				ret = false;
+			}
+		}
+		layer_iterator = layer_iterator->next;
+	}
 }

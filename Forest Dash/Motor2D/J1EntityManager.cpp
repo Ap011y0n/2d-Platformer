@@ -47,6 +47,15 @@ bool j1EntityManager::Start() {
 	return true;
 
 }
+bool j1EntityManager::PreUpdate(float dt) {
+	p2List_item<j1Entity*>* entities_list = entities.start;
+	while (entities_list) {
+		entities_list->data->PreUpdate(dt);
+		entities_list = entities_list->next;
+	}
+	return true;
+
+}
 bool j1EntityManager::Update(float dt) 
 {
 	BROFILER_CATEGORY("Update_EntityManager", Profiler::Color::Yellow);
@@ -62,6 +71,11 @@ bool j1EntityManager::Update(float dt)
 }
 
 bool j1EntityManager::PostUpdate(float dt) {
+	p2List_item<j1Entity*>* entities_list = entities.start;
+	while (entities_list) {
+		entities_list->data->PostUpdate(dt);
+		entities_list = entities_list->next;
+	}
 	return true;
 
 }

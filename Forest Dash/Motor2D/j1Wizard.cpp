@@ -184,6 +184,23 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 		deathTimerWizard = SDL_GetTicks();
 		
 	}
+
+	if (c2->type == COLLIDER_PLAYER) {
+
+		if (position.x <= c2->rect.x)
+		{
+			position.x -= 50;
+			//position.y -= 30;
+			
+		}
+		else
+		{
+			position.x += 50;
+		//	position.y -= 30;
+		
+		}
+
+	}
 }
 
 bool j1Wizard::Pathfinding(float dt) {
@@ -205,12 +222,12 @@ bool j1Wizard::Pathfinding(float dt) {
 	{
 
 		if (path->At(1)->x < origin.x) {
-			position.x -= 2 * DT_CONVERTER * dt;
+			position.x -= 1.5 * DT_CONVERTER * dt;
 			flip = SDL_FLIP_NONE;
 		}
 
 		if (path->At(1)->x > origin.x) {
-			position.x += 2* DT_CONVERTER * dt;
+			position.x += 1.5* DT_CONVERTER * dt;
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 

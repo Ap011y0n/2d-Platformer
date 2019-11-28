@@ -28,6 +28,8 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	void OnCollision(Collider* c1, Collider* c2);
+	void CheckCollision(float dt);
+
 
 
 private:
