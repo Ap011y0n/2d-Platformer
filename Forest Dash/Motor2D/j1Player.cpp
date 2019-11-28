@@ -57,6 +57,9 @@ j1Player::j1Player(int posx, int posy) : j1Entity(Types::player)
 	bow = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
 	bow.loop = false;
+
+	swordAttack = animation_iterator->data;
+	animation_iterator = animation_iterator->next;
 	
 }
 
@@ -296,6 +299,12 @@ void j1Player::Movement(float dt) {
 
 		}
 
+		//Sword Attack
+		if (App->input->GetMouseButtonDown(3) == KEY_REPEAT)
+		{
+			state = ATTACK;
+		}
+
 		//Jump code
 		if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) && state != DEATH) {
 			// Check if can move down
@@ -424,18 +433,23 @@ void j1Player::StateMachine(float dt)
 	if (state == IDLE) {
 		
 		aimbarw = 0;
-
+		animationStart = 0;
 		//Reset Animations
 		up.Reset();
 		crouch.Reset();
 		dash.Reset();
 		aiming.Reset();
 		bow.Reset();
+		swordAttack.Reset();
 
 		//Reset FX
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
+
+		//Reset collider
+		collider = true;
+		
 	}
 	if (state == DASH_L) {
 
@@ -455,6 +469,10 @@ void j1Player::StateMachine(float dt)
 		//Reset FX
 		playedJumpFx = false;
 		playeDeadFx = false;
+
+		//Reset collider
+		collider = true;
+		
 	}
 	if (state == DASH_R) {
 		if (dashspeed < 0) {
@@ -473,10 +491,14 @@ void j1Player::StateMachine(float dt)
 		//Reset FX
 		playedJumpFx = false;
 		playeDeadFx = false;
+
+		//Reset collider
+		collider = true;
+		
 	}
 	if(state == FORWARD)
 	{
-		
+		animationStart = 0;
 		dashspeed = acceleration;
 		current_animation = &forward;
 		if (BarWidth < maxBarWidth)	BarWidth += 2;
@@ -485,11 +507,15 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
+
+		//Reset collider
+		collider = true;
+		
 	}
 	if(state == BACKWARD)
 	{
 		
-		
+		animationStart = 0;
 		dashspeed = acceleration;
 		current_animation = &forward;
 		if(BarWidth < maxBarWidth)	BarWidth += 2;
@@ -498,20 +524,28 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
+
+		//Reset collider
+		collider = true;
+		
 	}
 	if (state == CROUCH)
 	{
-
+		animationStart = 0;
 		current_animation = &crouch;
 
 		//Reset FX
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
+
+		//Reset collider
+		collider = true;
+		
 	}
 	if(state == JUMP)
 	{
-		
+		animationStart = 0;
 		current_animation = &up;
 
 		//Play jumpFx
@@ -523,9 +557,14 @@ void j1Player::StateMachine(float dt)
 		//Reset FX
 		playeDeadFx = false;
 		playeDashFx = false;
+
+		//Reset collider
+		collider = true;
+		
 	}
 	if (state == FALLING)
 	{
+		animationStart = 0;
 		current_animation = &up;
 
 		//Reset FX
@@ -533,9 +572,13 @@ void j1Player::StateMachine(float dt)
 		playeDeadFx = false;
 		playeDashFx = false;
 
+		//Reset collider
+		collider = true;
+		
 	}
 	if (state == DEATH)
 	{
+		animationStart = 0;
 		BarWidth = 0;
 		current_animation = &dead;
 		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45* (DT_CONVERTER * dt));
@@ -549,6 +592,10 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDashFx = false;
 
+		//Reset collider
+		collider = true;
+		
+
 		if (SDL_GetTicks() > (DeathTimer + 2500)) {
 			state = IDLE;
 			BarWidth = maxBarWidth;
@@ -559,6 +606,7 @@ void j1Player::StateMachine(float dt)
 	}
 	if (state == AIMING)
 	{
+		animationStart = 0;
 		if(aimbarw<50)
 		aimbarw += ( 1 * DT_CONVERTER *dt);
 		AimTimer = SDL_GetTicks();
@@ -568,7 +616,41 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
+
+		//Reset collider
+		collider = true;
+		
 	}
+	if (state == ATTACK)
+	{
+		
+		current_animation = &swordAttack;
+		SDL_Rect r = {position.x, position.y, 35, 20 };
+		
+		if (collider == true)
+		{
+			colliderAttack = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
+			collider = false;
+			
+		}
+		//Reset FX
+		playedJumpFx = false;
+		playeDeadFx = false;
+		playeDashFx = false;
+		
+	}
+
+	if(animationStart == 0)
+	{
+		if (colliderAttack != nullptr)
+		{
+			if (flip == SDL_FLIP_NONE)	colliderAttack->SetPos(position.x + 30, position.y+15);
+			if (flip == SDL_FLIP_HORIZONTAL) colliderAttack->SetPos(position.x - 30, position.y+15);
+			if (current_animation->AnimationEnd() == true && animationStart == 0) colliderAttack->to_delete = true;
+		}
+	}
+	
+	
 }
 
 //Predict if in next frame, the player will collide with something ----------------------------------------------

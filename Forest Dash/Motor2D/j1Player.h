@@ -28,6 +28,7 @@ enum player_state
 	DASH_L,
 	DASH_R,
 	AIMING,
+	ATTACK,
 	ADJUST
 };
 
@@ -67,6 +68,8 @@ private:
 	bool playeDeadFx = false;
 	bool playeDashFx = false;
 	bool playedWinFx = false;
+	bool collider = true;
+	
 
 	Animation idle;
 	Animation forward;
@@ -78,6 +81,7 @@ private:
 	Animation dash;
 	Animation aiming;
 	Animation bow;
+	Animation swordAttack;
 	SDL_Rect aimbar;
 	
 	int DeathTimer = 0;
@@ -85,7 +89,9 @@ private:
 	int playerHeight;
 	int playerWidth;
 	int playerCentre;
-	
+	int animationStart = 0;
+	int numCollider = 0;
+
 	p2SString		moveFx;
 	p2SString		deathFx;
 	p2SString		jumpFx;
@@ -101,6 +107,8 @@ private:
 
 public:	
 	
+	Collider* colliderAttack;
+
 	bool death = false;
 
 	iPoint initialPosition;

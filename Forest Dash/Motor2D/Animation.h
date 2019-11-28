@@ -18,6 +18,7 @@ public:
 
 private:
 	float current_frame;
+	bool animationEnd = false;
 	int loops = 0;
 	int speeddelay = 0;
 
@@ -36,9 +37,11 @@ public:
 
 	SDL_Rect& GetCurrentFrame(float dt)
 	{
+		animationEnd = false;
 		current_frame += speed[(int)current_frame]*30*dt;
 		if (current_frame >= last_frame)
 		{
+			animationEnd = true;
 			current_frame = (loop) ? 0.0f : last_frame - 1;
 			loops++;
 		}
@@ -47,6 +50,9 @@ public:
 	}
 	int returnCurrentFrame() {
 		return (int)current_frame;
+	}
+	bool AnimationEnd() {
+		return animationEnd;
 	}
 	bool Finished() const
 	{
