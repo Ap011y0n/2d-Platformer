@@ -192,7 +192,7 @@ void j1Slime::setAnimation()
 //	int i = 0;
 //	pugi::xml_node tile;
 //	pugi::xml_node frame;
-//
+//	
 //	for (tile = slime_file.child("map").child("tileset").child("tile"); tile; tile = tile.next_sibling("tile")) 
 //	{
 //		Animation* set = new Animation();
@@ -202,9 +202,9 @@ void j1Slime::setAnimation()
 //			LOG("Animation %d, %d, %d, %d", frame.attribute("tileid").as_int(), (frame.attribute("duration").as_float()) / 1000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int());
 //		}
 //		animations.add(*set);
-//
+//	
 //	}
-//
+//	
 //}
 
 //Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
