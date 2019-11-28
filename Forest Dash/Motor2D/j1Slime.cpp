@@ -98,9 +98,10 @@ bool j1Slime::Update(float dt)
 	setAnimation();
 	DrawHitbox();
 	flip = SDL_FLIP_HORIZONTAL;
-
-	if (App->EntityManager->GetPlayer()->position.x > position.x - 200 && App->EntityManager->GetPlayer()->position.x < position.x + 200 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
-		if (pathFinding)Pathfinding(dt);
+	if (!App->EntityManager->GetPlayer()->death) {
+		if (App->EntityManager->GetPlayer()->position.x > position.x - 200 && App->EntityManager->GetPlayer()->position.x < position.x + 200 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
+			if (pathFinding)Pathfinding(dt);
+	}
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(App->EntityManager->slimeTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	

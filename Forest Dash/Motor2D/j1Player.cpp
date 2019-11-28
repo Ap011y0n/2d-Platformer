@@ -90,7 +90,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	dashspeed = acceleration;
 
 	jumpSpeed = -1 * speedY;
-
+	BarWidth = maxBarWidth;
 	
 
 	return ret;
@@ -147,7 +147,7 @@ bool j1Player::Start()
 	r.y = position.y;
 
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_PLAYER, this);
-
+	
 	charging = false;
 
 	return true;
@@ -550,10 +550,11 @@ void j1Player::StateMachine(float dt)
 		playeDashFx = false;
 
 		if (SDL_GetTicks() > (DeathTimer + 2500)) {
-			state = IDLE;
+			/*state = IDLE;
 			BarWidth = maxBarWidth;
 			position.x = initialPosition.x;
-			position.y = initialPosition.y;
+			position.y = initialPosition.y;*/
+			App->EntityManager->ResetEntities = true;
 			
 		}
 	}

@@ -34,8 +34,6 @@ j1EntityManager::~j1EntityManager() {
 bool j1EntityManager::Awake(pugi::xml_node& config) {
 	node = config;
 
-	LOG("Awake NODE %d", node.child("initialPosition").attribute("x").as_int());
-
 	return true;
 }
 
@@ -76,6 +74,8 @@ bool j1EntityManager::PostUpdate(float dt) {
 		entities_list->data->PostUpdate(dt);
 		entities_list = entities_list->next;
 	}
+	if (ResetEntities)
+		EntitiesReset();
 	return true;
 
 }
@@ -110,7 +110,6 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy
 	//static_assert(j1Entity::Types::unknown != (j1Entity::Types)(4), "code needs update");
 	j1Entity* ret = nullptr;
 
-	LOG("Awake NODE %d", node.child("initialPosition").attribute("x").as_int());
 	switch (type) {
 	case j1Entity::Types::player: ret = new j1Player(posx, posy); break;
 	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy); break;
@@ -192,4 +191,11 @@ void j1EntityManager::DeleteEntity() {
 
 		entities_list = entities_list->next;
 	}
+}
+
+void j1EntityManager::EntitiesReset() {
+
+		App->LoadGame();
+	ResetEntities = false;
+	
 }

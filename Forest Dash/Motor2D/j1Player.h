@@ -59,7 +59,6 @@ public:
 private:
 
 
-	player_state state;
 	player_state prev_state = IDLE;
 
 	bool charging = false;
@@ -100,8 +99,9 @@ private:
 	Animation* current_animation_bow = nullptr;
 
 public:	
-	
-	bool death = false;
+	player_state state;
+
+
 
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

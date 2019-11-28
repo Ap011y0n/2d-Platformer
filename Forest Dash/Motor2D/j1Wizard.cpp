@@ -94,10 +94,11 @@ bool j1Wizard::Update(float dt)
 	BROFILER_CATEGORY("Update_Wizard", Profiler::Color::Orchid);
 	Movement();
 	setAnimation(dt);
-
-	
+	if (!App->EntityManager->GetPlayer()->death) {
 	if (App->EntityManager->GetPlayer()->position.x > position.x - 400 && App->EntityManager->GetPlayer()->position.x < position.x + 400 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
-	if(pathFinding)Pathfinding(dt);
+			if (pathFinding)Pathfinding(dt);
+	}
+
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	DrawHitbox();
 	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
