@@ -191,7 +191,7 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	return ret;
 }
 
-/*
+
 void j1Audio::StopFx() {
 	Mix_HaltChannel(-1);
 
@@ -245,4 +245,4 @@ void j1Audio::fxvolume(float value, bool increase) {
 		if (volumefx < 0)
 			volumefx = 0;
 	}
-}*/
+}
