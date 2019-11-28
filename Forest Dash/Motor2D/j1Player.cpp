@@ -93,7 +93,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	dashspeed = acceleration;
 
 	jumpSpeed = -1 * speedY;
-	BarWidth = maxBarWidth;
+	BarWidth = 50;
 	
 
 	return ret;
@@ -106,8 +106,8 @@ bool j1Player::Start()
 	LOG("Awake :)");
 	bool ret = true;
 	to_delete = false;
-	
-
+	BarWidth = 50;
+	state = IDLE;
 	/*
 
 	initialPosition.x = config.child("initialPosition").attribute("x").as_int();
@@ -234,7 +234,7 @@ void j1Player::Movement(float dt) {
 			jumpSpeed = -1 * speedY;
 
 		//Set idle state if state is not dead nor jumping or dashing
-		if (state != JUMP && state != DEATH && state != DASH_L && state != DASH_R && !adjust) {
+		if (state != JUMP && state != DEATH && state != DASH_L && state != DASH_R && !adjust && state!= ATTACK) {
 			state = IDLE;
 		}
 
@@ -300,8 +300,9 @@ void j1Player::Movement(float dt) {
 		}
 
 		//Sword Attack
-		if (App->input->GetMouseButtonDown(3) == KEY_REPEAT)
+		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && state != DEATH && state != JUMP && state != FALLING && state != ATTACK)
 		{
+			attacktimer.Start();
 			state = ATTACK;
 		}
 
@@ -338,7 +339,7 @@ void j1Player::Movement(float dt) {
 		}
 
 		// Move to left direction if won't collide with anything or if it's not moving to left
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R && state != AIMING) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R && state != AIMING && state != ATTACK) {
 			if (state == BACKWARD) {
 				state = IDLE;
 				position.x += (speedX * DT_CONVERTER * dt);
@@ -354,6 +355,7 @@ void j1Player::Movement(float dt) {
 
 				}
 			}
+			
 		}
 
 		// Move to left direction if won't collide with anything or if it's not moving to right
@@ -441,6 +443,7 @@ void j1Player::StateMachine(float dt)
 		aiming.Reset();
 		bow.Reset();
 		swordAttack.Reset();
+		
 
 		//Reset FX
 		playedJumpFx = false;
@@ -626,18 +629,18 @@ void j1Player::StateMachine(float dt)
 	{
 		
 		current_animation = &swordAttack;
-		SDL_Rect r = {position.x, position.y, 35, 20 };
+		SDL_Rect r = {position.x, position.y, 20, 40 };
 		
 		if (collider == true)
 		{
 			colliderAttack = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
 			collider = false;
-			
 		}
 		//Reset FX
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
+		if (attacktimer.Read() > 1000)state = IDLE;
 		
 	}
 
@@ -646,7 +649,7 @@ void j1Player::StateMachine(float dt)
 		if (colliderAttack != nullptr)
 		{
 			if (flip == SDL_FLIP_NONE)	colliderAttack->SetPos(position.x + 30, position.y+15);
-			if (flip == SDL_FLIP_HORIZONTAL) colliderAttack->SetPos(position.x - 30, position.y+15);
+			if (flip == SDL_FLIP_HORIZONTAL) colliderAttack->SetPos(position.x - 10, position.y+15);
 			if (current_animation->AnimationEnd() == true && animationStart == 0) colliderAttack->to_delete = true;
 		}
 	}

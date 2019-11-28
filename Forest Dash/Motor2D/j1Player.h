@@ -101,7 +101,7 @@ private:
 	float acceleration;
 	float speedBar;
 	float angle;
-
+	j1Timer attacktimer;
 	Animation* current_animation_bow = nullptr;
 
 public:	
