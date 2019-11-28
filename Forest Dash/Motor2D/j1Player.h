@@ -59,7 +59,6 @@ public:
 
 private:
 
-
 	player_state state;
 	player_state prev_state = IDLE;
 
@@ -106,12 +105,13 @@ private:
 	Animation* current_animation_bow = nullptr;
 
 public:	
+
 	
 	Collider* colliderAttack;
 
 	bool death = false;
-
 	iPoint initialPosition;
+	
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	SDL_RendererFlip flip_bow = SDL_FLIP_NONE;
 	

@@ -316,6 +316,8 @@ bool j1Scene::CreateEntities() {
 	p2List_item<MapLayer*>* layer_iterator = App->map->data.layers.start;
 	MapLayer* layer = App->map->data.layers.start->data;
 
+	
+
 	while (ret == true && layer_iterator != NULL) {
 		layer = layer_iterator->data;
 		LOG("%s, %d", layer->name.GetString(), layer->returnPropValue("Navigation"));
@@ -348,9 +350,8 @@ bool j1Scene::CreateEntities() {
 		layer_iterator = layer_iterator->next;
 	}
 
-
-	
 	App->EntityManager->CreateEntity(j1Entity::Types::player, 100, 500);
+	
 	/*
 	App->EntityManager->CreateEntity(j1Entity::Types::slime, 150, 500);
 	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300);

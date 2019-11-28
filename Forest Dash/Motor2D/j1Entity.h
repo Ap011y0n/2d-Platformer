@@ -79,6 +79,7 @@ public:
 	bool to_delete = false;
 	pugi::xml_document	entity_file;
 	TileSetPlayer TileSetData;
+	bool death = false;
 };
 
 #endif
