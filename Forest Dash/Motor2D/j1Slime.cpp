@@ -78,10 +78,11 @@ bool j1Slime::Start()
 	LOG("Start Slime");
 	App->EntityManager->slimeTex;
 	to_delete = false;
-	
-	
+	playedSlimeDeathFx = false;
+	deathTimerSlime = 0;
+	slimeDead = false;
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
-
+	flip = SDL_FLIP_NONE;
 	startMoving = SDL_GetTicks();
 	pathFinding = true;
 	return true;
@@ -98,7 +99,7 @@ bool j1Slime::Update(float dt)
 	setAnimation();
 	DrawHitbox();
 	flip = SDL_FLIP_HORIZONTAL;
-	if (!App->EntityManager->GetPlayer()->death) {
+	if (!App->EntityManager->GetPlayer()->is_death) {
 		if (App->EntityManager->GetPlayer()->position.x > position.x - 200 && App->EntityManager->GetPlayer()->position.x < position.x + 200 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
 			if (pathFinding)Pathfinding(dt);
 	}
@@ -166,49 +167,6 @@ void j1Slime::setAnimation()
 
 }
 
-// Load animations from tiled  ----------------------------------------------
-//void j1Slime::LoadAnimations(const char* path)
-//{
-//	pugi::xml_parse_result result = slime_file.load_file(path);
-//	if (result == NULL)
-//	{
-//		LOG("Could not load map xml file %s. pugi error: %s", path, result.description());
-//
-//	}
-//
-//	TileSetData.firstgid = slime_file.child("map").child("tileset").attribute("firstgid").as_int();
-//	TileSetData.tile_width = slime_file.child("map").child("tileset").attribute("tilewidth").as_int();
-//	TileSetData.tile_height = slime_file.child("map").child("tileset").attribute("tileheight").as_int();
-//	TileSetData.tex_width = slime_file.child("map").child("tileset").child("image").attribute("width").as_int();
-//	TileSetData.Texname.create(slime_file.child("map").child("tileset").child("image").attribute("source").as_string());
-//	TileSetData.num_tiles_width = TileSetData.tex_width / TileSetData.tile_width;
-//	LOG("Tileset: %s", TileSetData.Texname.GetString());
-//	LOG("firstgid %d", TileSetData.firstgid);
-//	LOG("tile_width %d", TileSetData.tile_width);
-//	LOG("tile_height %d", TileSetData.tile_height);
-//	LOG("tex_width %d", TileSetData.tex_width);
-//	LOG("num_tiles_width %d", TileSetData.num_tiles_width);
-//	
-//	int i = 0;
-//	pugi::xml_node tile;
-//	pugi::xml_node frame;
-//
-//	for (tile = slime_file.child("map").child("tileset").child("tile"); tile; tile = tile.next_sibling("tile")) 
-//	{
-//		Animation* set = new Animation();
-//		for (frame = tile.child("animation").child("frame"); frame; frame = frame.next_sibling("frame"))
-//		{
-//			set->PushBack(TileSetData.GetAnimRect(frame.attribute("tileid").as_int()), (frame.attribute("duration").as_float()) / 2000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int(), 0, 0);
-//			LOG("Animation %d, %d, %d, %d", frame.attribute("tileid").as_int(), (frame.attribute("duration").as_float()) / 1000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int());
-//		}
-//		animations.add(*set);
-//
-//	}
-//
-//}
-
-//Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
-
 
 void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 
@@ -223,8 +181,7 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 }
 
 bool j1Slime::Pathfinding(float dt) {
-	speedX = 0;
-	speedY = 0;
+
 	static iPoint origin;
 	static bool origin_selected = false;
 	int x, y;

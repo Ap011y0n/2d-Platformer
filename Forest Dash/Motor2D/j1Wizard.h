@@ -63,7 +63,6 @@ public:
 	bool wizarDead = false;
 	bool pathFinding = false;
 	int deathTimerWizard = 0;
-	int startMoving = 0;
 	int collided;
 	iPoint initialPosition;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

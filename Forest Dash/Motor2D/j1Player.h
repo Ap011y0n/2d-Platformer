@@ -103,6 +103,18 @@ private:
 	float angle;
 	j1Timer attacktimer;
 	Animation* current_animation_bow = nullptr;
+	bool Canright = true;
+	bool Canleft = true;
+	bool CandashR = true;
+	bool CandashL = true;
+	bool Canjump = true;
+	bool Candown = true;
+	bool shoot = false;
+	bool adjust = false;
+	float jumpSpeed;
+
+	int speedX;
+	int speedY;
 
 public:	
 

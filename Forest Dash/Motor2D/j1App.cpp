@@ -86,13 +86,13 @@ void j1App::AddModule(j1Module* module)
 bool j1App::Awake()
 {
 	PERF_START(ptimer);
-
-
+	vsync.create("IDK");
+	framecap.create("ON");
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
 
 	bool ret = false;
-		
+	cap = true;
 	config = LoadConfig(config_file);
 
 	if(config.empty() == false)
@@ -214,10 +214,12 @@ void j1App::FinishUpdate()
 	float seconds_since_startup = startup_time.ReadSec();
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
-
+	
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
-		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
+
+	sprintf_s(title, 256, "Time since startup: %.3f FPS:%02u Av.FPS: %.2f Last Frame Ms: %02u Cap:%s Vsync: %s ",
+		seconds_since_startup, prev_last_sec_frame_count, avg_fps, last_frame_ms,framecap.GetString(), vsync.GetString());
+	
 	App->win->SetTitle(title);
 
 	// TODO 2: Use SDL_Delay to make sure you get your capped framerate
@@ -225,7 +227,7 @@ void j1App::FinishUpdate()
 	
 	int delay = 1 * 1000 / framerate - last_frame_ms;
 	
-	if (delay > 0){
+	if (delay > 0 && cap){
 	SDL_Delay(1 * 1000 / framerate - last_frame_ms);
 	}
 //	LOG("We waited for %d milliseconds and got back in %f", (int)delaytimer.ReadMs(), delaytimer.ReadMs());

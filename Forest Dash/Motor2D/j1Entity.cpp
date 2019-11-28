@@ -64,7 +64,7 @@ bool j1Entity::Save(pugi::xml_node& data) const {
 	data.child("position").append_attribute("pos_y") = position.y;
 	return true;
 }
-SDL_Rect TileSetPlayer::GetAnimRect(int id) const
+SDL_Rect TileSetEntity::GetAnimRect(int id) const
 {
 	int relative_id = id;
 	SDL_Rect rect;
@@ -75,7 +75,7 @@ SDL_Rect TileSetPlayer::GetAnimRect(int id) const
 	return rect;
 }
 void j1Entity::LoadAnimations(const char* path) {
-
+	pugi::xml_document	entity_file;
 	pugi::xml_parse_result result = entity_file.load_file(path);
 	if (result == NULL)
 	{

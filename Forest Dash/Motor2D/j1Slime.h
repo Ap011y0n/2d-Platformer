@@ -51,7 +51,7 @@ private:
 
 	bool playedSlimeDeathFx = false;
 
-	pugi::xml_document	slime_file;
+	
 	slime_state state;
 
 public:

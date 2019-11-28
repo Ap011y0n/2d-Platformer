@@ -21,7 +21,7 @@ j1Wizard::j1Wizard(int posx, int posy) : j1Entity(Types::wizard)
 
 	current_animation = NULL;
 	LoadAnimations("textures/wizard_animations.tmx");
-	state = WD_IDLE;
+	
 	// Load animations from an animations list ----------------------------------------------
 	p2List_item<Animation>* animation_iterator = animations.start;
 
@@ -71,14 +71,15 @@ bool j1Wizard::Start()
 	LOG("Start Wizard");
 	App->EntityManager->wizardTex;
 	to_delete = false;
-
+	wizarDead = false;
+	state = WD_IDLE;
 	move = position.x;
 	patrol = true;
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
-
-	
+	playedWizarDeathFx = false;
+	deathTimerWizard = 0;
 	collided = SDL_GetTicks();
-	
+	flip = SDL_FLIP_NONE;
 	pathFinding = true;
 
 	
@@ -94,7 +95,7 @@ bool j1Wizard::Update(float dt)
 	BROFILER_CATEGORY("Update_Wizard", Profiler::Color::Orchid);
 	Movement();
 	setAnimation(dt);
-	if (!App->EntityManager->GetPlayer()->death) {
+	if (!App->EntityManager->GetPlayer()->is_death) {
 	if (App->EntityManager->GetPlayer()->position.x > position.x - 400 && App->EntityManager->GetPlayer()->position.x < position.x + 400 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
 			if (pathFinding)Pathfinding(dt);
 	}
@@ -205,8 +206,7 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 }
 
 bool j1Wizard::Pathfinding(float dt) {
-	speedX = 0;
-	speedY = 0;
+
 	static iPoint origin;
 	static bool origin_selected = false;
 	int x, y;

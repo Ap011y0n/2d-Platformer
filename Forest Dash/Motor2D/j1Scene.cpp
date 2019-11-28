@@ -300,11 +300,13 @@ void j1Scene::Debug() {
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
-		if(App->framerate == 30){
-		App->framerate = 10000;
+		if (App->cap == false) {
+			App->cap = true;
+			App->framecap.create("ON");
 		}
-		else{
-			App->framerate = 30;
+		else {
+			App->cap = false;
+			App->framecap.create("OFF");
 		}
 	}
 

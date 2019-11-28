@@ -97,6 +97,9 @@ public:
 	uint32				framerate = 0u;
 	pugi::xml_document	config_file;
 
+	p2SString vsync;
+	p2SString framecap;
+	bool cap = false;
 
 private:
 

@@ -108,6 +108,8 @@ bool j1Player::Start()
 	to_delete = false;
 	BarWidth = 50;
 	state = IDLE;
+	Godmode = false;
+	colliderAttack = nullptr;
 	/*
 
 	initialPosition.x = config.child("initialPosition").attribute("x").as_int();
@@ -584,7 +586,7 @@ void j1Player::StateMachine(float dt)
 		animationStart = 0;
 		BarWidth = 0;
 		current_animation = &dead;
-		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 0.45* (DT_CONVERTER * dt));
+		if(position.y < -1 * App->render->camera.y + App->win->height)position.y += (jumpSpeed += 1* (DT_CONVERTER * dt));
 		
 		//Play death FX
 		if (!playeDeadFx)
@@ -599,7 +601,7 @@ void j1Player::StateMachine(float dt)
 		collider = true;
 		
 
-		if (SDL_GetTicks() > (DeathTimer + 2500)) {
+		if (SDL_GetTicks() > (DeathTimer + 1500)) {
 			/*state = IDLE;
 			BarWidth = maxBarWidth;
 			position.x = initialPosition.x;
@@ -664,10 +666,11 @@ void j1Player::CheckCollision(float dt) {
 	Canleft = true;
 	Canjump = true;
 	Candown = true;
-	death = false;
 	adjust = true;
 	CandashL = true;
 	CandashR = true;
+	is_death = false;
+
 
 	bool ret = true;
 	iPoint coord;
@@ -733,7 +736,7 @@ void j1Player::CheckCollision(float dt) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
 					if (layer->Get(coord.x, coord.y) != 0) {
 						
-						death = true;	
+						is_death = true;
 					}
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) {
@@ -743,7 +746,7 @@ void j1Player::CheckCollision(float dt) {
 					if (death == true){
 						
 					state = DEATH;
-					jumpSpeed = -speedY* (DT_CONVERTER * dt);
+					jumpSpeed = -speedY*0.5 *(DT_CONVERTER * dt);
 					DeathTimer = SDL_GetTicks();
 					ret = false;
 					}

@@ -17,7 +17,7 @@ struct Collider;
 struct Anim;
 
 
-struct TileSetPlayer
+struct TileSetEntity
 {
 	SDL_Rect GetAnimRect(int id) const;
 	int tile_width;
@@ -60,28 +60,18 @@ public:
 protected:
 
 	int gravity;
-	int speedX;
-	int speedY;
 	Animation* current_animation = nullptr;
 	p2List<Animation> animations;
-	bool Canright = true;
-	bool Canleft = true;
-	bool CandashR = true;
-	bool CandashL = true;
-	bool Canjump = true;
-	bool Candown = true;
-	bool shoot = false;
-	bool adjust = false;
-	float jumpSpeed;
+
 
 public:
 	iPoint position;
 	Collider *EntityCollider;
 	bool Godmode = false;
 	bool to_delete = false;
-	pugi::xml_document	entity_file;
-	TileSetPlayer TileSetData;
-	bool death = false;
+	bool is_death;
+	TileSetEntity TileSetData;
+	
 };
 
 #endif
