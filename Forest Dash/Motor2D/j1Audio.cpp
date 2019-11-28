@@ -23,9 +23,9 @@ bool j1Audio::Awake(pugi::xml_node & config)
 {
 	
 	music_directory = config.child("music").child_value("folder");
-	//fx_directory = config.child("fx").child_value("folder");
+	fx_directory = config.child("fx").child_value("folder");
 	volumemusic = config.child("music").child("volumemusic").attribute("value").as_float();
-	//volumefx = config.child("fx").child("volumefx").attribute("value").as_float();
+	volumefx = config.child("fx").child("volumefx").attribute("value").as_float();
 	
 
 	LOG("Loading Audio Mixer");

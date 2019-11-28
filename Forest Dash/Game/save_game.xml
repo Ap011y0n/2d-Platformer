@@ -4,22 +4,25 @@
 	<window />
 	<renderer />
 	<textures />
-	<audio>
-		<volumemusic value="0.300000012" />
-		<volumefx value="0.300000012" />
-	</audio>
+	<audio />
 	<map />
 	<scene>
-		<scenename name="maplevel2.tmx" />
+		<scenename name="maplevel1.tmx" />
 	</scene>
 	<collision />
 	<particles />
 	<entity>
-		<Entity type="player">
-			<position pos_x="100" pos_y="715" />
+		<Entity type="slime">
+			<position pos_x="622" pos_y="716" />
 		</Entity>
-		<Entity type="wizard">
-			<position pos_x="4200" pos_y="450" />
+		<Entity type="slime">
+			<position pos_x="896" pos_y="740" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="621" pos_y="736" />
+		</Entity>
+		<Entity type="player">
+			<position pos_x="157" pos_y="717" />
 		</Entity>
 	</entity>
 	<pathfinding />

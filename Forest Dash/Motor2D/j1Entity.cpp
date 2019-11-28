@@ -41,7 +41,7 @@ bool j1Entity::CleanUp() {
 	}
 	animations.clear();*/
 
-
+	if(EntityCollider!= false)
 	EntityCollider->to_delete = true;
 	return true;
 }

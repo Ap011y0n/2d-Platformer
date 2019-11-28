@@ -153,7 +153,7 @@ void j1Slime::setAnimation()
 
 		if (SDL_GetTicks() > (deathTimerSlime + 2500)) {
 			
-			EntityCollider->to_delete = true;
+			
 			to_delete = true;
 
 		}
@@ -215,6 +215,7 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 	if (c2->type == COLLIDER_PLAYER_SHOT) {
 		
 		slimeDead = true;
+		EntityCollider->to_delete = true;
 		deathTimerSlime = SDL_GetTicks();
 	}
 

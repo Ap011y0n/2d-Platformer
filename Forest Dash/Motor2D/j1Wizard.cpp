@@ -154,7 +154,6 @@ void j1Wizard::setAnimation(float dt)
 
 		if (SDL_GetTicks() > (deathTimerWizard + 2500)) {
 			
-			EntityCollider->to_delete = true;
 			to_delete = true;
 
 		}
@@ -180,6 +179,7 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 	if (c2->type == COLLIDER_PLAYER_SHOT) {
 		
 		pathFinding = false;
+		EntityCollider->to_delete = true;
 		wizarDead = true;
 		deathTimerWizard = SDL_GetTicks();
 		

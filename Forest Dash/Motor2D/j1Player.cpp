@@ -56,6 +56,7 @@ j1Player::j1Player(int posx, int posy) : j1Entity(Types::player)
 
 	bow = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
+	bow.loop = false;
 	
 }
 
@@ -175,7 +176,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(App->EntityManager->playerTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	/*MoveCondition(dt);*/
+	MoveCondition(dt);
 
 	current_animation_bow = &bow;
 	SDL_Rect* rec = &current_animation_bow->GetCurrentFrame(dt);
@@ -233,6 +234,67 @@ void j1Player::Movement(float dt) {
 			state = IDLE;
 		}
 
+		//Particles
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && state != DEATH && state != JUMP && state != FALLING)
+		{
+			charging = true;
+			state = AIMING;
+
+			aimbar.h = 3;
+			aimbar.w = aimbarw;
+			aimbar.x = position.x;
+			aimbar.y = position.y + playerHeight - 50;
+			App->render->DrawQuad(aimbar, 0, 0, 255, 255);
+
+			int x, y;
+			App->input->GetMousePosition(x, y);
+
+
+
+			iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+			iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
+			iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
+
+			angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
+			//	LOG("%f", angle);
+			yvec = (vec.y / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
+			xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
+			//LOG("Raw %d, %d", vec.x, vec.y);
+		//	LOG("Normal %f, %f", xvec, yvec);
+
+			if (xvec < 0)
+				flip = SDL_FLIP_HORIZONTAL;
+			if (xvec > 0)
+				flip = SDL_FLIP_NONE;
+
+
+			xvec = xvec * 30;
+			yvec = yvec * 30;
+
+			//	LOG("Depurated %f, %f", xvec, yvec);
+			//	LOG("Depurated %d, %d", (int)xvec, (int)yvec);
+
+		}
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && state != DEATH)
+		{
+			LOG("Open fire");
+			if (aimbar.w >= 50)
+			{
+				aimbarw = 0;
+
+				//Blit arrow
+				if (flip == SDL_FLIP_NONE) {
+					//App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+					App->EntityManager->CreateEntity(j1Entity::Types::projectile_player, position.x + 25, position.y + 25, (int)xvec, (int)yvec, angle);
+				}
+				else if (flip == SDL_FLIP_HORIZONTAL)
+					//App->particles->AddParticle(App->particles->arrow, position.x-10, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
+					App->EntityManager->CreateEntity(j1Entity::Types::projectile_player, position.x - 10, position.y + 25, (int)xvec, (int)yvec, angle);
+				aiming.Reset();
+			}
+
+		}
+
 		//Jump code
 		if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) && state != DEATH) {
 			// Check if can move down
@@ -266,7 +328,7 @@ void j1Player::Movement(float dt) {
 		}
 
 		// Move to left direction if won't collide with anything or if it's not moving to left
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R && state != AIMING) {
 			if (state == BACKWARD) {
 				state = IDLE;
 				position.x += (speedX * DT_CONVERTER * dt);
@@ -285,7 +347,7 @@ void j1Player::Movement(float dt) {
 		}
 
 		// Move to left direction if won't collide with anything or if it's not moving to right
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R && state != AIMING) {
 			if (state == FORWARD) {
 				state = IDLE;
 				position.x -= (int)(speedX * DT_CONVERTER * dt);
@@ -303,7 +365,7 @@ void j1Player::Movement(float dt) {
 			}
 		}
 		// Dash: add acceleration when presing left or rigth arrows
-		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH) {
+		if ((App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH && state != AIMING) {
 			state = DASH_L;
 
 			if (dashspeed > 0) { dashspeed -= (DT_CONVERTER * dt); }
@@ -311,7 +373,7 @@ void j1Player::Movement(float dt) {
 			if (Canleft && CandashL)position.x -= (int)(dashspeed * DT_CONVERTER * dt);
 			position.y -= (int)(gravity * (DT_CONVERTER * dt));
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH) {
+		if ((App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH && state != AIMING) {
 			state = DASH_R;
 
 			if (dashspeed > 0) { dashspeed -=  DT_CONVERTER * dt; }
@@ -351,66 +413,8 @@ void j1Player::Movement(float dt) {
 			if (state == IDLE)state = JUMP;
 		}
 	}
-
-	//Particles
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-	{
-		charging = true;
-		state = AIMING;
-		SDL_Rect aimbar;
-		aimbar.h = 3;
-		aimbar.w = aimbarw;
-		aimbar.x = position.x;
-		aimbar.y = position.y + playerHeight - 50;
-		App->render->DrawQuad(aimbar, 0, 0, 255, 255);
-
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		
-
-		
-		iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-		iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
-		iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
-		
-		angle = -(-90 + atan2(vec.x, vec.y) * 180 / 3.14159265);
-	//	LOG("%f", angle);
-		float yvec = (vec.y / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
-		float xvec = (vec.x / sqrt(pow(vec.x, 2) + pow(vec.y, 2)));
-		//LOG("Raw %d, %d", vec.x, vec.y);
-		LOG("Normal %f, %f", xvec, yvec);
-
-		if (xvec < 0)
-			flip = SDL_FLIP_HORIZONTAL;
-		if (xvec > 0)
-			flip = SDL_FLIP_NONE;
-
-
-		xvec = xvec * 30;
-		yvec = yvec * 30;
-
-	//	LOG("Depurated %f, %f", xvec, yvec);
-	//	LOG("Depurated %d, %d", (int)xvec, (int)yvec);
-
-		if (aimbar.w >= 50)
-		{
-			aimbarw = 0;
-		
-			//Blit arrow
-			if (flip == SDL_FLIP_NONE) {
-				//App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
-				App->EntityManager->CreateEntity(j1Entity::Types::projectile_player, position.x +25, position.y + 25, (int)xvec, (int)yvec, angle);
-			}
-			else if (flip == SDL_FLIP_HORIZONTAL)
-				//App->particles->AddParticle(App->particles->arrow, position.x-10, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
-				App->EntityManager->CreateEntity(j1Entity::Types::projectile_player,position.x - 10, position.y + 25, (int)xvec, (int)yvec, angle);
-			aiming.Reset();
-		}
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-		{
-		}
-	}
+	
+	
 }
 
 //Depending of the state set on Movement(), play fx, change facing direction and other interaction ----------------------------------------------
@@ -554,6 +558,7 @@ void j1Player::StateMachine(float dt)
 	}
 	if (state == AIMING)
 	{
+		if(aimbarw<50)
 		aimbarw += ( 1 * DT_CONVERTER *dt);
 		AimTimer = SDL_GetTicks();
 		current_animation = &aiming;

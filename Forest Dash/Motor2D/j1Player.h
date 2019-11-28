@@ -113,6 +113,10 @@ public:
 	int opacity = 0;
 	int maxBarWidth;
 
+	float yvec = 0;
+	float xvec = 0;
+
+
 
 };
 
