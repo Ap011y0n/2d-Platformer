@@ -13,6 +13,7 @@
 #include "j1ModuleCollision.h"
 #include "j1Particles.h"
 #include "J1EntityManager.h"
+#include "j1Pathfinding.h"
 #include "Brofiler/Brofiler.h"
 
 
@@ -82,6 +83,7 @@ bool j1Slime::Start()
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
 
 	startMoving = SDL_GetTicks();
+	pathFinding = true;
 	return true;
 }
 
@@ -96,6 +98,9 @@ bool j1Slime::Update(float dt)
 	setAnimation();
 	DrawHitbox();
 	flip = SDL_FLIP_HORIZONTAL;
+
+	if (App->EntityManager->GetPlayer()->position.x > position.x - 200 && App->EntityManager->GetPlayer()->position.x < position.x + 200 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
+		if (pathFinding)Pathfinding(dt);
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(App->EntityManager->slimeTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	
@@ -213,4 +218,48 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 		deathTimerSlime = SDL_GetTicks();
 	}
 
+}
+
+bool j1Slime::Pathfinding(float dt) {
+	speedX = 0;
+	speedY = 0;
+	static iPoint origin;
+	static bool origin_selected = false;
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->EntityManager->GetPlayer()->position;
+	p = App->map->WorldToMap(p.x + 30, p.y + 30);
+
+	origin = App->map->WorldToMap(position.x + 30, position.y + 30);
+	App->pathfinding->CreatePath(origin, p);
+
+	state = SLIME_FORWARD;
+	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+	if (path->At(1) != NULL)
+	{
+
+		if (path->At(1)->x < origin.x) {
+			position.x -= 2 * DT_CONVERTER * dt;
+			flip = SDL_FLIP_NONE;
+		}
+
+		if (path->At(1)->x > origin.x) {
+			position.x += 2 * DT_CONVERTER * dt;
+			flip = SDL_FLIP_HORIZONTAL;
+		}
+
+		if (path->At(1)->y > origin.y) {
+			position.y += 2 * DT_CONVERTER * dt*9.81;
+		}
+	}
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint nextPoint = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		if (App->collision->debug)
+		{
+			App->render->Blit(App->scene->debug_tex, nextPoint.x, nextPoint.y);
+		}
+	}
+
+	return true;
 }

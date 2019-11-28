@@ -36,7 +36,7 @@ public:
 	//bool Save(pugi::xml_node&) const;
 //	void LoadAnimations(const char* path);
 	void OnCollision(Collider* c1, Collider* c2);
-
+	bool Pathfinding(float dt);
 
 private:
 	void Movement();
@@ -47,6 +47,7 @@ private:
 	Animation idle;
 	Animation death;
 	Animation forward;
+	bool pathFinding = false;
 
 	bool playedSlimeDeathFx = false;
 
