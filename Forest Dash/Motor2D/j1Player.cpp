@@ -103,6 +103,7 @@ bool j1Player::Start()
 	LOG("Awake :)");
 	bool ret = true;
 	to_delete = false;
+	
 
 	/*
 
@@ -660,6 +661,15 @@ void j1Player::CheckCollision(float dt) {
 					DeathTimer = SDL_GetTicks();
 					ret = false;
 					}
+				}
+				if(!App->scene->checkpoint){
+				if (layer->returnPropValue("Navigation") == 5) {
+					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight / 2);
+					if (layer->Get(coord.x, coord.y) != 0) {
+						App->SaveGame();
+						App->scene->checkpoint = true;
+					}
+				}
 				}
 			
 		layer_iterator = layer_iterator->next;

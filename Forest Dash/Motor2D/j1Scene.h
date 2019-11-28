@@ -38,12 +38,16 @@ public:
 	void Nextmap();
 	void Debug();
 	bool CreateEntities();
-	p2SString current_level;
-	p2List<p2SString> levels;
-	SDL_Texture* debug_tex;
+	
 	
 private:
 	bool changeEntities = false;
+public:
+	p2SString current_level;
+	p2List<p2SString> levels;
+	SDL_Texture* debug_tex;
+	bool checkpoint = false;
+	
 };
 
 #endif // __j1SCENE_H__

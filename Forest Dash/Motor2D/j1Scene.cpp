@@ -45,6 +45,7 @@ bool j1Scene::Start()
 	LOG("Start scene");
 	current_level = levels.start->data;
 	changeEntities = false;
+	checkpoint = false;
 	//App->map->Load(current_level.GetString());
 
 	if (App->map->Load(current_level.GetString()) == true)
@@ -161,6 +162,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 {
 	LOG("Loading Scene state");
 //	App->player->BarWidth = App->player->maxBarWidth;
+	checkpoint = false;
 	App->map->CleanUp();
 	current_level.create(data.child("scenename").attribute("name").as_string());
 	App->map->Load(current_level.GetString());
@@ -190,6 +192,7 @@ void j1Scene::Nextmap() {
 
 	changeEntities = true;
 	App->map->CleanUp();
+	checkpoint = false;
 //	App->player->BarWidth = App->player->maxBarWidth;
 	p2List_item<p2SString>* iterator;
 	for (iterator = levels.start; iterator->data != current_level.GetString(); iterator = iterator->next) {
@@ -216,6 +219,7 @@ void j1Scene::Debug() {
 	{
 
 		App->map->CleanUp();
+		checkpoint = false;
 		current_level.create("maplevel1.tmx");
 		App->map->Load(current_level.GetString());
 		int w, h;
@@ -239,6 +243,7 @@ void j1Scene::Debug() {
 		
 
 		App->map->CleanUp();
+		checkpoint = false;
 		current_level.create("maplevel2.tmx");
 		App->map->Load(current_level.GetString());
 		int w, h;

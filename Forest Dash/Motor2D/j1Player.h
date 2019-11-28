@@ -53,6 +53,7 @@ public:
 	void MoveCondition(float dt);
 //	void LoadAnimations(const char* path);
 	void OnCollision(Collider* c1, Collider* c2);
+	
 
 
 private:
