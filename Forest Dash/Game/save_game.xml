@@ -62,6 +62,7 @@
 		</Entity>
 		<Entity type="player">
 			<position pos_x="210" pos_y="716" />
+
 		</Entity>
 	</entity>
 	<pathfinding />
