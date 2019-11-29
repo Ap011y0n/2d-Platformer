@@ -217,7 +217,7 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 		
 	}
 
-	/*if (c2->type == COLLIDER_PLAYER) {
+	if (c2->type == COLLIDER_PLAYER) {
 
 		if (position.x <= c2->rect.x)
 		{
@@ -232,7 +232,7 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 		
 		}
 
-	}*/
+	}
 }
 
 bool j1Wizard::Pathfinding(float dt) {

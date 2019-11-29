@@ -256,8 +256,6 @@ void j1Player::Movement(float dt) {
 			int x, y;
 			App->input->GetMousePosition(x, y);
 
-
-
 			iPoint destiny = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 			iPoint origin = App->map->WorldToMap(position.x + 15, position.y + 15);
 			iPoint vec(destiny.x - origin.x, destiny.y - origin.y);
@@ -282,7 +280,7 @@ void j1Player::Movement(float dt) {
 			//	LOG("Depurated %d, %d", (int)xvec, (int)yvec);
 
 		}
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP && state != DEATH)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP && state != DEATH && state != ATTACK)
 		{
 			LOG("Open fire");
 			if (aimbar.w >= 50)

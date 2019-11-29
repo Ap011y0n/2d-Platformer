@@ -166,9 +166,10 @@ bool j1Scene::PostUpdate(float dt)
 // Called before quitting
 bool j1Scene::CleanUp()
 {
+	App->map->CleanUp();
 	App->tex->UnLoad(debug_tex);
 	App->tex->UnLoad(flag_tex);
-	App->map->CleanUp();
+	
 	LOG("Freeing scene");
 
 	return true;
@@ -354,6 +355,12 @@ bool j1Scene::CreateEntities() {
 							App->EntityManager->CreateEntity(j1Entity::Types::wizard, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
 							break;
 						case 2076:
+							App->EntityManager->CreateEntity(j1Entity::Types::slime, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
+							break;
+						case 2605:
+							App->EntityManager->CreateEntity(j1Entity::Types::wizard, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
+							break;
+						case 2604:
 							App->EntityManager->CreateEntity(j1Entity::Types::slime, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
 							break;
 						}

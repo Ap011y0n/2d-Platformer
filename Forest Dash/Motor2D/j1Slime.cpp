@@ -192,9 +192,9 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 
 	}
 	
-	/*if (c2->type == COLLIDER_PLAYER) {
+	if (c2->type == COLLIDER_PLAYER) {
 
-		/*if (position.x <= c2->rect.x)
+		if (position.x <= c2->rect.x)
 		{
 			position.x -= 50;
 			
@@ -205,7 +205,7 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 
 		}
 
-	}*/
+	}
 
 }
 

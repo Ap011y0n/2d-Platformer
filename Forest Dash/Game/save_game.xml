@@ -15,11 +15,8 @@
 	<collision />
 	<particles />
 	<entity>
-		<Entity type="slime">
-			<position pos_x="1415" pos_y="288" />
-		</Entity>
 		<Entity type="wizard">
-			<position pos_x="4878" pos_y="416" />
+			<position pos_x="4800" pos_y="416" />
 		</Entity>
 		<Entity type="slime">
 			<position pos_x="3616" pos_y="800" />
@@ -34,7 +31,7 @@
 			<position pos_x="3904" pos_y="1504" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="3247" pos_y="461" />
+			<position pos_x="3223" pos_y="453" />
 		</Entity>
 	</entity>
 	<pathfinding />
