@@ -12,12 +12,12 @@
   </tile>
   <tile id="1">
    <animation>
-    <frame tileid="8" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="9" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="10" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="11" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="12" duration="400" pivotx="-30" pivoty="-5"/>
-    <frame tileid="13" duration="400" pivotx="-30" pivoty="-5"/>
+    <frame tileid="8" duration="500" pivotx="-30" pivoty="-5"/>
+    <frame tileid="9" duration="500" pivotx="-30" pivoty="-5"/>
+    <frame tileid="10" duration="500" pivotx="-30" pivoty="-5"/>
+    <frame tileid="11" duration="500" pivotx="-30" pivoty="-5"/>
+    <frame tileid="12" duration="500" pivotx="-30" pivoty="-5"/>
+    <frame tileid="13" duration="500" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
   <tile id="2">
@@ -82,7 +82,6 @@
     <frame tileid="128" duration="500" pivotx="-30" pivoty="-5"/>
     <frame tileid="129" duration="500" pivotx="-30" pivoty="-5"/>
     <frame tileid="130" duration="500" pivotx="-30" pivoty="-5"/>
-    <frame tileid="131" duration="500" pivotx="-30" pivoty="-5"/>
    </animation>
   </tile>
   <tile id="8">

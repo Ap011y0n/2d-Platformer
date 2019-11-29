@@ -158,13 +158,16 @@ bool j1Scene::PostUpdate(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	
+
 	return ret;
 }
 
 // Called before quitting
 bool j1Scene::CleanUp()
 {
-	
+	App->tex->UnLoad(debug_tex);
+	App->tex->UnLoad(flag_tex);
 	App->map->CleanUp();
 	LOG("Freeing scene");
 

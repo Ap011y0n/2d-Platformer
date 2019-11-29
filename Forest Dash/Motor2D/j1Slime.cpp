@@ -150,7 +150,12 @@ void j1Slime::setAnimation()
 	if(state == SLIME_IDLE)
 	{
 		current_animation = &idle;
+		
+		//Reset Animations
 		death.Reset();
+
+		//Reset Fx
+		playedSlimeDeathFx = false;
 	}
 	if (state == SLIME_DEATH)
 	{

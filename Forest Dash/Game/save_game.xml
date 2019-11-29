@@ -15,32 +15,23 @@
 	<collision />
 	<particles />
 	<entity>
-		<Entity type="slime">
-			<position pos_x="1405" pos_y="1723" />
+		<Entity type="wizard">
+			<position pos_x="4820" pos_y="416" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="4768" pos_y="608" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="4960" pos_y="672" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="3616" pos_y="768" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="3264" pos_y="960" />
+			<position pos_x="3616" pos_y="800" />
 		</Entity>
 		<Entity type="slime">
 			<position pos_x="4160" pos_y="1088" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="3296" pos_y="1280" />
+			<position pos_x="3264" pos_y="1248" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="4032" pos_y="1408" />
+			<position pos_x="3904" pos_y="1504" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="3244" pos_y="460" />
+			<position pos_x="3249" pos_y="460" />
 		</Entity>
 	</entity>
 	<pathfinding />

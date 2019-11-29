@@ -54,8 +54,12 @@ public:
 	int dashFx;
 	int winFx;
 	int deathFx;
+	int arrowFx;
+	int swordFx;
+	int checkpointFx;
 	int wizarDeathFx;
 	int slimeDeathFx;
+	
 
 private:
 

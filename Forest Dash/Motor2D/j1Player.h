@@ -67,6 +67,9 @@ private:
 	bool playeDeadFx = false;
 	bool playeDashFx = false;
 	bool playedWinFx = false;
+	bool playedArrowFx = false;
+	bool playedSwordFx = false;
+	bool playedCheckpointFx = false;
 	bool collider = true;
 	
 

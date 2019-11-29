@@ -63,9 +63,11 @@ bool j1Audio::Awake(pugi::xml_node & config)
 	dashFx = LoadFx("audio/fx/dash.wav");
 	winFx = LoadFx("audio/fx/win.wav");
 	deathFx = LoadFx("audio/fx/death.wav");
+	arrowFx = LoadFx("audio/fx/arrow.wav");
+	swordFx = LoadFx("audio/fx/sword.wav");
+	checkpointFx = LoadFx("audio/fx/checkpoint.wav");
 	wizarDeathFx = LoadFx("audio/fx/wizard_death.wav");
 	slimeDeathFx = LoadFx("audio/fx/slime_death.wav");
-
 	return ret;
 }
 
