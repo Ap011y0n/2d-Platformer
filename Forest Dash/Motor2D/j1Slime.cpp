@@ -257,6 +257,23 @@ void j1Slime::CheckCollision(float dt) {
 			if (layer->Get(coord.x, coord.y) != 0) 
 				candown = false;
 		}
+		if (layer->returnPropValue("Navigation") == 3) {
+			coord = App->map->WorldToMap(position.x + 40, position.y);
+			if (layer->Get(coord.x, coord.y) != 0) {
+
+				is_death = true;
+			}
+			coord = App->map->WorldToMap(position.x + 40, position.y);
+			if (layer->Get(coord.x, coord.y) != 0) {
+
+				is_death = true;
+			}
+			if (is_death == true) {
+
+				state = SLIME_DEATH;
+				ret = false;
+			}
+		}
 		layer_iterator = layer_iterator->next;
 	}
 

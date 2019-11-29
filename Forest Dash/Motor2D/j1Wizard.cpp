@@ -40,7 +40,7 @@ j1Wizard::j1Wizard(int posx, int posy) : j1Entity(Types::wizard)
 	position.y = posy;
 	initialPosition.x = posx;
 	r.w = 40;
-	r.h = 70;
+ 	r.h = 70;
 	r.x = position.x;
 	r.y = position.y;
 }
@@ -74,14 +74,13 @@ bool j1Wizard::Start()
 	wizarDead = false;
 	state = WD_IDLE;
 	move = position.x;
-	patrol = true;
 	EntityCollider = App->collision->AddCollider(&r, COLLIDER_WIZARD, this);
 	playedWizarDeathFx = false;
 	deathTimerWizard = 0;
 	collided = SDL_GetTicks();
 	flip = SDL_FLIP_NONE;
 	pathFinding = true;
-
+	patrolr = true;
 	
 	return true;
 }
@@ -132,14 +131,29 @@ void j1Wizard::Movement()
 	if (wizarDead) state = WD_DEATH;
 	if (state != WD_PATHFINDING && state != WD_DEATH)
 	{
-		/*if (position.x < initialPosition.x-20)
+		if (position.x > initialPosition.x + 100)
+		{
+			patrolr = false;
+			patroll = true;
+		}
+		if (position.x < initialPosition.x - 100)
+		{
+			patrolr = true;
+			patroll = false;
+		}
+
+		if (patroll == true)
 		{
 			position.x -= 2;
+			state = WD_FORWARD;
+			flip = SDL_FLIP_NONE;
 		}
-		if(position.x < initialPosition.x - 21)
+		if (patrolr == true)
 		{
 			position.x += 2;
-		}*/
+			flip = SDL_FLIP_HORIZONTAL;
+			state = WD_FORWARD;
+		}
 	}
 }
 

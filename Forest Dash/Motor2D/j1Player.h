@@ -130,6 +130,7 @@ public:
 	float BarWidth = 40;
 	float aimbarw = 0;
 	float magnitude = 0.0f;
+	float hit = 0.0f;
 	
 	int opacity = 0;
 	int maxBarWidth;

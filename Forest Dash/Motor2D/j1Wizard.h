@@ -51,8 +51,9 @@ private:
 	Animation forward;
 
 	int move;
-
-	bool patrol;
+	int  i = 0, j = 0;
+	bool patrolr=false;
+	bool patroll=false;
 	bool playedWizarDeathFx = false;
 	
 	wizard_state state;
