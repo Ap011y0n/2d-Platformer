@@ -16,13 +16,13 @@
 	<particles />
 	<entity>
 		<Entity type="wizard">
-			<position pos_x="4840" pos_y="416" />
+			<position pos_x="4864" pos_y="416" />
 		</Entity>
 		<Entity type="slime">
 			<position pos_x="610" pos_y="722" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="2561" pos_y="417" />
+			<position pos_x="2585" pos_y="417" />
 		</Entity>
 		<Entity type="slime">
 			<position pos_x="3616" pos_y="800" />
@@ -37,7 +37,7 @@
 			<position pos_x="3904" pos_y="1504" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="3222" pos_y="452" />
+			<position pos_x="3222" pos_y="458" />
 		</Entity>
 	</entity>
 	<pathfinding />
