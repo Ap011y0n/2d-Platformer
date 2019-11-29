@@ -55,6 +55,7 @@ public:
 	int winFx;
 	int deathFx;
 	int arrowFx;
+	int bowFx;
 	int swordFx;
 	int checkpointFx;
 	int wizarDeathFx;

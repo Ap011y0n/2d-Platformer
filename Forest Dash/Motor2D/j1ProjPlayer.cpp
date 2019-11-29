@@ -206,6 +206,11 @@ bool j1ProjPlayer::Movement(float dt)
 void j1ProjPlayer::setAnimation()
 {
 	current_animation = &anim;
+
+	//Play arrow FX
+	if (!playedArrowFx)
+		App->audio->PlayFx(App->audio->arrowFx);
+	playedArrowFx = true;
 	
 }
 

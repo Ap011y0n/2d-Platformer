@@ -24,8 +24,8 @@
  <tileset firstgid="2603" name="map_changer" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="levelchange.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="2604" name="Crossed" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="Crossed.png" width="32" height="32"/>
+ <tileset firstgid="2604" name="Enemies" tilewidth="32" tileheight="32" tilecount="2" columns="2">
+  <image source="Enemies.png" width="64" height="32"/>
  </tileset>
  <layer name="Mountains" width="200" height="75">
   <properties>
@@ -99281,7 +99281,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1376"/>
+   <tile gid="1464"/>
    <tile gid="1422"/>
    <tile gid="1466"/>
    <tile gid="1427"/>
@@ -99481,7 +99481,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1420"/>
+   <tile gid="1508"/>
    <tile gid="1422"/>
    <tile gid="1422"/>
    <tile gid="1471"/>
@@ -99681,7 +99681,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1464"/>
+   <tile gid="1508"/>
    <tile gid="1465"/>
    <tile gid="1466"/>
    <tile gid="1465"/>
@@ -99881,7 +99881,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1376"/>
+   <tile gid="1420"/>
    <tile gid="1422"/>
    <tile gid="1422"/>
    <tile gid="1421"/>
@@ -100081,7 +100081,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1376"/>
+   <tile gid="1464"/>
    <tile gid="1422"/>
    <tile gid="1466"/>
    <tile gid="1427"/>
@@ -100281,7 +100281,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1420"/>
+   <tile gid="1508"/>
    <tile gid="1422"/>
    <tile gid="1422"/>
    <tile gid="1471"/>
@@ -100481,7 +100481,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1464"/>
+   <tile gid="1420"/>
    <tile gid="1465"/>
    <tile gid="1466"/>
    <tile gid="1465"/>
@@ -100681,7 +100681,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1508"/>
+   <tile gid="1464"/>
    <tile gid="1422"/>
    <tile gid="1422"/>
    <tile gid="1421"/>
@@ -100881,7 +100881,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1376"/>
+   <tile gid="1508"/>
    <tile gid="1422"/>
    <tile gid="1466"/>
    <tile gid="1427"/>
@@ -101681,7 +101681,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1376"/>
+   <tile gid="1420"/>
    <tile gid="1422"/>
    <tile gid="1466"/>
    <tile gid="1427"/>
@@ -101881,7 +101881,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1420"/>
+   <tile gid="1464"/>
    <tile gid="1422"/>
    <tile gid="1422"/>
    <tile gid="1471"/>
@@ -102081,7 +102081,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1464"/>
+   <tile gid="1508"/>
    <tile gid="1465"/>
    <tile gid="1466"/>
    <tile gid="1465"/>
@@ -102281,7 +102281,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1376"/>
+   <tile gid="1420"/>
    <tile gid="1422"/>
    <tile gid="1422"/>
    <tile gid="1421"/>
@@ -102481,7 +102481,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1376"/>
+   <tile gid="1464"/>
    <tile gid="1422"/>
    <tile gid="1466"/>
    <tile gid="1427"/>
@@ -102681,7 +102681,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1420"/>
+   <tile gid="1508"/>
    <tile gid="1422"/>
    <tile gid="1422"/>
    <tile gid="1471"/>
@@ -102881,7 +102881,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1464"/>
+   <tile gid="1552"/>
    <tile gid="1465"/>
    <tile gid="1466"/>
    <tile gid="1465"/>
@@ -103081,7 +103081,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1508"/>
+   <tile gid="1552"/>
    <tile gid="1422"/>
    <tile gid="1422"/>
    <tile gid="1421"/>
@@ -150117,7 +150117,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Crossable" width="200" height="75">
+ <layer name="Enemies" width="200" height="75">
   <properties>
    <property name="Navigation" type="int" value="4"/>
    <property name="Nodraw" type="int" value="1"/>
@@ -154739,7 +154739,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="2604"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>

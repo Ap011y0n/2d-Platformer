@@ -453,7 +453,7 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 		playedSwordFx = false;
 
 		//Reset collider
@@ -478,7 +478,7 @@ void j1Player::StateMachine(float dt)
 		//Reset FX
 		playedJumpFx = false;
 		playeDeadFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 		playedSwordFx = false;
 
 		//Reset collider
@@ -502,7 +502,7 @@ void j1Player::StateMachine(float dt)
 		//Reset FX
 		playedJumpFx = false;
 		playeDeadFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 		playedSwordFx = false;
 
 		//Reset collider
@@ -520,7 +520,7 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 		playedSwordFx = false;
 
 		//Reset collider
@@ -539,7 +539,7 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 		playedSwordFx = false;
 
 		//Reset collider
@@ -555,7 +555,7 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 		playedSwordFx = false;
 
 		//Reset collider
@@ -576,7 +576,7 @@ void j1Player::StateMachine(float dt)
 		//Reset FX
 		playeDeadFx = false;
 		playeDashFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 		playedSwordFx = false;
 
 		//Reset collider
@@ -592,7 +592,7 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 		playedSwordFx = false;
 
 		//Reset collider
@@ -614,7 +614,7 @@ void j1Player::StateMachine(float dt)
 		//Reset FX
 		playedJumpFx = false;
 		playeDashFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 		playedSwordFx = false;
 
 		//Reset collider
@@ -639,9 +639,9 @@ void j1Player::StateMachine(float dt)
 		current_animation = &aiming;
 		
 		//Play arrow FX
-		if (!playedArrowFx)
-			App->audio->PlayFx(App->audio->arrowFx);
-		playedArrowFx = true;
+		if (!playedBowFx)
+			App->audio->PlayFx(App->audio->bowFx);
+		playedBowFx = true;
 
 		//Reset FX
 		playedJumpFx = false;
@@ -665,6 +665,7 @@ void j1Player::StateMachine(float dt)
 			{
 				colliderAttack = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
 				collider = false;
+
 			}
 		}
 
@@ -677,7 +678,7 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
-		playedArrowFx = false;
+		playedBowFx = false;
 
 		if (attackTimerEnd.Read() > 600) { state = IDLE; 
 		colliderAttack->to_delete = true;

@@ -35,7 +35,7 @@ public:
 private:
 	bool Movement(float dt);
 	void setAnimation();
-
+	bool playedArrowFx = false;
 
 	
 

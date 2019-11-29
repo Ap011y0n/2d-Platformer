@@ -64,6 +64,7 @@ bool j1Audio::Awake(pugi::xml_node & config)
 	winFx = LoadFx("audio/fx/win.wav");
 	deathFx = LoadFx("audio/fx/death.wav");
 	arrowFx = LoadFx("audio/fx/arrow.wav");
+	bowFx = LoadFx("audio/fx/bow.wav");
 	swordFx = LoadFx("audio/fx/sword.wav");
 	checkpointFx = LoadFx("audio/fx/checkpoint.wav");
 	wizarDeathFx = LoadFx("audio/fx/wizard_death.wav");
