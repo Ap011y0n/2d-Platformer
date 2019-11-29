@@ -201,20 +201,15 @@ bool j1Slime::Pathfinding(float dt) {
 	{
 		if (state != SLIME_DEATH)
 		{
-			if (path->At(1)->x < origin.x && !App->pathfinding->IsWalkable(leftCell) ) {
+			if (path->At(1)->x < origin.x && !App->pathfinding->IsWalkable(DownCell) ) {
 				position.x -= 2 * DT_CONVERTER * dt;
 				flip = SDL_FLIP_HORIZONTAL;
-			}
-			if (path->At(1)->x == origin.x && App->pathfinding->IsWalkable(DownCell))
-			{
-				position.y += 2 * DT_CONVERTER * dt * GRAVITY;
 			}
 			if (path->At(1)->x > origin.x && !App->pathfinding->IsWalkable(rightCell)) {
 				position.x += 2 * DT_CONVERTER * dt;
 				flip = SDL_FLIP_NONE;
 			}
-
-			if (path->At(1)->y > origin.y && !App->pathfinding->IsWalkable(DownCell)) {
+			if (path->At(1)->y > origin.y && !dApp->pathfinding->IsWalkable(DownCell)) {
 				position.y += 2 * DT_CONVERTER * dt * GRAVITY;
 			}
 		}

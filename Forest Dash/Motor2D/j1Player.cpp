@@ -889,17 +889,17 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	}
 	if (c1 == EntityCollider && c2->type == COLLIDER_WIZARD) {
 		BarWidth -= 20;
-		position.y -= 30;
+		/*position.y -= 30;*/
 		DeathTimer = SDL_GetTicks();
 
-		if (position.x <= c2->rect.x)
-		{
-			position.x -= 30;
-		}
-		else
-		{
-			position.x += 30;
-		}
+		//if (position.x <= c2->rect.x)
+		//{
+		//	position.x -= 30;
+		//}
+		//else
+		//{
+		//	position.x += 30;
+		//}
 
 
 	}
