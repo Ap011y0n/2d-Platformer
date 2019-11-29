@@ -16,20 +16,21 @@
 	<particles />
 	<entity>
 		<Entity type="wizard">
-			<position pos_x="820" pos_y="580" />
+			<position pos_x="640" pos_y="416" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="860" pos_y="731" />
+			<position pos_x="928" pos_y="480" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="773" pos_y="719" />
+			<position pos_x="672" pos_y="544" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="813" pos_y="736" />
+			<position pos_x="672" pos_y="736" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="3242" pos_y="459" />
+			<position pos_x="100" pos_y="717" />
 		</Entity>
 	</entity>
 	<pathfinding />
+	<Fade />
 </game_state>

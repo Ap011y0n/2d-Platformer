@@ -63,6 +63,7 @@ bool j1Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+	
 	return true;
 }
 
@@ -75,8 +76,7 @@ bool j1Render::PreUpdate(float dt)
 
 bool j1Render::Update(float dt)
 {
-	if (fade)
-		FadeToBlack();
+	
 
 	if (shaking)
 		UpdateCameraShake();
@@ -307,16 +307,7 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 
 	return ret;
 }
-void j1Render::FadeToBlack() {
-	SDL_Rect screen;
-	screen.x = -1*camera.x;
-	screen.y = -1*camera.y;
-	screen.w = App->win->width * App->win->GetScale();
-	screen.h = App->win->height * App->win->GetScale();
-	
-	DrawQuad(screen, 0, 0, 0);
 
-}
 
 void j1Render::StartCameraShake(int duration, float magnitude)
 {

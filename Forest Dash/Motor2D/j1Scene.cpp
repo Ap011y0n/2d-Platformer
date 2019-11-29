@@ -116,7 +116,7 @@ bool j1Scene::Update(float dt)
 		App->audio->musicvolume(0.05, 0);
 		App->audio->fxvolume(0.05, 0);
 	}
-	App->render->fade = false;
+	
 	Debug();
 	App->map->Draw();
 
@@ -286,7 +286,6 @@ void j1Scene::Debug() {
 	// Load last save
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
-		App->render->fade = true; 
 		App->LoadGame();
 	}
 

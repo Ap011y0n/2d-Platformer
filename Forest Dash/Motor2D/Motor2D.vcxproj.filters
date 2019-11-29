@@ -63,6 +63,9 @@
     <ClCompile Include="j1ProjPlayer.cpp">
       <Filter>Modules\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="j1FadeToBlack.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h" />
@@ -147,6 +150,9 @@
     </ClInclude>
     <ClInclude Include="j1ProjPlayer.h">
       <Filter>Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1FadeToBlack.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

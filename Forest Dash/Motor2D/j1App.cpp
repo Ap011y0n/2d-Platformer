@@ -17,6 +17,7 @@
 #include "j1EntityManager.h"
 #include "j1Entity.h"
 #include "j1Pathfinding.h"
+#include "j1FadeToBlack.h"
 
 
 // Constructor
@@ -38,6 +39,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	particles = new j1Particles();
 	EntityManager = new j1EntityManager();
 	pathfinding = new j1PathFinding();
+	fade = new j1FadeToBlack();
 
 	
 
@@ -55,6 +57,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(particles);
 	AddModule(EntityManager);
 	AddModule(pathfinding);
+	AddModule(fade);
 	// render last to swap buffer
 
 
@@ -353,7 +356,9 @@ void j1App::LoadGame()
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
-	want_to_load = true;
+	App->fade->FadeToBlack();
+	
+
 }
 
 // ---------------------------------------

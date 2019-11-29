@@ -5,6 +5,7 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
+
 enum RENDER_PIVOT
 {
 	TOP_RIGHT,
@@ -47,7 +48,7 @@ public:
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
-	void FadeToBlack();
+	
 	void StartCameraShake(int duration, float magnitude);
 	void UpdateCameraShake();
 
@@ -62,9 +63,10 @@ public:
 	SDL_Rect		camera;
 	SDL_Rect		viewport;
 	SDL_Color		background;
-	bool fade = false;
-private:
 
+	
+	
+private:
 	bool shaking = false;
 	int shake_duration = 0.0f;
 	int shake_timer = 0.0f;

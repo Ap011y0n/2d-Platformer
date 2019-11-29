@@ -20,6 +20,7 @@ class j1Particles;
 class j1EntityManager;
 class j1Entity;
 class j1PathFinding;
+class j1FadeToBlack;
 
 class j1App
 {
@@ -94,12 +95,14 @@ public:
 	j1Particles*		particles;
 	j1EntityManager*	EntityManager;
 	j1PathFinding*		pathfinding;
+	j1FadeToBlack*		fade;
 	uint32				framerate = 0u;
 	pugi::xml_document	config_file;
 
 	p2SString vsync;
 	p2SString framecap;
 	bool cap = false;
+	bool				want_to_load;
 
 private:
 
@@ -112,7 +115,6 @@ private:
 	p2SString			organization;
 
 	mutable bool		want_to_save;
-	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
 
