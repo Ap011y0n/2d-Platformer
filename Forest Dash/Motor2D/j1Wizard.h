@@ -17,7 +17,8 @@ enum wizard_state
 {
 	WD_IDLE = 0,
 	WD_DEATH,
-	WD_FORWARD
+	WD_FORWARD,
+	WD_PATHFINDING
 };
 
 

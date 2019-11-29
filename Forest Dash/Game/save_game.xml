@@ -16,19 +16,46 @@
 	<particles />
 	<entity>
 		<Entity type="wizard">
+			<position pos_x="2016" pos_y="224" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="1536" pos_y="288" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="2368" pos_y="288" />
+		</Entity>
+		<Entity type="wizard">
 			<position pos_x="640" pos_y="416" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="928" pos_y="480" />
+			<position pos_x="704" pos_y="544" />
+		</Entity>
+		<Entity type="wizard">
+			<position pos_x="2080" pos_y="608" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="672" pos_y="544" />
+			<position pos_x="4768" pos_y="608" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="672" pos_y="736" />
+			<position pos_x="4960" pos_y="672" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="3616" pos_y="768" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="3264" pos_y="960" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="4160" pos_y="1088" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="3296" pos_y="1280" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="4032" pos_y="1408" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="100" pos_y="717" />
+			<position pos_x="100" pos_y="714" />
 		</Entity>
 	</entity>
 	<pathfinding />
