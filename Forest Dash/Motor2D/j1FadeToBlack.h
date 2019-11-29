@@ -21,6 +21,9 @@ public:
 	~j1FadeToBlack();
 	bool CleanUp();
 	void FadeToBlack();
+private:
+	int alpha;
+	float deltatime;
 public: 
 	bool fade;
 	j1Timer fadetimer;

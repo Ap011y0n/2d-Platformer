@@ -134,8 +134,7 @@ bool j1Scene::Update(float dt)
 	iPoint p = App->render->ScreenToWorld(x, y);
 	
 
-	App->render->Blit(debug_tex, p.x, p.y);
-	App->render->Blit(debug_tex, p.x, p.y);
+	App->render->Blit(debug_tex, p.x-15, p.y-15);
 
 	//App->win->SetTitle(title.GetString());
 	current_animation = &flag;

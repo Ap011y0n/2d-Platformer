@@ -208,13 +208,13 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 		if (position.x <= c2->rect.x)
 		{
 			position.x -= 50;
-			//position.y -= 30;
+			position.y -= 30;
 			
 		}
 		else
 		{
 			position.x += 50;
-		//	position.y -= 30;
+			position.y -= 30;
 		
 		}
 
