@@ -108,6 +108,7 @@ bool j1Player::Start()
 	to_delete = false;
 	BarWidth = 50;
 	state = IDLE;
+	is_death = false;
 	Godmode = false;
 	colliderAttack = nullptr;
 	/*
@@ -182,7 +183,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(App->EntityManager->playerTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	/*MoveCondition(dt);*/
+	MoveCondition(dt);
 
 	current_animation_bow = &bow;
 	SDL_Rect* rec = &current_animation_bow->GetCurrentFrame(dt);
@@ -435,7 +436,7 @@ void j1Player::Movement(float dt) {
 void j1Player::StateMachine(float dt)
 {
 	if (state == IDLE) {
-		
+		is_death = false;
 		aimbarw = 0;
 		animationStart = 0;
 		//Reset Animations
@@ -669,7 +670,7 @@ void j1Player::CheckCollision(float dt) {
 	adjust = true;
 	CandashL = true;
 	CandashR = true;
-	is_death = false;
+	
 
 
 	bool ret = true;
@@ -741,9 +742,9 @@ void j1Player::CheckCollision(float dt) {
 					coord = App->map->WorldToMap(position.x + playerCentre, position.y + playerHeight);
 					if (layer->Get(coord.x, coord.y) != 0) {
 						
-						death = true;
+						is_death = true;
 					}
-					if (death == true){
+					if (is_death == true){
 						
 					state = DEATH;
 					jumpSpeed = -speedY*0.5 *(DT_CONVERTER * dt);

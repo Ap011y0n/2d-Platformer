@@ -99,10 +99,10 @@ bool j1Slime::Update(float dt)
 	setAnimation();
 	DrawHitbox();
 	flip = SDL_FLIP_HORIZONTAL;
-	if (!App->EntityManager->GetPlayer()->is_death) {
+	
 		if (App->EntityManager->GetPlayer()->position.x > position.x - 200 && App->EntityManager->GetPlayer()->position.x < position.x + 200 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
-			if (pathFinding)Pathfinding(dt);
-	}
+			if (pathFinding && !App->EntityManager->GetPlayer()->is_death)Pathfinding(dt);
+	
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(App->EntityManager->slimeTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	
@@ -209,10 +209,11 @@ bool j1Slime::Pathfinding(float dt) {
 				position.x += 2 * DT_CONVERTER * dt;
 				flip = SDL_FLIP_NONE;
 			}
-			if (path->At(1)->y > origin.y && !dApp->pathfinding->IsWalkable(DownCell)) {
+			if (path->At(1)->y > origin.y && !App->pathfinding->IsWalkable(DownCell)) {
 				position.y += 2 * DT_CONVERTER * dt * GRAVITY;
 			}
 		}
+	
 
 	}
 	for (uint i = 0; i < path->Count(); ++i)

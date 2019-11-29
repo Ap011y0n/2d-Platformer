@@ -121,7 +121,7 @@ public:
 	
 	Collider* colliderAttack;
 
-	bool death = false;
+	
 	iPoint initialPosition;
 	
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

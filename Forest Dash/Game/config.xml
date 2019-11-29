@@ -51,7 +51,7 @@
    <speedBar value="0.1"/>
    <maxBarWidth value="40"/>
    <playerHeight value="50"/>
-   <playerWidth value="20"/>
+   <playerWidth value="25"/>
    <playerCentre value="10"/>
   </entity>
 
