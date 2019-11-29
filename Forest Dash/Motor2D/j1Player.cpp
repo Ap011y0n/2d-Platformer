@@ -182,7 +182,7 @@ bool j1Player::Update(float dt)
 	App->render->Blit(App->EntityManager->playerTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	MoveCondition(dt);
+	/*MoveCondition(dt);*/
 
 	current_animation_bow = &bow;
 	SDL_Rect* rec = &current_animation_bow->GetCurrentFrame(dt);
@@ -872,10 +872,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == EntityCollider && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
 		BarWidth -= 15;
-		position.y -= 30;
+		/*position.y -= 30;*/
 		DeathTimer = SDL_GetTicks();
 
-		if (position.x <= c2->rect.x)
+		/*if (position.x <= c2->rect.x)
 		{
 			position.x -= 30;
 
@@ -883,7 +883,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		else
 		{
 			position.x += 30;
-		}
+		}*/
 		
 		
 	}

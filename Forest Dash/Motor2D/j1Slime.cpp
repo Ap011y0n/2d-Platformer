@@ -185,31 +185,40 @@ bool j1Slime::Pathfinding(float dt) {
 	static iPoint origin;
 	static bool origin_selected = false;
 	int x, y;
+	iPoint rightCell(position.x - 1, position.y);
+	iPoint leftCell(position.x + 1, position.y);
+	iPoint upCell(position.x , position.y-1);
+	iPoint DownCell(position.x, position.y+1);
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->EntityManager->GetPlayer()->position;
 	p = App->map->WorldToMap(p.x + 30, p.y + 30);
 
-	origin = App->map->WorldToMap(position.x + 30, position.y + 30);
+	origin = App->map->WorldToMap(position.x, position.y);
 	App->pathfinding->CreatePath(origin, p);
 
-	state = SLIME_FORWARD;
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 	if (path->At(1) != NULL)
 	{
+		if (state != SLIME_DEATH)
+		{
+			if (path->At(1)->x < origin.x && !App->pathfinding->IsWalkable(leftCell) ) {
+				position.x -= 2 * DT_CONVERTER * dt;
+				flip = SDL_FLIP_HORIZONTAL;
+			}
+			if (path->At(1)->x == origin.x && App->pathfinding->IsWalkable(DownCell))
+			{
+				position.y += 2 * DT_CONVERTER * dt * GRAVITY;
+			}
+			if (path->At(1)->x > origin.x && !App->pathfinding->IsWalkable(rightCell)) {
+				position.x += 2 * DT_CONVERTER * dt;
+				flip = SDL_FLIP_NONE;
+			}
 
-		if (path->At(1)->x < origin.x) {
-			position.x -= 2 * DT_CONVERTER * dt;
-			flip = SDL_FLIP_NONE;
+			if (path->At(1)->y > origin.y && !App->pathfinding->IsWalkable(DownCell)) {
+				position.y += 2 * DT_CONVERTER * dt * GRAVITY;
+			}
 		}
 
-		if (path->At(1)->x > origin.x) {
-			position.x += 2 * DT_CONVERTER * dt;
-			flip = SDL_FLIP_HORIZONTAL;
-		}
-
-		if (path->At(1)->y > origin.y) {
-			position.y += 2 * DT_CONVERTER * dt*9.81;
-		}
 	}
 	for (uint i = 0; i < path->Count(); ++i)
 	{
