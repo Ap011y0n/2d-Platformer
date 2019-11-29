@@ -54,11 +54,11 @@
   </tile>
   <tile id="5">
    <animation>
-    <frame tileid="106" duration="600" pivotx="-30" pivoty="-5"/>
-    <frame tileid="107" duration="600" pivotx="-30" pivoty="-5"/>
-    <frame tileid="108" duration="600" pivotx="-30" pivoty="-5"/>
-    <frame tileid="109" duration="600" pivotx="-30" pivoty="-5"/>
-    <frame tileid="110" duration="600" pivotx="-30" pivoty="-5"/>
+    <frame tileid="106" duration="600" pivotx="-30" pivoty="20"/>
+    <frame tileid="107" duration="600" pivotx="-30" pivoty="20"/>
+    <frame tileid="108" duration="600" pivotx="-30" pivoty="20"/>
+    <frame tileid="109" duration="600" pivotx="-30" pivoty="20"/>
+    <frame tileid="110" duration="600" pivotx="-30" pivoty="20"/>
    </animation>
   </tile>
   <tile id="6">
