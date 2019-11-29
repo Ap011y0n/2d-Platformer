@@ -95,7 +95,8 @@ bool j1Slime::Start()
 bool j1Slime::Update(float dt)
 {	
 	BROFILER_CATEGORY("Update_Slime", Profiler::Color::Green);
-	Movement();
+	CheckCollision(dt);
+	Movement(dt);
 	setAnimation();
 	DrawHitbox();
 	flip = SDL_FLIP_HORIZONTAL;
@@ -132,9 +133,15 @@ bool j1Slime::PostUpdate(float dt)
 //}
 
 
-void j1Slime::Movement()
+void j1Slime::Movement(float dt)
 {
 	if (slimeDead) state = SLIME_DEATH;
+
+	if (candown && dt < 0.05)
+	{
+		position.y += 2 * DT_CONVERTER * dt * GRAVITY;
+
+	}
 
 }
 
@@ -165,6 +172,7 @@ void j1Slime::setAnimation()
 		current_animation = &forward;
 	}
 
+
 }
 
 
@@ -187,8 +195,8 @@ bool j1Slime::Pathfinding(float dt) {
 	int x, y;
 	iPoint rightCell(position.x - 1, position.y);
 	iPoint leftCell(position.x + 1, position.y);
-	iPoint upCell(position.x , position.y-1);
-	iPoint DownCell(position.x, position.y+1);
+	iPoint upCell(position.x , position.y+1);
+	iPoint DownCell(position.x, position.y-1);
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->EntityManager->GetPlayer()->position;
 	p = App->map->WorldToMap(p.x + 30, p.y + 30);
@@ -201,17 +209,19 @@ bool j1Slime::Pathfinding(float dt) {
 	{
 		if (state != SLIME_DEATH)
 		{
-			if (path->At(1)->x < origin.x && !App->pathfinding->IsWalkable(DownCell) ) {
-				position.x -= 2 * DT_CONVERTER * dt;
-				flip = SDL_FLIP_HORIZONTAL;
+			
+			if (candown == false)
+			{
+				if (path->At(1)->x < origin.x && !App->pathfinding->IsWalkable(DownCell)) {
+					position.x -= 2 * DT_CONVERTER * dt;
+					flip = SDL_FLIP_HORIZONTAL;
+				}
+				if (path->At(1)->x > origin.x && !App->pathfinding->IsWalkable(rightCell)) {
+					position.x += 2 * DT_CONVERTER * dt;
+					flip = SDL_FLIP_NONE;
+				}
 			}
-			if (path->At(1)->x > origin.x && !App->pathfinding->IsWalkable(rightCell)) {
-				position.x += 2 * DT_CONVERTER * dt;
-				flip = SDL_FLIP_NONE;
-			}
-			if (path->At(1)->y > origin.y && !dApp->pathfinding->IsWalkable(DownCell)) {
-				position.y += 2 * DT_CONVERTER * dt * GRAVITY;
-			}
+
 		}
 
 	}
@@ -225,4 +235,29 @@ bool j1Slime::Pathfinding(float dt) {
 	}
 
 	return true;
+}
+
+void j1Slime::CheckCollision(float dt) {
+
+
+	candown = true;
+	is_death = false;
+
+
+	bool ret = true;
+	iPoint coord;
+	p2List_item<MapLayer*>* layer_iterator = App->map->data.layers.start;
+	MapLayer* layer = App->map->data.layers.start->data;
+
+	while (ret == true && layer_iterator != NULL) {
+		layer = layer_iterator->data;
+		// Map colliders, limit movement
+		if (layer->returnPropValue("Navigation") == 1) {
+			coord = App->map->WorldToMap(position.x, position.y+40 + (int)(GRAVITY * DT_CONVERTER * dt));
+			if (layer->Get(coord.x, coord.y) != 0) 
+				candown = false;
+		}
+		layer_iterator = layer_iterator->next;
+	}
+
 }

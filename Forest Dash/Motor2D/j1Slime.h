@@ -17,7 +17,8 @@ enum slime_state
 {
 	SLIME_IDLE = 0,
 	SLIME_DEATH,
-	SLIME_FORWARD
+	SLIME_FORWARD,
+	SLIME_FALLING
 };
 
 
@@ -37,9 +38,10 @@ public:
 //	void LoadAnimations(const char* path);
 	void OnCollision(Collider* c1, Collider* c2);
 	bool Pathfinding(float dt);
+	void CheckCollision(float dt);
 
 private:
-	void Movement();
+	void Movement(float dt);
 	void setAnimation();
 	
 
@@ -48,14 +50,13 @@ private:
 	Animation death;
 	Animation forward;
 	bool pathFinding = false;
-
 	bool playedSlimeDeathFx = false;
 
 	
 	slime_state state;
 
 public:
-
+	bool candown = false;
 	bool slimeDead = false;
 	int deathTimerSlime = 0;
 	int startMoving = 0;
