@@ -38,7 +38,7 @@ j1Wizard::j1Wizard(int posx, int posy) : j1Entity(Types::wizard)
 
 	position.x = posx;
 	position.y = posy;
-
+	initialPosition.x = posx;
 	r.w = 40;
 	r.h = 70;
 	r.x = position.x;
@@ -130,7 +130,17 @@ bool j1Wizard::PostUpdate(float dt)
 void j1Wizard::Movement()
 {
 	if (wizarDead) state = WD_DEATH;
-
+	if (state != WD_PATHFINDING && state != WD_DEATH)
+	{
+		/*if (position.x < initialPosition.x-20)
+		{
+			position.x -= 2;
+		}
+		if(position.x < initialPosition.x - 21)
+		{
+			position.x += 2;
+		}*/
+	}
 }
 
 void j1Wizard::setAnimation(float dt)
@@ -167,6 +177,12 @@ void j1Wizard::setAnimation(float dt)
 
 		//Reset Fx
 		playedWizarDeathFx = false;
+	}
+	if (state == WD_PATHFINDING)
+	{
+		current_animation = &forward;
+		state = WD_IDLE;
+
 	}
 }
 
@@ -217,10 +233,11 @@ bool j1Wizard::Pathfinding(float dt) {
 	origin = App->map->WorldToMap(position.x+30, position.y+30);
 	App->pathfinding->CreatePath(origin, p);
 
-	state = WD_FORWARD;
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+
 	if (path->At(1) != NULL)
 	{
+		state = WD_PATHFINDING;
 
 		if (path->At(1)->x < origin.x) {
 			position.x -= 1.5 * DT_CONVERTER * dt;
@@ -249,67 +266,6 @@ bool j1Wizard::Pathfinding(float dt) {
 		}
 	}
 	
-		/*
-			const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint nextPoint = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		if (App->collision->debug)
-		{
-			App->render->Blit(App->scene->debug_tex, nextPoint.x, nextPoint.y);
-		}
-
-		if (App->pathfinding->CreatePath(App->map->WorldToMap(position.x +10, position.y + 10), App->map->WorldToMap(App->EntityManager->GetPlayer()->position.x, App->EntityManager->GetPlayer()->position.y)) > -1)
-		{
-			state = WD_FORWARD;
-			if (nextPoint.x < position.x)
-			{
-				flip = SDL_RendererFlip::SDL_FLIP_NONE;
-				speedX = -40 * dt;
-			}
-			else if (nextPoint.x > position.x)
-			{
-				flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
-				speedX = 40 * dt;
-			}
-
-			if (nextPoint.y < position.y)
-			{
-				speedY = -40 * dt;
-			}
-			else if (nextPoint.y > position.y)
-			{
-				speedY = 40 * dt;
-			}
-		}
-		else
-		{
-
-			if (SDL_GetTicks() > (collided + 500) && App->EntityManager->GetPlayer()->position.x < position.x)
-			{
-				position.x -= 20;
-			}
-			if (SDL_GetTicks() > (collided + 500) && App->EntityManager->GetPlayer()->position.x < position.x)
-			{
-				position.x += 20;
-			}
-			if (SDL_GetTicks() > (collided + 500) && App->EntityManager->GetPlayer()->position.y < position.y)
-			{
-				position.y -= 20;
-			}
-			if (SDL_GetTicks() > (collided + 500) && App->EntityManager->GetPlayer()->position.y < position.y)
-			{
-				position.y += 20;
-			}
-			
-			speedX = 0;
-			speedY = 0;
-		}
-
-		position.x += speedX;
-		position.y += speedY;
-	}
-	*/
 	return true;
 }
 
