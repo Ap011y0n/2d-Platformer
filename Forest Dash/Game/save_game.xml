@@ -40,7 +40,7 @@
 			<position pos_x="4032" pos_y="1408" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="3239" pos_y="456" />
+		<position pos_x="100" pos_y="715" />
 		</Entity>
 	</entity>
 	<pathfinding />

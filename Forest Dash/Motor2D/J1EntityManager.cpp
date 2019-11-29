@@ -57,14 +57,16 @@ bool j1EntityManager::PreUpdate(float dt) {
 bool j1EntityManager::Update(float dt) 
 {
 	BROFILER_CATEGORY("Update_EntityManager", Profiler::Color::Yellow);
+	if(dt < 0.05) {
 
-	p2List_item<j1Entity*>* entities_list = entities.start;
-	while (entities_list) {
-		entities_list->data->Update(dt);
-		entities_list = entities_list->next;
+		p2List_item<j1Entity*>* entities_list = entities.start;
+		while (entities_list) {
+			entities_list->data->Update(dt);
+			entities_list = entities_list->next;
+		}
 	}
-	DeleteEntity();
-
+		DeleteEntity();
+	
 	return true;
 }
 

@@ -184,6 +184,21 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 		slimeDead = true;
 		EntityCollider->to_delete = true;
 		deathTimerSlime = SDL_GetTicks();
+
+	}
+	if (c2->type == COLLIDER_PLAYER) {
+
+		if (position.x <= c2->rect.x)
+		{
+			position.x -= 50;
+			
+		}
+		else
+		{
+			position.x += 50;
+
+		}
+
 	}
 
 }

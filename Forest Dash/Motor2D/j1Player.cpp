@@ -174,7 +174,7 @@ bool j1Player::Update(float dt)
 	charging = false;
 
 	BROFILER_CATEGORY("Update_Player", Profiler::Color::SaddleBrown);
-
+	
 	current_animation = &idle;
 	CheckCollision(dt);
 	Movement(dt);
@@ -242,7 +242,7 @@ void j1Player::Movement(float dt) {
 		}
 
 		//Particles
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && state != DEATH && state != JUMP && state != FALLING)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT && state != DEATH && state != JUMP && state != FALLING && state != ATTACK)
 		{
 			charging = true;
 			state = AIMING;
@@ -282,7 +282,7 @@ void j1Player::Movement(float dt) {
 			//	LOG("Depurated %d, %d", (int)xvec, (int)yvec);
 
 		}
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && state != DEATH)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP && state != DEATH)
 		{
 			LOG("Open fire");
 			if (aimbar.w >= 50)
@@ -292,7 +292,7 @@ void j1Player::Movement(float dt) {
 				//Blit arrow
 				if (flip == SDL_FLIP_NONE) {
 					//App->particles->AddParticle(App->particles->arrow, position.x + 25, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
-					App->EntityManager->CreateEntity(j1Entity::Types::projectile_player, position.x + 25, position.y + 25, (int)xvec, (int)yvec, angle);
+					App->EntityManager->CreateEntity(j1Entity::Types::projectile_player, position.x, position.y + 25, (int)xvec, (int)yvec, angle);
 				}
 				else if (flip == SDL_FLIP_HORIZONTAL)
 					//App->particles->AddParticle(App->particles->arrow, position.x-10, position.y + 25, COLLIDER_PLAYER_SHOT, 0.5, (int)xvec, (int)yvec, angle);
@@ -303,14 +303,14 @@ void j1Player::Movement(float dt) {
 		}
 
 		//Sword Attack
-		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && state != DEATH && state != JUMP && state != FALLING && state != ATTACK)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN && state != DEATH && state != JUMP && state != FALLING && state != ATTACK)
 		{
 			attacktimer.Start();
 			state = ATTACK;
 		}
 
 		//Jump code
-		if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) && state != DEATH) {
+		if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || state == JUMP) && state != DEATH && state != ATTACK) {
 			// Check if can move down
 			if ((!Candown) && state == JUMP) {
 				state = IDLE;
@@ -337,7 +337,7 @@ void j1Player::Movement(float dt) {
 
 		}
 		//Crouch wen in floor
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R) {
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R && state != ATTACK) {
 			if (state != JUMP && state != DEATH)state = CROUCH;
 		}
 
@@ -362,7 +362,7 @@ void j1Player::Movement(float dt) {
 		}
 
 		// Move to left direction if won't collide with anything or if it's not moving to right
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R && state != AIMING) {
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != DEATH && state != DASH_L && state != DASH_R && state != AIMING && state != ATTACK) {
 			if (state == FORWARD) {
 				state = IDLE;
 				position.x -= (int)(speedX * DT_CONVERTER * dt);
@@ -382,7 +382,7 @@ void j1Player::Movement(float dt) {
 		// Dash: add acceleration when presing left or rigth arrows
 		if ((App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || state == DASH_L) && dashspeed >= 0 && state != DEATH && state != AIMING) {
 			state = DASH_L;
-
+			if (colliderAttack)colliderAttack->to_delete = true;
 			if (dashspeed > 0) { dashspeed -= (DT_CONVERTER * dt); }
 			else { state = IDLE; }
 			if (Canleft && CandashL)position.x -= (int)(dashspeed * DT_CONVERTER * dt);
@@ -390,7 +390,7 @@ void j1Player::Movement(float dt) {
 		}
 		if ((App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || state == DASH_R) && dashspeed >= 0 && state != DEATH && state != AIMING) {
 			state = DASH_R;
-
+			if (colliderAttack)colliderAttack->to_delete = true;
 			if (dashspeed > 0) { dashspeed -=  DT_CONVERTER * dt; }
 			else { state = IDLE; }
 			if (Canright && CandashR)position.x += (int)(dashspeed* DT_CONVERTER * dt);
@@ -602,7 +602,7 @@ void j1Player::StateMachine(float dt)
 		collider = true;
 		
 
-		if (SDL_GetTicks() > (DeathTimer + 1500)) {
+		if (SDL_GetTicks() > (DeathTimer + 2000)) {
 			/*state = IDLE;
 			BarWidth = maxBarWidth;
 			position.x = initialPosition.x;
@@ -643,7 +643,9 @@ void j1Player::StateMachine(float dt)
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
-		if (attacktimer.Read() > 1000)state = IDLE;
+		if (attacktimer.Read() > 700) { state = IDLE; 
+		colliderAttack->to_delete = true;
+		}
 		
 	}
 
@@ -653,7 +655,7 @@ void j1Player::StateMachine(float dt)
 		{
 			if (flip == SDL_FLIP_NONE)	colliderAttack->SetPos(position.x + 30, position.y+15);
 			if (flip == SDL_FLIP_HORIZONTAL) colliderAttack->SetPos(position.x - 10, position.y+15);
-			if (current_animation->AnimationEnd() == true && animationStart == 0) colliderAttack->to_delete = true;
+		//	if (current_animation->AnimationEnd() == true && animationStart == 0) colliderAttack->to_delete = true;
 		}
 	}
 	
@@ -873,10 +875,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == EntityCollider && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
 		BarWidth -= 15;
-		/*position.y -= 30;*/
+		position.y -= 30;
 		DeathTimer = SDL_GetTicks();
 
-		/*if (position.x <= c2->rect.x)
+		if (position.x <= c2->rect.x)
 		{
 			position.x -= 30;
 
@@ -884,23 +886,23 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		else
 		{
 			position.x += 30;
-		}*/
+		}
 		
 		
 	}
 	if (c1 == EntityCollider && c2->type == COLLIDER_WIZARD) {
-		BarWidth -= 20;
-		/*position.y -= 30;*/
+		BarWidth -= 15;
+		position.y -= 30;
 		DeathTimer = SDL_GetTicks();
 
-		//if (position.x <= c2->rect.x)
-		//{
-		//	position.x -= 30;
-		//}
-		//else
-		//{
-		//	position.x += 30;
-		//}
+		if (position.x <= c2->rect.x)
+		{
+			position.x -= 30;
+		}
+		else
+		{
+			position.x += 30;
+		}
 
 
 	}
