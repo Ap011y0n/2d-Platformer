@@ -305,7 +305,8 @@ void j1Player::Movement(float dt) {
 		//Sword Attack
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN && state != DEATH && state != JUMP && state != FALLING && state != ATTACK)
 		{
-			attacktimer.Start();
+			attackTimerStart.Start();
+			attackTimerEnd.Start();
 			state = ATTACK;
 		}
 
@@ -632,18 +633,21 @@ void j1Player::StateMachine(float dt)
 	{
 		
 		current_animation = &swordAttack;
-		SDL_Rect r = {position.x, position.y, 20, 40 };
+		SDL_Rect r = {position.x, position.y, 30, 40 };
 		
 		if (collider == true)
 		{
-			colliderAttack = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
-			collider = false;
+			if(attackTimerStart.Read() > 400)
+			{
+				colliderAttack = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
+				collider = false;
+			}
 		}
 		//Reset FX
 		playedJumpFx = false;
 		playeDeadFx = false;
 		playeDashFx = false;
-		if (attacktimer.Read() > 700) { state = IDLE; 
+		if (attackTimerEnd.Read() > 600) { state = IDLE; 
 		colliderAttack->to_delete = true;
 		}
 		
@@ -653,8 +657,8 @@ void j1Player::StateMachine(float dt)
 	{
 		if (colliderAttack != nullptr)
 		{
-			if (flip == SDL_FLIP_NONE)	colliderAttack->SetPos(position.x + 30, position.y+15);
-			if (flip == SDL_FLIP_HORIZONTAL) colliderAttack->SetPos(position.x - 10, position.y+15);
+			if (flip == SDL_FLIP_NONE)	colliderAttack->SetPos(position.x + 35, position.y+10);
+			if (flip == SDL_FLIP_HORIZONTAL) colliderAttack->SetPos(position.x - 20, position.y+10);
 		//	if (current_animation->AnimationEnd() == true && animationStart == 0) colliderAttack->to_delete = true;
 		}
 	}

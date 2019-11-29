@@ -101,7 +101,8 @@ private:
 	float acceleration;
 	float speedBar;
 	float angle;
-	j1Timer attacktimer;
+	j1Timer attackTimerEnd;
+	j1Timer attackTimerStart;
 	Animation* current_animation_bow = nullptr;
 	bool Canright = true;
 	bool Canleft = true;
