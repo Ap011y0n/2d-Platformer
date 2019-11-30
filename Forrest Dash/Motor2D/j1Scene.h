@@ -46,8 +46,8 @@ private:
 public:
 	p2SString current_level;
 	p2List<p2SString> levels;
-	SDL_Texture* debug_tex;
-	SDL_Texture* flag_tex;
+	SDL_Texture* debug_tex = nullptr;
+	SDL_Texture* flag_tex = nullptr;
 	Animation* current_animation;
 	Animation flag;
 	bool checkpoint = false;
