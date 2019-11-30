@@ -34,11 +34,11 @@ public:
 	bool PostUpdate(float dt);
 	void OnCollision(Collider* c1, Collider* c2);
 	bool Pathfinding(float dt);
+	void setAnimation(float);
+	void Movement();
 
 private:
 
-	void setAnimation(float);
-	void Movement();
 
 	Animation idle;
 	Animation death;

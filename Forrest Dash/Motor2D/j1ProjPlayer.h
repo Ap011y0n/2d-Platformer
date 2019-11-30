@@ -29,18 +29,14 @@ public:
 	bool PostUpdate(float dt);
 	void OnCollision(Collider* c1, Collider* c2);
 	void CheckCollision(float dt);
-
-
-
-private:
 	bool Movement(float dt);
 	void setAnimation();
-	bool playedArrowFx = false;
+
 
 	
 
 public:
-
+	bool playedArrowFx = false;
 	Animation anim;
 	uint fx = 0;
 	iPoint speed;
