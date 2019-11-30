@@ -35,6 +35,7 @@ bool j1FadeToBlack::Start()
 bool j1FadeToBlack::Update(float dt)
 {
 	deltatime = dt;
+	//if fade is active, then call fadetoblack function
 	if (fade) {
 		FadeToBlack();
 	}
@@ -46,6 +47,9 @@ bool j1FadeToBlack::PostUpdate(float dt)
 	return true;
 }
 
+//Basically, when this function is called the first time, we set a timer
+//Alpha value of the black rectangle is gradually increased, then the rect is blited. After a certain time has passed, 
+//Reset alpha, fade bool and prepare application to load
 void j1FadeToBlack::FadeToBlack() {
 	if(!fade)fadetimer.Start();
 	fade = true;

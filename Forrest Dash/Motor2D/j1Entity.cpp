@@ -2,7 +2,6 @@
 #include "p2Defs.h"
 #include "j1App.h"
 #include "j1Textures.h"
-#include "j1Input.h"
 #include "j1Render.h"
 #include "p2Log.h"
 #include "j1Window.h"
@@ -10,7 +9,6 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
-#include "math.h"
 #include "j1ModuleCollision.h"
 #include "j1Slime.h"
 #include "j1Wizard.h"
@@ -27,7 +25,7 @@ j1Entity::~j1Entity() {
 
 }
 
-
+//Delete this entity collider on cleanup
 bool j1Entity::CleanUp() {
 
 	if(EntityCollider!= false)
@@ -51,6 +49,7 @@ bool j1Entity::Save(pugi::xml_node& data) const {
 	data.child("position").append_attribute("pos_y") = position.y;
 	return true;
 }
+//gets an specific rect dimentions, depending on the tileset
 SDL_Rect TileSetEntity::GetAnimRect(int id) const
 {
 	int relative_id = id;
@@ -61,6 +60,8 @@ SDL_Rect TileSetEntity::GetAnimRect(int id) const
 	rect.y = ((rect.h) * (relative_id / num_tiles_width));
 	return rect;
 }
+
+//Automatically load and store animations from tiled
 void j1Entity::LoadAnimations(const char* path) {
 	pugi::xml_document	entity_file;
 	pugi::xml_parse_result result = entity_file.load_file(path);
@@ -100,6 +101,6 @@ void j1Entity::DrawHitbox() {
 	}
 }
 
-void j1Entity::playfx(const int id, const int rep) {
+/*void j1Entity::playfx(const int id, const int rep) {
 
-}
+}*/

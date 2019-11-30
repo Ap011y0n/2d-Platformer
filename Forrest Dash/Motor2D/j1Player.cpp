@@ -70,33 +70,27 @@ j1Player::~j1Player()
 bool j1Player::Awake(pugi::xml_node& config)
 
 {
-
-	LOG("Awake :)");
-
 	bool ret = true;
 
-	gravity = config.child("gravity").attribute("value").as_int();
-	speedX = config.child("speedX").attribute("value").as_int();
-	speedY = config.child("speedY").attribute("value").as_int();
-	acceleration = config.child("acceleration").attribute("value").as_int();
-	maxBarWidth = config.child("maxBarWidth").attribute("value").as_int();
-	speedBar = config.child("speedBar").attribute("value").as_float();
-	playerHeight = config.child("playerHeight").attribute("value").as_int();
-	playerWidth = config.child("playerWidth").attribute("value").as_int();
-	playerCentre = config.child("playerCentre").attribute("value").as_int();
+	gravity = config.child("player").child("gravity").attribute("value").as_int();
+	speedX = config.child("player").child("speedX").attribute("value").as_float();
+	speedY = config.child("player").child("speedY").attribute("value").as_float();
+	acceleration = config.child("player").child("acceleration").attribute("value").as_int();
+	maxBarWidth = config.child("player").child("maxBarWidth").attribute("value").as_int();
+	speedBar = config.child("player").child("speedBar").attribute("value").as_float();
+	playerHeight = config.child("player").child("playerHeight").attribute("value").as_int();
+	playerWidth = config.child("player").child("playerWidth").attribute("value").as_int();
+	playerCentre = config.child("player").child("playerCentre").attribute("value").as_int();
 	
+	LOG("%d", gravity);
 
-	dashspeed = acceleration;
-
-	jumpSpeed = -1 * speedY;
-	BarWidth = 50;
 	
 
 	return ret;
 
 }
 
-// Load assets ----------------------------------------------
+// Load assets and declare variables value----------------------------------------------
 bool j1Player::Start()
 {
 	LOG("Awake :)");
@@ -108,6 +102,22 @@ bool j1Player::Start()
 	Godmode = false;
 	colliderAttack = nullptr;
 	
+	charging = false;
+	playedJumpFx = false;
+	playeDeadFx = false;
+	playeDashFx = false;
+	playedWinFx = false;
+	playedBowFx = false;
+	playedSwordFx = false;
+	playedCheckpointFx = false;
+	collider = true;
+	flip = SDL_FLIP_NONE;
+	flip_bow = SDL_FLIP_NONE;
+
+	dashspeed = acceleration;
+	jumpSpeed = -1 * speedY;
+	BarWidth = 50;
+
 	LOG("Loading player");
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;

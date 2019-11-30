@@ -67,6 +67,4 @@ inline const char* const PATH(const char* folder, const char* file)
 
 //dt multiplier
 #define DT_CONVERTER 60
-// GRAVITY
-#define GRAVITY 4.91
 #endif

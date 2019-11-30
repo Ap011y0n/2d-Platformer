@@ -43,24 +43,17 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);
-//	bool CleanUp();
-//	bool Load(pugi::xml_node&);
-//	bool Save(pugi::xml_node&) const;
 	void Movement(float dt);
 	void CheckCollision(float dt);
 	void StateMachine(float dt);
-//	void DrawHitbox();
 	void Camera();
 	void MoveCondition(float dt);
-//	void LoadAnimations(const char* path);
 	void OnCollision(Collider* c1, Collider* c2);
-	
-
 
 private:
 
 	player_state state;
-	player_state prev_state = IDLE;
+	//player_state prev_state = IDLE;
 
 	bool charging = false;
 	bool playedJumpFx = false;
@@ -72,7 +65,6 @@ private:
 	bool playedCheckpointFx = false;
 	bool collider = true;
 	
-
 	Animation idle;
 	Animation forward;
 	Animation backward;
@@ -94,12 +86,6 @@ private:
 	int animationStart = 0;
 	int numCollider = 0;
 
-	p2SString		moveFx;
-	p2SString		deathFx;
-	p2SString		jumpFx;
-	p2SString		winFx;
-	p2SString		dashFx;
-
 	float dashspeed;
 	float acceleration;
 	float speedBar;
@@ -117,8 +103,6 @@ private:
 	bool adjust = false;
 	float jumpSpeed;
 
-	int speedX;
-	int speedY;
 
 public:	
 

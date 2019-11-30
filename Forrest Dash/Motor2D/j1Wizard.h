@@ -51,7 +51,9 @@ private:
 	bool patrolr=false;
 	bool patroll=false;
 	bool playedWizarDeathFx = false;
-	
+	int rangeX;
+	int rangeY;
+
 	wizard_state state;
 	
 	const p2DynArray<iPoint>* path;

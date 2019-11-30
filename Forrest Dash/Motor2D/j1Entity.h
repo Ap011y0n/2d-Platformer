@@ -54,7 +54,7 @@ public:
 
 	void LoadAnimations(const char* path);
 	virtual void DrawHitbox();
-	void playfx(const int id, const int rep);
+	//void playfx(const int id, const int rep);
 	
 
 protected:
@@ -62,7 +62,8 @@ protected:
 	int gravity;
 	Animation* current_animation = nullptr;
 	p2List<Animation> animations;
-
+	float speedX;
+	float speedY;
 
 public:
 	iPoint position;
@@ -71,7 +72,6 @@ public:
 	bool to_delete = false;
 	bool is_death;
 	iPoint initialPosition;
-
 	
 };
 

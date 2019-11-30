@@ -58,10 +58,14 @@ j1Slime::~j1Slime()
 
 
 bool j1Slime::Awake(pugi::xml_node& config)
-
 {
-
 	bool ret = true;
+
+	gravity = config.child("slime").child("gravity").attribute("value").as_float();
+	speedX = config.child("slime").child("speed").attribute("x").as_float();
+	speedY = config.child("slime").child("speed").attribute("y").as_float();
+	rangeX = config.child("slime").child("range").attribute("x").as_int();
+	rangeY = config.child("slime").child("range").attribute("x").as_int();
 
 
 
@@ -87,10 +91,8 @@ bool j1Slime::Start()
 	return true;
 }
 
-// Unload assets ----------------------------------------------
 
-
-// Update: draw background ----------------------------------------------
+// Update: call all slime functions in order ----------------------------------------------
 bool j1Slime::Update(float dt)
 {	
 	BROFILER_CATEGORY("Update_Slime", Profiler::Color::Green);
@@ -103,7 +105,7 @@ bool j1Slime::Update(float dt)
 
 	flip = SDL_FLIP_HORIZONTAL;
 	
-		if (App->EntityManager->GetPlayer()->position.x > position.x - 300 && App->EntityManager->GetPlayer()->position.x < position.x + 300 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
+		if (App->EntityManager->GetPlayer()->position.x > position.x - rangeX && App->EntityManager->GetPlayer()->position.x < position.x + rangeX && App->EntityManager->GetPlayer()->position.y + rangeY && App->EntityManager->GetPlayer()->position.y - rangeY)
 			if (pathFinding && !App->EntityManager->GetPlayer()->is_death)Pathfinding(dt);
 	
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
@@ -126,7 +128,7 @@ void j1Slime::Movement(float dt)
 
 	if (candown && dt < 0.05)
 	{
-		position.y += 2 * DT_CONVERTER * dt * GRAVITY;
+		position.y += speedY * DT_CONVERTER * dt * gravity;
 
 	}
 
@@ -220,11 +222,11 @@ bool j1Slime::Pathfinding(float dt) {
 			if (candown == false)
 			{
 				if (path->At(1)->x < origin.x && !App->pathfinding->IsWalkable(DownCell)) {
-					position.x -= 1.5 * DT_CONVERTER * dt;
+					position.x -= speedX * DT_CONVERTER * dt;
 					flip = SDL_FLIP_HORIZONTAL;
 				}
 				if (path->At(1)->x > origin.x && !App->pathfinding->IsWalkable(rightCell)) {
-					position.x += 1.5 * DT_CONVERTER * dt;
+					position.x += speedX * DT_CONVERTER * dt;
 					flip = SDL_FLIP_NONE;
 				}
 			}
@@ -261,7 +263,7 @@ void j1Slime::CheckCollision(float dt) {
 		layer = layer_iterator->data;
 		// Map colliders, limit movement
 		if (layer->returnPropValue("Navigation") == 1) {
-			coord = App->map->WorldToMap(position.x, position.y+40 + (int)(GRAVITY * DT_CONVERTER * dt));
+			coord = App->map->WorldToMap(position.x, position.y+40 + (int)(gravity * DT_CONVERTER * dt));
 			if (layer->Get(coord.x, coord.y) != 0) 
 				candown = false;
 		}

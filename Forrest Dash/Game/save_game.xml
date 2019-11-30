@@ -21,16 +21,16 @@
 			<position pos_x="2496" pos_y="288" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="640" pos_y="416" />
+			<position pos_x="706" pos_y="416" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="4864" pos_y="416" />
+			<position pos_x="4930" pos_y="416" />
 		</Entity>
 		<Entity type="slime">
 			<position pos_x="704" pos_y="544" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="2080" pos_y="608" />
+			<position pos_x="2146" pos_y="608" />
 		</Entity>
 		<Entity type="slime">
 			<position pos_x="3616" pos_y="800" />
@@ -45,7 +45,7 @@
 			<position pos_x="3904" pos_y="1504" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="100" pos_y="500" />
+			<position pos_x="100" pos_y="714" />
 		</Entity>
 	</entity>
 	<pathfinding />

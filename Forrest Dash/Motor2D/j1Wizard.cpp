@@ -52,14 +52,15 @@ j1Wizard::~j1Wizard()
 
 
 
-// Read player variables from config.xml ----------------------------------------------
+// Read variables from config.xml ----------------------------------------------
 bool j1Wizard::Awake(pugi::xml_node& config)
-
 {
-
 	bool ret = true;
 
-
+	speedX = config.child("wizard").child("speed").attribute("x").as_float();
+	speedY = config.child("wizard").child("speed").attribute("y").as_float();
+	rangeX = config.child("wizard").child("range").attribute("x").as_int();
+	rangeY = config.child("wizard").child("range").attribute("x").as_int();
 
 	return ret;
 
@@ -85,8 +86,6 @@ bool j1Wizard::Start()
 	return true;
 }
 
-// Unload assets ----------------------------------------------
-
 
 // Update: draw background ----------------------------------------------
 bool j1Wizard::Update(float dt)
@@ -95,7 +94,7 @@ bool j1Wizard::Update(float dt)
 	Movement();
 	setAnimation(dt);
 	if (!App->EntityManager->GetPlayer()->is_death) {
-	if (App->EntityManager->GetPlayer()->position.x > position.x - 400 && App->EntityManager->GetPlayer()->position.x < position.x + 400 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
+	if (App->EntityManager->GetPlayer()->position.x > position.x - rangeX && App->EntityManager->GetPlayer()->position.x < position.x + rangeX && App->EntityManager->GetPlayer()->position.y + rangeY && App->EntityManager->GetPlayer()->position.y - rangeY)
 			if (pathFinding)Pathfinding(dt);
 	}
 	if(EntityCollider != NULL)
@@ -238,21 +237,21 @@ bool j1Wizard::Pathfinding(float dt) {
 		state = WD_PATHFINDING;
 
 		if (path->At(1)->x < origin.x) {
-			position.x -= 1.5 * DT_CONVERTER * dt;
+			position.x -= speedX * DT_CONVERTER * dt;
 			flip = SDL_FLIP_NONE;
 		}
 
 		if (path->At(1)->x > origin.x) {
-			position.x += 1.5* DT_CONVERTER * dt;
+			position.x += speedX * DT_CONVERTER * dt;
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 
 		if (path->At(1)->y < origin.y) {
-			position.y -= 2 * DT_CONVERTER * dt;
+			position.y -= speedY * DT_CONVERTER * dt;
 		}
 
 		if (path->At(1)->y > origin.y) {
-			position.y += 2 * DT_CONVERTER * dt;
+			position.y += speedY * DT_CONVERTER * dt;
 		}
 	}
 	for (uint i = 0; i < path->Count(); ++i)

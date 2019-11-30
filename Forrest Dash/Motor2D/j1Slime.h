@@ -48,7 +48,8 @@ private:
 	Animation forward;
 	bool pathFinding = false;
 	bool playedSlimeDeathFx = false;
-	
+	int rangeX;
+	int rangeY;
 	
 	slime_state state;
 
