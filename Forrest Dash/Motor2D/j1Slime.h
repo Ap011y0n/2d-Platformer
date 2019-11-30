@@ -36,13 +36,11 @@ public:
 	bool Pathfinding(float dt);
 	void CheckCollision(float dt);
 	void DrawHitbox();
-
-private:
 	void Movement(float dt);
 	void setAnimation();
-	
 
-	Animation* current_animation = nullptr;
+private:
+	
 	Animation idle;
 	Animation death;
 	Animation forward;

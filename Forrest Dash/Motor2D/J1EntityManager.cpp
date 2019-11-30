@@ -114,7 +114,6 @@ bool j1EntityManager::EntityCleanUp() {
 	}
 	entities.clear();
 	return true;
-
 }
 
 //Called when we want to create an entity, we should only receive a type and position for common entities, but projectiles also receive a speed and angle

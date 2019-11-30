@@ -40,8 +40,6 @@ private:
 	void setAnimation(float);
 	void Movement();
 
-	Animation* current_animation = nullptr;
-
 	Animation idle;
 	Animation death;
 	Animation forward;
