@@ -140,8 +140,9 @@ bool j1Scene::Update(float dt)
 	current_animation = &flag;
 	SDL_Rect r = current_animation->GetCurrentFrame(dt);
 	
-	App->render->Blit(flag_tex, 3240 + current_animation->pivotx[current_animation->returnCurrentFrame()], 520 - r.h + current_animation->pivoty[current_animation->returnCurrentFrame()], &r);
-
+	if(current_level == "maplevel1.tmx")App->render->Blit(flag_tex, 3240 + current_animation->pivotx[current_animation->returnCurrentFrame()], 520 - r.h + current_animation->pivoty[current_animation->returnCurrentFrame()], &r);
+	if (current_level == "maplevel2.tmx")App->render->Blit(flag_tex, 3142 + current_animation->pivotx[current_animation->returnCurrentFrame()], 1767 - r.h + current_animation->pivoty[current_animation->returnCurrentFrame()], &r);
+	
 	return true;
 }
 
