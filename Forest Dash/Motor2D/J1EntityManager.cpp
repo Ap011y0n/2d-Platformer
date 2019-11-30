@@ -11,7 +11,6 @@
 #include "j1Audio.h"
 #include "Animation.h"
 #include "j1ModuleCollision.h"
-#include "j1Particles.h"
 #include "j1Entity.h"
 #include "j1Player.h"
 #include "j1Wizard.h"

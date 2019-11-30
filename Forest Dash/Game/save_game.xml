@@ -13,16 +13,9 @@
 		<scenename name="maplevel1.tmx" />
 	</scene>
 	<collision />
-	<particles />
 	<entity>
 		<Entity type="wizard">
-			<position pos_x="4868" pos_y="416" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="610" pos_y="722" />
-		</Entity>
-		<Entity type="wizard">
-			<position pos_x="2589" pos_y="417" />
+			<position pos_x="4826" pos_y="416" />
 		</Entity>
 		<Entity type="slime">
 			<position pos_x="3616" pos_y="800" />
@@ -37,7 +30,7 @@
 			<position pos_x="3904" pos_y="1504" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="3222" pos_y="458" />
+			<position pos_x="3249" pos_y="461" />
 		</Entity>
 	</entity>
 	<pathfinding />

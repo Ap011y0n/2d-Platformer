@@ -12,7 +12,6 @@
 #include "Animation.h"
 #include "math.h"
 #include "j1ModuleCollision.h"
-#include "j1Particles.h"
 #include "j1Slime.h"
 #include "j1entityManager.h"
 #include "j1Wizard.h"
@@ -906,13 +905,11 @@ void j1Player::MoveCondition(float dt) {
 	
 }
 
-// Load animations from tiled  ----------------------------------------------
-
-
-//Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
-
+// Calls when receiving a collision with an entity  ----------------------------------------------
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	
+	//if godmode isn't activated, player receives a little knockback and the timebar reduces a bit
+	if (Godmode == false) 
+	{
 	if (c1 == EntityCollider && c2->type == COLLIDER_ENEMY) {
 		LOG("Damage");
 		BarWidth -= 15;
@@ -947,7 +944,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 
 	}
-
+	}
 }
 
 

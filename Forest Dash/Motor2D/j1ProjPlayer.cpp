@@ -11,7 +11,6 @@
 #include "j1Audio.h"
 #include "Animation.h"
 #include "j1ModuleCollision.h"
-//#include "j1Particles.h"
 #include "J1EntityManager.h"
 #include "Brofiler/Brofiler.h"
 
@@ -30,32 +29,6 @@ j1ProjPlayer::j1ProjPlayer(int posx, int posy, int speedx, int speedy, float ang
 	speed.y = speedy;
 	angle = anglepar;
 
-	/*LoadAnimations("textures/slime_animations.tmx");
-	state = SLIME_IDLE;
-
-	// Load animations from an animations list ----------------------------------------------
-	p2List_item<Animation>* animation_iterator = animations.start;
-
-	idle = animation_iterator->data;
-	animation_iterator = animation_iterator->next;
-
-	death = animation_iterator->data;
-	animation_iterator = animation_iterator->next;
-	death.loop = false;
-
-	forward = animation_iterator->data;
-	animation_iterator = animation_iterator->next;
-
-	initialPosition.x = posx;
-	position.x = posx;
-	position.y = posy;
-
-	r.w = 40;
-	r.h = 50;
-	r.x = position.x;
-	r.y = position.y;
-	*/
-
 }
 
 j1ProjPlayer::~j1ProjPlayer()
@@ -67,19 +40,14 @@ j1ProjPlayer::~j1ProjPlayer()
 bool j1ProjPlayer::Awake(pugi::xml_node& config)
 
 {
-
 	bool ret = true;
-
-	
-
-
 	return ret;
 
 }
 
 
 
-// Load assets ----------------------------------------------
+// Prepare animations ----------------------------------------------
 bool j1ProjPlayer::Start()
 {
 	LOG("Start Projectile");
@@ -130,27 +98,17 @@ bool j1ProjPlayer::Start()
 	return true;
 }
 
-// Unload assets ----------------------------------------------
 
 
-// Update: draw background ----------------------------------------------
+// Update:----------------------------------------------
 bool j1ProjPlayer::Update(float dt)
 {
-	
 	BROFILER_CATEGORY("Update_Projectile", Profiler::Color::CornflowerBlue);
 	Movement(dt);
 	setAnimation();
-
+	CheckCollision(dt);
 	DrawHitbox();
-	//flip = SDL_FLIP_HORIZONTAL;
-
-
-	
-
-
-	//App->render->Blit(App->EntityManager->icespiketex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f /*flip*/);
 	App->render->Blit(App->EntityManager->icespiketex, position.x, position.y, &(anim.GetCurrentFrame(dt)), 1, 1, SDL_FLIP_NONE, angle);
-	
 
 	return true;
 }
@@ -158,26 +116,10 @@ bool j1ProjPlayer::Update(float dt)
 
 bool j1ProjPlayer::PostUpdate(float dt)
 {
-	CheckCollision(dt);
 	return true;
-
 }
 
-// Load Game State ----------------------------------------------
-//bool j1Slime::Load(pugi::xml_node& data)
-//{
-//	
-//	return true;
-//}
-//
-//// Save Game State ----------------------------------------------
-//bool j1Slime::Save(pugi::xml_node& data) const
-//{
-//	
-//	return true;
-//}
-
-
+//Calculates arrow movement
 bool j1ProjPlayer::Movement(float dt)
 {
 	bool ret = false;
@@ -185,7 +127,6 @@ bool j1ProjPlayer::Movement(float dt)
 	if (life > 0)
 	{
 		if ((SDL_GetTicks() - born) > life) {
-		//	EntityCollider->to_delete = true;
 			to_delete = true;
 
 			return ret;
@@ -197,12 +138,12 @@ bool j1ProjPlayer::Movement(float dt)
 
 	position.x += speed.x * DT_CONVERTER* dt;
 	position.y += speed.y * DT_CONVERTER* dt;
-//	EntityCollider->SetPos(position.x, position.y);
 	ret = true;
 	return ret;
 
 }
 
+//Sets an animation and plays some audio efects
 void j1ProjPlayer::setAnimation()
 {
 	current_animation = &anim;
@@ -214,50 +155,10 @@ void j1ProjPlayer::setAnimation()
 	
 }
 
-// Load animations from tiled  ----------------------------------------------
-//void j1Slime::LoadAnimations(const char* path)
-//{
-//	pugi::xml_parse_result result = slime_file.load_file(path);
-//	if (result == NULL)
-//	{
-//		LOG("Could not load map xml file %s. pugi error: %s", path, result.description());
-//
-//	}
-//
-//	TileSetData.firstgid = slime_file.child("map").child("tileset").attribute("firstgid").as_int();
-//	TileSetData.tile_width = slime_file.child("map").child("tileset").attribute("tilewidth").as_int();
-//	TileSetData.tile_height = slime_file.child("map").child("tileset").attribute("tileheight").as_int();
-//	TileSetData.tex_width = slime_file.child("map").child("tileset").child("image").attribute("width").as_int();
-//	TileSetData.Texname.create(slime_file.child("map").child("tileset").child("image").attribute("source").as_string());
-//	TileSetData.num_tiles_width = TileSetData.tex_width / TileSetData.tile_width;
-//	LOG("Tileset: %s", TileSetData.Texname.GetString());
-//	LOG("firstgid %d", TileSetData.firstgid);
-//	LOG("tile_width %d", TileSetData.tile_width);
-//	LOG("tile_height %d", TileSetData.tile_height);
-//	LOG("tex_width %d", TileSetData.tex_width);
-//	LOG("num_tiles_width %d", TileSetData.num_tiles_width);
-//	
-//	int i = 0;
-//	pugi::xml_node tile;
-//	pugi::xml_node frame;
-//
-//	for (tile = slime_file.child("map").child("tileset").child("tile"); tile; tile = tile.next_sibling("tile")) 
-//	{
-//		Animation* set = new Animation();
-//		for (frame = tile.child("animation").child("frame"); frame; frame = frame.next_sibling("frame"))
-//		{
-//			set->PushBack(TileSetData.GetAnimRect(frame.attribute("tileid").as_int()), (frame.attribute("duration").as_float()) / 2000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int(), 0, 0);
-//			LOG("Animation %d, %d, %d, %d", frame.attribute("tileid").as_int(), (frame.attribute("duration").as_float()) / 1000, frame.attribute("pivotx").as_int(), frame.attribute("pivoty").as_int());
-//		}
-//		animations.add(*set);
-//
-//	}
-//
-//}
 
-//Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
+ 
 
-
+//Destroy the particle when colliding with an enemy
 void j1ProjPlayer::OnCollision(Collider* c1, Collider* c2) {
 
 	
@@ -268,6 +169,7 @@ void j1ProjPlayer::OnCollision(Collider* c1, Collider* c2) {
 	
 }
 
+//Checks if we collided with a map collider, if so, destroy the particle ----------------------------------------------
 void j1ProjPlayer::CheckCollision(float dt) {
 	p2List_item<MapLayer*>* layer_iterator = App->map->data.layers.start;
 	MapLayer* layer = App->map->data.layers.start->data;

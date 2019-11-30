@@ -11,7 +11,6 @@
 #include "j1Audio.h"
 #include "Animation.h"
 #include "j1ModuleCollision.h"
-#include "j1Particles.h"
 #include "J1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "Brofiler/Brofiler.h"
@@ -98,7 +97,10 @@ bool j1Slime::Update(float dt)
 	CheckCollision(dt);
 	Movement(dt);
 	setAnimation();
-	DrawHitbox();
+	
+	if(EntityCollider!= NULL)
+		DrawHitbox();
+
 	flip = SDL_FLIP_HORIZONTAL;
 	
 		if (App->EntityManager->GetPlayer()->position.x > position.x - 200 && App->EntityManager->GetPlayer()->position.x < position.x + 200 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
@@ -117,21 +119,6 @@ bool j1Slime::PostUpdate(float dt)
 	return true;
 
 }
-
-// Load Game State ----------------------------------------------
-//bool j1Slime::Load(pugi::xml_node& data)
-//{
-//	
-//	return true;
-//}
-//
-//// Save Game State ----------------------------------------------
-//bool j1Slime::Save(pugi::xml_node& data) const
-//{
-//	
-//	return true;
-//}
-
 
 void j1Slime::Movement(float dt)
 {
@@ -185,7 +172,7 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 
 
 	if (c2->type == COLLIDER_PLAYER_SHOT) {
-		
+		App->render->StartCameraShake(500, 3);
 		slimeDead = true;
 		EntityCollider->to_delete = true;
 		deathTimerSlime = SDL_GetTicks();
@@ -220,7 +207,7 @@ bool j1Slime::Pathfinding(float dt) {
 	iPoint DownCell(position.x, position.y-1);
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->EntityManager->GetPlayer()->position;
-	p = App->map->WorldToMap(p.x + 30, p.y + 30);
+	p = App->map->WorldToMap(p.x, p.y + 30);
 
 	origin = App->map->WorldToMap(position.x, position.y);
 	App->pathfinding->CreatePath(origin, p);
@@ -298,4 +285,11 @@ void j1Slime::CheckCollision(float dt) {
 		layer_iterator = layer_iterator->next;
 	}
 
+}
+
+void j1Slime::DrawHitbox() {
+	if (flip == SDL_FLIP_NONE)
+	EntityCollider->SetPos(position.x-5, position.y);
+	if (flip == SDL_FLIP_HORIZONTAL)
+		EntityCollider->SetPos(position.x, position.y);
 }

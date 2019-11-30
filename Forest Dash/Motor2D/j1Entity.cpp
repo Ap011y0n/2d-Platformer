@@ -12,7 +12,6 @@
 #include "Animation.h"
 #include "math.h"
 #include "j1ModuleCollision.h"
-#include "j1Particles.h"
 #include "j1Slime.h"
 #include "j1Wizard.h"
 #include "j1Player.h"
@@ -31,16 +30,6 @@ j1Entity::~j1Entity() {
 
 bool j1Entity::CleanUp() {
 
-
-	/*p2List_item<Animation>* item;
-	item = animations.start;
-	while (item != NULL)
-	{
-		RELEASE(item);
-		item = item->next;
-	}
-	animations.clear();*/
-
 	if(EntityCollider!= false)
 	EntityCollider->to_delete = true;
 	return true;
@@ -48,10 +37,8 @@ bool j1Entity::CleanUp() {
 
 bool j1Entity::Load(pugi::xml_node& data) {
 	LOG("Loading %s state",name.GetString());
-/*
-	position.x = data.child("position").attribute("pos_x").as_int();
-	position.y = data.child("position").attribute("pos_y").as_int();
-	*/return true;
+
+	return true;
 }
 
 bool j1Entity::Save(pugi::xml_node& data) const {
@@ -106,6 +93,7 @@ void j1Entity::LoadAnimations(const char* path) {
 	}
 }
 
+//Sets collider position depending of entity's position
 void j1Entity::DrawHitbox() {
 
 	EntityCollider->SetPos(position.x + 10, position.y);
@@ -114,8 +102,3 @@ void j1Entity::DrawHitbox() {
 void j1Entity::playfx(const int id, const int rep) {
 
 }
-
-/*
-void j1Entity::OnCollision(Collider* c1, Collider* c2) {
-
-}*/

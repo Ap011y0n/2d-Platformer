@@ -53,9 +53,9 @@ public:
 	bool Save(pugi::xml_node& data) const;
 
 	void LoadAnimations(const char* path);
-	void DrawHitbox();
+	virtual void DrawHitbox();
 	void playfx(const int id, const int rep);
-	//void OnCollision(Collider* c1, Collider* c2);
+	
 
 protected:
 

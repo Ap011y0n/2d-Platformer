@@ -45,9 +45,6 @@
     <ClCompile Include="j1Window.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Particles.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Render.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -113,9 +110,6 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Window.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Particles.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Render.h">

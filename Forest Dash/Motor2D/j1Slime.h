@@ -39,6 +39,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 	bool Pathfinding(float dt);
 	void CheckCollision(float dt);
+	void DrawHitbox();
 
 private:
 	void Movement(float dt);
@@ -51,7 +52,7 @@ private:
 	Animation forward;
 	bool pathFinding = false;
 	bool playedSlimeDeathFx = false;
-
+	
 	
 	slime_state state;
 

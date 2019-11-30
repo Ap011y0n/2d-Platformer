@@ -98,9 +98,9 @@ bool j1Wizard::Update(float dt)
 	if (App->EntityManager->GetPlayer()->position.x > position.x - 400 && App->EntityManager->GetPlayer()->position.x < position.x + 400 && App->EntityManager->GetPlayer()->position.y + 100 && App->EntityManager->GetPlayer()->position.y - 100)
 			if (pathFinding)Pathfinding(dt);
 	}
-
-	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
+	if(EntityCollider != NULL)
 	DrawHitbox();
+	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(App->EntityManager->wizardTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	return true;
 }
@@ -112,19 +112,6 @@ bool j1Wizard::PostUpdate(float dt)
 
 }
 
-//// Load Game State ----------------------------------------------
-//bool j1Wizard::Load(pugi::xml_node& data)
-//{
-//
-//	return true;
-//}
-//
-//// Save Game State ----------------------------------------------
-//bool j1Wizard::Save(pugi::xml_node& data) const
-//{
-//
-//	return true;
-//}
 
 void j1Wizard::Movement()
 {
@@ -200,16 +187,12 @@ void j1Wizard::setAnimation(float dt)
 	}
 }
 
-// Load animations from tiled  ----------------------------------------------
-
-
-//Get an sdl rect depending on the frame id we are receiving ----------------------------------------------
-
-
+//Detects if the enemy collided against another entity
 void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 
+	//If it's a player attack, the entity will die
 	if (c2->type == COLLIDER_PLAYER_SHOT) {
-		
+		App->render->StartCameraShake(500, 3);
 		pathFinding = false;
 		EntityCollider->to_delete = true;
 		wizarDead = true;
@@ -217,6 +200,7 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 		
 	}
 
+	//if it's the player, the entity will receive a little knocback
 	if (c2->type == COLLIDER_PLAYER) {
 
 		if (position.x <= c2->rect.x)
