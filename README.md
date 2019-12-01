@@ -1,6 +1,6 @@
 # Forrest Dash
 
-## First assigment for our videogames development subject.
+## Asigment for our videogames development subject.
 
 ## Repository
 ### https://github.com/Ap011y0n/2d-Platformer
