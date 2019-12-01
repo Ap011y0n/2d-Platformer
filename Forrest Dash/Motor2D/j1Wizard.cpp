@@ -217,25 +217,24 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 
 	}
 }
-
+//Called if the player is close enough
 bool j1Wizard::Pathfinding(float dt) {
 
 	static iPoint origin;
 	static bool origin_selected = false;
-	int x, y;
-	App->input->GetMousePosition(x, y);
+	//the destiny is the player position
 	iPoint p = App->EntityManager->GetPlayer()->position;
 	p = App->map->WorldToMap(p.x+30, p.y+30);
-
+	//The origin is the current position of the Wizard
 	origin = App->map->WorldToMap(position.x+30, position.y+30);
 	App->pathfinding->CreatePath(origin, p);
-
+	//Path created with both inputs
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
 	if (path->At(1) != NULL)
 	{
 		state = WD_PATHFINDING;
-
+		//This makes a comparison with the players position to make the correct move
 		if (path->At(1)->x < origin.x) {
 			position.x -= speedX * DT_CONVERTER * dt;
 			flip = SDL_FLIP_NONE;

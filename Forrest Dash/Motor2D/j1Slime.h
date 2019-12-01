@@ -18,7 +18,7 @@ enum slime_state
 	SLIME_IDLE = 0,
 	SLIME_DEATH,
 	SLIME_FORWARD,
-	SLIME_FALLING
+	SLIME_PATHFINDING
 };
 
 
@@ -48,6 +48,7 @@ private:
 	bool playedSlimeDeathFx = false;
 	int rangeX;
 	int rangeY;
+	bool patroll= false, patrolr=false;
 	
 	slime_state state;
 

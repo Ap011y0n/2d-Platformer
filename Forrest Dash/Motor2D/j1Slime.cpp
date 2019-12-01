@@ -88,6 +88,7 @@ bool j1Slime::Start()
 	flip = SDL_FLIP_NONE;
 	startMoving = SDL_GetTicks();
 	pathFinding = true;
+	patrolr = true;
 	return true;
 }
 
@@ -103,7 +104,6 @@ bool j1Slime::Update(float dt)
 	if(EntityCollider!= NULL)
 		DrawHitbox();
 
-	flip = SDL_FLIP_HORIZONTAL;
 	
 		if (App->EntityManager->GetPlayer()->position.x > position.x - rangeX && App->EntityManager->GetPlayer()->position.x < position.x + rangeX && App->EntityManager->GetPlayer()->position.y + rangeY && App->EntityManager->GetPlayer()->position.y - rangeY)
 			if (pathFinding && !App->EntityManager->GetPlayer()->is_death)Pathfinding(dt);
@@ -131,6 +131,33 @@ void j1Slime::Movement(float dt)
 		position.y += speedY * DT_CONVERTER * dt * gravity;
 
 	}
+	//SLIME PATROL (WIP)
+	/*if (state != SLIME_PATHFINDING && state != SLIME_DEATH)
+	{
+		if (position.x > initialPosition.x + 50)
+		{
+			patrolr = false;
+			patroll = true;
+		}
+		if (position.x < initialPosition.x - 50)
+		{
+			patrolr = true;
+			patroll = false;
+		}
+
+		if (patroll == true)
+		{
+			position.x -= 2;
+			state = SLIME_FORWARD;
+			flip = SDL_FLIP_HORIZONTAL;
+		}
+		if (patrolr == true)
+		{
+			position.x += 2;
+			flip = SDL_FLIP_NONE;
+			state = SLIME_FORWARD;
+		}
+	}*/
 
 }
 
@@ -165,7 +192,11 @@ void j1Slime::setAnimation()
 	{
 		current_animation = &forward;
 	}
-
+	if (state == SLIME_PATHFINDING)
+	{
+		current_animation = &forward;
+		state = SLIME_IDLE;
+	}
 
 }
 
@@ -197,35 +228,34 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 	}
 
 }
-
+//Called if the player is close enough
 bool j1Slime::Pathfinding(float dt) {
 
 	static iPoint origin;
 	static bool origin_selected = false;
-	int x, y;
-	iPoint rightCell(position.x - 1, position.y);
-	iPoint leftCell(position.x + 1, position.y);
-	iPoint upCell(position.x , position.y+1);
-	iPoint DownCell(position.x, position.y-1);
-	App->input->GetMousePosition(x, y);
+	//the destiny is the player position
 	iPoint p = App->EntityManager->GetPlayer()->position;
 	p = App->map->WorldToMap(p.x, p.y + 30);
-
+	//The origin is the current position of the Slime
 	origin = App->map->WorldToMap(position.x, position.y);
+	//Path created with both inputs
 	App->pathfinding->CreatePath(origin, p);
 
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 	if (path->At(1) != NULL)
 	{
+		//if the slime is not in dying animations 
 		if (state != SLIME_DEATH)
 		{	
+			state = SLIME_PATHFINDING;
+			// If the slime is not falling
 			if (candown == false)
 			{
-				if (path->At(1)->x < origin.x && !App->pathfinding->IsWalkable(DownCell)) {
+				if (path->At(1)->x < origin.x) {
 					position.x -= speedX * DT_CONVERTER * dt;
 					flip = SDL_FLIP_HORIZONTAL;
 				}
-				if (path->At(1)->x > origin.x && !App->pathfinding->IsWalkable(rightCell)) {
+				if (path->At(1)->x > origin.x) {
 					position.x += speedX * DT_CONVERTER * dt;
 					flip = SDL_FLIP_NONE;
 				}
