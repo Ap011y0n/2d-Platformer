@@ -44,7 +44,7 @@
 #### Created 2 levels , added player with animations, music and fx selected and implemented, debug features added, time bar added, death/win condition implemented, dash added.
 ### 0.8:
 #### Levels have been changed to implement more usage of the dash, now there are enemies that pathfind the player, the player can kill them with a melee attack or a range one, module entites implemented now
-####the player and the rest of the entities derivate from this class, framerate now capped to 30 (you can desactivate this)
+#### the player and the rest of the entities derivate from this class, framerate now capped to 30 (you can desactivate this)
 ### Innovations: 
 #### for 0.5: Animations loaded from Tiled, time bar, colliders made in Tiled, volume for music and fx can be manipulated and saved.
 #### for 0.8: Bow animation depends of position of the mouse, checkpoints, enemies created from tmx
