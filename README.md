@@ -8,21 +8,26 @@
 ## Team
 
 ### Albert García Delerda - https://github.com/Ap011y0n
-#### Physics, load things from Tiled, cleaning code
+#### 0.5: Physics, load things from Tiled, cleaning code
+#### 0.8: Entities, framerate cap
 ### Javier D. Belda González - https://github.com/JBGelsenorJ
-#### Audio, death condition, Map 2, godmode, camera borders
+#### 0.5: Audio, death condition, Map 2, godmode, camera borders
+#### 0.8: Pathfinding and enemy behaviour
 ### Macià Dalmau Roig- https://github.com/maciadalmau
-#### Map 1, animations, sprites, shake, parallax
-
+#### 0.5: Map 1, animations, sprites, shake, parallax, 
+#### 0.8: Framerate cap, enemies animations and machine state, brofiler, bow animation, sfx
 ## How to play
-### Your objective is to reach the end of the level, but be careful, you can't be still for very much, there is a bar behind you that only regenerates while running (not jumping), also watch out for the dangers of your trip, such as spikes, death pits, deep underground lakes...
+### Your objective is to reach the end of the level, but be careful, you can't be still for very much, there is a bar behind you that only regenerates while running (not jumping), also watch out for the dangers of your trip, such as enemies, spikes, death pits, deep underground lakes...
 
 ## Controls
 ### A: Backward movement
 ### D: Forward movement
 ### W: Jump
 ### S: Crouch (no need to use yet)
-### Right/left arrow: Dash
+### Q/E arrow: Dash
+### +/- up/down volume
+### Left click melee attack
+### Right click bow (need to be loaded)
 
 ## Debug
 ### F1: First level from start
@@ -32,13 +37,17 @@
 ### F6: Load the previous state
 ### F9: Show colliders
 ### F10: God mode
+### F11: framerate cap / no cap
 
 ## Changelog
 ### 0.5: 
 #### Created 2 levels , added player with animations, music and fx selected and implemented, debug features added, time bar added, death/win condition implemented, dash added.
-
-### Innovations: animations loaded from Tiled, time bar, colliders made in Tiled, volume for music and fx can be manipulated and saved.
-
+### 0.8:
+#### Levels have been changed to implement more usage of the dash, now there are enemies that pathfind the player, the player can kill them with a melee attack or a range one, module entites implemented now
+####the player and the rest of the entities derivate from this class, framerate now capped to 30 (you can desactivate this)
+### Innovations: 
+#### for 0.5: Animations loaded from Tiled, time bar, colliders made in Tiled, volume for music and fx can be manipulated and saved.
+#### for 0.8: Bow animation depends of position of the mouse, checkpoints, enemies created from tmx
 
 ### Cave Assets: "Warped" by Luis Zuno https://twitter.com/ansimuz?lang=es
 ### Forest Assets: "Forest game assets" by Anokolisa https://twitter.com/anokolisa
