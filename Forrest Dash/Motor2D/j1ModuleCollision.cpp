@@ -113,6 +113,7 @@ bool j1ModuleCollision::PreUpdate(float dt)
 // Called before render is available
 bool j1ModuleCollision::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::LightGoldenRodYellow);
 
 	DebugDraw();
 	deltatime = dt;

@@ -13,6 +13,7 @@
 #include "J1EntityManager.h"
 #include "J1Entity.h"
 #include "j1Pathfinding.h"
+#include "Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -80,6 +81,8 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate(float dt)
 {
+	BROFILER_CATEGORY("PreUpdate_Scene", Profiler::Color::Snow);
+
 	// debug pathfing ------------------
 	static iPoint origin;
 	static bool origin_selected = false;
@@ -108,6 +111,8 @@ bool j1Scene::PreUpdate(float dt)
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Scene", Profiler::Color::Tomato);
+
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) {
 		App->audio->musicvolume(0.05, 1);
 		App->audio->fxvolume(0.05, 1);

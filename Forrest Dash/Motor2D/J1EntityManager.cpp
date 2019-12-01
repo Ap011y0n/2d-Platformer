@@ -49,6 +49,9 @@ bool j1EntityManager::Start() {
 
 //In this section we call al the preupdates, updates and postupdates for our entities --------------------------------------------------
 bool j1EntityManager::PreUpdate(float dt) {
+
+	BROFILER_CATEGORY("PreUpdate_EntityManager", Profiler::Color::DeepPink);
+
 	p2List_item<j1Entity*>* entities_list = entities.start;
 	while (entities_list) {
 		entities_list->data->PreUpdate(dt);
@@ -61,6 +64,7 @@ bool j1EntityManager::PreUpdate(float dt) {
 bool j1EntityManager::Update(float dt) 
 {
 	BROFILER_CATEGORY("Update_EntityManager", Profiler::Color::Yellow);
+
 	if(dt < 0.05) {
 
 		p2List_item<j1Entity*>* entities_list = entities.start;

@@ -70,13 +70,15 @@ bool j1Render::Start()
 // Called each loop iteration
 bool j1Render::PreUpdate(float dt)
 {
+	BROFILER_CATEGORY("PreUpdate_Render", Profiler::Color::Aqua);
+
 	SDL_RenderClear(renderer);
 	return true;
 }
 
 bool j1Render::Update(float dt)
 {
-	
+	BROFILER_CATEGORY("Update_Render", Profiler::Color::Aquamarine);
 
 	if (shaking)
 		UpdateCameraShake();
@@ -86,8 +88,7 @@ bool j1Render::Update(float dt)
 
 bool j1Render::PostUpdate(float dt)
 {
-	BROFILER_CATEGORY("Post_Render", Profiler::Color::Aqua)
-	
+	BROFILER_CATEGORY("Post_Render", Profiler::Color::Azure)
 
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
