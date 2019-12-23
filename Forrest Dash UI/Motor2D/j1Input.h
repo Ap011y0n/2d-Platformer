@@ -67,6 +67,10 @@ public:
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
+	void EnableTextInput(char* textinput = "");
+	void DisableTextInput();
+
+
 
 private:
 	bool		windowEvents[WE_COUNT];
@@ -76,6 +80,8 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
+public:
+	p2SString text;
 };
 
 #endif // __j1INPUT_H__

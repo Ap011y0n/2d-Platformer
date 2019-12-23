@@ -17,7 +17,11 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
-  
+
+  <gui>
+    <atlas file="gui/atlas.png"/>
+  </gui>
+
   <audio>
     <music>
       <folder>audio/music/</folder>

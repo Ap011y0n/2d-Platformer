@@ -1,0 +1,165 @@
+#ifndef __j1GUI_H__
+#define __j1GUI_H__
+
+#include "j1Module.h"
+
+
+#define CURSOR_WIDTH 2
+
+// TODO 1: Create your structure of classes
+
+enum class Types
+{
+	image,
+	text,
+	button,
+	inputText,
+	slider,
+};
+
+struct _TTF_Font;
+struct SDL_Color;
+
+// Instrucciones:
+//Meter un nodo GuiItem en la clase guiItem (parent)
+//Nos servira para calcular todas las funciones de rect etc
+//El input, sacarlo fuera de checkboundaries
+//Checkboundaries sea un bool, en el momento que devuelva un true,llamar a su input y
+//cortar la iteración, solo detectaremos input de un elemento ui
+class GuiItem
+{
+
+public:
+	GuiItem();
+	virtual ~GuiItem();
+	bool checkBoundaries(int, int);
+	void Input();
+	void SetFocus();
+	void GetScreenRect(SDL_Rect&);
+	SDL_Rect* GetLocalRect();
+	void GetScreenPos(int&, int&);
+	void GetLocalPos(int&, int&);
+	void SetLocalPos(int&, int&);
+	virtual void slide() {
+	}
+	virtual float returnSliderPos() {
+		return 0;
+	}
+
+protected:
+	int LocalX;
+	int LocalY;
+	SDL_Rect LocalRect;
+	
+
+public:
+	GuiItem* parent;
+	Types type;
+	j1Module* CallBack;
+	bool focus;
+	SDL_Texture* texture;
+	SDL_Rect textureRect;
+	bool isDynamic;
+};
+
+class GuiImage: public GuiItem
+{
+public:
+	GuiImage(int, int, SDL_Rect, j1Module* callback = nullptr);
+	virtual ~GuiImage();
+
+};
+
+class GuiText : public GuiItem
+{
+public:
+	GuiText(int, int, SDL_Rect, char*, j1Module* callback = nullptr);
+	virtual ~GuiText();
+
+private:
+	_TTF_Font* font;
+	SDL_Color color;
+	char *text;
+};
+
+class GuiButton : public GuiItem
+{
+public:
+	GuiButton(int, int, SDL_Rect, j1Module* callback = nullptr);
+	virtual ~GuiButton();
+
+};
+
+class InputText : public GuiItem
+{
+public:
+	InputText(int x, int y, SDL_Rect texrect, j1Module* callback = nullptr);
+	virtual ~InputText();
+private:
+	GuiItem* text;
+	GuiItem* image;
+
+};
+
+class GuiSlider : public GuiItem
+{
+public:
+	GuiSlider(int x, int y, SDL_Rect texrect, j1Module* callback = nullptr);
+	virtual ~GuiSlider();
+	void slide();
+	float returnSliderPos();
+private:
+	GuiItem* Image;
+	GuiItem* ScrollThumb;
+
+public:
+	int dragarea;
+};
+
+// ---------------------------------------------------
+class j1Gui : public j1Module
+{
+public:
+
+	j1Gui();
+
+	// Destructor
+	virtual ~j1Gui();
+
+	// Called when before render is available
+	bool Awake(pugi::xml_node&);
+
+	// Call before first frame
+	bool Start();
+
+	// Called before all Updates
+	bool PreUpdate(float dt);
+
+	// Called after all Updates
+	bool Update(float dt);
+
+	// Called before quitting
+	bool CleanUp();
+
+	// TODO 2: Create the factory methods
+	// Gui creation functions
+	void IterateFocus();
+
+	void sendInput(GuiItem* item);
+
+	SDL_Texture* GetAtlas() const;
+	
+	GuiItem* CreateGuiElement(Types type, int x, int y, SDL_Rect, GuiItem* parentnode = NULL, j1Module* callback = nullptr, char* text = NULL);
+public:
+	bool buttonPressed;
+	int FocusIt;
+	p2List<GuiItem*> guiElements;
+
+private:
+	p2SString atlas_file_name;
+	SDL_Texture* atlas;
+
+
+};
+
+#endif // __j1GUI_H__

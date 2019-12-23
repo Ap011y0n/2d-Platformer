@@ -18,6 +18,8 @@
 #include "j1Pathfinding.h"
 #include "j1FadeToBlack.h"
 #include "j1MainMenu.h"
+#include "j1Fonts.h"
+#include "j1Gui.h"
 
 
 // Constructor
@@ -40,6 +42,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new j1PathFinding();
 	fade = new j1FadeToBlack();
 	menu = new j1MainMenu();
+	font = new j1Fonts();
+	gui = new j1Gui();
 	
 
 
@@ -57,6 +61,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(fade);
 	AddModule(menu);
+	AddModule(font);
+	AddModule(gui);
+	
+
 	// render last to swap buffer
 
 

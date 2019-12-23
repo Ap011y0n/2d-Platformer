@@ -11,6 +11,8 @@
 
 class j1App;
 struct Collider;
+class GuiItem;
+
 
 class j1Module
 {
@@ -71,6 +73,8 @@ public:
 	}
 
 	virtual void OnCollision(Collider*, Collider*) {}
+	virtual void GuiInput(GuiItem*) {}
+
 public:
 
 	p2SString	name;

@@ -4,7 +4,6 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "SDL/include/SDL.h"
-#include "Brofiler/Brofiler.h"
 
 #define MAX_KEYS 300
 
@@ -42,7 +41,6 @@ bool j1Input::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Input::Start()
 {
-	LOG("Start input");
 	SDL_StopTextInput();
 	return true;
 }
@@ -50,8 +48,6 @@ bool j1Input::Start()
 // Called each loop iteration
 bool j1Input::PreUpdate(float dt)
 {
-	BROFILER_CATEGORY("PreUpdate_Input", Profiler::Color::LightCyan);
-
 	static SDL_Event event;
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
@@ -121,14 +117,26 @@ bool j1Input::PreUpdate(float dt)
 				//LOG("Mouse button %d up", event.button.button-1);
 			break;
 
-			case SDL_MOUSEMOTION:
+			case SDL_MOUSEMOTION: 
+			{
 				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
-				mouse_y = event.motion.y / scale;
+				mouse_y = event.motion.y / scale; 
+			}
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
+
+			case SDL_TEXTINPUT:
+			{
+				text += (event.text.text);
+				
+				
+			}
+				break;
+			case SDL_TEXTEDITING:
+				break;
 		}
 	}
 
@@ -159,4 +167,14 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+void j1Input::EnableTextInput(char* textInput) {
+	text = textInput;
+	SDL_StartTextInput();
+
+}
+
+void j1Input::DisableTextInput() {
+	SDL_StopTextInput();
 }

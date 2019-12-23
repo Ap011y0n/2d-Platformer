@@ -66,6 +66,12 @@
     <ClCompile Include="j1MainMenu.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="j1Gui.cpp">
+      <Filter>Modules\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Modules\Gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h" />
@@ -154,6 +160,12 @@
     <ClInclude Include="j1MainMenu.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="j1Gui.h">
+      <Filter>Modules\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Modules\Gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -170,6 +182,9 @@
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{253b558e-a197-4021-be1d-4cc56a99b27a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gui">
+      <UniqueIdentifier>{d4fdf8b2-029b-4a9c-b43e-f2c4d2c7999f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

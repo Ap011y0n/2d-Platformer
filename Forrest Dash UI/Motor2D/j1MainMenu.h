@@ -7,7 +7,10 @@
 #include "p2DynArray.h"
 #include "Animation.h"
 
+#define COORDS(a) a+3000 
+
 struct SDL_Texture;
+class GuiItem;
 
 class j1MainMenu : public j1Module
 {
@@ -38,10 +41,16 @@ public:
 
 	bool Save(pugi::xml_node&) const;
 
+	void GuiInput(GuiItem*);
+
 public:
 
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect r;
+	GuiItem* banner;
+	GuiItem* text;
+	GuiItem* button;
+
 };
 
 #endif // !__j1MAINMENU_H__
