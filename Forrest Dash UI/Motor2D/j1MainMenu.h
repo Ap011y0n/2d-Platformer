@@ -46,8 +46,8 @@ public:
 	SDL_Texture* graphics = nullptr;
 	GuiItem* banner;
 	GuiItem* text;
-	GuiItem* button;
-
+	GuiItem* buttonNewGame;
+	
 };
 
 #endif // !__j1MAINMENU_H__

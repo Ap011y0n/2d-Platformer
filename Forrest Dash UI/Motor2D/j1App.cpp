@@ -41,11 +41,11 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	collision = new j1ModuleCollision();
 	EntityManager = new j1EntityManager();
 	pathfinding = new j1PathFinding();
-	fade = new j1FadeToBlack();
 	menu = new j1MainMenu();
 	font = new j1Fonts();
 	gui = new j1Gui();
 	console = new j1Console();
+	fade = new j1FadeToBlack();
 
 
 	// Ordered for awake / Start / Update
@@ -60,12 +60,11 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collision);
 	AddModule(EntityManager);
 	AddModule(pathfinding);
-	AddModule(fade);
 	AddModule(menu);
 	AddModule(font);
 	AddModule(gui);
 	AddModule(console);
-
+	AddModule(fade);
 	
 
 	// render last to swap buffer

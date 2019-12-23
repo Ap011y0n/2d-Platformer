@@ -19,11 +19,12 @@ class j1ModuleCollision;
 class j1EntityManager;
 class j1Entity;
 class j1PathFinding;
-class j1FadeToBlack;
 class j1MainMenu;
 class j1Fonts;
 class j1Gui;
 class j1Console;
+class j1FadeToBlack;
+
 class j1App
 {
 public:
@@ -96,11 +97,11 @@ public:
 	j1ModuleCollision*  collision;
 	j1EntityManager*	EntityManager;
 	j1PathFinding*		pathfinding;
-	j1FadeToBlack*		fade;
 	j1MainMenu*			menu;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
 	j1Console*			console = NULL;
+	j1FadeToBlack*		fade;
 
 
 	uint32				framerate = 0u;

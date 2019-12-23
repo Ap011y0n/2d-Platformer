@@ -226,11 +226,13 @@ void j1Scene::Nextmap() {
 	current_level = iterator->data;
 	
 	App->map->Load(current_level.GetString());
+
 	int w, h;
 	uchar* data = NULL;
 	if (App->map->CreateWalkabilityMap(w, h, &data))
 		App->pathfinding->SetMap(w, h, data);
 	App->SaveGame();
+
 	RELEASE_ARRAY(data);
 	
 }

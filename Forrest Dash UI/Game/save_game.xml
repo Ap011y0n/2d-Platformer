@@ -10,13 +10,39 @@
 	</audio>
 	<map />
 	<scene>
-		<scenename name="menu.tmx" />
+		<scenename name="maplevel2.tmx" />
 	</scene>
 	<collision />
-	<entity />
+	<entity>
+		<Entity type="wizard">
+			<position pos_x="920" pos_y="510" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="2202" pos_y="544" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="489" pos_y="736" />
+		</Entity>
+		<Entity type="wizard">
+			<position pos_x="5748" pos_y="1312" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="2619" pos_y="1440" />
+		</Entity>
+		<Entity type="wizard">
+			<position pos_x="3892" pos_y="1440" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="4928" pos_y="1728" />
+		</Entity>
+		<Entity type="player">
+			<position pos_x="3140" pos_y="1709" />
+		</Entity>
+	</entity>
 	<pathfinding />
-	<Fade />
 	<main_menu />
 	<fonts />
 	<gui />
+	<console />
+	<Fade />
 </game_state>
