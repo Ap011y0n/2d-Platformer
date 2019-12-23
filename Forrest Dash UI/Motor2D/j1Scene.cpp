@@ -226,6 +226,7 @@ void j1Scene::Nextmap() {
 	current_level = iterator->data;
 	
 	App->map->Load(current_level.GetString());
+	App->audio->PlayMusic(App->map->data.music.GetString());
 
 	int w, h;
 	uchar* data = NULL;

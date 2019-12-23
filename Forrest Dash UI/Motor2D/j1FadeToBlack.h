@@ -21,10 +21,12 @@ public:
 	~j1FadeToBlack();
 	bool CleanUp();
 	void FadeToBlack();
+	void ChangeScene();
 private:
 	int alpha;
 	float deltatime;
 public: 
+	bool changeScene;
 	bool fade;
 	j1Timer fadetimer;
 	

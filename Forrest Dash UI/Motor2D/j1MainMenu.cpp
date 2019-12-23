@@ -161,12 +161,7 @@ void j1MainMenu::GuiInput(GuiItem* item)
 
 	if(item == buttonNewGame)
 	{
-		App->fade->FadeToBlack();
-
-		if(App->fade->fadetimer.Read() > 1000)
-		{
-			App->scene->Nextmap();
-		}
+		App->fade->ChangeScene();
 
 	}
 }
