@@ -89,9 +89,10 @@ bool j1Gui::Update(float dt)
 			gui_list->data->Input();
 
 		gui_list->data->GetScreenPos(x, y);
-	//	LOG("%d", gui_list->data->textureRect.h);
-		if(gui_list->data->type == Types::text)
+		//	LOG("%d", gui_list->data->textureRect.h);
+		if (gui_list->data->type == Types::text) {
 		App->render->Blit(gui_list->data->texture, x, y, &gui_list->data->textureRect);
+	}
 		else {
 			App->render->Blit(GetAtlas(), x, y, &gui_list->data->textureRect);
 
@@ -314,7 +315,7 @@ GuiImage::~GuiImage() {
 
 }
 //-------------------------------------------------------------
-GuiText::GuiText(int x, int y, SDL_Rect texrect, char* inputtext, j1Module* callback) : GuiItem() {
+GuiText::GuiText(int x, int y, SDL_Rect texrect,  char* inputtext, j1Module* callback) : GuiItem() {
 	type = Types::text;
 	text = inputtext;
 	LocalX = x;
@@ -322,11 +323,12 @@ GuiText::GuiText(int x, int y, SDL_Rect texrect, char* inputtext, j1Module* call
 	LocalRect = texrect;
 	isDynamic = false;
 	focus = false;
-	//font = App->font->Load("fonts/open_sans/OpenSans-Regular.ttf",24);
+	textureRect.x = 0;
+	textureRect.y = 0;
 	color = SDL_Color{ 255,255,255 };
 	CallBack = callback;
-	texture = App->font->Print(inputtext, color, font);
-	App->font->CalcSize(text, textureRect.w, textureRect.h, font);
+	texture = App->font->Print(text, color);
+	App->font->CalcSize(text, textureRect.w, textureRect.h);
 
 }
 

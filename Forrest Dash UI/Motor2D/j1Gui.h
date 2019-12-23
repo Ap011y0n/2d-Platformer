@@ -77,7 +77,7 @@ public:
 	virtual ~GuiText();
 
 private:
-	_TTF_Font* font;
+	
 	SDL_Color color;
 	char *text;
 };
@@ -149,7 +149,7 @@ public:
 
 	SDL_Texture* GetAtlas() const;
 	
-	GuiItem* CreateGuiElement(Types type, int x, int y, SDL_Rect, GuiItem* parentnode = NULL, j1Module* callback = nullptr, char* text = NULL);
+	GuiItem* CreateGuiElement(Types type, int x, int y, SDL_Rect, GuiItem* parentnode = NULL, j1Module* callback = nullptr, char* text = "");
 public:
 	bool buttonPressed;
 	int FocusIt;

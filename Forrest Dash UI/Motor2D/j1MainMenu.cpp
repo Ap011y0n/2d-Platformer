@@ -31,7 +31,7 @@ bool j1MainMenu::Awake()
 bool j1MainMenu::Start()
 {
 	graphics = App->tex->Load("gui/our ui.png");
-	r = { 0, 0, 427, 218 };
+	SDL_Rect r = { 0, 0, 427, 218 };
 	//r = { 0, 0, 1024, 1024 };
 	App->render->camera.x = -3060;
 
@@ -45,7 +45,7 @@ bool j1MainMenu::Start()
 	button = App->gui->CreateGuiElement(Types::button, 200, 200, rect, banner, this);
 
 	App->gui->CreateGuiElement(Types::inputText, COORDS(200), 400, { 488, 569, 344, 61 }, nullptr, this);
-	App->gui->CreateGuiElement(Types::inputText, COORDS(400), 600, { 488, 569, 344, 61 }, nullptr, this);
+	//App->gui->CreateGuiElement(Types::inputText, COORDS(400), 600, { 488, 569, 344, 61 }, nullptr, this);
 	App->gui->CreateGuiElement(Types::slider, COORDS(100), 300, { 973, 786, 11, 157 }, nullptr, this);
 
 	return true;
@@ -59,6 +59,7 @@ bool j1MainMenu::PreUpdate()
 
 bool j1MainMenu::Update(float dt)
 {
+	SDL_Rect r = { 0, 0, 427, 218 };
 	App->render->Blit(graphics, COORDS(345), 30, &r);
 	//App->render->Blit(graphics, 3480, 390, &r);
 	return true;

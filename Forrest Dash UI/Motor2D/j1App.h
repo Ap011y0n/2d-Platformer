@@ -23,7 +23,7 @@ class j1FadeToBlack;
 class j1MainMenu;
 class j1Fonts;
 class j1Gui;
-
+class j1Console;
 class j1App
 {
 public:
@@ -100,6 +100,8 @@ public:
 	j1MainMenu*			menu;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
+	j1Console*			console = NULL;
+
 
 	uint32				framerate = 0u;
 	pugi::xml_document	config_file;

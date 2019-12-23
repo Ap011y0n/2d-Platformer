@@ -1,5 +1,6 @@
-#ifndef __j1MAINMENU_H__
-#define __j1MAINMENU_H__
+#pragma once
+#ifndef __j1CONSOLE_H__
+#define __j1CONSOLE_H__
 
 #include "j1Module.h"
 #include "p2List.h"
@@ -7,15 +8,14 @@
 
 #define COORDS(a) a+3000 
 
-struct SDL_Texture;
 class GuiItem;
 
-class j1MainMenu : public j1Module
+class j1Console : public j1Module
 {
 public:
 
-	j1MainMenu();
-	~j1MainMenu();
+	j1Console();
+	~j1Console();
 
 	// Called before render is available
 	bool Awake();
@@ -43,10 +43,7 @@ public:
 
 public:
 
-	SDL_Texture* graphics = nullptr;
-	GuiItem* banner;
-	GuiItem* text;
-	GuiItem* button;
+
 
 };
 

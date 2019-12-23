@@ -20,6 +20,7 @@
 #include "j1MainMenu.h"
 #include "j1Fonts.h"
 #include "j1Gui.h"
+#include "j1Console.h"
 
 
 // Constructor
@@ -44,7 +45,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	menu = new j1MainMenu();
 	font = new j1Fonts();
 	gui = new j1Gui();
-	
+	console = new j1Console();
 
 
 	// Ordered for awake / Start / Update
@@ -63,6 +64,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(menu);
 	AddModule(font);
 	AddModule(gui);
+	AddModule(console);
+
 	
 
 	// render last to swap buffer
