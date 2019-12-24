@@ -38,7 +38,7 @@ public:
 	SDL_Texture* slimeTex = nullptr;
 	SDL_Texture* wizardTex = nullptr;
 	SDL_Texture* icespiketex = nullptr;
-	
+	SDL_Texture* cointex = nullptr;
 
 };
 

@@ -35,7 +35,7 @@ bool j1Console::Start()
 	temp = ConsoleText->GetText();*/
 
 	for (int i = 0; i < MAXTEXT; i++) {
-		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 20, -20-i*40, { 0, 0, 0, 0 }, InputText, this, "- ");
+		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 20, -20-i*40, { 0, 0, 0, 0 }, InputText, this, " ");
 		temp[i] = ConsoleText[i]->GetText();
 	}
 
@@ -99,10 +99,10 @@ void j1Console::GuiInput(GuiItem* item)
 
 
 		temp[i] = temp[i - 1];
-		LOG("%d %s",i, temp[i].GetString());
+		
 	}
 	temp[0] = item->GetText();
-	LOG("0 %s",temp[0].GetString());
+	
 
 	for (int i = 0; i < MAXTEXT; i++) {
 		

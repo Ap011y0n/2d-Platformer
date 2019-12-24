@@ -39,6 +39,7 @@ public:
 		slime,
 		wizard,
 		projectile_player,
+		coin,
 		unknown
 	};
 

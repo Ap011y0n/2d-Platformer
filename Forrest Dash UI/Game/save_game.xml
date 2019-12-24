@@ -10,42 +10,33 @@
 	</audio>
 	<map />
 	<scene>
-		<scenename name="maplevel1.tmx" />
+		<scenename name="maplevel2.tmx" />
 	</scene>
 	<collision />
 	<entity>
-		<Entity type="slime">
-			<position pos_x="1536" pos_y="288" />
+		<Entity type="wizard">
+			<position pos_x="930" pos_y="645" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="2496" pos_y="288" />
+			<position pos_x="2248" pos_y="544" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="405" pos_y="736" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="640" pos_y="416" />
+			<position pos_x="5764" pos_y="1312" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="2732" pos_y="1440" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="4864" pos_y="416" />
+			<position pos_x="3908" pos_y="1440" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="704" pos_y="544" />
-		</Entity>
-		<Entity type="wizard">
-			<position pos_x="2080" pos_y="608" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="3616" pos_y="800" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="4160" pos_y="1088" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="3264" pos_y="1248" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="3904" pos_y="1504" />
+			<position pos_x="4928" pos_y="1728" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="100" pos_y="500" />
+			<position pos_x="3139" pos_y="1680" />
 		</Entity>
 	</entity>
 	<pathfinding />
