@@ -20,9 +20,9 @@ j1Coin::j1Coin(int posx, int posy) : j1Entity(Types::coin)
 	name.create("coin");
 
 	current_animation = NULL;
-	/*LoadAnimations("textures/cointex.png.tmx");*/
+	LoadAnimations("textures/coin_animations.tmx");
 
-
+	state = COIN_IDLE;
 	// Load animations from an animations list ----------------------------------------------
 	p2List_item<Animation>* animation_iterator = animations.start;
 
@@ -61,7 +61,7 @@ bool j1Coin::Start()
 	to_delete = false;
 	coinpickedfx = false;
 	pickedup = false;
-	EntityCollider = App->collision->AddCollider(&r, COLLIDER_ENEMY, this);
+	EntityCollider = App->collision->AddCollider(&r, COLLIDER_COIN, this);
 	flip = SDL_FLIP_NONE;
 	return true;
 }
@@ -88,8 +88,22 @@ bool j1Coin::PostUpdate(float dt)
 }
 
 void j1Coin::setAnimation()
-{
+{	
+	if (state == COIN_IDLE)
+	{
 		current_animation = &idle;
+		coinpickedfx = false;
+	}
+
+	if (state == COIN_PICKED)
+	{
+		current_animation = &idle;
+		if (!coinpickedfx)
+			App->audio->PlayFx(App->audio->coinpickupFx);
+		coinpickedfx = true;
+		state = COIN_IDLE;
+	}
+
 }
 
 
@@ -97,16 +111,9 @@ void j1Coin::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c2->type == COLLIDER_PLAYER) {
 
-		delete(this);
-
+		EntityCollider->to_delete = true;
+		to_delete = true;
+		state = COIN_PICKED;
 	}
 
-}
-
-
-void j1Coin::DrawHitbox() {
-	if (flip == SDL_FLIP_NONE)
-		EntityCollider->SetPos(position.x - 5, position.y);
-	if (flip == SDL_FLIP_HORIZONTAL)
-		EntityCollider->SetPos(position.x, position.y);
 }
