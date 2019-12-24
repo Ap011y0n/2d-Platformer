@@ -16,6 +16,7 @@
 #include "j1Wizard.h"
 #include "j1Slime.h"
 #include "j1ProjPlayer.h"
+#include "j1Coin.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -43,6 +44,7 @@ bool j1EntityManager::Start() {
 	slimeTex = App->tex->Load("textures/slimetex.png");
 	wizardTex = App->tex->Load("textures/wizardtex.png");
 	icespiketex = App->tex->Load("textures/icepick.png");
+	cointex = App->tex->Load("textures/cointex.png.png");
 	return true;
 
 }
@@ -100,7 +102,7 @@ bool j1EntityManager::CleanUp() {
 	App->tex->UnLoad(slimeTex);
 	App->tex->UnLoad(wizardTex);
 	App->tex->UnLoad(icespiketex);
-	
+	App->tex->UnLoad(cointex);
 	return true;
 
 }
@@ -131,6 +133,7 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int posx, int posy
 	case j1Entity::Types::wizard: ret = new j1Wizard(posx, posy); break;
 	case j1Entity::Types::slime: ret = new j1Slime(posx, posy); break;
 	case j1Entity::Types::projectile_player: ret = new j1ProjPlayer(posx, posy, speedx, speedy, angle); break;
+	case j1Entity::Types::coin:ret = new j1Coin(posx, posy); break;
 	}
 	
 	if (ret != nullptr){
@@ -169,7 +172,10 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 		{
 			id = j1Entity::Types::wizard;
 		}
-		
+		if (type == "coin")
+		{
+			id = j1Entity::Types::coin;
+		}
 		//Once located an entity, we create it
 		CreateEntity(id, entity.child("position").attribute("pos_x").as_int(), entity.child("position").attribute("pos_y").as_int());
 		}
