@@ -1,3 +1,5 @@
+#include "p2Defs.h"
+#include "p2Log.h"
 #include "j1MainMenu.h"
 #include "j1Scene.h"
 #include "j1App.h"
@@ -86,17 +88,30 @@ bool j1MainMenu::Start()
 {
 	graphics = App->tex->Load("gui/ui.png");
 	
+	//Menu Sections
 	
-	App->render->camera.x = -3060;
+	camLock = false;
 
+	moveToPoint[(int)Section::credits].create(-1060, 0);
+	moveToPoint[(int)Section::main_menu].create(-3060, 0);
+	moveToPoint[(int)Section::settings].create(-5060, 0);
+
+	camPos.create(-3060, 0);
+	camSpeed = 1000.0f;
+
+	//Buttons
 	SDL_Rect rect{ 485, 829, 328, 103 };
 
 	banner = App->gui->CreateGuiElement(Types::image, COORDS(345), 30, rect, nullptr);
 	rect = { 2, 111, 226, 69 };
 
-	//Buttons
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 100, 350, rect, banner, this);
 	text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");
+
+	buttonSettings = App->gui->CreateGuiElement(Types::button, 450, 600, rect, banner, this);
+
+	buttonCredits = App->gui->CreateGuiElement(Types::button, -250, 600, rect, banner, this);
+
 
 	/*
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 50, 0, rect, banner, this);
@@ -120,8 +135,47 @@ bool j1MainMenu::PreUpdate()
 
 bool j1MainMenu::Update(float dt)
 {
+	
+	if(!camLock)
+	{
+		if (camVelocity.x < 0.0f)
+		{
+			if (camPos.x > moveToPoint[(int)current_section].x)
+			{
+				camPos.x += camVelocity.x * dt;
+			}
+
+			if (camPos.x < moveToPoint[(int)current_section].x)
+			{
+				camPos.x = moveToPoint[(int)current_section].x;
+				camVelocity.x = 0.0f;
+			}
+
+		}
+		else if (camVelocity.x > 0.0f)
+		{
+			if (camPos.x < moveToPoint[(int)current_section].x)
+			{
+				camPos.x += camVelocity.x * dt;
+			}
+
+			if (camPos.x > moveToPoint[(int)current_section].x)
+			{
+				camPos.x = moveToPoint[(int)current_section].x;
+				camVelocity.x = 0.0f;
+			}
+		}
+		else
+		{
+			camPos.x = moveToPoint[(int)current_section].x;
+		}
+
+		App->render->camera.x = camPos.x;
+		App->render->camera.y = camPos.y;
+	}
+	
 	SDL_Rect r = { 0, 0, 427, 218 };
-	App->render->Blit(graphics, COORDS(345), 30, &r);
+	App->render->Blit(graphics, COORDS(350), 30, &r);
 
 	return true;
 }
@@ -161,8 +215,37 @@ void j1MainMenu::GuiInput(GuiItem* item)
 
 	if(item == buttonNewGame)
 	{
+		camLock = true;
 		App->fade->ChangeScene();
 
 	}
+	else if (item == buttonSettings)
+	{
+		MoveToSection(Section::settings);
+	}
+	else if (item == buttonCredits)
+	{
+		MoveToSection(Section::credits);
+	}
+}
+
+bool j1MainMenu::MoveToSection(Section section)
+{
+	current_section = section;
+
+	if (App->render->camera.x > moveToPoint[(int)section].x)
+	{
+		camVelocity.x = -camSpeed;
+	}
+	else if (App->render->camera.x < moveToPoint[(int)section].x)
+	{
+		camVelocity.x = camSpeed;
+	}
+	else
+	{
+		camVelocity.x = 0.0f;
+	}
+
+	return false;
 }
 

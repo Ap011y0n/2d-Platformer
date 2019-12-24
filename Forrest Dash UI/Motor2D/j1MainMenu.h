@@ -4,8 +4,18 @@
 #include "j1Module.h"
 #include "p2List.h"
 #include "p2DynArray.h"
+#include "p2Point.h"
 
 #define COORDS(a) a+3000 
+
+enum class Section : int
+{
+	
+	credits = 0,
+	main_menu = 1,
+	settings = 2,
+	max = 3
+};
 
 struct SDL_Texture;
 class GuiItem;
@@ -41,12 +51,26 @@ public:
 
 	void GuiInput(GuiItem*);
 
+private:
+
+	bool MoveToSection(Section menu_section);
+
 public:
 
 	SDL_Texture* graphics = nullptr;
 	GuiItem* banner;
 	GuiItem* text;
 	GuiItem* buttonNewGame;
+	GuiItem* buttonSettings;
+	GuiItem* buttonCredits;
+	bool camLock = false;
+private:
+
+	Section current_section = Section::main_menu;
+	fPoint moveToPoint[(int)Section::max];
+	fPoint camVelocity = { 0.0f , 0.0f };
+	fPoint camPos = { 0.0f, 0.0f };
+	float camSpeed = 0.0f;
 	
 };
 
