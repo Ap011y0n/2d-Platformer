@@ -14,6 +14,11 @@
 struct SDL_Texture;
 struct Collider;
 struct Anim;
+enum coin_state
+{
+	COIN_IDLE = 0,
+	COIN_PICKED,
+};
 class j1Coin : public j1Entity {
 public:
 
@@ -24,8 +29,6 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	void OnCollision(Collider* c1, Collider* c2);
-	/*void CheckCollision(float dt);*/
-	void DrawHitbox();
 	void setAnimation();
 
 private:
@@ -35,7 +38,7 @@ private:
 	int rangeX;
 	int rangeY;
 
-	/*coin_state state;*/
+	coin_state state;
 
 public:
 	bool pickedup = false;

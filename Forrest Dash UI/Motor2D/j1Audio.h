@@ -60,7 +60,7 @@ public:
 	int checkpointFx;
 	int wizarDeathFx;
 	int slimeDeathFx;
-	
+	int coinpickupFx;
 
 private:
 

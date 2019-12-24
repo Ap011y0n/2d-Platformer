@@ -193,17 +193,17 @@ bool j1MainMenu::CleanUp()
 	return true;
 }
 
-bool j1MainMenu::Load(pugi::xml_node& data)
-{
-	
-	return true;
-}
-
-bool j1MainMenu::Save(pugi::xml_node& data) const
-{
-	
-	return true;
-}
+//bool j1MainMenu::Load(pugi::xml_node& data)
+//{
+//	
+//	return true;
+//}
+//
+//bool j1MainMenu::Save(pugi::xml_node& data) const
+//{
+//	
+//	return true;
+//}
 
 void j1MainMenu::GuiInput(GuiItem* item)
 {

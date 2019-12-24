@@ -53,6 +53,13 @@ j1ModuleCollision::j1ModuleCollision()
 	matrix[COLLIDER_WIZARD][COLLIDER_PLAYER_SHOT] = true;
 	matrix[COLLIDER_WIZARD][COLLIDER_ENEMY_SHOT] = false;
 	matrix[COLLIDER_WIZARD][COLLIDER_WIZARD] = false;
+
+	matrix[COLLIDER_COIN][COLLIDER_WALL] = false;
+	matrix[COLLIDER_COIN][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_COIN][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_COIN][COLLIDER_PLAYER_SHOT] = false;
+	matrix[COLLIDER_COIN][COLLIDER_ENEMY_SHOT] = false;
+	matrix[COLLIDER_COIN][COLLIDER_WIZARD] = false;
 }
 
 // Destructor
@@ -156,6 +163,9 @@ void j1ModuleCollision::DebugDraw()
 			break;
 			case COLLIDER_WIZARD: // red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+			case COLLIDER_COIN: // Brown
+				App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
 		}
 	}

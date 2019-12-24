@@ -212,7 +212,7 @@ void GuiItem::SetFocus() {
 			App->input->DisableTextInput();
 			gui_list = gui_list->prev;
 		}
-		App->input->EnableTextInput();
+		App->input->EnableTextInput(" ");
 		focus = true;
 		}
 	}
@@ -244,10 +244,16 @@ void GuiItem::Input() {
 		{
 			texture = App->font->Print(App->input->text.GetString());
 			App->font->CalcSize(App->input->text.GetString(), textureRect.w, textureRect.h);
+			
 			int x, y;
 			GetScreenPos(x, y);
 			App->render->DrawQuad({ x + textureRect.w, y, 1, textureRect.h }, 255, 255, 255);
-			App->gui->sendInput(this);
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN){
+				SetText(App->input->text.GetString());
+				App->gui->sendInput(this);
+				focus = false;
+				App->input->DisableTextInput();
+			}
 
 		}
 	}
@@ -307,6 +313,7 @@ GuiImage::GuiImage(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiItem
 	isDynamic = false;
 	texture = App->gui->GetAtlas();
 	focus = false;
+	follow = false;
 	CallBack = callback;
 
 }
@@ -323,6 +330,7 @@ GuiText::GuiText(int x, int y, SDL_Rect texrect,  char* inputtext, j1Module* cal
 	LocalRect = texrect;
 	isDynamic = false;
 	focus = false;
+	follow = false;
 	textureRect.x = 0;
 	textureRect.y = 0;
 	color = SDL_Color{ 255,255,255 };
@@ -343,6 +351,7 @@ GuiButton::GuiButton(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	textureRect = texrect;
 	LocalRect = textureRect;
 	isDynamic = true;
+	follow = false;
 	texture = App->gui->GetAtlas();
 	focus = false;
 	CallBack = callback;
@@ -362,6 +371,7 @@ InputText::InputText(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	textureRect = { 0, 0, 0, 0 };
 	LocalRect = textureRect;
 	isDynamic = true;
+	follow = false;
 	texture = App->gui->GetAtlas();
 	focus = false;
 	CallBack = callback;
@@ -386,6 +396,7 @@ GuiSlider::GuiSlider(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	textureRect = { 0, 0, 0, 0 };
 	LocalRect = textureRect;
 	isDynamic = false;
+	follow = false;
 	texture = App->gui->GetAtlas();
 	focus = false;
 	CallBack = callback;
@@ -446,4 +457,14 @@ float GuiSlider::returnSliderPos()
 	ratio =  (y / a);
 
 	return ratio;
+}
+
+const char* GuiText::GetText() const{
+	
+	return text;
+}
+
+void GuiText::SetText(const char* newtext)
+{
+	text = newtext;
 }

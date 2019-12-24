@@ -374,7 +374,10 @@ bool j1Scene::CreateEntities() {
 							break;
 						case 2604:
 							App->EntityManager->CreateEntity(j1Entity::Types::slime, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
-							break;
+							break; 
+						case 2079:
+								App->EntityManager->CreateEntity(j1Entity::Types::coin, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
+								break;
 						}
 					}
 				}

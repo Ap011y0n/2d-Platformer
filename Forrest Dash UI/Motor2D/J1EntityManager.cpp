@@ -44,7 +44,7 @@ bool j1EntityManager::Start() {
 	slimeTex = App->tex->Load("textures/slimetex.png");
 	wizardTex = App->tex->Load("textures/wizardtex.png");
 	icespiketex = App->tex->Load("textures/icepick.png");
-	cointex = App->tex->Load("textures/cointex.png.png");
+	cointex = App->tex->Load("textures/cointex.png");
 	return true;
 
 }
