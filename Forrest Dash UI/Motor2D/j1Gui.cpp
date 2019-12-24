@@ -110,6 +110,8 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
+	guiElements.clear();
+
 	return true;
 }
 
