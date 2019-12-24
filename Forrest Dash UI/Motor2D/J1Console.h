@@ -7,6 +7,7 @@
 #include "p2DynArray.h"
 
 #define COORDS(a) a+3000 
+#define MAXTEXT 100
 
 class GuiItem;
 
@@ -43,6 +44,13 @@ public:
 
 public:
 
+private:
+	GuiItem* InputText;
+	GuiItem* ConsoleText[MAXTEXT];
+	p2SString temp[MAXTEXT];
+
+	SDL_Texture* graphics = nullptr;
+	SDL_Rect textureRect;
 
 
 };

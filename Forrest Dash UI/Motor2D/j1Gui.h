@@ -45,6 +45,12 @@ public:
 	virtual float returnSliderPos() {
 		return 0;
 	}
+	virtual void SetText(const char*) {
+	}
+	
+	virtual const char* GetText() const {
+		return "none";
+	}
 
 protected:
 	int LocalX;
@@ -60,6 +66,7 @@ public:
 	SDL_Texture* texture;
 	SDL_Rect textureRect;
 	bool isDynamic;
+	bool follow;
 };
 
 class GuiImage: public GuiItem
@@ -77,9 +84,12 @@ public:
 	virtual ~GuiText();
 
 private:
-	
 	SDL_Color color;
-	char *text;
+	const char *text;
+
+public:
+	const char* GetText() const;
+	void SetText(const char*);
 };
 
 class GuiButton : public GuiItem
