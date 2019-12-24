@@ -11,9 +11,9 @@
 enum class Section : int
 {
 	
-	credits = 0,
+	settings = 0,
 	main_menu = 1,
-	settings = 2,
+	credits = 2,
 	max = 3
 };
 
@@ -63,6 +63,8 @@ public:
 	GuiItem* buttonNewGame;
 	GuiItem* buttonSettings;
 	GuiItem* buttonCredits;
+	GuiItem* buttonSettingsToMenu;
+	GuiItem* buttonCreditsToMenu;
 	bool camLock = false;
 private:
 

@@ -92,9 +92,9 @@ bool j1MainMenu::Start()
 	
 	camLock = false;
 
-	moveToPoint[(int)Section::credits].create(-1060, 0);
+	moveToPoint[(int)Section::credits].create(-5060, 0);
 	moveToPoint[(int)Section::main_menu].create(-3060, 0);
-	moveToPoint[(int)Section::settings].create(-5060, 0);
+	moveToPoint[(int)Section::settings].create(-1060, 0);
 
 	camPos.create(-3060, 0);
 	camSpeed = 1000.0f;
@@ -108,11 +108,14 @@ bool j1MainMenu::Start()
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 100, 350, rect, banner, this);
 	text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");
 
-	buttonSettings = App->gui->CreateGuiElement(Types::button, 450, 600, rect, banner, this);
+	buttonCredits = App->gui->CreateGuiElement(Types::button, 450, 600, rect, banner, this);
 
-	buttonCredits = App->gui->CreateGuiElement(Types::button, -250, 600, rect, banner, this);
+	buttonCreditsToMenu = App->gui->CreateGuiElement(Types::button, 1800, 600, rect, banner, this);
 
+	buttonSettings = App->gui->CreateGuiElement(Types::button, -250, 600, rect, banner, this);
 
+	buttonSettingsToMenu = App->gui->CreateGuiElement(Types::button, -1500, 600, rect, banner, this);
+	
 	/*
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 50, 0, rect, banner, this);
 	text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");
@@ -226,6 +229,14 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	else if (item == buttonCredits)
 	{
 		MoveToSection(Section::credits);
+	}
+	else if (item == buttonSettingsToMenu)
+	{
+		MoveToSection(Section::main_menu);
+	}
+	else if (item == buttonCreditsToMenu)
+	{
+		MoveToSection(Section::main_menu);
 	}
 }
 
