@@ -106,7 +106,7 @@ bool j1MainMenu::Start()
 	rect = { 2, 111, 226, 69 };
 
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 100, 350, rect, banner, this);
-	text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");
+	//text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");
 
 	buttonCredits = App->gui->CreateGuiElement(Types::button, 450, 600, rect, banner, this);
 
@@ -115,6 +115,12 @@ bool j1MainMenu::Start()
 	buttonSettings = App->gui->CreateGuiElement(Types::button, -250, 600, rect, banner, this);
 
 	buttonSettingsToMenu = App->gui->CreateGuiElement(Types::button, -1500, 600, rect, banner, this);
+
+	rect = { 22, 530, 444, 473 };
+	creditsPanel = App->gui->CreateGuiElement(Types::image, COORDS(2500), 30, rect, nullptr);
+	licenseText = App->gui->CreateGuiElement(Types::text, 40, 40, rect, creditsPanel, this, "MIT License");
+
+	App->gui->CreateGuiElement(Types::slider, COORDS(-1500), 300, { 973, 786, 11, 157 }, nullptr, this);
 	
 	/*
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 50, 0, rect, banner, this);
