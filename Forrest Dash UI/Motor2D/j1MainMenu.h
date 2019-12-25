@@ -72,6 +72,7 @@ public:
 	GuiItem* settingsPanel;
 	GuiItem* creditsText;
 	bool camLock = false;
+
 private:
 
 	Section current_section = Section::main_menu;

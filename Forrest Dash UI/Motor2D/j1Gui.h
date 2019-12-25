@@ -17,6 +17,22 @@ enum class Types
 	slider,
 };
 
+struct Button_Definition
+{
+public:
+	Button_Definition() {}
+	Button_Definition(SDL_Rect idle_rect, SDL_Rect illuminated_rect, SDL_Rect pushed_rect)
+	{
+		this->idleRect = idle_rect;
+		this->illuminatedRect = illuminated_rect;
+		this->pushedRect = pushed_rect;
+	}
+
+	SDL_Rect idleRect = { 0,0,0,0 };
+	SDL_Rect illuminatedRect = { 0,0,0,0 };
+	SDL_Rect pushedRect = { 0,0,0,0 };
+};
+
 struct _TTF_Font;
 struct SDL_Color;
 
@@ -65,6 +81,9 @@ public:
 	bool focus;
 	SDL_Texture* texture;
 	SDL_Rect textureRect;
+	SDL_Rect idleRect;
+	SDL_Rect illuminatedRect;
+	SDL_Rect pushedRect;
 	bool isDynamic;
 	bool follow;
 };
@@ -95,7 +114,7 @@ public:
 class GuiButton : public GuiItem
 {
 public:
-	GuiButton(int, int, SDL_Rect, j1Module* callback = nullptr);
+	GuiButton(int, int, SDL_Rect, SDL_Rect, SDL_Rect, j1Module* callback = nullptr);
 	virtual ~GuiButton();
 
 };
@@ -159,7 +178,7 @@ public:
 
 	SDL_Texture* GetAtlas() const;
 	
-	GuiItem* CreateGuiElement(Types type, int x, int y, SDL_Rect, GuiItem* parentnode = NULL, j1Module* callback = nullptr, char* text = "");
+	GuiItem* CreateGuiElement(Types type, int x, int y, SDL_Rect, SDL_Rect, SDL_Rect, GuiItem* parentnode = NULL, j1Module* callback = nullptr, char* text = "");
 public:
 	bool buttonPressed;
 	int FocusIt;
