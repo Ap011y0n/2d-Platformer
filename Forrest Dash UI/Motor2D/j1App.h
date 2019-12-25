@@ -60,6 +60,9 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
+
+	bool Pause();
+	bool GetPause();
 private:
 
 	// Load config file
@@ -125,6 +128,7 @@ private:
 	mutable bool		want_to_save;
 	p2SString			load_game;
 	mutable p2SString	save_game;
+	bool				pause = false;
 
 	j1PerfTimer			ptimer;
 	j1PerfTimer			delaytimer;

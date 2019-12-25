@@ -81,6 +81,9 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("textures/bullside.png");
 	flag_tex = App->tex->Load("textures/flag.png");
 
+	if (App->GetPause())
+		App->Pause();
+
 	//SDL_Rect rect = { 2, 111, 226, 69 };
 	//text = App->gui->CreateGuiElement(Types::text, 25 * (1/ App->win->GetScale()), 5 * (1 / App->win->GetScale()),nullptr,0, this, "COINS");
 	return true;
@@ -120,7 +123,11 @@ bool j1Scene::PreUpdate(float dt)
 bool j1Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("Update_Scene", Profiler::Color::Tomato);
-
+	//PAUSE (WIP)
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		if (App->GetPause())
+			App->Pause();
+	}
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) {
 		App->audio->musicvolume(0.05, 1);
 		App->audio->fxvolume(0.05, 1);
@@ -155,6 +162,7 @@ bool j1Scene::Update(float dt)
 	if(current_level == "maplevel1.tmx")App->render->Blit(flag_tex, 3240 + current_animation->pivotx[current_animation->returnCurrentFrame()], 520 - r.h + current_animation->pivoty[current_animation->returnCurrentFrame()], &r);
 	if (current_level == "maplevel2.tmx")App->render->Blit(flag_tex, 3142 + current_animation->pivotx[current_animation->returnCurrentFrame()], 1767 - r.h + current_animation->pivoty[current_animation->returnCurrentFrame()], &r);
 	
+
 	return true;
 }
 

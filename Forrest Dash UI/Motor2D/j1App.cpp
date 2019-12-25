@@ -199,8 +199,10 @@ void j1App::PrepareUpdate()
 	last_sec_frame_count++;
 
 	//Calculate the dt: differential time since last frame
-	dt = frame_time.ReadSec();
-
+	if (!pause)
+		dt = frame_time.ReadSec();
+	else
+		dt = 0.0f;
 	frame_time.Start();
 }
 
@@ -385,6 +387,17 @@ void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
 }
+
+bool j1App::Pause()
+{
+	return pause = !pause;
+}
+
+bool j1App::GetPause()
+{
+	return pause;
+}
+
 
 bool j1App::LoadGameNow()
 {
