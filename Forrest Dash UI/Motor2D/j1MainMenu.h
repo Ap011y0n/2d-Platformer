@@ -71,6 +71,8 @@ public:
 	GuiItem* licenseText;
 	GuiItem* settingsPanel;
 	GuiItem* creditsText;
+	GuiItem* buttonToRepo;
+	GuiItem* buttonToWeb;
 	bool camLock = false;
 
 private:

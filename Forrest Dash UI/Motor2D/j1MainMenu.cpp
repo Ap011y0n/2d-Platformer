@@ -13,6 +13,7 @@
 #include "j1Textures.h"
 #include "j1FadeToBlack.h"
 #include "j1Gui.h"
+#include "j1Url.h"
 
 
 j1MainMenu::j1MainMenu()
@@ -131,7 +132,12 @@ bool j1MainMenu::Start()
 	
 	buttonCreditsToMenu = App->gui->CreateGuiElement(Types::button, 1900, 580, { 1980, 19, 98, 108 }, { 1980, 133, 98, 108 }, { 1980, 246, 98, 108 }, banner, this);
 
-	buttonSettingsToMenu = App->gui->CreateGuiElement(Types::button, -1500, 550, { 2087, 19, 98, 108 }, { 2087, 133, 98, 108 }, { 2087, 246, 98, 108 }, banner, this);
+	buttonSettingsToMenu = App->gui->CreateGuiElement(Types::button, -1550, 550, { 2087, 19, 98, 108 }, { 2087, 133, 98, 108 }, { 2087, 246, 98, 108 }, banner, this);
+
+	buttonToRepo = App->gui->CreateGuiElement(Types::button, 2480, 580, { 1661, 360, 98, 108 }, { 1661, 473, 98, 108 }, { 1661, 587, 98, 108 }, banner, this);
+	
+	buttonToWeb = App->gui->CreateGuiElement(Types::button, 460, 600, { 1661, 20, 98, 108 }, { 1661, 133, 98, 108 }, { 1661, 246, 98, 108 }, banner, this);
+
 	/*
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 50, 0, rect, banner, this);
 	text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");
@@ -256,6 +262,10 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	else if (item == buttonExit)
 	{
 		App->quitGame = true;
+	}
+	else if (item == buttonToRepo)
+	{
+		openUrl("https://github.com/Ap011y0n/2d-Platformer");
 	}
 }
 
