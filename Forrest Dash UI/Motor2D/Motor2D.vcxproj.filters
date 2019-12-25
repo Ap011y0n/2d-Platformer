@@ -178,6 +178,9 @@
     <ClInclude Include="j1Coin.h">
       <Filter>Modules\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="j1Url.h">
+      <Filter>Modules\Gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

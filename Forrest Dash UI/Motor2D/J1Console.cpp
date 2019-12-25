@@ -30,15 +30,15 @@ bool j1Console::Awake()
 
 bool j1Console::Start()
 {
-	InputText = App->gui->CreateGuiElement(Types::inputText, COORDS(100), 200, { 488, 569, 344, 61 }, nullptr, this);
+	//InputText = App->gui->CreateGuiElement(Types::inputText, COORDS(100), 200, { 488, 569, 344, 61 }, nullptr, this);
 	/*ConsoleText = App->gui->CreateGuiElement(Types::text, -10, -40, { 0, 0, 0, 0 }, InputText, this,"Console \n text");
 	temp = ConsoleText->GetText();*/
-
+	/*
 	for (int i = 0; i < MAXTEXT; i++) {
 		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 20, -20-i*40, { 0, 0, 0, 0 }, InputText, this, " ");
 		temp[i] = ConsoleText[i]->GetText();
 	}
-
+	*/
 
 	//graphics = App->font->Print("text \n text");
 	//textureRect = { 0,0,0,0 };

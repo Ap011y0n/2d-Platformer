@@ -12,6 +12,7 @@
 #include "j1Slime.h"
 #include "J1EntityManager.h"
 #include "J1Entity.h"
+#include "J1Gui.h"
 #include "j1Pathfinding.h"
 #include "j1Gui.h"
 #include "Brofiler/Brofiler.h"
@@ -216,7 +217,9 @@ bool j1Scene::Save(pugi::xml_node& data) const
 }
 void j1Scene::Nextmap() {
 	
+	
 	changeEntities = true;
+	App->gui->CleanUp();
 	App->map->CleanUp();
 	checkpoint = false;
 //	App->player->BarWidth = App->player->maxBarWidth;

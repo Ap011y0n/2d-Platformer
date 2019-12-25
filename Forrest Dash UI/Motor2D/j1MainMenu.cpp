@@ -1,3 +1,5 @@
+#include "p2Defs.h"
+#include "p2Log.h"
 #include "j1MainMenu.h"
 #include "j1Scene.h"
 #include "j1App.h"
@@ -11,6 +13,7 @@
 #include "j1Textures.h"
 #include "j1FadeToBlack.h"
 #include "j1Gui.h"
+#include "j1Url.h"
 
 
 j1MainMenu::j1MainMenu()
@@ -84,19 +87,56 @@ bool j1MainMenu::Awake()
 
 bool j1MainMenu::Start()
 {
-	graphics = App->tex->Load("gui/ui.png");
 	
 	
-	App->render->camera.x = -3060;
+	//Menu Sections
+	
+	camLock = false;
 
-	SDL_Rect rect{ 485, 829, 328, 103 };
+	moveToPoint[(int)Section::credits].create(-5060, 0);
+	moveToPoint[(int)Section::main_menu].create(-3060, 0);
+	moveToPoint[(int)Section::settings].create(-1060, 0);
 
-	banner = App->gui->CreateGuiElement(Types::image, COORDS(345), 30, rect, nullptr);
-	rect = { 2, 111, 226, 69 };
+	camPos.create(-3060, 0);
+	camSpeed = 1000.0f;
 
 	//Buttons
-	buttonNewGame = App->gui->CreateGuiElement(Types::button, 100, 350, rect, banner, this);
-	text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");
+	SDL_Rect rect = { 0, 0, 427, 218 };
+
+	banner = App->gui->CreateGuiElement(Types::image, COORDS(350), 30, rect,rect,rect, nullptr);
+	
+	rect = { 444, 169, 244, 65 };
+
+	buttonNewGame = App->gui->CreateGuiElement(Types::button, 95, 370, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, banner, this, NULL);
+	text = App->gui->CreateGuiElement(Types::text, 40, 14, rect,rect,rect, buttonNewGame, this, "NEW GAME");
+	
+	buttonContinue = App->gui->CreateGuiElement(Types::button, 95, 470, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, banner, this, NULL);
+	text = App->gui->CreateGuiElement(Types::text, 50, 14, rect,rect,rect, buttonContinue, this, "CONTINUE");
+	
+	buttonExit = App->gui->CreateGuiElement(Types::button, 95, 570, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, banner, this, NULL);
+	text = App->gui->CreateGuiElement(Types::text, 90, 14, rect,rect,rect, buttonExit, this, "EXIT");
+	
+	
+	buttonCredits = App->gui->CreateGuiElement(Types::button, 580, 600, { 1980, 360, 98, 108 }, { 1980, 473, 98, 108 }, { 1980, 587, 98, 108 }, banner, this);
+
+	buttonSettings = App->gui->CreateGuiElement(Types::button, -250, 600, { 2087, 700, 98, 108 }, { 2087, 814, 98, 108 }, { 2087, 927, 98, 108 }, banner, this);
+	
+	rect = { 760, 12, 886, 604 };
+	creditsPanel = App->gui->CreateGuiElement(Types::image, COORDS(2160), 40, rect,rect,rect, nullptr);
+	licenseText = App->gui->CreateGuiElement(Types::text, 325, 35, rect,rect,rect, creditsPanel, this, "MIT License");
+	rect = { 760, 617, 840, 503 };
+	creditsText = App->gui->CreateGuiElement(Types::image, COORDS(2160), 120, rect,rect,rect, nullptr);
+	
+	rect = { 760, 12, 886, 604 };
+	settingsPanel = App->gui->CreateGuiElement(Types::image, COORDS(-1850), 40, rect,rect,rect, nullptr);
+	
+	buttonCreditsToMenu = App->gui->CreateGuiElement(Types::button, 1900, 580, { 1980, 19, 98, 108 }, { 1980, 133, 98, 108 }, { 1980, 246, 98, 108 }, banner, this);
+
+	buttonSettingsToMenu = App->gui->CreateGuiElement(Types::button, -1550, 550, { 2087, 19, 98, 108 }, { 2087, 133, 98, 108 }, { 2087, 246, 98, 108 }, banner, this);
+
+	buttonToRepo = App->gui->CreateGuiElement(Types::button, 2480, 580, { 1661, 360, 98, 108 }, { 1661, 473, 98, 108 }, { 1661, 587, 98, 108 }, banner, this);
+	
+	buttonToWeb = App->gui->CreateGuiElement(Types::button, 460, 600, { 1661, 20, 98, 108 }, { 1661, 133, 98, 108 }, { 1661, 246, 98, 108 }, banner, this);
 
 	/*
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 50, 0, rect, banner, this);
@@ -120,8 +160,46 @@ bool j1MainMenu::PreUpdate()
 
 bool j1MainMenu::Update(float dt)
 {
-	SDL_Rect r = { 0, 0, 427, 218 };
-	App->render->Blit(graphics, COORDS(345), 30, &r);
+	
+	if(!camLock)
+	{
+		if (camVelocity.x < 0.0f)
+		{
+			if (camPos.x > moveToPoint[(int)current_section].x)
+			{
+				camPos.x += camVelocity.x * dt;
+			}
+
+			if (camPos.x < moveToPoint[(int)current_section].x)
+			{
+				camPos.x = moveToPoint[(int)current_section].x;
+				camVelocity.x = 0.0f;
+			}
+
+		}
+		else if (camVelocity.x > 0.0f)
+		{
+			if (camPos.x < moveToPoint[(int)current_section].x)
+			{
+				camPos.x += camVelocity.x * dt;
+			}
+
+			if (camPos.x > moveToPoint[(int)current_section].x)
+			{
+				camPos.x = moveToPoint[(int)current_section].x;
+				camVelocity.x = 0.0f;
+			}
+		}
+		else
+		{
+			camPos.x = moveToPoint[(int)current_section].x;
+		}
+
+		App->render->camera.x = camPos.x;
+		App->render->camera.y = camPos.y;
+	}
+	
+	
 
 	return true;
 }
@@ -161,8 +239,53 @@ void j1MainMenu::GuiInput(GuiItem* item)
 
 	if(item == buttonNewGame)
 	{
+		camLock = true;
 		App->fade->ChangeScene();
 
 	}
+	else if (item == buttonSettings)
+	{
+		MoveToSection(Section::settings);
+	}
+	else if (item == buttonCredits)
+	{
+		MoveToSection(Section::credits);
+	}
+	else if (item == buttonSettingsToMenu)
+	{
+		MoveToSection(Section::main_menu);
+	}
+	else if (item == buttonCreditsToMenu)
+	{
+		MoveToSection(Section::main_menu);
+	}
+	else if (item == buttonExit)
+	{
+		App->quitGame = true;
+	}
+	else if (item == buttonToRepo)
+	{
+		openUrl("https://github.com/Ap011y0n/2d-Platformer");
+	}
+}
+
+bool j1MainMenu::MoveToSection(Section section)
+{
+	current_section = section;
+
+	if (App->render->camera.x > moveToPoint[(int)section].x)
+	{
+		camVelocity.x = -camSpeed;
+	}
+	else if (App->render->camera.x < moveToPoint[(int)section].x)
+	{
+		camVelocity.x = camSpeed;
+	}
+	else
+	{
+		camVelocity.x = 0.0f;
+	}
+
+	return false;
 }
 
