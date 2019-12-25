@@ -86,7 +86,7 @@ bool j1MainMenu::Awake()
 
 bool j1MainMenu::Start()
 {
-	graphics = App->tex->Load("gui/ui.png");
+	
 	
 	//Menu Sections
 	
@@ -100,13 +100,16 @@ bool j1MainMenu::Start()
 	camSpeed = 1000.0f;
 
 	//Buttons
-	SDL_Rect rect{ 485, 829, 328, 103 };
+	SDL_Rect rect = { 0, 0, 427, 218 };
 
-	banner = App->gui->CreateGuiElement(Types::image, COORDS(345), 30, rect, nullptr);
-	rect = { 2, 111, 226, 69 };
+	banner = App->gui->CreateGuiElement(Types::image, COORDS(350), 30, rect, nullptr);
+	
+	//rect = { 444, 169, 244, 65 };
 
-	buttonNewGame = App->gui->CreateGuiElement(Types::button, 100, 350, rect, banner, this);
-	//text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");
+	//ButtonDef button_rectangle({ 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 });
+
+	buttonNewGame = App->gui->CreateGuiElement(Types::button, 100, 350, rect, banner, this, NULL);
+	text = App->gui->CreateGuiElement(Types::text, 40, 14, rect, buttonNewGame, this, "NEW GAME");
 
 	buttonCredits = App->gui->CreateGuiElement(Types::button, 450, 600, rect, banner, this);
 
@@ -116,10 +119,11 @@ bool j1MainMenu::Start()
 
 	buttonSettingsToMenu = App->gui->CreateGuiElement(Types::button, -1500, 600, rect, banner, this);
 
-	rect = { 22, 530, 444, 473 };
-	creditsPanel = App->gui->CreateGuiElement(Types::image, COORDS(2500), 30, rect, nullptr);
+	rect = { 760, 12, 886, 657 };
+	creditsPanel = App->gui->CreateGuiElement(Types::image, COORDS(2160), 40, rect, nullptr);
 	licenseText = App->gui->CreateGuiElement(Types::text, 40, 40, rect, creditsPanel, this, "MIT License");
 
+	settingsPanel = App->gui->CreateGuiElement(Types::image, COORDS(-1850), 40, rect, nullptr);
 	App->gui->CreateGuiElement(Types::slider, COORDS(-1500), 300, { 973, 786, 11, 157 }, nullptr, this);
 	
 	/*
@@ -183,8 +187,7 @@ bool j1MainMenu::Update(float dt)
 		App->render->camera.y = camPos.y;
 	}
 	
-	SDL_Rect r = { 0, 0, 427, 218 };
-	App->render->Blit(graphics, COORDS(350), 30, &r);
+	
 
 	return true;
 }

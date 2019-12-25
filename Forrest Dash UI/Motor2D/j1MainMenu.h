@@ -67,6 +67,7 @@ public:
 	GuiItem* buttonCreditsToMenu;
 	GuiItem* creditsPanel;
 	GuiItem* licenseText;
+	GuiItem* settingsPanel;
 	bool camLock = false;
 private:
 

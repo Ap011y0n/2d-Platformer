@@ -35,7 +35,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 
-	atlas = App->tex->Load("gui/atlas.png");
+	atlas = App->tex->Load("gui/ui.png");
 	FocusIt = 0;
 	return true;
 }
@@ -175,14 +175,14 @@ void j1Gui::sendInput(GuiItem* Item)
 //Ui Classes
 bool GuiItem::checkBoundaries(int x, int y) {
 	if (type == Types::button)
-	textureRect = { 644, 167, 226, 69 };
+	textureRect = { 444, 169, 244, 65 }; //idle Button
 	int posx, posy;
 	GetScreenPos(posx, posy);
 
 	if (x > posx && x < (posx + LocalRect.w))
 		if (y > posy && y < (posy + LocalRect.h)) {
 			if (type == Types::button)
-			textureRect = { 413, 167, 226, 69 };
+			textureRect = { 444, 413, 244, 66 }; //Illuminated Button
 			return true;
 		}
 	return false;
@@ -225,7 +225,7 @@ void GuiItem::Input() {
 	if (type == Types::button) {
 		if (focus == true)
 		{
-			textureRect = { 2, 111, 226, 69 };
+			textureRect = { 444, 661, 244, 65 }; //Pushed Button
 			App->gui->sendInput(this);
 		}
 
