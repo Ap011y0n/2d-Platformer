@@ -6,6 +6,7 @@
 
 struct SDL_Texture;
 class j1Entity;
+class GuiItem;
 
 class j1Scene : public j1Module
 {
@@ -51,7 +52,9 @@ public:
 	Animation* current_animation;
 	Animation flag;
 	bool checkpoint = false;
-	
+
+	GuiItem* banner;
+	GuiItem* text;
 };
 
 #endif // __j1SCENE_H__

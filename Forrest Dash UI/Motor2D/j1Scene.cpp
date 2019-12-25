@@ -13,6 +13,7 @@
 #include "J1EntityManager.h"
 #include "J1Entity.h"
 #include "j1Pathfinding.h"
+#include "j1Gui.h"
 #include "Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -78,6 +79,9 @@ bool j1Scene::Start()
 	
 	debug_tex = App->tex->Load("textures/bullside.png");
 	flag_tex = App->tex->Load("textures/flag.png");
+
+	//SDL_Rect rect = { 2, 111, 226, 69 };
+	//text = App->gui->CreateGuiElement(Types::text, 25 * (1/ App->win->GetScale()), 5 * (1 / App->win->GetScale()),nullptr,0, this, "COINS");
 	return true;
 }
 
@@ -124,7 +128,6 @@ bool j1Scene::Update(float dt)
 		App->audio->musicvolume(0.05, 0);
 		App->audio->fxvolume(0.05, 0);
 	}
-	
 	Debug();
 	App->map->Draw();
 

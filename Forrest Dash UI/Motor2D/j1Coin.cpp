@@ -39,7 +39,6 @@ j1Coin::j1Coin(int posx, int posy) : j1Entity(Types::coin)
 	r.x = position.x;
 	r.y = position.y;
 
-
 }
 
 j1Coin::~j1Coin()

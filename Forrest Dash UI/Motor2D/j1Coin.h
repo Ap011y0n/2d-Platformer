@@ -46,6 +46,5 @@ public:
 	SDL_Rect r;
 
 
-
 };
 #endif
