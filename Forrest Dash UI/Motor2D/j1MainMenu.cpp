@@ -108,8 +108,14 @@ bool j1MainMenu::Start()
 
 	//ButtonDef button_rectangle({ 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 });
 
-	buttonNewGame = App->gui->CreateGuiElement(Types::button, 100, 350, rect, banner, this, NULL);
+	buttonNewGame = App->gui->CreateGuiElement(Types::button, 95, 350, rect, banner, this, NULL);
 	text = App->gui->CreateGuiElement(Types::text, 40, 14, rect, buttonNewGame, this, "NEW GAME");
+
+	buttonContinue = App->gui->CreateGuiElement(Types::button, 95, 450, rect, banner, this, NULL);
+	text = App->gui->CreateGuiElement(Types::text, 50, 14, rect, buttonContinue, this, "CONTINUE");
+
+	buttonExit = App->gui->CreateGuiElement(Types::button, 95, 550, rect, banner, this, NULL);
+	text = App->gui->CreateGuiElement(Types::text, 90, 14, rect, buttonExit, this, "EXIT");
 
 	buttonCredits = App->gui->CreateGuiElement(Types::button, 450, 600, rect, banner, this);
 
@@ -119,12 +125,14 @@ bool j1MainMenu::Start()
 
 	buttonSettingsToMenu = App->gui->CreateGuiElement(Types::button, -1500, 600, rect, banner, this);
 
-	rect = { 760, 12, 886, 657 };
+	rect = { 760, 12, 886, 604 };
 	creditsPanel = App->gui->CreateGuiElement(Types::image, COORDS(2160), 40, rect, nullptr);
-	licenseText = App->gui->CreateGuiElement(Types::text, 40, 40, rect, creditsPanel, this, "MIT License");
-
+	rect = { 760, 617, 840, 431 };
+	licenseText = App->gui->CreateGuiElement(Types::text, 65, 40, rect, creditsPanel, this, "MIT License");
+	creditsText = App->gui->CreateGuiElement(Types::image, COORDS(2230), 120, rect, nullptr);
+	
+	rect = { 760, 12, 886, 604 };
 	settingsPanel = App->gui->CreateGuiElement(Types::image, COORDS(-1850), 40, rect, nullptr);
-	App->gui->CreateGuiElement(Types::slider, COORDS(-1500), 300, { 973, 786, 11, 157 }, nullptr, this);
 	
 	/*
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 50, 0, rect, banner, this);

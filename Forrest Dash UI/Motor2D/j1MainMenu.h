@@ -61,6 +61,8 @@ public:
 	GuiItem* banner;
 	GuiItem* text;
 	GuiItem* buttonNewGame;
+	GuiItem* buttonContinue;
+	GuiItem* buttonExit;
 	GuiItem* buttonSettings;
 	GuiItem* buttonCredits;
 	GuiItem* buttonSettingsToMenu;
@@ -68,6 +70,7 @@ public:
 	GuiItem* creditsPanel;
 	GuiItem* licenseText;
 	GuiItem* settingsPanel;
+	GuiItem* creditsText;
 	bool camLock = false;
 private:
 
