@@ -253,6 +253,10 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	{
 		MoveToSection(Section::main_menu);
 	}
+	else if (item == buttonExit)
+	{
+		App->quitGame = true;
+	}
 }
 
 bool j1MainMenu::MoveToSection(Section section)
