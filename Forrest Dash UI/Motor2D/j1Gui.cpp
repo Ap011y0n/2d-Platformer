@@ -280,6 +280,7 @@ void GuiItem::Input() {
 
 		if (focus == true)
 		{
+			SDL_DestroyTexture(texture);
 			texture = App->font->Print(App->input->text.GetString());
 			App->font->CalcSize(App->input->text.GetString(), textureRect.w, textureRect.h);
 			

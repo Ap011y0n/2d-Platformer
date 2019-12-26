@@ -39,13 +39,8 @@ bool j1Console::Start()
 	
 	for (int i = 0; i < MAXTEXT; i++) {
 		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 20, -i*40, { 0, 0, 0, 0 }, InputText, this, "- ");
-		
 	}
-	
 
-	/*graphics = App->font->Print("text \n text");
-	textureRect = { 0,0,0,0 };
-	App->font->CalcSize("text \n text", textureRect.w, textureRect.h);*/
 	return true;
 }
 
@@ -58,11 +53,17 @@ bool j1Console::PreUpdate(float dt)
 bool j1Console::Update(float dt)
 {
 //	App->render->Blit(graphics, COORDS(100), 400, NULL);
-	/*for (int i = 0; i < MAXTEXT; i++) {
+	for (int i = 0; i < MAXTEXT; i++) {
+	
 		ConsoleText[i]->SetText(App->temp[i].GetString());
+		SDL_DestroyTexture(ConsoleText[i]->texture);
+		p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(ConsoleText[i]->texture));
+		//[App->tex->textures.find(ConsoleText[i]->texture)]
+		App->tex->textures.del(texlist);
 		ConsoleText[i]->texture = App->font->Print(ConsoleText[i]->GetText());
+		
 		App->font->CalcSize(ConsoleText[i]->GetText(), ConsoleText[i]->textureRect.w, ConsoleText[i]->textureRect.h);
-	}*/
+	}
 	return true;
 }
 
@@ -97,13 +98,8 @@ void j1Console::GuiInput(GuiItem* item)
 	write(item->GetText());
 	ExecuteCommand(ReturnCommand(item->GetText()));
 
-	for (int i = 0; i < MAXTEXT; i++) {
-		ConsoleText[i]->SetText(App->temp[i].GetString());
-		ConsoleText[i]->texture = App->font->Print(ConsoleText[i]->GetText());
-		App->font->CalcSize(ConsoleText[i]->GetText(), ConsoleText[i]->textureRect.w, ConsoleText[i]->textureRect.h);
-	}
-
 	item->SetText("");
+	SDL_DestroyTexture(item->texture);
 	item->texture = App->font->Print(item->GetText());
 	App->font->CalcSize(item->GetText(), item->textureRect.w, item->textureRect.h);
 }
