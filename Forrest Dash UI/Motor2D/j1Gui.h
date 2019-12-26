@@ -36,12 +36,6 @@ public:
 struct _TTF_Font;
 struct SDL_Color;
 
-// Instrucciones:
-//Meter un nodo GuiItem en la clase guiItem (parent)
-//Nos servira para calcular todas las funciones de rect etc
-//El input, sacarlo fuera de checkboundaries
-//Checkboundaries sea un bool, en el momento que devuelva un true,llamar a su input y
-//cortar la iteración, solo detectaremos input de un elemento ui
 class GuiItem
 {
 
@@ -67,23 +61,29 @@ public:
 	virtual const char* GetText() const {
 		return "none";
 	}
+	virtual void setRects(SDL_Rect, SDL_Rect) {
+
+	}
 
 protected:
 	int LocalX;
 	int LocalY;
 	SDL_Rect LocalRect;
+	SDL_Rect idleRect;
+	SDL_Rect illuminatedRect;
+	SDL_Rect pushedRect;
 	
 
 public:
+	int initposx;
+	int initposy;
 	GuiItem* parent;
 	Types type;
 	j1Module* CallBack;
 	bool focus;
 	SDL_Texture* texture;
 	SDL_Rect textureRect;
-	SDL_Rect idleRect;
-	SDL_Rect illuminatedRect;
-	SDL_Rect pushedRect;
+
 	bool isDynamic;
 	bool follow;
 };
@@ -114,9 +114,10 @@ public:
 class GuiButton : public GuiItem
 {
 public:
-	GuiButton(int, int, SDL_Rect, SDL_Rect, SDL_Rect, j1Module* callback = nullptr);
+	GuiButton(int, int, SDL_Rect, j1Module* callback = nullptr);
 	virtual ~GuiButton();
-
+	void setRects(SDL_Rect, SDL_Rect);
+	
 };
 
 class InputText : public GuiItem
@@ -178,7 +179,7 @@ public:
 
 	SDL_Texture* GetAtlas() const;
 	
-	GuiItem* CreateGuiElement(Types type, int x, int y, SDL_Rect, SDL_Rect, SDL_Rect, GuiItem* parentnode = NULL, j1Module* callback = nullptr, char* text = "");
+	GuiItem* CreateGuiElement(Types type, int x, int y, SDL_Rect, GuiItem* parentnode = NULL, j1Module* callback = nullptr, char* text = "");
 public:
 	bool buttonPressed;
 	int FocusIt;

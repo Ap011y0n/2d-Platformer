@@ -12,7 +12,7 @@
 struct SDL_Texture;
 struct Collider;
 struct Anim;
-#define DT_CONVERTER 30
+
 enum wizard_state
 {
 	WD_IDLE = 0,

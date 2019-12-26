@@ -9,7 +9,6 @@
 #include "p2Point.h"
 #include "p2DynArray.h"
 
-#define DT_CONVERTER 60
 
 struct SDL_Texture;
 struct Collider;
