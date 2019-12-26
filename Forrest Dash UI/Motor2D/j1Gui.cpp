@@ -250,7 +250,7 @@ void GuiItem::SetFocus() {
 			App->input->DisableTextInput();
 			gui_list = gui_list->prev;
 		}
-		App->input->EnableTextInput(" ");
+		App->input->EnableTextInput("");
 		focus = true;
 		}
 	}

@@ -7,7 +7,14 @@
 #include "p2DynArray.h"
 
 #define COORDS(a) a+3000 
-
+enum class Commands
+{
+	God_Mode,
+	quit,
+	FPS,
+	map,
+	none
+};
 
 class GuiItem;
 
@@ -46,6 +53,9 @@ public:
 	
 	void write(const char*); 
 
+	Commands ReturnCommand(const char*);
+
+	void ExecuteCommand(Commands);
 
 public:
 	GuiItem* ConsoleText[MAXTEXT];
