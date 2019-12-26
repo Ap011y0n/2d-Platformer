@@ -417,6 +417,13 @@ void j1Scene::PauseMenu()
 	if (App->GetPause() == false){ App->Pause(); }
 	else { App->Pause(); }
 	LOG("menu de pausa");
-	/*SDL_Rect rect = { 760, 12, 886, 604 };
-	panel = App->gui->CreateGuiElement(Types::image, (App->win->width - 850) / 2, (App->win->height - 200) / 2, rect, rect, rect, nullptr, this);*/
+	SDL_Rect rect = { 760, 12, 886, 604 };
+	//panel = App->gui->CreateGuiElement(Types::image, (App->win->width - 850) / 2, (App->win->height - 200) / 2, rect, rect, rect, nullptr, this);
+
+	resumeButton = App->gui->CreateGuiElement(Types::button, 95, 370, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, panel, this, NULL);
+	text = App->gui->CreateGuiElement(Types::text, 40, 14, rect, rect, rect, resumeButton, this, "RESUME");
+
+
+	mainmenuButton = App->gui->CreateGuiElement(Types::button, 95, 570, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, panel, this, NULL);
+	text = App->gui->CreateGuiElement(Types::text, 50, 14, rect, rect, rect, mainmenuButton, this, "MAIN MENU");
 }

@@ -57,7 +57,10 @@ public:
 	Animation flag;
 	bool checkpoint = false;
 
-	GuiItem* banner;
+	GuiItem* text;
+	GuiItem* resumeButton;
+	GuiItem* mainmenuButton;
+	GuiItem* volume;
 	GuiItem* panel;
 };
 
