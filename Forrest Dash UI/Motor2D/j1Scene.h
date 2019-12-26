@@ -58,6 +58,8 @@ public:
 	bool checkpoint = false;
 
 	GuiItem* text;
+	GuiItem* text2;
+
 	GuiItem* resumeButton;
 	GuiItem* mainmenuButton;
 	GuiItem* volume;

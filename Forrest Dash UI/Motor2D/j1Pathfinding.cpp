@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1PathFinding.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
@@ -19,6 +20,7 @@ j1PathFinding::~j1PathFinding()
 bool j1PathFinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
+	App->console->write("Freeing pathfinding library");
 
 	last_path.Clear();
 	RELEASE_ARRAY(map);

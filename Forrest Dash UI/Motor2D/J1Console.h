@@ -7,9 +7,11 @@
 #include "p2DynArray.h"
 
 #define COORDS(a) a+3000 
-#define MAXTEXT 100
+
 
 class GuiItem;
+
+
 
 class j1Console : public j1Module
 {
@@ -41,16 +43,16 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	void GuiInput(GuiItem*);
+	
+	void write(const char*); 
+
 
 public:
-
+	GuiItem* ConsoleText[MAXTEXT];
 private:
 	GuiItem* InputText;
-	GuiItem* ConsoleText[MAXTEXT];
-	p2SString temp[MAXTEXT];
 
-	SDL_Texture* graphics = nullptr;
-	SDL_Rect textureRect;
+
 
 
 };

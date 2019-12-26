@@ -52,18 +52,28 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(win);
-	AddModule(render);
+
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
+
 	AddModule(scene);
 	AddModule(collision);
-	AddModule(EntityManager);
+
 	AddModule(pathfinding);
-	AddModule(menu);
-	AddModule(font);
+
 	AddModule(gui);
+	AddModule(font);
+
+	AddModule(EntityManager);
+
+	AddModule(menu);
 	AddModule(console);
+
+	AddModule(render);
+
+
+
 	AddModule(fade);
 	
 
@@ -185,8 +195,10 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 	pugi::xml_node ret;
 	pugi::xml_parse_result result = config_file.load_file("config.xml");
 
-	if(result == NULL)
-		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	if (result == NULL) {
+	LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	App->console->write("Could not load map xml file config.xml");
+	}
 	else
 		ret = config_file.child("config");
 
@@ -412,7 +424,7 @@ bool j1App::LoadGameNow()
 	if(result != NULL)
 	{
 		LOG("Loading new Game State from %s...", load_game.GetString());
-
+		App->console->write("Loading new Game State");
 		root = data.child("game_state");
 
 		p2List_item<j1Module*>* item = modules.start;
@@ -426,12 +438,20 @@ bool j1App::LoadGameNow()
 
 		data.reset();
 		if(ret == true)
+		{
 			LOG("...finished loading");
+		App->console->write("...finished loading");
+		}
 		else
+		{
 			LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+			App->console->write("...loading process interrupted");
+		}
 	}
-	else
+	else {
 		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
+		App->console->write("Could not parse game state xml file");
+	}
 
 	want_to_load = false;
 	return ret;
@@ -442,32 +462,35 @@ bool j1App::SavegameNow() const
 	bool ret = true;
 	save_game.create("save_game.xml");
 	LOG("Saving Game State to %s...", save_game.GetString());
-
+	App->console->write("Saving Game State");
 	// xml object were we will store all data
 	pugi::xml_document data;
 	pugi::xml_node root;
-	
+
 	root = data.append_child("game_state");
 
 	p2List_item<j1Module*>* item = modules.start;
 
-	while(item != NULL && ret == true)
+	while (item != NULL && ret == true)
 	{
 		ret = item->data->Save(root.append_child(item->data->name.GetString()));
 		item = item->next;
 	}
 
-	if(ret == true)
+	if (ret == true)
 	{
 		std::stringstream stream;
 		data.save(stream);
 
 		data.save_file(save_game.GetString());
 		LOG("... finished saving", save_game.GetString());
-	}
-	else
-		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+		App->console->write("... finished saving");
 
+	}
+	else {
+	LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+	App->console->write("Save process halted from an error");
+	}
 	data.reset();
 	want_to_save = false;
 	return ret;

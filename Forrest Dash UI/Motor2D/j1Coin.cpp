@@ -14,6 +14,7 @@
 #include "J1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 j1Coin::j1Coin(int posx, int posy) : j1Entity(Types::coin)
 {
@@ -56,6 +57,8 @@ bool j1Coin::Awake(pugi::xml_node& config)
 bool j1Coin::Start()
 {
 	LOG("Start Coins");
+	App->console->write("Start Coins");
+
 	App->EntityManager->cointex;
 	to_delete = false;
 	coinpickedfx = false;

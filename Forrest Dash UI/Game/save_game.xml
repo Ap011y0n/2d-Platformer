@@ -2,7 +2,6 @@
 <game_state>
 	<input />
 	<window />
-	<renderer />
 	<textures />
 	<audio>
 		<volumemusic value="0.300000012" />
@@ -13,24 +12,27 @@
 		<scenename name="maplevel1.tmx" />
 	</scene>
 	<collision />
+	<pathfinding />
+	<gui />
+	<fonts />
 	<entity>
 		<Entity type="slime">
-			<position pos_x="1447" pos_y="288" />
+			<position pos_x="1536" pos_y="288" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="2593" pos_y="924" />
+			<position pos_x="2496" pos_y="288" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="613" pos_y="495" />
+			<position pos_x="640" pos_y="416" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="4891" pos_y="416" />
+			<position pos_x="4864" pos_y="416" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="651" pos_y="731" />
+			<position pos_x="704" pos_y="544" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="2002" pos_y="565" />
+			<position pos_x="2080" pos_y="608" />
 		</Entity>
 		<Entity type="slime">
 			<position pos_x="3616" pos_y="800" />
@@ -99,6 +101,54 @@
 			<position pos_x="960" pos_y="448" />
 		</Entity>
 		<Entity type="coin">
+			<position pos_x="1824" pos_y="512" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1856" pos_y="512" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1120" pos_y="544" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1152" pos_y="544" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1184" pos_y="544" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1216" pos_y="544" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1248" pos_y="544" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1472" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1504" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1536" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1568" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1600" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2432" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2464" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2496" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2528" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
 			<position pos_x="2048" pos_y="640" />
 		</Entity>
 		<Entity type="coin">
@@ -114,13 +164,11 @@
 			<position pos_x="2176" pos_y="640" />
 		</Entity>
 		<Entity type="player">
-			<position pos_x="3240" pos_y="455" />
+			<position pos_x="100" pos_y="500" />
 		</Entity>
 	</entity>
-	<pathfinding />
 	<main_menu />
-	<fonts />
-	<gui />
 	<console />
+	<renderer />
 	<Fade />
 </game_state>

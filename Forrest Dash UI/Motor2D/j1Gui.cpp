@@ -8,6 +8,7 @@
 #include "j1Gui.h"
 #include "j1Window.h"
 #include "j1MainMenu.h"
+#include "J1Console.h"
 
 
 
@@ -26,6 +27,8 @@ j1Gui::~j1Gui()
 bool j1Gui::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading GUI atlas");
+	App->console->write("Loading GUI atlas");
+
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
@@ -99,10 +102,6 @@ bool j1Gui::Update(float dt)
 		if (gui_list->data->focus)
 			gui_list->data->Input();
 
-		
-
-		
-
 		gui_list->data->GetScreenPos(x, y);
 		//	LOG("%d", gui_list->data->textureRect.h);
 		
@@ -127,6 +126,7 @@ bool j1Gui::Update(float dt)
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
+	App->console->write("Freeing GUI");
 
 	p2List_item<GuiItem*>* gui_list = guiElements.end;
 

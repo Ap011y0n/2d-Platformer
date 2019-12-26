@@ -3,6 +3,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
+#include "J1Console.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -44,7 +45,7 @@ int main(int argc, char* args[])
 			// Allocate the engine --------------------------------------------
 			case CREATE:
 			LOG("CREATION PHASE ===============================");
-
+			//App->console->write("CREATION PHASE ===============================");
 			App = new j1App(argc, args);
 
 			if(App != NULL)
@@ -57,11 +58,15 @@ int main(int argc, char* args[])
 			// Awake all modules -----------------------------------------------
 			case AWAKE:
 			LOG("AWAKE PHASE ===============================");
+			App->console->write("AWAKE PHASE ===============================");
+
 			if(App->Awake() == true)
 				state = START;
 			else
 			{
 				LOG("ERROR: Awake failed");
+				App->console->write("ERROR: Awake failed");
+
 				state = FAIL;
 			}
 
@@ -70,15 +75,21 @@ int main(int argc, char* args[])
 			// Call all modules before first frame  ----------------------------
 			case START:
 			LOG("START PHASE ===============================");
+			App->console->write("START PHASE ===============================");
+
 			if(App->Start() == true)
 			{
 				state = LOOP;
 				LOG("UPDATE PHASE ===============================");
+				App->console->write("UPDATE PHASE ===============================");
+
 			}
 			else
 			{
 				state = FAIL;
 				LOG("ERROR: Start failed");
+				App->console->write("ERROR: Start failed");
+
 			}
 			break;
 
@@ -94,6 +105,8 @@ int main(int argc, char* args[])
 			// Cleanup allocated memory -----------------------------------------
 			case CLEAN:
 			LOG("CLEANUP PHASE ===============================");
+			App->console->write("CLEANUP PHASE ===============================");
+
 			if(App->CleanUp() == true)
 			{
 				RELEASE(App);
@@ -108,6 +121,8 @@ int main(int argc, char* args[])
 			// Exit with errors and shame ---------------------------------------
 			case FAIL:
 			LOG("Exiting with errors :(");
+			App->console->write("Exiting with errors :(");
+
 			result = EXIT_FAILURE;
 			state = EXIT;
 			break;
@@ -115,7 +130,7 @@ int main(int argc, char* args[])
 	}
 
 	LOG("... Bye! :)\n");
-
+	
 	// Dump memory leaks
 	return result;
 }

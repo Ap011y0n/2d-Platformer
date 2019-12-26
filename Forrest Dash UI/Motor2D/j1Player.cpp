@@ -16,6 +16,7 @@
 #include "j1entityManager.h"
 #include "j1Wizard.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 
 j1Player::j1Player(int posx, int posy) : j1Entity(Types::player)
@@ -23,7 +24,6 @@ j1Player::j1Player(int posx, int posy) : j1Entity(Types::player)
 	name.create("player");
 	initialPosition.x = posx;
 	initialPosition.y = posy;
-	LOG("Initial position %d, %d", posx, posy);
 	current_animation = NULL;
 	LoadAnimations("textures/adventurer_animations.tmx");
 
@@ -82,9 +82,6 @@ bool j1Player::Awake(pugi::xml_node& config)
 	playerWidth = config.child("player").child("playerWidth").attribute("value").as_int();
 	playerCentre = config.child("player").child("playerCentre").attribute("value").as_int();
 	
-	LOG("%d", gravity);
-
-	
 
 	return ret;
 
@@ -93,7 +90,9 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Load assets and declare variables value----------------------------------------------
 bool j1Player::Start()
 {
-	LOG("Awake :)");
+	LOG("Player Awake");
+	App->console->write("Player Awake");
+
 	bool ret = true;
 	to_delete = false;
 	BarWidth = 50;
@@ -119,6 +118,8 @@ bool j1Player::Start()
 	BarWidth = 50;
 
 	LOG("Loading player");
+	App->console->write("Loading player");
+
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
 
@@ -223,7 +224,6 @@ void j1Player::Movement(float dt) {
 		}
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP && state != DEATH && state != ATTACK)
 		{
-			LOG("Open fire");
 			if (aimbar.w >= 50)
 			{
 				aimbarw = 0;
@@ -848,7 +848,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (Godmode == false) 
 	{
 	if (c1 == EntityCollider && c2->type == COLLIDER_ENEMY) {
-		LOG("Damage");
 		BarWidth -= 15;
 		position.y -= 30;
 		DeathTimer = SDL_GetTicks();

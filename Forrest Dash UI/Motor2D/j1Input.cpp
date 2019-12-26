@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "SDL/include/SDL.h"
+#include "J1Console.h"
 
 #define MAX_KEYS 300
 
@@ -26,12 +27,16 @@ j1Input::~j1Input()
 bool j1Input::Awake(pugi::xml_node& config)
 {
 	LOG("Init SDL input event system");
+	App->console->write("Init SDL input event system");
+
 	bool ret = true;
 	SDL_Init(0);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+		//App->console->write("SDL_EVENTS could not initialize!");
+
 		ret = false;
 	}
 
@@ -147,6 +152,8 @@ bool j1Input::PreUpdate(float dt)
 bool j1Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
+	App->console->write("Quitting SDL event subsystem");
+
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
