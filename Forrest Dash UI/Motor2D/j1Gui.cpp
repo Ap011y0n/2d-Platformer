@@ -64,6 +64,14 @@ bool j1Gui::PreUpdate(float dt)
 		p2List_item<GuiItem*>* gui_list = guiElements.end;
 		while (gui_list && ret) {
 			int x, y;
+			if (gui_list->data->follow)
+			{
+				x = -App->render->camera.x + gui_list->data->initposx;
+				y = -App->render->camera.y + gui_list->data->initposy;
+				gui_list->data->SetLocalPos(x, y);
+			}
+
+			
 			App->input->GetMousePosition(x, y);
 			if (gui_list->data->isDynamic)
 			{
@@ -73,6 +81,7 @@ bool j1Gui::PreUpdate(float dt)
 					ret = false;
 				}
 			}
+		
 		
 			gui_list = gui_list->prev;
 		}
@@ -92,14 +101,7 @@ bool j1Gui::Update(float dt)
 
 		
 
-		if (gui_list->data->follow)
-		{
-			
-			x = -App->render->camera.x+ gui_list->data->initposx;
-			y = -App->render->camera.y+ gui_list->data->initposy;
-			gui_list->data->SetLocalPos(x, y);
-			LOG("%d, %d", x, y);
-		}
+		
 
 		gui_list->data->GetScreenPos(x, y);
 		//	LOG("%d", gui_list->data->textureRect.h);
@@ -113,9 +115,11 @@ bool j1Gui::Update(float dt)
 		}
 	//	SDL_Rect	r = { 0, 0, 427, 218 };
 	//	App->render->Blit(App->menu->graphics, 3480, 390, &r);
+
 		gui_list = gui_list->next;
 	}
 
+	DeleteGuiElement();
 	return true;
 }
 
@@ -124,9 +128,26 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
-	//guiElements.clear();
+	p2List_item<GuiItem*>* gui_list = guiElements.end;
+
+	while (gui_list != NULL)
+	{
+		RELEASE(gui_list->data);
+		gui_list = gui_list->prev;
+	}
+	guiElements.clear();
 
 	return true;
+}
+
+void j1Gui::DeleteGuiElement() {
+
+	p2List_item<GuiItem*>* gui_list = guiElements.end;
+	while (gui_list) {
+		if (gui_list->data->to_delete == true)
+			guiElements.del(gui_list);
+		gui_list = gui_list->prev;
+	}
 }
 
 // const getter for atlas
@@ -333,7 +354,7 @@ GuiImage::GuiImage(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiItem
 	focus = false;
 	follow = false;
 	CallBack = callback;
-
+	to_delete = false;
 }
 
 GuiImage::~GuiImage() {
@@ -355,6 +376,7 @@ GuiText::GuiText(int x, int y, SDL_Rect texrect,  char* inputtext, j1Module* cal
 	CallBack = callback;
 	texture = App->font->Print(text, color);
 	App->font->CalcSize(text, textureRect.w, textureRect.h);
+	to_delete = false;
 
 }
 
@@ -374,6 +396,7 @@ GuiButton::GuiButton(int x, int y, SDL_Rect idle_rect, j1Module* callback) : Gui
 	texture = App->gui->GetAtlas();
 	focus = false;
 	CallBack = callback;
+	to_delete = false;
 
 }
 
@@ -401,7 +424,8 @@ InputText::InputText(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	focus = false;
 	CallBack = callback;
 
-	
+	to_delete = false;
+
 	image = App->gui->CreateGuiElement(Types::image, 0, 0, texrect, this);
 	text = App->gui->CreateGuiElement(Types::text, 20, 15, texrect, this, callback, "Insert Text");
 	text->isDynamic = true;
@@ -409,7 +433,7 @@ InputText::InputText(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 }
 
 InputText::~InputText() {
-
+	
 }
 
 //--------------------------------------------------------------
@@ -429,7 +453,8 @@ GuiSlider::GuiSlider(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	ScrollThumb = App->gui->CreateGuiElement(Types::image, -3, 0, { 843, 322, 15, 26 }, this, callback);
 	
 	ScrollThumb->isDynamic = true;
-	
+	to_delete = false;
+
 }
 
 GuiSlider::~GuiSlider() {

@@ -14,7 +14,7 @@
 #include "J1Entity.h"
 #include "J1Gui.h"
 #include "j1Pathfinding.h"
-#include "j1Gui.h"
+#include "j1MainMenu.h"
 #include "Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -227,7 +227,7 @@ void j1Scene::Nextmap() {
 	
 	
 	changeEntities = true;
-	App->gui->CleanUp();
+	App->menu->CleanUp();
 	App->map->CleanUp();
 	checkpoint = false;
 //	App->player->BarWidth = App->player->maxBarWidth;

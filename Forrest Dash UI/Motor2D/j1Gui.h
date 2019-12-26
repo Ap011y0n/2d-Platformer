@@ -83,7 +83,7 @@ public:
 	bool focus;
 	SDL_Texture* texture;
 	SDL_Rect textureRect;
-
+	bool to_delete;
 	bool isDynamic;
 	bool follow;
 };
@@ -175,6 +175,8 @@ public:
 	// Gui creation functions
 	void IterateFocus();
 
+	void DeleteGuiElement();
+
 	void sendInput(GuiItem* item);
 
 	SDL_Texture* GetAtlas() const;
@@ -188,7 +190,6 @@ public:
 private:
 	p2SString atlas_file_name;
 	SDL_Texture* atlas;
-
 
 };
 

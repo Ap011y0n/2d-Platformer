@@ -59,6 +59,8 @@ public:
 	SDL_Texture* graphics = nullptr;
 	GuiItem* banner;
 	GuiItem* text;
+	GuiItem* text1;
+	GuiItem* text2;
 	GuiItem* buttonNewGame;
 	GuiItem* buttonContinue;
 	GuiItem* buttonExit;

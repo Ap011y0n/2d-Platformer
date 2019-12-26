@@ -30,7 +30,7 @@ bool j1Console::Awake()
 
 bool j1Console::Start()
 {
-	InputText = App->gui->CreateGuiElement(Types::inputText, 100, 200, { 488, 569, 344, 61 }, nullptr, this);
+	InputText = App->gui->CreateGuiElement(Types::inputText, 30, 200, { 488, 569, 344, 61 }, nullptr, this);
 	InputText->follow = true;
 	//ConsoleText = App->gui->CreateGuiElement(Types::text, -10, -40, { 0, 0, 0, 0 }, InputText, this,"Console \n text");
 	//temp = ConsoleText->GetText();
@@ -47,7 +47,7 @@ bool j1Console::Start()
 	return true;
 }
 
-bool j1Console::PreUpdate()
+bool j1Console::PreUpdate(float dt)
 {
 
 	return true;

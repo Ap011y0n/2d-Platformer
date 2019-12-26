@@ -114,12 +114,12 @@ bool j1MainMenu::Start()
 	buttonContinue = App->gui->CreateGuiElement(Types::button, 95, 470, { 444, 169, 244, 65 }, banner, this, NULL);
 	buttonContinue->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
 
-	text = App->gui->CreateGuiElement(Types::text, 50, 14, rect, buttonContinue, this, "CONTINUE");
+	text1 = App->gui->CreateGuiElement(Types::text, 50, 14, rect, buttonContinue, this, "CONTINUE");
 	
 	buttonExit = App->gui->CreateGuiElement(Types::button, 95, 570, { 444, 169, 244, 65 }, banner, this, NULL);
 	buttonExit->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
 
-	text = App->gui->CreateGuiElement(Types::text, 90, 14, rect, buttonExit, this, "EXIT");
+	text2 = App->gui->CreateGuiElement(Types::text, 90, 14, rect, buttonExit, this, "EXIT");
 	
 	
 	buttonCredits = App->gui->CreateGuiElement(Types::button, 580, 600, { 1980, 360, 98, 108 }, banner, this);
@@ -223,7 +223,24 @@ bool j1MainMenu::PostUpdate(float dt)
 
 bool j1MainMenu::CleanUp()
 {
-	
+	banner->to_delete = true;
+	text->to_delete = true;
+	text1->to_delete = true;
+	text2->to_delete = true;
+	buttonNewGame->to_delete = true;
+	buttonContinue->to_delete = true;
+	buttonExit->to_delete = true;
+	buttonSettings->to_delete = true;
+	buttonCredits->to_delete = true;
+	buttonSettingsToMenu->to_delete = true;
+	buttonCreditsToMenu->to_delete = true;
+	creditsPanel->to_delete = true;
+	licenseText->to_delete = true;
+	settingsPanel->to_delete = true;
+	creditsText->to_delete = true;
+	buttonToRepo->to_delete = true;
+	buttonToWeb->to_delete = true;
+
 	return true;
 }
 
