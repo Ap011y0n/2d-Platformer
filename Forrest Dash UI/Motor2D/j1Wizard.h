@@ -12,7 +12,7 @@
 struct SDL_Texture;
 struct Collider;
 struct Anim;
-
+#define DT_CONVERTER 30
 enum wizard_state
 {
 	WD_IDLE = 0,
@@ -35,7 +35,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 	bool Pathfinding(float dt);
 	void setAnimation(float);
-	void Movement();
+	void Movement(float dt);
 
 private:
 

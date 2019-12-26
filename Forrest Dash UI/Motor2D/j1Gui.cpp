@@ -6,6 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Gui.h"
+#include "j1Window.h"
 #include "j1MainMenu.h"
 
 
@@ -28,6 +29,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+	
 	return ret;
 }
 

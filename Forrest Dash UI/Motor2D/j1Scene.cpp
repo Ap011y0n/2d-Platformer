@@ -124,10 +124,10 @@ bool j1Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("Update_Scene", Profiler::Color::Tomato);
 	//PAUSE (WIP)
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
-		if (App->GetPause())
-			App->Pause();
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		PauseMenu();
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) {
 		App->audio->musicvolume(0.05, 1);
 		App->audio->fxvolume(0.05, 1);
@@ -176,8 +176,8 @@ bool j1Scene::PostUpdate(float dt)
 		CreateEntities();
 		changeEntities = false;
 	}
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	/*if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;*/
 
 	
 
@@ -412,3 +412,11 @@ bool j1Scene::CreateEntities() {
 	return ret;
 }
 
+void j1Scene::PauseMenu()
+{
+	if (App->GetPause() == false){ App->Pause(); }
+	else { App->Pause(); }
+	LOG("menu de pausa");
+	/*SDL_Rect rect = { 760, 12, 886, 604 };
+	panel = App->gui->CreateGuiElement(Types::image, (App->win->width - 850) / 2, (App->win->height - 200) / 2, rect, rect, rect, nullptr, this);*/
+}

@@ -54,7 +54,6 @@ public:
 private:
 
 	bool MoveToSection(Section menu_section);
-
 public:
 
 	SDL_Texture* graphics = nullptr;

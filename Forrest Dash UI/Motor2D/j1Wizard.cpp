@@ -91,7 +91,7 @@ bool j1Wizard::Start()
 bool j1Wizard::Update(float dt)
 {
 	BROFILER_CATEGORY("Update_Wizard", Profiler::Color::Orchid);
-	Movement();
+	Movement(dt);
 	setAnimation(dt);
 	if (!App->EntityManager->GetPlayer()->is_death) {
 	if (App->EntityManager->GetPlayer()->position.x > position.x - rangeX && App->EntityManager->GetPlayer()->position.x < position.x + rangeX && App->EntityManager->GetPlayer()->position.y + rangeY && App->EntityManager->GetPlayer()->position.y - rangeY)
@@ -112,7 +112,7 @@ bool j1Wizard::PostUpdate(float dt)
 }
 
 
-void j1Wizard::Movement()
+void j1Wizard::Movement(float dt)
 {
 	if (wizarDead) state = WD_DEATH;
 	if (state != WD_PATHFINDING && state != WD_DEATH)
@@ -130,13 +130,13 @@ void j1Wizard::Movement()
 
 		if (patroll == true)
 		{
-			position.x -= 2;
+			position.x -= 2*dt* DT_CONVERTER;
 			state = WD_FORWARD;
 			flip = SDL_FLIP_NONE;
 		}
 		if (patrolr == true)
 		{
-			position.x += 2;
+			position.x += 2 * dt * DT_CONVERTER;
 			flip = SDL_FLIP_HORIZONTAL;
 			state = WD_FORWARD;
 		}

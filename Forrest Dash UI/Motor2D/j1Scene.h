@@ -4,6 +4,8 @@
 #include "j1Module.h"
 #include "Animation.h"
 
+#define COORDS(a) a+3000 
+
 struct SDL_Texture;
 class j1Entity;
 class GuiItem;
@@ -44,6 +46,8 @@ public:
 	
 private:
 	bool changeEntities = false;
+	void PauseMenu();
+	void DestroyMenu();
 public:
 	p2SString current_level;
 	p2List<p2SString> levels;
@@ -54,7 +58,7 @@ public:
 	bool checkpoint = false;
 
 	GuiItem* banner;
-	GuiItem* text;
+	GuiItem* panel;
 };
 
 #endif // __j1SCENE_H__

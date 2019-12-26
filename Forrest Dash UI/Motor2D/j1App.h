@@ -128,7 +128,7 @@ private:
 	mutable bool		want_to_save;
 	p2SString			load_game;
 	mutable p2SString	save_game;
-	bool				pause = false;
+	bool				pause = true;
 
 	j1PerfTimer			ptimer;
 	j1PerfTimer			delaytimer;
