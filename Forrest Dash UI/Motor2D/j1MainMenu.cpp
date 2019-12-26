@@ -103,41 +103,51 @@ bool j1MainMenu::Start()
 	//Buttons
 	SDL_Rect rect = { 0, 0, 427, 218 };
 
-	banner = App->gui->CreateGuiElement(Types::image, COORDS(350), 30, rect,rect,rect, nullptr);
+	banner = App->gui->CreateGuiElement(Types::image, COORDS(350), 30, rect, nullptr);
 	
 	rect = { 444, 169, 244, 65 };
 
-	buttonNewGame = App->gui->CreateGuiElement(Types::button, 95, 370, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, banner, this, NULL);
-	text = App->gui->CreateGuiElement(Types::text, 40, 14, rect,rect,rect, buttonNewGame, this, "NEW GAME");
+	buttonNewGame = App->gui->CreateGuiElement(Types::button, 95, 370, { 444, 169, 244, 65 }, banner, this, NULL);
+	buttonNewGame->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
+	text = App->gui->CreateGuiElement(Types::text, 40, 14, rect, buttonNewGame, this, "NEW GAME");
 	
-	buttonContinue = App->gui->CreateGuiElement(Types::button, 95, 470, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, banner, this, NULL);
-	text = App->gui->CreateGuiElement(Types::text, 50, 14, rect,rect,rect, buttonContinue, this, "CONTINUE");
-	
-	buttonExit = App->gui->CreateGuiElement(Types::button, 95, 570, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, banner, this, NULL);
-	text = App->gui->CreateGuiElement(Types::text, 90, 14, rect,rect,rect, buttonExit, this, "EXIT");
-	
-	
-	buttonCredits = App->gui->CreateGuiElement(Types::button, 580, 600, { 1980, 360, 98, 108 }, { 1980, 473, 98, 108 }, { 1980, 587, 98, 108 }, banner, this);
+	buttonContinue = App->gui->CreateGuiElement(Types::button, 95, 470, { 444, 169, 244, 65 }, banner, this, NULL);
+	buttonContinue->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
 
-	buttonSettings = App->gui->CreateGuiElement(Types::button, -250, 600, { 2087, 700, 98, 108 }, { 2087, 814, 98, 108 }, { 2087, 927, 98, 108 }, banner, this);
+	text = App->gui->CreateGuiElement(Types::text, 50, 14, rect, buttonContinue, this, "CONTINUE");
 	
+	buttonExit = App->gui->CreateGuiElement(Types::button, 95, 570, { 444, 169, 244, 65 }, banner, this, NULL);
+	buttonExit->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
+
+	text = App->gui->CreateGuiElement(Types::text, 90, 14, rect, buttonExit, this, "EXIT");
+	
+	
+	buttonCredits = App->gui->CreateGuiElement(Types::button, 580, 600, { 1980, 360, 98, 108 }, banner, this);
+	buttonCredits->setRects({ 1980, 473, 98, 108 }, { 1980, 587, 98, 108 });
+
+	buttonSettings = App->gui->CreateGuiElement(Types::button, -250, 600, { 2087, 700, 98, 108 }, banner, this);
+	buttonSettings->setRects({ 1980, 473, 98, 108 }, { 1980, 587, 98, 108 });
+
 	rect = { 760, 12, 886, 604 };
-	creditsPanel = App->gui->CreateGuiElement(Types::image, COORDS(2160), 40, rect,rect,rect, nullptr);
-	licenseText = App->gui->CreateGuiElement(Types::text, 325, 35, rect,rect,rect, creditsPanel, this, "MIT License");
+	creditsPanel = App->gui->CreateGuiElement(Types::image, COORDS(2160), 40, rect, nullptr);
+	licenseText = App->gui->CreateGuiElement(Types::text, 325, 35, rect, creditsPanel, this, "MIT License");
 	rect = { 760, 617, 840, 503 };
-	creditsText = App->gui->CreateGuiElement(Types::image, COORDS(2160), 120, rect,rect,rect, nullptr);
+	creditsText = App->gui->CreateGuiElement(Types::image, COORDS(2160), 120, rect, nullptr);
 	
 	rect = { 760, 12, 886, 604 };
-	settingsPanel = App->gui->CreateGuiElement(Types::image, COORDS(-1850), 40, rect,rect,rect, nullptr);
+	settingsPanel = App->gui->CreateGuiElement(Types::image, COORDS(-1850), 40, rect, nullptr);
 	
-	buttonCreditsToMenu = App->gui->CreateGuiElement(Types::button, 1900, 580, { 1980, 19, 98, 108 }, { 1980, 133, 98, 108 }, { 1980, 246, 98, 108 }, banner, this);
+	buttonCreditsToMenu = App->gui->CreateGuiElement(Types::button, 1900, 580, { 1980, 19, 98, 108 }, banner, this);
+	buttonCreditsToMenu->setRects({ 1980, 133, 98, 108 }, { 1980, 246, 98, 108 });
 
-	buttonSettingsToMenu = App->gui->CreateGuiElement(Types::button, -1550, 550, { 2087, 19, 98, 108 }, { 2087, 133, 98, 108 }, { 2087, 246, 98, 108 }, banner, this);
+	buttonSettingsToMenu = App->gui->CreateGuiElement(Types::button, -1550, 550, { 2087, 19, 98, 108 }, banner, this);
+	buttonSettingsToMenu->setRects({ 2087, 133, 98, 108 }, { 2087, 246, 98, 108 });
 
-	buttonToRepo = App->gui->CreateGuiElement(Types::button, 2480, 580, { 1661, 360, 98, 108 }, { 1661, 473, 98, 108 }, { 1661, 587, 98, 108 }, banner, this);
-	
-	buttonToWeb = App->gui->CreateGuiElement(Types::button, 460, 600, { 1661, 20, 98, 108 }, { 1661, 133, 98, 108 }, { 1661, 246, 98, 108 }, banner, this);
+	buttonToRepo = App->gui->CreateGuiElement(Types::button, 2480, 580, { 1661, 360, 98, 108 }, banner, this);
+	buttonToRepo->setRects({ 1661, 473, 98, 108 }, { 1661, 587, 98, 108 });
 
+	buttonToWeb = App->gui->CreateGuiElement(Types::button, 460, 600, { 1661, 20, 98, 108 }, banner, this);
+	buttonToWeb->setRects({ 1661, 133, 98, 108 }, { 1661, 246, 98, 108 });
 	/*
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 50, 0, rect, banner, this);
 	text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");

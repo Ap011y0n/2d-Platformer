@@ -90,8 +90,20 @@ bool j1Gui::Update(float dt)
 		if (gui_list->data->focus)
 			gui_list->data->Input();
 
+		
+
+		if (gui_list->data->follow)
+		{
+			
+			x = -App->render->camera.x+ gui_list->data->initposx;
+			y = -App->render->camera.y+ gui_list->data->initposy;
+			gui_list->data->SetLocalPos(x, y);
+			LOG("%d, %d", x, y);
+		}
+
 		gui_list->data->GetScreenPos(x, y);
 		//	LOG("%d", gui_list->data->textureRect.h);
+		
 		if (gui_list->data->type == Types::text) {
 		App->render->Blit(gui_list->data->texture, x, y, &gui_list->data->textureRect);
 	}
@@ -112,7 +124,7 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
-	guiElements.clear();
+	//guiElements.clear();
 
 	return true;
 }
@@ -152,13 +164,13 @@ GuiItem::~GuiItem() {
 }
 
 
-GuiItem* j1Gui::CreateGuiElement(Types type, int x, int y, SDL_Rect rect, SDL_Rect illuminated, SDL_Rect pushed, GuiItem* parentnode, j1Module* callback, char* text) {
+GuiItem* j1Gui::CreateGuiElement(Types type, int x, int y, SDL_Rect rect, GuiItem* parentnode, j1Module* callback, char* text) {
 
 	GuiItem* ret;
 	switch (type) {
 	case Types::image: ret = new GuiImage(x, y, rect, callback); ret->parent = parentnode; break;
 	case Types::text: ret = new GuiText(x, y, rect, text, callback); ret->parent = parentnode; break;
-	case Types::button: ret = new GuiButton(x, y, rect, illuminated, pushed, callback); ret->parent = parentnode; break;
+	case Types::button: ret = new GuiButton(x, y, rect, callback); ret->parent = parentnode; break;
 	case Types::inputText: ret = new InputText(x, y, rect, callback); ret->parent = parentnode; break;
 	case Types::slider: ret = new GuiSlider(x, y, rect, callback); ret->parent = parentnode; break;
 	}
@@ -311,8 +323,9 @@ void GuiItem::SetLocalPos(int& x, int& y) {
 //-------------------------------------------------------------
 GuiImage::GuiImage(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiItem() {
 	type = Types::image;
-	LocalX = x;
-	LocalY = y;
+	LocalX = initposx = x;
+	LocalY = initposy = y;
+	
 	textureRect = texrect;
 	LocalRect = textureRect;
 	isDynamic = false;
@@ -330,8 +343,8 @@ GuiImage::~GuiImage() {
 GuiText::GuiText(int x, int y, SDL_Rect texrect,  char* inputtext, j1Module* callback) : GuiItem() {
 	type = Types::text;
 	text = inputtext;
-	LocalX = x;
-	LocalY = y;
+	LocalX = initposx = x;
+	LocalY = initposy = y;
 	LocalRect = texrect;
 	isDynamic = false;
 	focus = false;
@@ -349,14 +362,12 @@ GuiText::~GuiText() {
 
 }
 //-------------------------------------------------------------
-GuiButton::GuiButton(int x, int y, SDL_Rect idle_rect, SDL_Rect illuminated_rect, SDL_Rect pushed_rect, j1Module* callback) : GuiItem() {
+GuiButton::GuiButton(int x, int y, SDL_Rect idle_rect, j1Module* callback) : GuiItem() {
 	type = Types::button;
-	LocalX = x;
-	LocalY = y;
+	LocalX = initposx = x;
+	LocalY = initposy = y;
 	textureRect = idle_rect;
 	idleRect = idle_rect;
-	illuminatedRect = illuminated_rect;
-	pushedRect = pushed_rect;
 	LocalRect = textureRect;
 	isDynamic = true;
 	follow = false;
@@ -370,12 +381,18 @@ GuiButton::~GuiButton() {
 
 }
 
+
+void GuiButton::setRects(SDL_Rect iluminated, SDL_Rect pushed) {
+
+	illuminatedRect = iluminated;
+	pushedRect = pushed;
+}
 //--------------------------------------------------------------
 InputText::InputText(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiItem()
 	{
 	type = Types::inputText;
-	LocalX = x;
-	LocalY = y;
+	LocalX = initposx = x;
+	LocalY = initposy = y;
 	textureRect = { 0, 0, 0, 0 };
 	LocalRect = textureRect;
 	isDynamic = true;
@@ -385,8 +402,8 @@ InputText::InputText(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	CallBack = callback;
 
 	
-	image = App->gui->CreateGuiElement(Types::image, 0, 0, texrect, texrect, texrect, this);
-	text = App->gui->CreateGuiElement(Types::text, 20, 15, texrect, texrect, texrect, this, callback, "Insert Text");
+	image = App->gui->CreateGuiElement(Types::image, 0, 0, texrect, this);
+	text = App->gui->CreateGuiElement(Types::text, 20, 15, texrect, this, callback, "Insert Text");
 	text->isDynamic = true;
 
 }
@@ -399,8 +416,8 @@ InputText::~InputText() {
 GuiSlider::GuiSlider(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiItem()
 {
 	type = Types::slider;
-	LocalX = x;
-	LocalY = y;
+	LocalX = initposx = x;
+	LocalY = initposy = y;
 	textureRect = { 0, 0, 0, 0 };
 	LocalRect = textureRect;
 	isDynamic = false;
@@ -408,8 +425,8 @@ GuiSlider::GuiSlider(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	texture = App->gui->GetAtlas();
 	focus = false;
 	CallBack = callback;
-	Image = App->gui->CreateGuiElement(Types::image, 0, 0, texrect, texrect, texrect, this);
-	ScrollThumb = App->gui->CreateGuiElement(Types::image, -3, 0, { 843, 322, 15, 26 }, texrect, texrect, this, callback);
+	Image = App->gui->CreateGuiElement(Types::image, 0, 0, texrect, this);
+	ScrollThumb = App->gui->CreateGuiElement(Types::image, -3, 0, { 843, 322, 15, 26 }, this, callback);
 	
 	ScrollThumb->isDynamic = true;
 	

@@ -103,6 +103,7 @@ bool j1App::Awake()
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
 
+	pause = false;
 	bool ret = false;
 	cap = true;
 	config = LoadConfig(config_file);
