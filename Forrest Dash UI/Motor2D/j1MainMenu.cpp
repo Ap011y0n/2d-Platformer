@@ -126,7 +126,7 @@ bool j1MainMenu::Start()
 	buttonCredits->setRects({ 1980, 473, 98, 108 }, { 1980, 587, 98, 108 });
 
 	buttonSettings = App->gui->CreateGuiElement(Types::button, -250, 600, { 2087, 700, 98, 108 }, banner, this);
-	buttonSettings->setRects({ 1980, 473, 98, 108 }, { 1980, 587, 98, 108 });
+	buttonSettings->setRects({ 2087, 814, 98, 108 }, { 2087, 927, 98, 108 });
 
 	rect = { 760, 12, 886, 604 };
 	creditsPanel = App->gui->CreateGuiElement(Types::image, COORDS(2160), 40, rect, nullptr);
