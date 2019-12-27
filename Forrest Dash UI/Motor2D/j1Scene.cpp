@@ -422,20 +422,21 @@ void j1Scene::PauseMenu()
 {
 	if (App->GetPause() == false) { App->Pause(); }
 	LOG("menu de pausa");
-	SDL_Rect rect = { 37, 260, 293, 354 };
-	panel = App->gui->CreateGuiElement(Types::image, (App->win->width - 320) / 2, (App->win->height - 310) / 2, rect, nullptr, this);
+	SDL_Rect rect = { 0, 764, 643, 356 };
+	panel = App->gui->CreateGuiElement(Types::image, (App->win->width - 643) / 2, (App->win->height - 310) / 2, rect, nullptr, this);
 	panel->follow = true;
-	resumeButton = App->gui->CreateGuiElement(Types::button, 30, 20, { 444, 169, 244, 65 }, panel, this, NULL);
+	resumeButton = App->gui->CreateGuiElement(Types::button, 20, 100, { 444, 169, 244, 65 }, panel, this, NULL);
 	resumeButton->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
 	text = App->gui->CreateGuiElement(Types::text, 30, 14, rect, resumeButton, this, "RESUME");
 
-	mainmenuButton = App->gui->CreateGuiElement(Types::button, 30, 100, { 444, 169, 244, 65 }, panel, this, NULL);
+	mainmenuButton = App->gui->CreateGuiElement(Types::button, 20, 180, { 444, 169, 244, 65 }, panel, this, NULL);
 	mainmenuButton->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
 	text2 = App->gui->CreateGuiElement(Types::text, 30, 14, rect, mainmenuButton, this, "MAIN MENU");
-
-	
-	
-
+	scrollMusic = App->gui->CreateGuiElement(Types::slider, 420, 130, { 28, 257, 12, 189 }, panel, this);
+	scrollFx = App->gui->CreateGuiElement(Types::slider, 550, 130, { 28, 257, 12, 189 }, panel, this);
+	text = App->gui->CreateGuiElement(Types::text, 300, 280, rect, panel, this, "Music");
+	text = App->gui->CreateGuiElement(Types::text, 490, 280, rect, panel, this, "Fx");
+	soundLogo = App->gui->CreateGuiElement(Types::image, 450, 30, { 1884, 379, 72, 71 }, panel, this);
 
 	/*volume = App->gui->CreateGuiElement(Types::slider, 40, 180, rect, panel, this);*/
 }
@@ -448,6 +449,9 @@ void j1Scene::DestroyMenu()
 	mainmenuButton->to_delete = true;
 	text->to_delete = true;
 	text2->to_delete = true;
+	scrollMusic->to_delete = true;
+	scrollFx->to_delete = true;
+	soundLogo->to_delete = true;
 }
 
 void j1Scene::GuiInput(GuiItem* item)

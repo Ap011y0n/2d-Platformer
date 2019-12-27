@@ -149,8 +149,8 @@ bool j1MainMenu::Start()
 	buttonToWeb = App->gui->CreateGuiElement(Types::button, 470, 600, { 1661, 20, 98, 108 }, banner, this);
 	buttonToWeb->setRects({ 1661, 133, 98, 108 }, { 1661, 246, 98, 108 });
 	
-	scrollBarMusic = App->gui->CreateGuiElement(Types::slider, COORDS(-1150), 250, { 50, 889, 12, 189 }, nullptr, this);
-	scrollBarFx = App->gui->CreateGuiElement(Types::slider, COORDS(-1520), 250, { 50, 889, 12, 189 }, nullptr, this);
+	scrollBarMusic = App->gui->CreateGuiElement(Types::slider, COORDS(-1150), 250, { 28, 257, 12, 189 }, nullptr, this);
+	scrollBarFx = App->gui->CreateGuiElement(Types::slider, COORDS(-1520), 250, { 28, 257, 12, 189 }, nullptr, this);
 	rect = { 2099, 717, 76, 74 };
 	text = App->gui->CreateGuiElement(Types::text, 300, 70, rect, settingsPanel, this, "Settings");
 	text = App->gui->CreateGuiElement(Types::text, 410, 300, rect, settingsPanel, this, "Music Volume");

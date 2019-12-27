@@ -68,6 +68,9 @@ public:
 	GuiItem* volume;
 	GuiItem* panel;
 	GuiItem* logo;
+	GuiItem* scrollMusic;
+	GuiItem* scrollFx;
+	GuiItem* soundLogo;
 };
 
 #endif // __j1SCENE_H__
