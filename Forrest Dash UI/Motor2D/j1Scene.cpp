@@ -438,20 +438,19 @@ void j1Scene::PauseMenu()
 {
 	if (App->GetPause() == false) { App->Pause(); }
 	LOG("menu de pausa");
-	SDL_Rect rect = { 61, 334, 320, 528 };
+	SDL_Rect rect = { 37, 260, 293, 354 };
 	panel = App->gui->CreateGuiElement(Types::image, (App->win->width - 320) / 2, (App->win->height - 310) / 2, rect, nullptr, this);
 	panel->follow = true;
-	resumeButton = App->gui->CreateGuiElement(Types::button, 40, 20, { 444, 169, 244, 65 }, panel, this, NULL);
+	resumeButton = App->gui->CreateGuiElement(Types::button, 30, 20, { 444, 169, 244, 65 }, panel, this, NULL);
 	resumeButton->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
 	text = App->gui->CreateGuiElement(Types::text, 30, 14, rect, resumeButton, this, "RESUME");
 
-	mainmenuButton = App->gui->CreateGuiElement(Types::button, 40, 100, { 444, 169, 244, 65 }, panel, this, NULL);
+	mainmenuButton = App->gui->CreateGuiElement(Types::button, 30, 100, { 444, 169, 244, 65 }, panel, this, NULL);
 	mainmenuButton->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
 	text2 = App->gui->CreateGuiElement(Types::text, 30, 14, rect, mainmenuButton, this, "MAIN MENU");
 
-	rect = { 0, 0, 427, 218 };
-
-	logo = App->gui->CreateGuiElement(Types::image, -100, -210, rect, panel, this);
+	
+	
 
 
 	/*volume = App->gui->CreateGuiElement(Types::slider, 40, 180, rect, panel, this);*/
@@ -465,7 +464,6 @@ void j1Scene::DestroyMenu()
 	mainmenuButton->to_delete = true;
 	text->to_delete = true;
 	text2->to_delete = true;
-	logo->to_delete = true;
 }
 
 void j1Scene::GuiInput(GuiItem* item)
