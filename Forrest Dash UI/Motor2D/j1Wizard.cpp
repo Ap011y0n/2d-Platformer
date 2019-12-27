@@ -238,21 +238,21 @@ bool j1Wizard::Pathfinding(float dt) {
 		state = WD_PATHFINDING;
 		//This makes a comparison with the players position to make the correct move
 		if (path->At(1)->x < origin.x) {
-			position.x -= speedX * DT_CONVERTER * dt;
+			position.x -= speedX * WIZARD_DT_CONVERTER * dt;
 			flip = SDL_FLIP_NONE;
 		}
 
 		if (path->At(1)->x > origin.x) {
-			position.x += speedX * DT_CONVERTER * dt;
+			position.x += speedX * WIZARD_DT_CONVERTER * dt;
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 
 		if (path->At(1)->y < origin.y) {
-			position.y -= speedY * DT_CONVERTER * dt;
+			position.y -= speedY * WIZARD_DT_CONVERTER * dt;
 		}
 
 		if (path->At(1)->y > origin.y) {
-			position.y += speedY * DT_CONVERTER * dt;
+			position.y += speedY * WIZARD_DT_CONVERTER * dt;
 		}
 	}
 	for (uint i = 0; i < path->Count(); ++i)

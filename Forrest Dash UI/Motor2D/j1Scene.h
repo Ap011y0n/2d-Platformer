@@ -48,6 +48,7 @@ private:
 	bool changeEntities = false;
 	void PauseMenu();
 	void DestroyMenu();
+	void GuiInput(GuiItem*);
 public:
 	p2SString current_level;
 	p2List<p2SString> levels;
@@ -57,13 +58,15 @@ public:
 	Animation flag;
 	bool checkpoint = false;
 
+
+	bool pausemenu = false;
 	GuiItem* text;
 	GuiItem* text2;
-
 	GuiItem* resumeButton;
 	GuiItem* mainmenuButton;
 	GuiItem* volume;
 	GuiItem* panel;
+	GuiItem* logo;
 };
 
 #endif // __j1SCENE_H__

@@ -62,10 +62,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(pathfinding);
 
+	AddModule(EntityManager);
+
 	AddModule(gui);
 	AddModule(font);
 
-	AddModule(EntityManager);
+	
 
 	AddModule(menu);
 	AddModule(console);
