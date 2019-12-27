@@ -15,22 +15,6 @@ enum class Types
 	slider,
 };
 
-struct Button_Definition
-{
-public:
-	Button_Definition() {}
-	Button_Definition(SDL_Rect idle_rect, SDL_Rect illuminated_rect, SDL_Rect pushed_rect)
-	{
-		this->idleRect = idle_rect;
-		this->illuminatedRect = illuminated_rect;
-		this->pushedRect = pushed_rect;
-	}
-
-	SDL_Rect idleRect = { 0,0,0,0 };
-	SDL_Rect illuminatedRect = { 0,0,0,0 };
-	SDL_Rect pushedRect = { 0,0,0,0 };
-};
-
 struct _TTF_Font;
 struct SDL_Color;
 

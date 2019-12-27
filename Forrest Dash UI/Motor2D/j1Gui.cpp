@@ -477,8 +477,8 @@ GuiSlider::GuiSlider(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	focus = false;
 	CallBack = callback;
 	Image = App->gui->CreateGuiElement(Types::image, 0, 0, texrect, this);
-	ScrollThumb = App->gui->CreateGuiElement(Types::image, -3, 0, { 843, 322, 15, 26 }, this, callback);
-	
+	ScrollThumb = App->gui->CreateGuiElement(Types::image, -18, 0, { 78, 912, 46, 23 }, this, callback);
+	ScrollThumb->setRects({ 78, 912, 46, 23 }, { 78, 888, 46, 23 }); 
 	ScrollThumb->isDynamic = true;
 	to_delete = false;
 

@@ -122,7 +122,7 @@ bool j1MainMenu::Start()
 	text2 = App->gui->CreateGuiElement(Types::text, 90, 14, rect, buttonExit, this, "EXIT");
 	
 	
-	buttonCredits = App->gui->CreateGuiElement(Types::button, 580, 600, { 1980, 360, 98, 108 }, banner, this);
+	buttonCredits = App->gui->CreateGuiElement(Types::button, 590, 600, { 1980, 360, 98, 108 }, banner, this);
 	buttonCredits->setRects({ 1980, 473, 98, 108 }, { 1980, 587, 98, 108 });
 
 	buttonSettings = App->gui->CreateGuiElement(Types::button, -250, 600, { 2087, 700, 98, 108 }, banner, this);
@@ -146,8 +146,17 @@ bool j1MainMenu::Start()
 	buttonToRepo = App->gui->CreateGuiElement(Types::button, 2480, 580, { 1661, 360, 98, 108 }, banner, this);
 	buttonToRepo->setRects({ 1661, 473, 98, 108 }, { 1661, 587, 98, 108 });
 
-	buttonToWeb = App->gui->CreateGuiElement(Types::button, 460, 600, { 1661, 20, 98, 108 }, banner, this);
+	buttonToWeb = App->gui->CreateGuiElement(Types::button, 470, 600, { 1661, 20, 98, 108 }, banner, this);
 	buttonToWeb->setRects({ 1661, 133, 98, 108 }, { 1661, 246, 98, 108 });
+	
+	scrollBarMusic = App->gui->CreateGuiElement(Types::slider, COORDS(-1150), 250, { 50, 889, 12, 189 }, nullptr, this);
+	scrollBarFx = App->gui->CreateGuiElement(Types::slider, COORDS(-1520), 250, { 50, 889, 12, 189 }, nullptr, this);
+	rect = { 2099, 717, 76, 74 };
+	text = App->gui->CreateGuiElement(Types::text, 300, 70, rect, settingsPanel, this, "Settings");
+	text = App->gui->CreateGuiElement(Types::text, 410, 300, rect, settingsPanel, this, "Music Volume");
+	text = App->gui->CreateGuiElement(Types::text, 90, 300, rect, settingsPanel, this, "FX Volume");
+	logoSettings = App->gui->CreateGuiElement(Types::image, COORDS(-1390), 90, rect, nullptr);
+	
 	/*
 	buttonNewGame = App->gui->CreateGuiElement(Types::button, 50, 0, rect, banner, this);
 	text = App->gui->CreateGuiElement(Types::text, 50, 20, rect, buttonNewGame, this, "NEW GAME");
@@ -240,6 +249,9 @@ bool j1MainMenu::CleanUp()
 	creditsText->to_delete = true;
 	buttonToRepo->to_delete = true;
 	buttonToWeb->to_delete = true;
+	scrollBarMusic->to_delete = true;
+	scrollBarFx->to_delete = true;
+	logoSettings->to_delete = true;
 
 	return true;
 }
