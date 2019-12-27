@@ -40,8 +40,16 @@ public:
 	GuiItem* liveEmpty;
 	GuiItem* liveEmpty2;
 	GuiItem* liveEmpty3;
+	GuiItem* timer_item;
+	GuiItem* minutes_item;
+	j1Timer	timer_game;
 	int lifesCounter = 3;
 	bool hudActive = false;
+	uint timer = 0;
+	uint minutes = 0;
+
+	char timer_text[10];
+	char minutes_text[10];
 private:
 
 
