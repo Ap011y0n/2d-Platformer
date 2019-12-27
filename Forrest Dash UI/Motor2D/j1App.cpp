@@ -52,6 +52,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(win);
+	AddModule(render);
 
 	AddModule(tex);
 	AddModule(audio);
@@ -64,17 +65,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(EntityManager);
 
-	AddModule(gui);
 	AddModule(font);
-
-	
-
 	AddModule(menu);
 	AddModule(console);
-
-	AddModule(render);
-
-
+	AddModule(gui);
 
 	AddModule(fade);
 	

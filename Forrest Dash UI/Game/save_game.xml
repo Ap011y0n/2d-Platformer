@@ -2,6 +2,7 @@
 <game_state>
 	<input />
 	<window />
+	<renderer />
 	<textures />
 	<audio>
 		<volumemusic value="0.300000012" />
@@ -165,10 +166,9 @@
 			<position pos_x="100" pos_y="500" />
 		</Entity>
 	</entity>
-	<gui />
 	<fonts />
 	<main_menu />
 	<console />
-	<renderer />
+	<gui />
 	<Fade />
 </game_state>

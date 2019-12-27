@@ -53,6 +53,8 @@ bool j1Input::Start()
 // Called each loop iteration
 bool j1Input::PreUpdate(float dt)
 {
+	ScrollUp = false;
+	ScrollDown = false;
 	static SDL_Event event;
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
@@ -132,7 +134,31 @@ bool j1Input::PreUpdate(float dt)
 			}
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
+			
+			case SDL_MOUSEWHEEL:
+			{
+				if (event.wheel.y > 0) // scroll up
+				{
+					ScrollUp= true;
+					LOG("Scroll up");
+				}
+				else if (event.wheel.y < 0) // scroll down
+				{
+					ScrollDown = true;
+					LOG("Scroll down");
+				}
 
+				if (event.wheel.x > 0) // scroll right
+				{
+					LOG("Scroll right ?");
+				}
+				else if (event.wheel.x < 0) // scroll left
+				{
+					LOG("Scroll left ??¿?");
+
+				}
+			}
+			break;
 			case SDL_TEXTINPUT:
 			{
 				text += (event.text.text);

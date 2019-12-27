@@ -434,7 +434,7 @@ InputText::InputText(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 
 	to_delete = false;
 
-	image = App->gui->CreateGuiElement(Types::image, 0, 0, texrect, this);
+	image = App->gui->CreateGuiElement(Types::image, 0, 0, { 759, 547, 840, 56 }, this);
 	text = App->gui->CreateGuiElement(Types::text, 20, 15, texrect, this, callback, "Insert Text");
 	text->isDynamic = true;
 

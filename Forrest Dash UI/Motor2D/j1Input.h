@@ -82,6 +82,8 @@ private:
 	int			mouse_y;
 public:
 	p2SString text;
+	bool ScrollUp;
+	bool ScrollDown;
 };
 
 #endif // __j1INPUT_H__

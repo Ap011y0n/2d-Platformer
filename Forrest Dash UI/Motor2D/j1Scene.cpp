@@ -153,7 +153,7 @@ bool j1Scene::Update(float dt)
 		App->audio->fxvolume(0.05, 0);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
-		panel->to_delete = true;
+		//panel->to_delete = true;
 	}
 	Debug();
 	App->map->Draw();

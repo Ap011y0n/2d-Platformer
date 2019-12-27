@@ -33,8 +33,8 @@ bool j1Console::Awake()
 bool j1Console::Start()
 {
 	opened = false;
-	
-
+	ConsText = App->font->Load("fonts/open_sans/OpenSans-Regular.ttf",16);
+	InText = App->font->Load("fonts/open_sans/OpenSans-Regular.ttf", 36);
 	return true;
 }
 
@@ -61,16 +61,37 @@ bool j1Console::Update(float dt)
 	}
 	if (opened == true)
 	{
+		App->render->DrawQuad({ -App->render->camera.x, -App->render->camera.y, (int)App->win->width, (int)App->win->height/3-50 }, 0, 0, 0, 170);
 		for (int i = 0; i < MAXTEXT; i++) {
 
 			ConsoleText[i]->SetText(App->temp[i].GetString());
+
 			SDL_DestroyTexture(ConsoleText[i]->texture);
 			p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(ConsoleText[i]->texture));
 			App->tex->textures.del(texlist);
-			ConsoleText[i]->texture = App->font->Print(ConsoleText[i]->GetText());
 
-			App->font->CalcSize(ConsoleText[i]->GetText(), ConsoleText[i]->textureRect.w, ConsoleText[i]->textureRect.h);
+			ConsoleText[i]->texture = App->font->Print(ConsoleText[i]->GetText(), { 255, 255, 255, 255 }, ConsText);
+			App->font->CalcSize(ConsoleText[i]->GetText(), ConsoleText[i]->textureRect.w, ConsoleText[i]->textureRect.h, ConsText);
+			
+			//&& temp2 == -30
+			}
+
+		if (App->input->ScrollUp == true)
+		{
+			int temp, temp2;
+			ConsoleText[0]->GetLocalPos(temp, temp2);
+			temp2 -= 10;
+			ConsoleText[0]->SetLocalPos(temp, temp2);
 		}
+
+		if (App->input->ScrollDown == true)
+		{
+			int temp, temp2;
+			ConsoleText[0]->GetLocalPos(temp, temp2);
+			temp2 += 10;
+			ConsoleText[0]->SetLocalPos(temp, temp2);
+		}
+		
 	}
 
 	return true;
@@ -108,8 +129,10 @@ void j1Console::GuiInput(GuiItem* item)
 	ExecuteCommand(ReturnCommand(item->GetText()));
 
 	item->SetText("");
+
 	SDL_DestroyTexture(item->texture);
-	item->texture = App->font->Print(item->GetText());
+
+	item->texture = App->font->Print(item->GetText(), { 255,255,255,255 }, InText);
 	App->font->CalcSize(item->GetText(), item->textureRect.w, item->textureRect.h);
 }
 
@@ -166,11 +189,12 @@ void j1Console::ExecuteCommand(Commands command) {
 
 void j1Console::Open() 
 {
-	InputText = App->gui->CreateGuiElement(Types::inputText, 30, 200, { 488, 569, 344, 61 }, nullptr, this);
+	InputText = App->gui->CreateGuiElement(Types::inputText, 0, 200, { 488, 569, 344, 61 }, nullptr, this);
 	InputText->follow = true;
 	
-	for (int i = 0; i < MAXTEXT; i++) {
-		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 20, -i * 40, { 0, 0, 0, 0 }, InputText, this, "- ");
+	ConsoleText[0] = App->gui->CreateGuiElement(Types::text, 30, -30, { 0, 0, 0, 0 }, InputText, this, "- ");
+	for (int i = 1; i < MAXTEXT; i++) {
+		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 0, -i * 20, { 0, 0, 0, 0 }, ConsoleText[0], this, "- ");
 	}
 }
 

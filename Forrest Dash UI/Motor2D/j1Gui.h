@@ -168,6 +168,7 @@ public:
 	bool Update(float dt);
 
 	bool PreUpdate(float dt);
+
 	// Called before quitting
 	bool CleanUp();
 

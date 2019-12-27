@@ -7,6 +7,9 @@
 #include "p2DynArray.h"
 
 #define COORDS(a) a+3000 
+
+struct _TTF_Font;
+
 enum class Commands
 {
 	God_Mode,
@@ -65,7 +68,8 @@ private:
 	GuiItem* ConsoleText[MAXTEXT];
 	GuiItem* InputText;
 	bool opened;
-
+	_TTF_Font* ConsText;
+	_TTF_Font* InText;
 
 
 
