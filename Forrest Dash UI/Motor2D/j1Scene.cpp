@@ -15,6 +15,7 @@
 #include "J1Gui.h"
 #include "j1Pathfinding.h"
 #include "j1MainMenu.h"
+#include "j1FadeToBlack.h"
 #include "Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -123,9 +124,20 @@ bool j1Scene::PreUpdate(float dt)
 bool j1Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("Update_Scene", Profiler::Color::Tomato);
-	//PAUSE (WIP)
+	//PAUSE
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
-		PauseMenu();
+		
+		if (current_level != nullptr)
+		{
+			if (App->Pause())
+			{
+				PauseMenu();
+			}
+			else
+			{
+				DestroyMenu();
+			}
+		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) {
@@ -135,6 +147,9 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) {
 		App->audio->musicvolume(0.05, 0);
 		App->audio->fxvolume(0.05, 0);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		panel->to_delete = true;
 	}
 	Debug();
 	App->map->Draw();
@@ -414,16 +429,61 @@ bool j1Scene::CreateEntities() {
 
 void j1Scene::PauseMenu()
 {
-	if (App->GetPause() == false){ App->Pause(); }
-	else { App->Pause(); }
+	if (App->GetPause() == false) { App->Pause(); }
 	LOG("menu de pausa");
-	SDL_Rect rect = { 760, 12, 886, 604 };
-	//panel = App->gui->CreateGuiElement(Types::image, (App->win->width - 850) / 2, (App->win->height - 200) / 2, rect, rect, rect, nullptr, this);
+	SDL_Rect rect = { 61, 334, 320, 528 };
+	panel = App->gui->CreateGuiElement(Types::image, (App->win->width - 320) / 2, (App->win->height - 310) / 2, rect, nullptr, this);
+	panel->follow = true;
+	resumeButton = App->gui->CreateGuiElement(Types::button, 40, 20, { 444, 169, 244, 65 }, panel, this, NULL);
+	resumeButton->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
+	text = App->gui->CreateGuiElement(Types::text, 30, 14, rect, resumeButton, this, "RESUME");
 
-	resumeButton = App->gui->CreateGuiElement(Types::button, 95, 370, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, panel, this, NULL);
-	text = App->gui->CreateGuiElement(Types::text, 40, 14, rect, rect, rect, resumeButton, this, "RESUME");
+	mainmenuButton = App->gui->CreateGuiElement(Types::button, 40, 100, { 444, 169, 244, 65 }, panel, this, NULL);
+	mainmenuButton->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
+	text2 = App->gui->CreateGuiElement(Types::text, 30, 14, rect, mainmenuButton, this, "MAIN MENU");
+
+	rect = { 0, 0, 427, 218 };
+
+	logo = App->gui->CreateGuiElement(Types::image, -100, -210, rect, panel, this);
 
 
-	mainmenuButton = App->gui->CreateGuiElement(Types::button, 95, 570, { 444, 169, 244, 65 }, { 444, 413, 244, 66 }, { 444, 661, 244, 65 }, panel, this, NULL);
-	text = App->gui->CreateGuiElement(Types::text, 50, 14, rect, rect, rect, mainmenuButton, this, "MAIN MENU");
+	/*volume = App->gui->CreateGuiElement(Types::slider, 40, 180, rect, panel, this);*/
+}
+
+void j1Scene::DestroyMenu()
+{
+	if (App->GetPause() == true) { App->Pause(); }
+	panel->to_delete = true;
+	resumeButton->to_delete = true;
+	mainmenuButton->to_delete = true;
+	text->to_delete = true;
+	text2->to_delete = true;
+	logo->to_delete = true;
+}
+
+void j1Scene::GuiInput(GuiItem* item)
+{
+	/*float f;
+	if (item->parent->type == Types::slider) {
+		f = item->parent->returnSliderPos();
+		LOG("%f", f);
+	}*/
+
+	if (item == resumeButton)
+	{
+		DestroyMenu();
+
+	}
+	if (item == mainmenuButton)
+	{
+		App->map->CleanUp();
+		App->menu->Start();
+		checkpoint = false;
+		current_level.create("menu.tmx");
+		App->map->Load(current_level.GetString());
+		App->audio->PlayMusic(App->map->data.music.GetString());
+		App->EntityManager->EntityCleanUp();
+		DestroyMenu();
+	}
+
 }

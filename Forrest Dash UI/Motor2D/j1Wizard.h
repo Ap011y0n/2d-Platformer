@@ -9,6 +9,8 @@
 #include "p2Point.h"
 #include "p2DynArray.h"
 
+#define WIZARD_DT_CONVERTER 30
+
 struct SDL_Texture;
 struct Collider;
 struct Anim;
