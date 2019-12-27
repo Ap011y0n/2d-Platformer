@@ -149,6 +149,7 @@ void j1Console::write(const char* newtext) {
 }
 
 Commands j1Console::ReturnCommand(const char* text) {
+	Commands ret = Commands::none;
 
 	//std::string::size_type sz;   // alias of size_t
 	//
@@ -161,7 +162,7 @@ Commands j1Console::ReturnCommand(const char* text) {
 //	LOG("%s", text);
 	
 	//LOG("%s", test.at(1));
-
+	
 	char test[100];
 	int i;
 	for (i = 0; text[i] != 0; i++) {
@@ -172,12 +173,13 @@ Commands j1Console::ReturnCommand(const char* text) {
 
 		p2SString result = test;
 		LOG("%s", result.GetString());
-
+		if (strcmp(result.GetString(), "fps") == 0) {
+			ret = Commands::FPS;
+		}
 	}
 
 	
 
-	Commands ret = Commands::none;
 	if (strcmp ("godmode", text) == 0) {
 		ret = Commands::God_Mode;
 	}
@@ -190,7 +192,7 @@ Commands j1Console::ReturnCommand(const char* text) {
 		ret = Commands::quit;
 	}
 
-	if (strcmp(" fps", text) == 0) {
+	if (strcmp("fps", text) == 0) {
 		ret = Commands::FPS;
 	}	
 
