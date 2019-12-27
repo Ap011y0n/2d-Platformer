@@ -12,11 +12,12 @@ struct _TTF_Font;
 
 enum class Commands
 {
+	none,
 	God_Mode,
 	quit,
 	FPS,
 	map,
-	none
+	list
 };
 
 class GuiItem;

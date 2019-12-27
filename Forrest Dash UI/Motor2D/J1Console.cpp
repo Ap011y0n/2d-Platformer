@@ -150,10 +150,44 @@ void j1Console::write(const char* newtext) {
 
 Commands j1Console::ReturnCommand(const char* text) {
 	Commands ret = Commands::none;
+
+	//std::string::size_type sz;   // alias of size_t
+	//
+	
+	//int i_dec = std::stoi(text);
+	//test = test.substr(sz);
+
+	//text = test.c_str();
+
+//	LOG("%s", text);
+	
+	//LOG("%s", test.at(1));
+	
+	char test[100];
+	int i;
+	for (i = 0; text[i] != 0; i++) {
+		//LOG("%c", text[i]);
+	
+		test[i] = text[i];
+		test[i + 1] = '\0';
+
+		p2SString result = test;
+		LOG("%s", result.GetString());
+		if (strcmp(result.GetString(), "fps") == 0) {
+			ret = Commands::FPS;
+		}
+	}
+
+	
+
 	if (strcmp ("godmode", text) == 0) {
 		ret = Commands::God_Mode;
 	}
-	
+
+	if (strcmp("list", text) == 0) {
+		ret = Commands::list;
+	}
+
 	if (strcmp("quit", text) == 0) {
 		ret = Commands::quit;
 	}
@@ -187,23 +221,33 @@ void j1Console::ExecuteCommand(Commands command) {
 				App->EntityManager->GetPlayer()->Godmode = false;
 			}
 		}
-		write("God Mode Activated");
-
+		write("- God Mode Activated");
 		break;
+
 	case Commands::quit:
-	
 		App->quitGame = true;
-		write("Quitting game");
+		write("- Quitting game");
+		break;
+
+	case Commands::list:
+
+		write("-----------COMMAND LIST------------");
+		write("- godmode --> Enables/disables player godmode");
+		write("- list --> If you haven't noticed yet, displays all available commands");
+		write("- fps --> sets a framerate cap between 30 and 120");
+		write("- map --> changes map");
+		write("- Quit --> Closes the application");
 
 		break;
+
 	case Commands::FPS:
 		LOG("Frame Cap set");
-		write("Frame Cap set");
-
+		write("- Frame Cap set");
 		break;
+
 	case Commands::map:
 		LOG("Changing map");
-		write("Changing map");
+		write("- Changing map");
 		break;
 	}
 }
