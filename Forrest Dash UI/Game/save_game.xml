@@ -13,8 +13,6 @@
 	</scene>
 	<collision />
 	<pathfinding />
-	<gui />
-	<fonts />
 	<entity>
 		<Entity type="slime">
 			<position pos_x="1536" pos_y="288" />
@@ -167,6 +165,8 @@
 			<position pos_x="100" pos_y="500" />
 		</Entity>
 	</entity>
+	<gui />
+	<fonts />
 	<main_menu />
 	<console />
 	<renderer />

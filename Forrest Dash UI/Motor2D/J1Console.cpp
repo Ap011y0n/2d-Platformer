@@ -32,14 +32,8 @@ bool j1Console::Awake()
 
 bool j1Console::Start()
 {
-	InputText = App->gui->CreateGuiElement(Types::inputText, 30, 200, { 488, 569, 344, 61 }, nullptr, this);
-	InputText->follow = true;
-	//ConsoleText = App->gui->CreateGuiElement(Types::text, -10, -40, { 0, 0, 0, 0 }, InputText, this,"Console \n text");
-	//temp = ConsoleText->GetText();
+	opened = false;
 	
-	for (int i = 0; i < MAXTEXT; i++) {
-		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 20, -i*40, { 0, 0, 0, 0 }, InputText, this, "- ");
-	}
 
 	return true;
 }
@@ -52,18 +46,33 @@ bool j1Console::PreUpdate(float dt)
 
 bool j1Console::Update(float dt)
 {
-//	App->render->Blit(graphics, COORDS(100), 400, NULL);
-	for (int i = 0; i < MAXTEXT; i++) {
-	
-		ConsoleText[i]->SetText(App->temp[i].GetString());
-		SDL_DestroyTexture(ConsoleText[i]->texture);
-		p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(ConsoleText[i]->texture));
-		//[App->tex->textures.find(ConsoleText[i]->texture)]
-		App->tex->textures.del(texlist);
-		ConsoleText[i]->texture = App->font->Print(ConsoleText[i]->GetText());
-		
-		App->font->CalcSize(ConsoleText[i]->GetText(), ConsoleText[i]->textureRect.w, ConsoleText[i]->textureRect.h);
+	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN) 
+	{
+		if (opened == false)
+		{
+			opened = true;
+			Open();
+		}
+		else
+		{
+			opened = false;
+			Close();
+		}
 	}
+	if (opened == true)
+	{
+		for (int i = 0; i < MAXTEXT; i++) {
+
+			ConsoleText[i]->SetText(App->temp[i].GetString());
+			SDL_DestroyTexture(ConsoleText[i]->texture);
+			p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(ConsoleText[i]->texture));
+			App->tex->textures.del(texlist);
+			ConsoleText[i]->texture = App->font->Print(ConsoleText[i]->GetText());
+
+			App->font->CalcSize(ConsoleText[i]->GetText(), ConsoleText[i]->textureRect.w, ConsoleText[i]->textureRect.h);
+		}
+	}
+
 	return true;
 }
 
@@ -154,3 +163,27 @@ void j1Console::ExecuteCommand(Commands command) {
 		break;
 	}
 }
+
+void j1Console::Open() 
+{
+	InputText = App->gui->CreateGuiElement(Types::inputText, 30, 200, { 488, 569, 344, 61 }, nullptr, this);
+	InputText->follow = true;
+	
+	for (int i = 0; i < MAXTEXT; i++) {
+		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 20, -i * 40, { 0, 0, 0, 0 }, InputText, this, "- ");
+	}
+}
+
+void j1Console::Close() 
+{
+	InputText->to_delete = true;
+
+	for (int i = 0; i < MAXTEXT; i++) {
+		ConsoleText[i]->to_delete = true;
+		SDL_DestroyTexture(ConsoleText[i]->texture);
+		p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(ConsoleText[i]->texture));
+		App->tex->textures.del(texlist);
+	}
+
+}
+

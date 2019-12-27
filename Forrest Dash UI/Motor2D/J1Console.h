@@ -57,10 +57,15 @@ public:
 
 	void ExecuteCommand(Commands);
 
-public:
-	GuiItem* ConsoleText[MAXTEXT];
+	void Open();
+
+	void Close();
+
 private:
+	GuiItem* ConsoleText[MAXTEXT];
 	GuiItem* InputText;
+	bool opened;
+
 
 
 

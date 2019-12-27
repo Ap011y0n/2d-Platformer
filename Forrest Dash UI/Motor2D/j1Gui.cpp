@@ -55,10 +55,10 @@ bool j1Gui::PreUpdate(float dt)
 	{
 		buttonPressed = true;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) 
+	/*if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) 
 	{
 		App->gui->IterateFocus();
-	}
+	}*/
 
 	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
 	{
@@ -144,8 +144,15 @@ void j1Gui::DeleteGuiElement() {
 
 	p2List_item<GuiItem*>* gui_list = guiElements.end;
 	while (gui_list) {
-		if (gui_list->data->to_delete == true)
+		if (gui_list->data->to_delete == true) 
+		{
 			guiElements.del(gui_list);
+		}
+		else if (gui_list->data->parent != nullptr)
+		{
+			if(gui_list->data->parent->to_delete == true)
+			guiElements.del(gui_list);
+		}
 		gui_list = gui_list->prev;
 	}
 }
