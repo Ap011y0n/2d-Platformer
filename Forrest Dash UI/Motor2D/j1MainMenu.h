@@ -74,6 +74,9 @@ public:
 	GuiItem* creditsText;
 	GuiItem* buttonToRepo;
 	GuiItem* buttonToWeb;
+	GuiItem* scrollBarMusic;
+	GuiItem* scrollBarFx;
+	GuiItem* logoSettings;
 	bool camLock = false;
 
 private:
