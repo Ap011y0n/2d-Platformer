@@ -3,7 +3,7 @@
 #include "j1App.h"
 #include "j1Textures.h"
 #include "j1Fonts.h"
-
+#include "J1Console.h"
 #include "SDL\include\SDL.h"
 #include "SDL_TTF\include\SDL_ttf.h"
 #pragma comment( lib, "SDL_ttf/libx86/SDL2_ttf.lib" )
@@ -21,11 +21,14 @@ j1Fonts::~j1Fonts()
 bool j1Fonts::Awake(pugi::xml_node& conf)
 {
 	LOG("Init True Type Font library");
+	App->console->write("Init True Type Font library");
+
 	bool ret = true;
 
 	if(TTF_Init() == -1)
 	{
 		LOG("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+		App->console->write("SDL_ttf could not initialize!");
 		ret = false;
 	}
 	else
@@ -44,6 +47,8 @@ bool j1Fonts::Awake(pugi::xml_node& conf)
 bool j1Fonts::CleanUp()
 {
 	LOG("Freeing True Type fonts and library");
+	App->console->write("Freeing True Type fonts and library");
+
 	p2List_item<TTF_Font*>* item;
 
 	for(item = fonts.start; item != NULL; item = item->next)
@@ -64,10 +69,13 @@ TTF_Font* const j1Fonts::Load(const char* path, int size)
 	if(font == NULL)
 	{
 		LOG("Could not load TTF font with path: %s. TTF_OpenFont: %s", path, TTF_GetError());
+		App->console->write("Could not load TTF font");
+
 	}
 	else
 	{
 		LOG("Successfully loaded font %s size %d", path, size);
+		App->console->write("Successfully loaded font");
 		fonts.add(font);
 	}
 
@@ -82,7 +90,9 @@ SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 
 	if(surface == NULL)
 	{
-		LOG("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+//		LOG("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+	//	App->console->write("Unable to render text surface!");
+
 	}
 	else
 	{
@@ -98,8 +108,12 @@ bool j1Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* fon
 {
 	bool ret = false;
 
-	if(TTF_SizeText((font) ? font : default, text, &width, &height) != 0)
-		LOG("Unable to calc size of text surface! SDL_ttf Error: %s\n", TTF_GetError());
+	if (TTF_SizeText((font) ? font : default, text, &width, &height) != 0) 
+	{
+	LOG("Unable to calc size of text surface! SDL_ttf Error: %s\n", TTF_GetError());
+	App->console->write("Unable to render text surface!");
+	}
+
 	else
 		ret = true;
 

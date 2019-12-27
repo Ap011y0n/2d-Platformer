@@ -2,7 +2,6 @@
 <game_state>
 	<input />
 	<window />
-	<renderer />
 	<textures />
 	<audio>
 		<volumemusic value="0.300000012" />
@@ -13,6 +12,9 @@
 		<scenename name="maplevel1.tmx" />
 	</scene>
 	<collision />
+	<pathfinding />
+	<gui />
+	<fonts />
 	<entity>
 		<Entity type="slime">
 			<position pos_x="1536" pos_y="288" />
@@ -165,10 +167,8 @@
 			<position pos_x="100" pos_y="500" />
 		</Entity>
 	</entity>
-	<pathfinding />
 	<main_menu />
-	<fonts />
-	<gui />
 	<console />
+	<renderer />
 	<Fade />
 </game_state>

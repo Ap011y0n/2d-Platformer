@@ -5,6 +5,7 @@
 #include "j1Player.h"
 #include "j1ModuleCollision.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 j1ModuleCollision::j1ModuleCollision()
 {
@@ -175,6 +176,8 @@ void j1ModuleCollision::DebugDraw()
 bool j1ModuleCollision::CleanUp()
 {
 	LOG("Freeing all colliders");
+	App->console->write("Freeing all colliders");
+
 
 	for(uint i = 0; i < MAX_COLLIDERS; ++i)
 	{

@@ -4,6 +4,7 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 #define VSYNC true
 
@@ -24,6 +25,8 @@ j1Render::~j1Render()
 bool j1Render::Awake(pugi::xml_node& config)
 {
 	LOG("Create SDL rendering context");
+	App->console->write("Create SDL rendering context");
+
 	bool ret = true;
 	// load flags
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
@@ -33,6 +36,8 @@ bool j1Render::Awake(pugi::xml_node& config)
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		App->vsync.create("On");
 		LOG("Using vsync");
+		App->console->write("Using vsync");
+
 	}
 	else {
 		App->vsync.create("Off");
@@ -43,6 +48,8 @@ bool j1Render::Awake(pugi::xml_node& config)
 	if(renderer == NULL)
 	{
 		LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
+		App->console->write("Could not create the renderer! SDL_Error");
+
 		ret = false;
 	}
 	else
@@ -61,6 +68,8 @@ bool j1Render::Awake(pugi::xml_node& config)
 bool j1Render::Start()
 {
 	LOG("render start");
+	App->console->write("render start");
+
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
 	
@@ -99,6 +108,8 @@ bool j1Render::PostUpdate(float dt)
 bool j1Render::CleanUp()
 {
 	LOG("Destroying SDL render");
+	App->console->write("Destroying SDL render");
+
 	SDL_DestroyRenderer(renderer);
 	return true;
 }
@@ -165,7 +176,9 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 
 	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
 	{
-		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+	//	LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+	//	App->console->write("Cannot blit to screen. SDL_RenderCopy error ");
+
 		ret = false;
 	}
 
@@ -220,6 +233,8 @@ bool j1Render::BlitWithScale(SDL_Texture* texture, int x, int y, SDL_Rect* _sect
 	if (SDL_RenderCopyEx(renderer, texture, &section, &rect, 0, NULL, flip) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		App->console->write("Cannot blit to screen. SDL_RenderCopy error");
+
 		ret = false;
 	}
 
@@ -249,6 +264,8 @@ bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a
 	if(result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		App->console->write("Cannot draw quad to screen. SDL_RenderFillRect error");
+
 		ret = false;
 	}
 
@@ -273,6 +290,8 @@ bool j1Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 
 	if(result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		App->console->write("Cannot draw quad to screen. SDL_RenderFillRect error");
+
 		ret = false;
 	}
 
@@ -303,6 +322,8 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	if(result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		App->console->write("Cannot draw quad to screen. SDL_RenderFillRect error");
+
 		ret = false;
 	}
 

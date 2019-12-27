@@ -14,6 +14,7 @@
 #include "J1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 
 
@@ -79,6 +80,8 @@ bool j1Slime::Awake(pugi::xml_node& config)
 bool j1Slime::Start()
 {
 	LOG("Start Slime");
+	App->console->write("Start Slime");
+
 	App->EntityManager->slimeTex;
 	to_delete = false;
 	playedSlimeDeathFx = false;

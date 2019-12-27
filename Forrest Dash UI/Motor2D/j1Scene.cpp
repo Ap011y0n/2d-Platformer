@@ -17,6 +17,7 @@
 #include "j1MainMenu.h"
 #include "j1FadeToBlack.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -39,6 +40,7 @@ j1Scene::~j1Scene()
 bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
+	App->console->write("Loading Scene");
 	pugi::xml_node map;
 
 	for (map = config.child("map"); map; map = map.next_sibling("map")) {
@@ -56,6 +58,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	LOG("Start scene");
+	App->console->write("Start scene");
+
 	current_level = levels.start->data;
 	changeEntities = false;
 	checkpoint = false;
@@ -207,12 +211,15 @@ bool j1Scene::CleanUp()
 	App->tex->UnLoad(flag_tex);
 	
 	LOG("Freeing scene");
+	App->console->write("Freeing scene");
 
 	return true;
 }
 bool j1Scene::Load(pugi::xml_node& data)
 {
 	LOG("Loading Scene state");
+	App->console->write("Loading Scene state");
+
 //	App->player->BarWidth = App->player->maxBarWidth;
 	checkpoint = false;
 	App->map->CleanUp();
@@ -233,6 +240,8 @@ bool j1Scene::Load(pugi::xml_node& data)
 bool j1Scene::Save(pugi::xml_node& data) const
 {
 	LOG("Saving Scene state");
+	App->console->write("Saving Scene state");
+
 	pugi::xml_node scene = data.append_child("scenename");
 	scene.append_attribute("name") = current_level.GetString();
 
@@ -419,11 +428,6 @@ bool j1Scene::CreateEntities() {
 
 	App->EntityManager->CreateEntity(j1Entity::Types::player, 100, 500);
 	
-	/*
-	App->EntityManager->CreateEntity(j1Entity::Types::slime, 150, 500);
-	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 690, 300);
-	App->EntityManager->CreateEntity(j1Entity::Types::wizard, 4200, 450);
-	App->EntityManager->CreateEntity(j1Entity::Types::slime, 690, 540);*/
 	return ret;
 }
 
@@ -485,5 +489,6 @@ void j1Scene::GuiInput(GuiItem* item)
 		App->EntityManager->EntityCleanUp();
 		DestroyMenu();
 	}
+
 
 }

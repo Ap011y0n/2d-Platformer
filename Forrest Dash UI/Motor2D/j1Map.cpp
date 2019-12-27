@@ -8,6 +8,7 @@
 #include "j1Audio.h"
 #include <math.h>
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -23,6 +24,7 @@ j1Map::~j1Map()
 bool j1Map::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Map Parser");
+	App->console->write("Loading Map Parser");
 	bool ret = true;
 	folder.create(config.child("folder").child_value());
 	return ret;
@@ -109,6 +111,7 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	else
 	{
 		LOG("Unknown map type");
+		App->console->write("Unknown map type");
 		ret.x = x; ret.y = y;
 	}
 
@@ -136,6 +139,8 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	else
 	{
 		LOG("Unknown map type");
+		App->console->write("Unknown map type");
+
 		ret.x = x; ret.y = y;
 	}
 
@@ -157,6 +162,7 @@ SDL_Rect TileSet::GetTileRect(int id) const
 bool j1Map::CleanUp()
 {
 	LOG("Unloading map");
+	App->console->write("Unloading map");
 
 	// Remove all tilesets ----------------------------------------------
 	p2List_item<TileSet*>* item;
@@ -199,6 +205,8 @@ bool j1Map::Load(const char* file_name)
 	if(result == NULL)
 	{
 		LOG("Could not load map xml file %s. pugi error: %s", file_name, result.description());
+		App->console->write("Could not load map from xml file");
+
 		ret = false;
 	}
 
@@ -242,6 +250,8 @@ bool j1Map::Load(const char* file_name)
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
+		App->console->write("Successfully parsed map from XML file");
+
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
@@ -291,6 +301,8 @@ bool j1Map::LoadMap()
 	if(map == NULL)
 	{
 		LOG("Error parsing map xml file: Cannot find 'map' tag.");
+		App->console->write("Error parsing map xml file: Cannot find 'map' tag.");
+
 		ret = false;
 	}
 	else
@@ -384,6 +396,8 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	if(image == NULL)
 	{
 		LOG("Error parsing tileset xml file: Cannot find 'image' tag.");
+		App->console->write("Error parsing tileset xml file: Cannot find 'image' tag.");
+
 		ret = false;
 	}
 	else
@@ -428,6 +442,8 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	if(layer_data == NULL)
 	{
 		LOG("Error parsing map xml file: Cannot find 'layer/data' tag.");
+		App->console->write("Error parsing tileset xml file: Cannot find 'layer/data' tag.");
+
 		ret = false;
 		RELEASE(layer);
 	}
@@ -450,6 +466,8 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 bool j1Map::LoadProperties(pugi::xml_node& node,Properties property[])
 {
 	LOG("Loading properties");
+	App->console->write("Loading properties");
+
 	pugi::xml_node layer;
 	bool ret = true;
 	

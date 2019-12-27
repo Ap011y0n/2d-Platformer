@@ -6,8 +6,6 @@
 
 #define CURSOR_WIDTH 2
 
-// TODO 1: Create your structure of classes
-
 enum class Types
 {
 	image,
@@ -127,6 +125,7 @@ public:
 	virtual ~InputText();
 private:
 	GuiItem* text;
+
 	GuiItem* image;
 
 };
@@ -163,11 +162,12 @@ public:
 	bool Start();
 
 	// Called before all Updates
-	bool PreUpdate(float dt);
+	//bool PreUpdate(float dt);
 
 	// Called after all Updates
 	bool Update(float dt);
 
+	bool PreUpdate(float dt);
 	// Called before quitting
 	bool CleanUp();
 

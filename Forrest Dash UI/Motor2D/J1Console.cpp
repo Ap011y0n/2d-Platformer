@@ -11,7 +11,6 @@
 #include "j1Fonts.h"
 
 
-
 j1Console::j1Console()
 {
 	name.create("console");
@@ -25,6 +24,9 @@ j1Console::~j1Console()
 
 bool j1Console::Awake()
 {
+	LOG("Start console");
+	write("Start console");
+
 	return true;
 }
 
@@ -36,8 +38,8 @@ bool j1Console::Start()
 	//temp = ConsoleText->GetText();
 	
 	for (int i = 0; i < MAXTEXT; i++) {
-		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 20, -20-i*40, { 0, 0, 0, 0 }, InputText, this, " ");
-		temp[i] = ConsoleText[i]->GetText();
+		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 20, -i*40, { 0, 0, 0, 0 }, InputText, this, "- ");
+		
 	}
 	
 
@@ -56,6 +58,11 @@ bool j1Console::PreUpdate(float dt)
 bool j1Console::Update(float dt)
 {
 //	App->render->Blit(graphics, COORDS(100), 400, NULL);
+	/*for (int i = 0; i < MAXTEXT; i++) {
+		ConsoleText[i]->SetText(App->temp[i].GetString());
+		ConsoleText[i]->texture = App->font->Print(ConsoleText[i]->GetText());
+		App->font->CalcSize(ConsoleText[i]->GetText(), ConsoleText[i]->textureRect.w, ConsoleText[i]->textureRect.h);
+	}*/
 	return true;
 }
 
@@ -86,32 +93,68 @@ bool j1Console::Save(pugi::xml_node& data) const
 
 void j1Console::GuiInput(GuiItem* item)
 {
-	
-	/*LOG("%s", temp.GetString());
-	temp += "\n";
-	temp += item->GetText();
-	
 
-	ConsoleText->SetText(temp.GetString());
-
-	ConsoleText->texture = App->font->Print(ConsoleText->GetText());
-	App->font->CalcSize(ConsoleText->GetText(), ConsoleText->textureRect.w, ConsoleText->textureRect.h);*/
-	for (int i = MAXTEXT-1; i > 0; i--) {
-
-
-		temp[i] = temp[i - 1];
-		
-	}
-	temp[0] = item->GetText();
-	
+	write(item->GetText());
+	ExecuteCommand(ReturnCommand(item->GetText()));
 
 	for (int i = 0; i < MAXTEXT; i++) {
-		
-		ConsoleText[i]->SetText(temp[i].GetString());
+		ConsoleText[i]->SetText(App->temp[i].GetString());
 		ConsoleText[i]->texture = App->font->Print(ConsoleText[i]->GetText());
 		App->font->CalcSize(ConsoleText[i]->GetText(), ConsoleText[i]->textureRect.w, ConsoleText[i]->textureRect.h);
 	}
-	item->SetText(" ");
+
+	item->SetText("");
 	item->texture = App->font->Print(item->GetText());
 	App->font->CalcSize(item->GetText(), item->textureRect.w, item->textureRect.h);
+}
+
+void j1Console::write(const char* newtext) {
+
+	for (int i = MAXTEXT - 1; i > 0; i--) {
+
+		App->temp[i] = App->temp[i - 1];
+
+	}
+	App->temp[0] = newtext;
+	
+}
+
+Commands j1Console::ReturnCommand(const char* text) {
+	Commands ret = Commands::none;
+	if (strcmp ("godmode", text) == 0) {
+		ret = Commands::God_Mode;
+	}
+	
+	if (strcmp("quit", text) == 0) {
+		ret = Commands::quit;
+	}
+
+	if (strcmp("fps", text) == 0) {
+		ret = Commands::FPS;
+	}	
+
+	if (strcmp("map", text) == 0) {
+		ret = Commands::map;
+	}
+	return ret;
+}
+
+void j1Console::ExecuteCommand(Commands command) {
+	switch (command) {
+	case Commands::none:
+		LOG("none");
+		break;
+	case Commands::God_Mode:
+		LOG("God Mode");
+		break;
+	case Commands::quit:
+		LOG("quit");
+		break;
+	case Commands::FPS:
+		LOG("FPS");
+		break;
+	case Commands::map:
+		LOG("map");
+		break;
+	}
 }

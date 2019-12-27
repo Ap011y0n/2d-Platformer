@@ -14,6 +14,7 @@
 #include "j1Wizard.h"
 #include "j1Player.h"
 #include "J1EntityManager.h"
+#include "J1Console.h"
 
 
 
@@ -35,13 +36,13 @@ bool j1Entity::CleanUp() {
 
 bool j1Entity::Load(pugi::xml_node& data) {
 	LOG("Loading %s state",name.GetString());
-
+	App->console->write("Loading entity state");
 	return true;
 }
 
 bool j1Entity::Save(pugi::xml_node& data) const {
 	LOG("Saving %s state", name.GetString());
-
+	App->console->write("Saving entity state");
 	data.append_child("position");
 
 	data.append_attribute("type") = name.GetString();
@@ -68,6 +69,8 @@ void j1Entity::LoadAnimations(const char* path) {
 	if (result == NULL)
 	{
 		LOG("Could not load map xml file %s. pugi error: %s", path, result.description());
+		App->console->write("Could not load map xml file");
+
 	}
 	TileSetData.firstgid = entity_file.child("map").child("tileset").attribute("firstgid").as_int();
 	TileSetData.tile_width = entity_file.child("map").child("tileset").attribute("tilewidth").as_int();

@@ -14,6 +14,7 @@
 #include "j1ModuleCollision.h"
 #include "J1EntityManager.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 j1Wizard::j1Wizard(int posx, int posy) : j1Entity(Types::wizard)
 {
@@ -70,6 +71,7 @@ bool j1Wizard::Awake(pugi::xml_node& config)
 bool j1Wizard::Start()
 {
 	LOG("Start Wizard");
+	App->console->write("Start Slime");
 	App->EntityManager->wizardTex;
 	to_delete = false;
 	wizarDead = false;

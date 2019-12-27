@@ -7,6 +7,7 @@
 #include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 
+#define MAXTEXT 100
 // Modules
 class j1Window;
 class j1Input;
@@ -114,6 +115,7 @@ public:
 	p2SString framecap;
 	bool cap = false;
 	bool				want_to_load;
+	p2SString temp[MAXTEXT];
 
 private:
 

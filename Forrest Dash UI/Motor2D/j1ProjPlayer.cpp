@@ -13,6 +13,7 @@
 #include "j1ModuleCollision.h"
 #include "J1EntityManager.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
 
 
 
@@ -51,6 +52,7 @@ bool j1ProjPlayer::Awake(pugi::xml_node& config)
 bool j1ProjPlayer::Start()
 {
 	LOG("Start Projectile");
+	App->console->write("Start Projectile");
 
 	anim.PushBack({ 4, 26, 62, 13 }, 0.1, 0, 0, 0, 0);
 	anim.PushBack({ 67, 26, 61, 13 }, 0.1, 0, 0, 0, 0);
