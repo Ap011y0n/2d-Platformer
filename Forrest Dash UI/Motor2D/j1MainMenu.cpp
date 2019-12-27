@@ -232,26 +232,47 @@ bool j1MainMenu::PostUpdate(float dt)
 
 bool j1MainMenu::CleanUp()
 {
+	if (banner != nullptr)
 	banner->to_delete = true;
+	if (text != nullptr)
 	text->to_delete = true;
+	if (text1 != nullptr)
 	text1->to_delete = true;
+	if (text2 != nullptr)
 	text2->to_delete = true;
+	if (buttonNewGame != nullptr)
 	buttonNewGame->to_delete = true;
+	if (buttonContinue != nullptr)
 	buttonContinue->to_delete = true;
+	if (buttonExit != nullptr)
 	buttonExit->to_delete = true;
+	if (buttonSettings != nullptr)
 	buttonSettings->to_delete = true;
+	if (buttonCredits != nullptr)
 	buttonCredits->to_delete = true;
+	if (buttonSettingsToMenu != nullptr)
 	buttonSettingsToMenu->to_delete = true;
+	if (buttonCreditsToMenu != nullptr)
 	buttonCreditsToMenu->to_delete = true;
+	if (creditsPanel != nullptr)
 	creditsPanel->to_delete = true;
+	if (licenseText != nullptr)
 	licenseText->to_delete = true;
+	if (settingsPanel != nullptr)
 	settingsPanel->to_delete = true;
+	if (creditsText != nullptr)
 	creditsText->to_delete = true;
+	if (buttonToRepo != nullptr)
 	buttonToRepo->to_delete = true;
+	if (buttonToWeb != nullptr)
 	buttonToWeb->to_delete = true;
+	if (scrollBarMusic != nullptr)
 	scrollBarMusic->to_delete = true;
+	if (scrollBarFx != nullptr)
 	scrollBarFx->to_delete = true;
+	if (logoSettings != nullptr)
 	logoSettings->to_delete = true;
+	
 
 	return true;
 }
@@ -282,6 +303,14 @@ void j1MainMenu::GuiInput(GuiItem* item)
 		App->fade->ChangeScene();
 
 	}
+	else if (item == buttonContinue)
+	{
+		camLock = true;
+		CleanUp();
+		App->LoadGame();
+
+	}
+	
 	else if (item == buttonSettings)
 	{
 		MoveToSection(Section::settings);

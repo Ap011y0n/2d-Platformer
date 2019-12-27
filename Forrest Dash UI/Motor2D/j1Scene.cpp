@@ -223,7 +223,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 //	App->player->BarWidth = App->player->maxBarWidth;
 	checkpoint = false;
 	App->map->CleanUp();
-	current_level.create(data.child("scenename").attribute("name").as_string());
+	current_level= data.child("scenename").attribute("name").as_string();
 	App->map->Load(current_level.GetString());
 	
 	int w, h;
@@ -282,21 +282,7 @@ void j1Scene::Debug() {
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		
-		App->map->CleanUp();
-		checkpoint = false;
-		current_level.create("maplevel1.tmx");
-		App->map->Load(current_level.GetString());
-		App->audio->PlayMusic(App->map->data.music.GetString());
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-		RELEASE_ARRAY(data);
-
-		App->EntityManager->EntityCleanUp();
-		CreateEntities();
-
+		startlevel1();
 		//App->player->position.x = App->player->initialPosition.x;
 		//App->player->position.y = App->player->initialPosition.y;
 		//App->player->BarWidth = App->player->maxBarWidth;
@@ -308,18 +294,7 @@ void j1Scene::Debug() {
 	{
 		
 
-		App->map->CleanUp();
-		checkpoint = false;
-		current_level.create("maplevel2.tmx");
-		App->map->Load(current_level.GetString());
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-		RELEASE_ARRAY(data);
-
-		App->EntityManager->EntityCleanUp();
-		CreateEntities();
+		startlevel2();
 		/*App->player->position.x = App->player->initialPosition.x;
 		App->player->position.y = App->player->initialPosition.y;
 		App->player->BarWidth = App->player->maxBarWidth;
@@ -345,6 +320,15 @@ void j1Scene::Debug() {
 	// Save current state
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN){
 		App->SaveGame();
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
+		if (App->gui->debug) {
+			App->gui->debug = false;
+
+		}
+		else {
+			App->gui->debug = true;
+		}
 	}
 	// View colliders
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
@@ -484,7 +468,7 @@ void j1Scene::GuiInput(GuiItem* item)
 		App->map->CleanUp();
 		App->menu->Start();
 		checkpoint = false;
-		current_level.create("menu.tmx");
+		current_level = "menu.tmx";
 		App->map->Load(current_level.GetString());
 		App->audio->PlayMusic(App->map->data.music.GetString());
 		App->EntityManager->EntityCleanUp();
@@ -492,4 +476,38 @@ void j1Scene::GuiInput(GuiItem* item)
 	}
 
 
+}
+
+void j1Scene::startlevel1()
+{
+	App->map->CleanUp();
+	checkpoint = false;
+	current_level = "maplevel1.tmx";
+	App->map->Load(current_level.GetString());
+	App->audio->PlayMusic(App->map->data.music.GetString());
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+		App->pathfinding->SetMap(w, h, data);
+	RELEASE_ARRAY(data);
+
+	App->EntityManager->EntityCleanUp();
+	CreateEntities();
+
+}
+
+void j1Scene::startlevel2()
+{
+	App->map->CleanUp();
+	checkpoint = false;
+	current_level = "maplevel2.tmx";
+	App->map->Load(current_level.GetString());
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+		App->pathfinding->SetMap(w, h, data);
+	RELEASE_ARRAY(data);
+
+	App->EntityManager->EntityCleanUp();
+	CreateEntities();
 }

@@ -42,6 +42,7 @@ bool j1Gui::Start()
 
 	atlas = App->tex->Load("gui/ui.png");
 	FocusIt = 0;
+	debug = false;
 	return true;
 }
 
@@ -110,11 +111,14 @@ bool j1Gui::Update(float dt)
 	}
 		else {
 			App->render->Blit(GetAtlas(), x, y, &gui_list->data->textureRect);
-
+			if (debug) {
+				SDL_Rect* rect = gui_list->data->GetLocalRect();
+				rect->x = x;
+				rect->y = y;
+				App->render->DrawQuad(*rect, 0, 0, 255, 100);
+			}
 		}
-	//	SDL_Rect	r = { 0, 0, 427, 218 };
-	//	App->render->Blit(App->menu->graphics, 3480, 390, &r);
-
+	
 		gui_list = gui_list->next;
 	}
 

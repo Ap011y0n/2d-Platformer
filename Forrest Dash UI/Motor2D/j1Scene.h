@@ -42,7 +42,8 @@ public:
 	void Nextmap();
 	void Debug();
 	bool CreateEntities();
-	
+	void startlevel1();
+	void startlevel2();
 	
 private:
 	bool changeEntities = false;

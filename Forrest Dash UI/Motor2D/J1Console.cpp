@@ -10,6 +10,7 @@
 #include "j1Gui.h"
 #include "j1Fonts.h"
 #include "J1EntityManager.h"
+#include "j1Scene.h"
 
 
 j1Console::j1Console()
@@ -151,26 +152,20 @@ void j1Console::write(const char* newtext) {
 
 Commands j1Console::ReturnCommand(const char* text) {
 	Commands ret = Commands::none;
-	bool read = false;
-
-
-	
-
-
-
+	bool read = false, read2 = false;
 	p2SString result;
 	p2SString result2;
+
 	char test[100];
 	char test2[100];
-
 	int i, j = 0;
 	for (i = 0; text[i] != 0; i++) {
-		//LOG("%c", text[i]);
-	
 		test[i] = text[i];
 		test[i + 1] = '\0';
-		if(!read)
+		
+		if(!read && !read2)
 		result = test;
+
 
 		if (read)
 		{
@@ -181,19 +176,37 @@ Commands j1Console::ReturnCommand(const char* text) {
 				result2 = test2;
 			}
 		}
-	
+
+		if (read2)
+		{
+			if (text[i] == '0' || text[i] == '1' || text[i] == '2' || text[i] == '3' || text[i] == '4' || text[i] == '5' || text[i] == '6' || text[i] == '7' || text[i] == '8' || text[i] == '9') {
+				test2[j] = text[i];
+				test2[j + 1] = '\0';
+				j++;
+				result2 = test2;
+			}
+		}
 		if (strcmp(result.GetString(), "fps") == 0) {
 			read = true;
 		}
+		if (strcmp(result.GetString(), "map") == 0) {
+			read2 = true;
+		}
 	}
-	LOG("%s", result.GetString());
+	
+	LOG("%s", result2.GetString());
 
-	if(read == true && result2!= ""){
-	std::string::size_type sz;   // alias of size_t
-	fpsCap = std::stoi(result2.GetString(), &sz);
-	LOG("%d", fpsCap);
+	if(read == true && result2!= "")
+	{
+		std::string::size_type sz;  
+		fpsCap = std::stoi(result2.GetString(), &sz);
 	}
 
+	if (read2 == true)
+	{
+		std::string::size_type sz;   
+		loadMap = std::stoi(result2.GetString(), &sz);
+	}
 
 
 	if (strcmp ("godmode", text) == 0) {
@@ -212,7 +225,7 @@ Commands j1Console::ReturnCommand(const char* text) {
 		ret = Commands::FPS;
 	}	
 
-	if (strcmp("map", text) == 0) {
+	if (strcmp("map", result.GetString()) == 0) {
 		ret = Commands::map;
 	}
 	return ret;
@@ -221,7 +234,7 @@ Commands j1Console::ReturnCommand(const char* text) {
 void j1Console::ExecuteCommand(Commands command) {
 	switch (command) {
 	case Commands::none:
-		LOG("Error, command not found");
+		
 		write("Error, command not found");
 		break;
 	case Commands::God_Mode:
@@ -257,7 +270,7 @@ void j1Console::ExecuteCommand(Commands command) {
 		break;
 
 	case Commands::FPS:
-		LOG("Frame Cap set");
+		
 		write("- Frame Cap set");
 		if (fpsCap < 30)
 			fpsCap = 30;
@@ -267,8 +280,23 @@ void j1Console::ExecuteCommand(Commands command) {
 		break;
 
 	case Commands::map:
-		LOG("Changing map");
-		write("- Changing map");
+		
+		
+		if (loadMap == 1) {
+			write("- Changing to map 1");
+			App->menu->CleanUp();
+			App->menu->camLock = true;
+			App->scene->startlevel1();
+		}
+		else if (loadMap == 2) {
+			write("- Changing to map 2");
+			App->menu->CleanUp();
+			App->menu->camLock = true;
+			App->scene->startlevel2();
+		}
+		else {
+			write("- Incorrect map id");
+		}
 		break;
 	}
 }

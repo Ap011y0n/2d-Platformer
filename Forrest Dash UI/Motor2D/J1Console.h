@@ -72,6 +72,7 @@ private:
 	_TTF_Font* ConsText;
 	_TTF_Font* InText;
 	int fpsCap;
+	int loadMap;
 
 
 
