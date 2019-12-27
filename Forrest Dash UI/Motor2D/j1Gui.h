@@ -43,6 +43,8 @@ public:
 	bool checkBoundaries(int, int);
 	void Input();
 	void SetFocus();
+	void SetSingleFocus();
+
 	void GetScreenRect(SDL_Rect&);
 	SDL_Rect* GetLocalRect();
 	void GetScreenPos(int&, int&);
@@ -58,6 +60,9 @@ public:
 	
 	virtual const char* GetText() const {
 		return "none";
+	}
+	virtual GuiItem* GetInputText() const {
+		return NULL;
 	}
 	virtual void setRects(SDL_Rect, SDL_Rect) {
 
@@ -122,6 +127,7 @@ class InputText : public GuiItem
 {
 public:
 	InputText(int x, int y, SDL_Rect texrect, j1Module* callback = nullptr);
+	GuiItem* GetInputText() const;
 	virtual ~InputText();
 private:
 	GuiItem* text;

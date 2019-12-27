@@ -140,12 +140,10 @@ bool j1Input::PreUpdate(float dt)
 				if (event.wheel.y > 0) // scroll up
 				{
 					ScrollUp= true;
-					LOG("Scroll up");
 				}
 				else if (event.wheel.y < 0) // scroll down
 				{
 					ScrollDown = true;
-					LOG("Scroll down");
 				}
 
 				if (event.wheel.x > 0) // scroll right

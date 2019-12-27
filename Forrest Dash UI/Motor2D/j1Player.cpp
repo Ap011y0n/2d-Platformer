@@ -139,19 +139,21 @@ bool j1Player::Start()
 // Update: call player functions which have to run every frame ----------------------------------------------
 bool j1Player::Update(float dt)
 {
-	charging = false;
+	
 
 	BROFILER_CATEGORY("Update_Player", Profiler::Color::SaddleBrown);
-	
+	charging = false;
 	current_animation = &idle;
-	CheckCollision(dt);
-	Movement(dt);
-	StateMachine(dt);
+	if (dt != 0) {
+		CheckCollision(dt);
+		Movement(dt);
+		StateMachine(dt);
+		MoveCondition(dt);
+	}
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
 	App->render->Blit(App->EntityManager->playerTex, position.x + (current_animation->pivotx[current_animation->returnCurrentFrame()]), position.y + (current_animation->pivoty[current_animation->returnCurrentFrame()]), r, 1.0f, 1.0f, flip);
 	DrawHitbox();
 	Camera();
-	MoveCondition(dt);
 
 	current_animation_bow = &bow;
 	SDL_Rect* rec = &current_animation_bow->GetCurrentFrame(dt);

@@ -9,6 +9,7 @@
 #include "J1Console.h"
 #include "j1Gui.h"
 #include "j1Fonts.h"
+#include "J1EntityManager.h"
 
 
 j1Console::j1Console()
@@ -174,7 +175,18 @@ void j1Console::ExecuteCommand(Commands command) {
 		write("Error, command not found");
 		break;
 	case Commands::God_Mode:
-		LOG("God Mode Activated");
+		if (App->EntityManager->GetPlayer() != NULL)
+		{
+
+			if (!App->EntityManager->GetPlayer()->Godmode)
+			{
+				App->EntityManager->GetPlayer()->Godmode = true;
+			}
+			else if (App->EntityManager->GetPlayer()->Godmode)
+			{
+				App->EntityManager->GetPlayer()->Godmode = false;
+			}
+		}
 		write("God Mode Activated");
 
 		break;
@@ -199,7 +211,7 @@ void j1Console::Open()
 {
 	InputText = App->gui->CreateGuiElement(Types::inputText, 0, 200, { 488, 569, 344, 61 }, nullptr, this);
 	InputText->follow = true;
-	
+	InputText->GetInputText()->SetSingleFocus();
 	ConsoleText[0] = App->gui->CreateGuiElement(Types::text, 30, -30, { 0, 0, 0, 0 }, InputText, this, "- ");
 	for (int i = 1; i < MAXTEXT; i++) {
 		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 0, -i * 20, { 0, 0, 0, 0 }, ConsoleText[0], this, "- ");

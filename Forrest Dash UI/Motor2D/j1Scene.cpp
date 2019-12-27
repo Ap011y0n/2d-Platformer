@@ -354,14 +354,17 @@ void j1Scene::Debug() {
 	
 	// Activate God Mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		
+		if (App->EntityManager->GetPlayer() != NULL) 
+		{
+
 		if (!App->EntityManager->GetPlayer()->Godmode)
-		{
-			App->EntityManager->GetPlayer()->Godmode = true;
-		}
+			{
+				App->EntityManager->GetPlayer()->Godmode = true;
+			}
 		else if (App->EntityManager->GetPlayer()->Godmode)
-		{
-			App->EntityManager->GetPlayer()->Godmode = false;
+			{
+				App->EntityManager->GetPlayer()->Godmode = false;
+			}
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {

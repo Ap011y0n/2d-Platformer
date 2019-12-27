@@ -263,6 +263,22 @@ void GuiItem::SetFocus() {
 	}
 }
 
+void GuiItem::SetSingleFocus() {
+	
+		if (type == Types::text)
+		{
+			p2List_item<GuiItem*>* gui_list = App->gui->guiElements.end;
+			while (gui_list) {
+				gui_list->data->focus = false;
+				App->input->DisableTextInput();
+				gui_list = gui_list->prev;
+			}
+			App->input->EnableTextInput("");
+			focus = true;
+		}
+	
+}
+
 void GuiItem::Input() {
 
 	if (type == Types::button) {
@@ -444,6 +460,9 @@ InputText::~InputText() {
 	
 }
 
+GuiItem* InputText::GetInputText() const {
+	return text;
+}
 //--------------------------------------------------------------
 GuiSlider::GuiSlider(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiItem()
 {
