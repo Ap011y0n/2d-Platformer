@@ -170,19 +170,27 @@ Commands j1Console::ReturnCommand(const char* text) {
 void j1Console::ExecuteCommand(Commands command) {
 	switch (command) {
 	case Commands::none:
-		LOG("none");
+		LOG("Error, command not found");
+		write("Error, command not found");
 		break;
 	case Commands::God_Mode:
-		LOG("God Mode");
+		LOG("God Mode Activated");
+		write("God Mode Activated");
+
 		break;
 	case Commands::quit:
-		LOG("quit");
+		LOG("Quitting game");
+		write("Quitting game");
+
 		break;
 	case Commands::FPS:
-		LOG("FPS");
+		LOG("Frame Cap set");
+		write("Frame Cap set");
+
 		break;
 	case Commands::map:
-		LOG("map");
+		LOG("Changing map");
+		write("Changing map");
 		break;
 	}
 }
