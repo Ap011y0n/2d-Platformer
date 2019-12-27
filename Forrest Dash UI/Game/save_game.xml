@@ -10,22 +10,13 @@
 	</audio>
 	<map />
 	<scene>
-		<scenename name="maplevel2.tmx" />
+		<scenename name="menu.tmx" />
 	</scene>
 	<collision />
 	<pathfinding />
 	<entity>
-		<Entity type="wizard">
-			<position pos_x="5762" pos_y="1312" />
-		</Entity>
-		<Entity type="wizard">
-			<position pos_x="3906" pos_y="1440" />
-		</Entity>
-		<Entity type="slime">
-			<position pos_x="4928" pos_y="1728" />
-		</Entity>
 		<Entity type="player">
-			<position pos_x="3146" pos_y="1689" />
+			<position pos_x="100" pos_y="500" />
 		</Entity>
 	</entity>
 	<fonts />

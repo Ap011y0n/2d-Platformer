@@ -150,35 +150,50 @@ void j1Console::write(const char* newtext) {
 
 Commands j1Console::ReturnCommand(const char* text) {
 	Commands ret = Commands::none;
+	bool read = false;
 
-	//std::string::size_type sz;   // alias of size_t
-	//
-	
-	//int i_dec = std::stoi(text);
-	//test = test.substr(sz);
 
-	//text = test.c_str();
+	
 
-//	LOG("%s", text);
-	
-	//LOG("%s", test.at(1));
-	
+
+
+	p2SString result;
+	p2SString result2;
 	char test[100];
-	int i;
+	char test2[100];
+
+	int i, j = 0;
 	for (i = 0; text[i] != 0; i++) {
 		//LOG("%c", text[i]);
 	
 		test[i] = text[i];
 		test[i + 1] = '\0';
+		if(!read)
+		result = test;
 
-		p2SString result = test;
-		LOG("%s", result.GetString());
+		if (read)
+		{
+			if (text[i] == '0' || text[i] == '1' || text[i] == '2' || text[i] == '3' || text[i] == '4' || text[i] == '5' || text[i] == '6' || text[i] == '7' || text[i] == '8' || text[i] == '9') {
+				test2[j] = text[i];
+				test2[j + 1] = '\0';
+				j++;
+				result2 = test2;
+			}
+		}
+	
 		if (strcmp(result.GetString(), "fps") == 0) {
-			ret = Commands::FPS;
+			read = true;
 		}
 	}
+	LOG("%s", result.GetString());
 
-	
+	if(read == true){
+	std::string::size_type sz;   // alias of size_t
+	fpsCap = std::stoi(result2.GetString(), &sz);
+	LOG("%d", fpsCap);
+	}
+
+
 
 	if (strcmp ("godmode", text) == 0) {
 		ret = Commands::God_Mode;
@@ -192,7 +207,7 @@ Commands j1Console::ReturnCommand(const char* text) {
 		ret = Commands::quit;
 	}
 
-	if (strcmp("fps", text) == 0) {
+	if (strcmp("fps", result.GetString()) == 0) {
 		ret = Commands::FPS;
 	}	
 
@@ -234,7 +249,7 @@ void j1Console::ExecuteCommand(Commands command) {
 		write("-----------COMMAND LIST------------");
 		write("- godmode --> Enables/disables player godmode");
 		write("- list --> If you haven't noticed yet, displays all available commands");
-		write("- fps --> sets a framerate cap between 30 and 120");
+		write("- fps <number> --> sets a framerate cap between 30 and 120");
 		write("- map --> changes map");
 		write("- Quit --> Closes the application");
 
@@ -243,6 +258,11 @@ void j1Console::ExecuteCommand(Commands command) {
 	case Commands::FPS:
 		LOG("Frame Cap set");
 		write("- Frame Cap set");
+		if (fpsCap < 30)
+			fpsCap = 30;
+		if (fpsCap > 120)
+			fpsCap = 120;
+		App->framerate = fpsCap;
 		break;
 
 	case Commands::map:
