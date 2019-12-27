@@ -34,6 +34,7 @@ bool j1Console::Awake()
 bool j1Console::Start()
 {
 	opened = false;
+	fpsCap = 30;
 	ConsText = App->font->Load("fonts/open_sans/OpenSans-Regular.ttf",16);
 	InText = App->font->Load("fonts/open_sans/OpenSans-Regular.ttf", 36);
 	return true;
@@ -187,7 +188,7 @@ Commands j1Console::ReturnCommand(const char* text) {
 	}
 	LOG("%s", result.GetString());
 
-	if(read == true){
+	if(read == true && result2!= ""){
 	std::string::size_type sz;   // alias of size_t
 	fpsCap = std::stoi(result2.GetString(), &sz);
 	LOG("%d", fpsCap);
