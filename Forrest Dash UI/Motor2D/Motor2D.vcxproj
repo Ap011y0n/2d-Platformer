@@ -83,6 +83,7 @@
     <ClCompile Include="J1EntityManager.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Gui.cpp" />
+    <ClCompile Include="j1Hud.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="J1EntityManager.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1Gui.h" />
+    <ClInclude Include="j1Hud.h" />
     <ClInclude Include="j1MainMenu.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />

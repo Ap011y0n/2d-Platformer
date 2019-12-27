@@ -23,6 +23,7 @@ class j1PathFinding;
 class j1MainMenu;
 class j1Fonts;
 class j1Gui;
+class j1Hud;
 class j1Console;
 class j1FadeToBlack;
 
@@ -104,6 +105,7 @@ public:
 	j1MainMenu*			menu;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
+	j1Hud*				hud = NULL;
 	j1Console*			console = NULL;
 	j1FadeToBlack*		fade;
 

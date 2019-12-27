@@ -18,6 +18,7 @@
 #include "j1FadeToBlack.h"
 #include "Brofiler/Brofiler.h"
 #include "J1Console.h"
+#include "J1Hud.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -249,7 +250,7 @@ bool j1Scene::Save(pugi::xml_node& data) const
 }
 void j1Scene::Nextmap() {
 	
-	
+	App->hud->ShowHud();
 	changeEntities = true;
 	App->menu->CleanUp();
 	App->map->CleanUp();

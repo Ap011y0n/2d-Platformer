@@ -20,6 +20,7 @@
 #include "j1MainMenu.h"
 #include "j1Fonts.h"
 #include "j1Gui.h"
+#include "j1Hud.h"
 #include "j1Console.h"
 
 
@@ -44,6 +45,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	menu = new j1MainMenu();
 	font = new j1Fonts();
 	gui = new j1Gui();
+	hud = new j1Hud();
 	console = new j1Console();
 	fade = new j1FadeToBlack();
 
@@ -69,6 +71,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(menu);
 	AddModule(console);
 	AddModule(gui);
+	AddModule(hud);
 
 	AddModule(fade);
 	

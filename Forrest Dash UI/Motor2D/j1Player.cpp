@@ -17,6 +17,7 @@
 #include "j1Wizard.h"
 #include "Brofiler/Brofiler.h"
 #include "J1Console.h"
+#include "j1Hud.h"
 
 
 j1Player::j1Player(int posx, int posy) : j1Entity(Types::player)
@@ -565,6 +566,7 @@ void j1Player::StateMachine(float dt)
 			App->EntityManager->ResetEntities = true;
 			
 		}
+		
 	}
 	if (state == AIMING)
 	{
@@ -720,11 +722,13 @@ void j1Player::CheckCollision(float dt) {
 						is_death = true;
 					}
 					if (is_death == true){
-						
+					
+					App->hud->SetLifes(App->hud->GetLifes() - 1);
 					state = DEATH;
 					jumpSpeed = -speedY*0.5 *(DT_CONVERTER * dt);
 					DeathTimer = SDL_GetTicks();
 					ret = false;
+					
 					}
 				}
 				if(!App->scene->checkpoint){

@@ -78,6 +78,9 @@
     <ClCompile Include="j1Coin.cpp">
       <Filter>Modules\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="j1Hud.cpp">
+      <Filter>Modules\Gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h" />
@@ -179,6 +182,9 @@
       <Filter>Modules\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1Url.h">
+      <Filter>Modules\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Hud.h">
       <Filter>Modules\Gui</Filter>
     </ClInclude>
   </ItemGroup>
