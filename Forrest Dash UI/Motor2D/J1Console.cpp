@@ -191,7 +191,8 @@ void j1Console::ExecuteCommand(Commands command) {
 
 		break;
 	case Commands::quit:
-		LOG("Quitting game");
+	
+		App->quitGame = true;
 		write("Quitting game");
 
 		break;
