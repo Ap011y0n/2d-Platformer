@@ -835,6 +835,7 @@ void j1Player::MoveCondition(float dt) {
 		if (state != DEATH && Godmode == false) {
 		jumpSpeed = -speedY* (70 * dt);
 		DeathTimer = SDL_GetTicks();
+		App->hud->SetLifes(App->hud->GetLifes() - 1);
 		state = DEATH;
 		}
 	}

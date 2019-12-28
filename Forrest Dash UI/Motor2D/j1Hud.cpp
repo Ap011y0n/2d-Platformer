@@ -33,7 +33,7 @@ bool j1Hud::Start()
 {
 	
 	lifesCounter = 3;
-
+	extraLife = true;
 	return true;
 }
 
@@ -44,6 +44,17 @@ bool j1Hud::PreUpdate()
 
 bool j1Hud::Update(float dt)
 {
+	if(extraLife)
+	{
+		if (score >= 500)
+		{
+			extraLife = false;
+			drawLife = true;
+			SetLifes(App->hud->GetLifes() + 1);
+		}
+	}
+	
+
 	//TIMER
 	if(activateTimer)
 	{
@@ -240,7 +251,30 @@ bool j1Hud::SetLifes(int lifes)
 		break;
 	}
 	
-	
+	if(drawLife)
+	{
+		switch (lifes)
+		{
+		case 3:
+			liveFull3 = App->gui->CreateGuiElement(Types::image, 100, 50, { 119, 258, 36, 34 }, nullptr);
+			liveFull3->follow = true;
+			drawLife = false;
+			break;
+		case 2:
+			liveFull2 = App->gui->CreateGuiElement(Types::image, 60, 50, { 119, 258, 36, 34 }, nullptr);
+			liveFull2->follow = true;
+			drawLife = false;
+			break;
+		case 1:
+			liveFull = App->gui->CreateGuiElement(Types::image, 20, 50, { 119, 258, 36, 34 }, nullptr);
+			liveFull->follow = true;
+			drawLife = false;
+			break;
+		default:
+			break;
+		}
+
+	}
 
 	return true;
 }
