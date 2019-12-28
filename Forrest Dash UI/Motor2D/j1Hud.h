@@ -42,12 +42,17 @@ public:
 	GuiItem* liveEmpty3;
 	GuiItem* timer_item;
 	GuiItem* minutes_item;
+	GuiItem* coins_collected;
+	GuiItem* score_title;
+	GuiItem* score_item;
 	j1Timer	timer_game;
 	int lifesCounter = 3;
 	bool activateTimer = false;
 	uint timer = 0;
 	uint minutes = 0;
+	uint score = 0;
 
+	char score_text[10];
 	char timer_text[10];
 	char minutes_text[10];
 private:

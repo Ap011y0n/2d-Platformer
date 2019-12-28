@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
+#include "j1Hud.h"
 #include "j1ModuleCollision.h"
 #include "J1EntityManager.h"
 #include "j1Pathfinding.h"
@@ -112,7 +113,7 @@ void j1Coin::setAnimation()
 void j1Coin::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c2->type == COLLIDER_PLAYER) {
-
+		App->hud->score += 10;
 		EntityCollider->to_delete = true;
 		to_delete = true;
 		state = COIN_PICKED;

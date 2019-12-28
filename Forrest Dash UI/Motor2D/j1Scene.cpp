@@ -131,17 +131,16 @@ bool j1Scene::Update(float dt)
 	BROFILER_CATEGORY("Update_Scene", Profiler::Color::Tomato);
 	//PAUSE
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
-		
-		if (current_level != nullptr)
+		if (current_level == "maplevel1.tmx" || current_level == "maplevel2.tmx")
 		{
-			if (App->Pause())
-			{
-				PauseMenu();
-			}
-			else
-			{
-				DestroyMenu();
-			}
+				if (App->Pause())
+				{
+					PauseMenu();
+				}
+				else
+				{
+					DestroyMenu();
+				}
 		}
 	}
 
@@ -477,6 +476,7 @@ void j1Scene::GuiInput(GuiItem* item)
 		App->map->Load(current_level.GetString());
 		App->audio->PlayMusic(App->map->data.music.GetString());
 		App->EntityManager->EntityCleanUp();
+		App->hud->CleanUp();
 		DestroyMenu();
 	}
 

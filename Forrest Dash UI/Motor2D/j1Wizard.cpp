@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
+#include "j1Hud.h"
 #include "j1Pathfinding.h"
 #include "j1ModuleCollision.h"
 #include "J1EntityManager.h"
@@ -193,6 +194,7 @@ void j1Wizard::OnCollision(Collider* c1, Collider* c2) {
 
 	//If it's a player attack, the entity will die
 	if (c2->type == COLLIDER_PLAYER_SHOT) {
+		App->hud->score += 20;
 		App->render->StartCameraShake(500, 3);
 		pathFinding = false;
 		EntityCollider->to_delete = true;

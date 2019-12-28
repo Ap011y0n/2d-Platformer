@@ -737,7 +737,7 @@ void j1Player::CheckCollision(float dt) {
 					if (layer->Get(coord.x, coord.y) != 0) {
 						App->SaveGame();
 						App->scene->checkpoint = true;
-						
+						App->hud->score += 100;
 						//Play jumpFx
 						if (!playedCheckpointFx) {
 							App->audio->PlayFx(App->audio->checkpointFx);
@@ -857,7 +857,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		BarWidth -= 15;
 		position.y -= 30;
 		DeathTimer = SDL_GetTicks();
-
 		if (position.x <= c2->rect.x)
 		{
 			position.x -= 30;
@@ -874,7 +873,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		BarWidth -= 15;
 		position.y -= 30;
 		DeathTimer = SDL_GetTicks();
-
 		if (position.x <= c2->rect.x)
 		{
 			position.x -= 30;

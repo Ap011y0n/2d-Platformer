@@ -9,6 +9,9 @@
 #include "j1Window.h"
 #include "j1Scene.h"
 #include "j1Timer.h"
+#include "j1Map.h"
+#include "j1MainMenu.h"
+#include "j1Audio.h"
 #include "j1Gui.h"
 #include "j1Hud.h"
 #include "Brofiler/Brofiler.h"
@@ -82,7 +85,17 @@ bool j1Hud::Update(float dt)
 		minutes_item->follow = true;
 		minutes_item->to_delete = true;
 	}
-
+	//SCORE
+	if (App->scene->current_level == "maplevel1.tmx" || App->scene->current_level == "maplevel2.tmx")
+	{
+		sprintf_s(score_text, 10, "%d", score);
+		score_title = App->gui->CreateGuiElement(Types::text, 780, 50, { 157, 258, 36, 34 }, NULL, this, "SCORE:");
+		score_title->follow = true;
+		score_title->to_delete = true;
+		score_item = App->gui->CreateGuiElement(Types::text, 900, 50, { 157, 258, 36, 34 }, NULL, this, score_text);
+		score_item->follow = true;
+		score_item->to_delete = true;
+	}
 
 	return true;
 }
@@ -95,7 +108,14 @@ bool j1Hud::PostUpdate()
 
 bool j1Hud::CleanUp()
 {
-	
+	score = 0;
+	score_title->to_delete = true;
+	liveFull->to_delete = true;
+	liveFull2->to_delete = true;
+	liveFull3->to_delete = true;
+	liveEmpty->to_delete = true;
+	liveEmpty2->to_delete = true;
+	liveEmpty3->to_delete = true;
 	return true;
 }
 
@@ -117,6 +137,15 @@ bool j1Hud::SetLifes(int lifes)
 	if (lifes <= 0)
 	{
 		lifes = 0;
+		score = 0;
+		App->map->CleanUp();
+		App->menu->Start();
+		App->scene->checkpoint = false;
+		App->scene->current_level = "menu.tmx";
+		App->map->Load(App->scene->current_level.GetString());
+		App->audio->PlayMusic(App->map->data.music.GetString());
+		App->EntityManager->EntityCleanUp();
+		CleanUp();
 		
 	}
 	else if (lifes > MAX_LIFES)

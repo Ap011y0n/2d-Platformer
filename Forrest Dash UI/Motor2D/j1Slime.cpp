@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "Animation.h"
+#include "j1Hud.h"
 #include "j1ModuleCollision.h"
 #include "J1EntityManager.h"
 #include "j1Pathfinding.h"
@@ -212,6 +213,7 @@ void j1Slime::OnCollision(Collider* c1, Collider* c2) {
 		slimeDead = true;
 		EntityCollider->to_delete = true;
 		deathTimerSlime = SDL_GetTicks();
+		App->hud->score += 20;
 
 	}
 	
