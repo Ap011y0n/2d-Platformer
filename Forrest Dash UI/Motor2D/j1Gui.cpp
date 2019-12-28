@@ -542,14 +542,13 @@ GuiSlider::~GuiSlider() {
 void GuiSlider::slide() {
 	int x, y, LocalX, LocalY, ScreenX, ScreenY, parentx, parenty, difference, height;
 	App->input->GetMousePosition(x, y);
-	x -= 5;
-	y -= 5;
+	x -= 5 + App->render->camera.x;
+	y -= 5 + App->render->camera.y;
 	height = Image->GetLocalRect()->h - ScrollThumb->GetLocalRect()->h + 1;
 	GetScreenPos(parentx, parenty);
 	ScrollThumb->GetScreenPos(ScreenX, ScreenY);
 	ScrollThumb->GetLocalPos(LocalX, LocalY);
-	
-	
+
 	if (y > ScreenY) 
 	{
 		difference = LocalY + y - ScreenY;
