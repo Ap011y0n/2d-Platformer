@@ -110,7 +110,6 @@ bool j1Player::Start()
 	playedBowFx = false;
 	playedSwordFx = false;
 	playedCheckpointFx = false;
-	collider = true;
 	flip = SDL_FLIP_NONE;
 	flip_bow = SDL_FLIP_NONE;
 
@@ -142,6 +141,14 @@ bool j1Player::Update(float dt)
 {
 		BROFILER_CATEGORY("Update_Player", Profiler::Color::SaddleBrown);
 	charging = false;
+	if (EntityCollider == nullptr) {
+		SDL_Rect r;
+		r.h = playerHeight;
+		r.w = playerWidth;
+		r.x = position.x + playerCentre;
+		r.y = position.y;
+		EntityCollider = App->collision->AddCollider(&r, COLLIDER_PLAYER, this);
+	}
 	current_animation = &idle;
 	if (dt != 0) {
 		CheckCollision(dt);
@@ -244,6 +251,8 @@ void j1Player::Movement(float dt) {
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN && state != DEATH && state != JUMP && state != FALLING && state != ATTACK)
 		{
 			attackTimerStart.Start();
+			SDL_Rect r = { position.x, position.y, 30, 40 };
+			colliderAttack = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
 			attackTimerEnd.Start();
 			state = ATTACK;
 		}
@@ -395,7 +404,6 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 	}
 	if (state == DASH_L) {
@@ -420,7 +428,6 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 	}
 	if (state == DASH_R) {
@@ -444,7 +451,6 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 	}
 	if(state == FORWARD)
@@ -462,7 +468,6 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 	}
 	if(state == BACKWARD)
@@ -481,7 +486,6 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 	}
 	if (state == CROUCH)
@@ -497,7 +501,6 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 	}
 	if(state == JUMP)
@@ -518,7 +521,6 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 	}
 	if (state == FALLING)
@@ -534,7 +536,6 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 	}
 	if (state == DEATH)
@@ -556,7 +557,6 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
@@ -593,24 +593,18 @@ void j1Player::StateMachine(float dt)
 		playedSwordFx = false;
 
 		//Reset collider
-		collider = true;
 		
 	}
 	if (state == ATTACK)
 	{
 		
 		current_animation = &swordAttack;
-		SDL_Rect r = {position.x, position.y, 30, 40 };
+	
 		
-		if (collider == true)
-		{
-			if(attackTimerStart.Read() > 400)
-			{
-				colliderAttack = App->collision->AddCollider(&r, COLLIDER_PLAYER_SHOT, this);
-				collider = false;
+		
+			
 
-			}
-		}
+		
 
 		//Play arrow FX
 		if (!playedSwordFx)

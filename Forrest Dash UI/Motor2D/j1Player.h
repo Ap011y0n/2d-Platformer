@@ -63,7 +63,7 @@ private:
 	bool playedBowFx = false;
 	bool playedSwordFx = false;
 	bool playedCheckpointFx = false;
-	bool collider = true;
+	bool prueba = true;
 	
 	Animation idle;
 	Animation forward;
