@@ -10,13 +10,12 @@ j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_L
 	name.create("pathfinding");
 }
 
-// Destructor
 j1PathFinding::~j1PathFinding()
 {
 	RELEASE_ARRAY(map);
 }
 
-// Called before quitting
+
 bool j1PathFinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
@@ -27,7 +26,7 @@ bool j1PathFinding::CleanUp()
 	return true;
 }
 
-// Sets up the walkability map
+
 void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 {
 	this->width = width;
@@ -38,21 +37,21 @@ void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 	memcpy(map, data, width * height);
 }
 
-// Utility: return true if pos is inside the map boundaries
+
 bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 {
 	return (pos.x >= 0 && pos.x <= (int)width &&
 		pos.y >= 0 && pos.y <= (int)height);
 }
 
-// Utility: returns true is the tile is walkable
+
 bool j1PathFinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
 	return t != INVALID_WALK_CODE && t > 0;
 }
 
-// Utility: return the walkability value of a tile
+
 uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
@@ -61,15 +60,13 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 	return INVALID_WALK_CODE;
 }
 
-// To request all tiles involved in the last generated path
+
 const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 {
 	return &last_path;
 }
 
-// PathList ------------------------------------------------------------------------
-// Looks for a node in this list and returns it's list node or NULL
-// ---------------------------------------------------------------------------------
+
 p2List_item<PathNode>* PathList::Find(const iPoint& point) const
 {
 	p2List_item<PathNode>* item = list.start;
@@ -82,9 +79,6 @@ p2List_item<PathNode>* PathList::Find(const iPoint& point) const
 	return NULL;
 }
 
-// PathList ------------------------------------------------------------------------
-// Returns the Pathnode with lowest score in this list or NULL if empty
-// ---------------------------------------------------------------------------------
 p2List_item<PathNode>* PathList::GetNodeLowestScore() const
 {
 	p2List_item<PathNode>* ret = NULL;
@@ -103,9 +97,7 @@ p2List_item<PathNode>* PathList::GetNodeLowestScore() const
 	return ret;
 }
 
-// PathNode -------------------------------------------------------------------------
-// Convenient constructors
-// ----------------------------------------------------------------------------------
+
 PathNode::PathNode() : g(-1), h(-1), pos(-1, -1), parent(NULL)
 {}
 
@@ -115,9 +107,7 @@ PathNode::PathNode(int g, int h, const iPoint& pos, PathNode* parent) : g(g), h(
 PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), parent(node.parent)
 {}
 
-// PathNode -------------------------------------------------------------------------
-// Fills a list (PathList) of all valid adjacent pathnodes
-// ----------------------------------------------------------------------------------
+
 uint PathNode::FindWalkableAdjacents(PathList& list_to_fill)
 {
 	iPoint cell;
@@ -146,17 +136,13 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill)
 	return list_to_fill.list.count();
 }
 
-// PathNode -------------------------------------------------------------------------
-// Calculates this tile score
-// ----------------------------------------------------------------------------------
+
 int PathNode::Score() const
 {
 	return g + h;
 }
 
-// PathNode -------------------------------------------------------------------------
-// Calculate the F for a specific destination tile
-// ----------------------------------------------------------------------------------
+
 int PathNode::CalculateF(const iPoint& destination)
 {
 	g = parent->g + 1;
@@ -165,9 +151,7 @@ int PathNode::CalculateF(const iPoint& destination)
 	return g + h;
 }
 
-// ----------------------------------------------------------------------------------
-// Actual A* algorithm: return number of steps in the creation of the path or -1 ----
-// ----------------------------------------------------------------------------------
+
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	BROFILER_CATEGORY("Pathfinding", Profiler::Color::Gold);
@@ -194,8 +178,6 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		closed.list.add(*current_node);
 		open.list.del(open.Find(current_node->pos));
 		// TODO 4: If we just added the destination, we are done!
-		// Backtrack to create the final path
-		// Use the Pathnode::parent and Flip() the path when you are finish... ¿ed?
 		if (current_node->pos == destination) {
 
 			PathNode* iterator = current_node;
@@ -211,24 +193,23 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		}
 
 		// TODO 5: Fill a list of all adjancent nodes
-		PathList Adjacent_list;
-		uint limit = current_node->FindWalkableAdjacents(Adjacent_list);
+		PathList adjList;
+		uint limit = current_node->FindWalkableAdjacents(adjList);
 		// TODO 6: Iterate adjancent nodes:
 		for (uint i = 0; i < limit; i++) {
-			// ignore nodes in the closed list <======> do things only if we didnt find them
-			if ((closed.Find(Adjacent_list.list[i].pos)) == NULL) {
-				// If it is NOT found, calculate its F and add it to the open list
-				if ((open.Find(Adjacent_list.list[i].pos)) == NULL) {
-					Adjacent_list.list[i].CalculateF(destination);
-					open.list.add(Adjacent_list.list[i]);
+			
+			if ((closed.Find(adjList.list[i].pos)) == NULL) {
+				
+				if ((open.Find(adjList.list[i].pos)) == NULL) {
+					adjList.list[i].CalculateF(destination);
+					open.list.add(adjList.list[i]);
 				}
-				else { // If it is already in the open list, check if it is a better path (compare G)
-					Adjacent_list.list[i].CalculateF(destination);
-					if (Adjacent_list.list[i].g < open.Find(Adjacent_list.list[i].pos)->data.g) {
-						// If it is a better path, Update the parent
-						//open.Find(Adjacent_list.list[i].pos)->data.parent = Adjacent_list.list[i].parent;
-						open.list.del(open.Find(Adjacent_list.list[i].pos));
-						open.list.add(Adjacent_list.list[i]);
+				else { 
+					adjList.list[i].CalculateF(destination);
+					if (adjList.list[i].g < open.Find(adjList.list[i].pos)->data.g) {
+						
+						open.list.del(open.Find(adjList.list[i].pos));
+						open.list.add(adjList.list[i]);
 
 					}
 				}

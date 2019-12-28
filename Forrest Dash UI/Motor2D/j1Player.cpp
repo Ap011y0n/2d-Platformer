@@ -555,9 +555,6 @@ void j1Player::StateMachine(float dt)
 		playedBowFx = false;
 		playedSwordFx = false;
 
-		//Reset collider
-		collider = true;
-		
 
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
 			//Reset all entities
@@ -567,6 +564,8 @@ void j1Player::StateMachine(float dt)
 			}
 			else {
 				App->hud->SetLifes(App->hud->GetLifes() - 1);
+				// Reset Collider
+				collider = true;
 			}
 
 			
