@@ -61,7 +61,7 @@ bool j1Scene::Start()
 	LOG("Start scene");
 	App->console->write("Start scene");
 
-	current_level = levels.start->data;
+	current_level = "menu.tmx";
 	changeEntities = false;
 	checkpoint = false;
 	//App->map->Load(current_level.GetString());
@@ -257,13 +257,20 @@ void j1Scene::Nextmap() {
 	checkpoint = false;
 //	App->player->BarWidth = App->player->maxBarWidth;
 	p2List_item<p2SString>* iterator;
+	if (current_level == "menu.tmx")
+	{
+		current_level = "maplevel1.tmx";
+	}
+	else {
+
+	
 	for (iterator = levels.start; iterator->data != current_level.GetString(); iterator = iterator->next) {
 		LOG("%s  %s", iterator->data.GetString(), current_level.GetString());
 	}
 	if (iterator->next != NULL) { iterator = iterator->next; }
 	else { iterator = levels.start; }
 	current_level = iterator->data;
-	
+	}
 	App->map->Load(current_level.GetString());
 	App->audio->PlayMusic(App->map->data.music.GetString());
 
@@ -315,11 +322,12 @@ void j1Scene::Debug() {
 	// Load last save
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
+		App->menu->CleanUp();
 		App->LoadGame();
 	}
 
 	// Save current state
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN){
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN && current_level != "menu.tmx"){
 		App->SaveGame();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
@@ -502,6 +510,7 @@ void j1Scene::GuiInput(GuiItem* item)
 void j1Scene::startlevel1()
 {
 	App->map->CleanUp();
+	App->menu->CleanUp();
 	checkpoint = false;
 	current_level = "maplevel1.tmx";
 	App->map->Load(current_level.GetString());
@@ -520,6 +529,8 @@ void j1Scene::startlevel1()
 void j1Scene::startlevel2()
 {
 	App->map->CleanUp();
+	App->menu->CleanUp();
+
 	checkpoint = false;
 	current_level = "maplevel2.tmx";
 	App->map->Load(current_level.GetString());

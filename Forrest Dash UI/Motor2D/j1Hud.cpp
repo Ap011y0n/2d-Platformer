@@ -120,15 +120,17 @@ bool j1Hud::CleanUp()
 {
 	score = 0; 
 	coins = 0;
-	score_title->to_delete = true;
-	liveFull->to_delete = true;
-	liveFull2->to_delete = true;
-	liveFull3->to_delete = true;
-	liveEmpty->to_delete = true;
-	liveEmpty2->to_delete = true;
-	liveEmpty3->to_delete = true;
-	coins_collected->to_delete = true;
-	coins_image->to_delete = true;
+	//timer_item->to_delete = true;
+//	minutes_item->to_delete = true;
+//	score_title->to_delete = true;
+//	liveFull->to_delete = true;
+//	liveFull2->to_delete = true;
+//	liveFull3->to_delete = true;
+//	liveEmpty->to_delete = true;
+//	liveEmpty2->to_delete = true;
+//	liveEmpty3->to_delete = true;
+//	coins_collected->to_delete = true;
+//	coins_image->to_delete = true;
 	return true;
 }
 

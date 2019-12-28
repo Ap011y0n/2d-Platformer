@@ -303,6 +303,8 @@ void j1Console::ExecuteCommand(Commands command) {
 
 void j1Console::Open() 
 {
+	
+		App->Pause();
 	InputText = App->gui->CreateGuiElement(Types::inputText, 0, 200, { 488, 569, 344, 61 }, nullptr, this);
 	InputText->follow = true;
 	InputText->GetInputText()->SetSingleFocus();
@@ -314,6 +316,8 @@ void j1Console::Open()
 
 void j1Console::Close() 
 {
+	App->Pause();
+
 	InputText->to_delete = true;
 
 	for (int i = 0; i < MAXTEXT; i++) {

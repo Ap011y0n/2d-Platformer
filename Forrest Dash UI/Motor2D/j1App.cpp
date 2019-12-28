@@ -449,12 +449,32 @@ bool j1App::LoadGameNow()
 	}
 	else {
 		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
+		
 		App->console->write("Could not parse game state xml file");
 	}
 
 	want_to_load = false;
 	return ret;
 }
+
+bool j1App::CheckSaveGame()
+{
+	pugi::xml_document data;
+	pugi::xml_node root;
+	load_game.create("save_game.xml");
+	pugi::xml_parse_result result = data.load_file(load_game.GetString());
+
+	if (result != NULL) {
+		return true;
+	}
+	else {
+		LOG("no available savegame");
+
+		App->console->write("no available savegame");
+		return false;
+	}
+}
+
 
 bool j1App::SavegameNow() const
 {
@@ -484,6 +504,8 @@ bool j1App::SavegameNow() const
 		data.save_file(save_game.GetString());
 		LOG("... finished saving", save_game.GetString());
 		App->console->write("... finished saving");
+	
+		
 
 	}
 	else {

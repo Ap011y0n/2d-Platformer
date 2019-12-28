@@ -65,6 +65,9 @@ public:
 
 	bool Pause();
 	bool GetPause();
+
+	bool CheckSaveGame();
+
 private:
 
 	// Load config file
@@ -88,7 +91,6 @@ private:
 	// Load / Save
 	bool LoadGameNow();
 	bool SavegameNow() const;
-
 public:
 
 	// Modules

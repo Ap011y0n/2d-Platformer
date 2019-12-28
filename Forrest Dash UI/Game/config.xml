@@ -71,7 +71,6 @@
   </entity>
 
    <scene>
-     <map name="menu.tmx"/>
      <map name="maplevel1.tmx"/>
      <map name="maplevel2.tmx"/>
    </scene>

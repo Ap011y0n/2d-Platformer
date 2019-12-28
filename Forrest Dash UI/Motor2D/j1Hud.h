@@ -32,6 +32,8 @@ public:
 
 	bool ShowHud();
 
+
+
 public:
 	
 	GuiItem* liveFull;

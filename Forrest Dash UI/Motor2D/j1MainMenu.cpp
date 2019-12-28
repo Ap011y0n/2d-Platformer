@@ -232,6 +232,9 @@ bool j1MainMenu::PostUpdate(float dt)
 
 bool j1MainMenu::CleanUp()
 {
+	camLock = true;
+
+
 	if (banner != nullptr)
 	banner->to_delete = true;
 	if (text != nullptr)
@@ -321,10 +324,11 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	}
 	else if (item == buttonContinue)
 	{
+		if(App->CheckSaveGame()){
 		camLock = true;
 		CleanUp();
 		App->LoadGame();
-
+	}
 	}
 	
 	else if (item == buttonSettings)
