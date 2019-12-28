@@ -237,19 +237,8 @@ bool j1Audio::Load(pugi::xml_node& data)
 	volumefx = data.child("volumefx").attribute("value").as_float();
 	return true;
 }
-void j1Audio::musicvolume(float value, bool increase) {
-	if (increase)
-	{
-		volumemusic += value;
-		if (volumemusic > 1)
-			volumemusic = 1;
-	}
-	if (!increase)
-	{
-		volumemusic -= value;
-		if (volumemusic < 0)
-			volumemusic = 0;
-	}
+void j1Audio::musicvolume(float value) {
+	volumemusic = value;
 	Mix_VolumeMusic(128 * volumemusic);
 }
 
