@@ -498,8 +498,9 @@ void j1Scene::GuiInput(GuiItem* item)
 		App->audio->musicvolume(f);
 	}
 	float fxf;
-	if (item->parent == scrollMusic) {
+	if (item->parent == scrollFx) {
 		fxf = item->parent->returnSliderPos();
+		LOG("%f", fxf);
 		if (fxf > 1)
 		{
 			fxf = 1;

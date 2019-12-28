@@ -591,7 +591,7 @@ float GuiSlider::returnSliderPos()
 	b = ScrollThumb->GetLocalRect()->h;
 	a = a - b;
 	ScrollThumb->GetLocalPos(x, y);
-	ratio =  (y / a);
+	ratio =  1 - (y / a);
 
 	return ratio;
 }
