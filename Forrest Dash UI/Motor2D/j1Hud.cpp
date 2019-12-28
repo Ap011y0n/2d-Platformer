@@ -33,7 +33,8 @@ bool j1Hud::Start()
 {
 	
 	lifesCounter = 3;
-
+	score_item = nullptr;
+	coins_collected = nullptr;
 	return true;
 }
 
@@ -96,7 +97,6 @@ bool j1Hud::Update(float dt)
 	if (score_item != nullptr)
 	{
 		sprintf_s(score_text, 10, "%d", score);
-
 		score_item->SetText(score_text);
 		SDL_DestroyTexture(score_item->texture);
 		p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(score_item->texture));
