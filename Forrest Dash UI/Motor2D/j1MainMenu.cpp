@@ -94,6 +94,8 @@ bool j1MainMenu::Start()
 	CanOpenURL = true;
 	camLock = false;
 	LoadHp = false;
+	ShowHud = false;
+
 	moveToPoint[(int)Section::credits].create(-5060, 0);
 	moveToPoint[(int)Section::main_menu].create(-3060, 0);
 	moveToPoint[(int)Section::settings].create(-1060, 0);
@@ -327,6 +329,7 @@ void j1MainMenu::GuiInput(GuiItem* item)
 		App->fade->ChangeScene();
 		App->hud->timer = 0;
 		App->hud->minutes = 0;
+		ShowHud = true;
 
 	}
 	else if (item == buttonContinue)

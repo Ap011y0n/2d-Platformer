@@ -79,6 +79,8 @@ public:
 	GuiItem* logoSettings;
 	bool camLock = false;
 	bool LoadHp;
+	bool ShowHud;
+
 
 
 private:

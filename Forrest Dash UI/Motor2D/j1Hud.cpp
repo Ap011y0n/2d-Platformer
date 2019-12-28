@@ -47,9 +47,7 @@ bool j1Hud::Update(float dt)
 	//TIMER
 	if(activateTimer)
 	{
-		
-
-		if (timer_game.Read() >= 1000)
+	if (timer_game.Read() >= 1000)
 		{
 			timer_game.Start();
 			timer++;
@@ -93,28 +91,39 @@ bool j1Hud::Update(float dt)
 	minutes_item->texture = App->font->Print(minutes_item->GetText(), { 255, 255, 255, 255 });
 	App->font->CalcSize(minutes_item->GetText(), minutes_item->textureRect.w, minutes_item->textureRect.h);
 	}
+
 	////SCORE
-	//if (App->scene->current_level == "maplevel1.tmx" || App->scene->current_level == "maplevel2.tmx")
-	//{
-	//	sprintf_s(score_text, 10, "%d", score);
-	//	score_title = App->gui->CreateGuiElement(Types::text, 780, 50, { 157, 258, 36, 34 }, NULL, this, "SCORE:");
-	//	score_title->follow = true;
-	//	score_title->to_delete = true;
-	//	score_item = App->gui->CreateGuiElement(Types::text, 900, 50, { 157, 258, 36, 34 }, NULL, this, score_text);
-	//	score_item->follow = true;
-	//	score_item->to_delete = true;
-	//}
-	//// COINS
-	//if (App->scene->current_level == "maplevel1.tmx" || App->scene->current_level == "maplevel2.tmx")
-	//{
-	//	sprintf_s(coins_text, 10, "%d", coins);
-	//	coins_collected = App->gui->CreateGuiElement(Types::text, 400, 50, { 157, 258, 36, 34 }, NULL, this, coins_text);
-	//	coins_collected->follow = true;
-	//	coins_collected->to_delete = true;
-	//	coins_image = App->gui->CreateGuiElement(Types::image, 350, 40, { 198, 251, 46, 45 }, NULL, this);
-	//	coins_image->follow = true;
-	//	coins_image->to_delete = true;
-	//}
+	if (score_item != nullptr)
+	{
+		sprintf_s(score_text, 10, "%d", score);
+
+		score_item->SetText(score_text);
+		SDL_DestroyTexture(score_item->texture);
+		p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(score_item->texture));
+		App->tex->textures.del(texlist);
+
+		score_item->texture = App->font->Print(score_item->GetText(), { 255, 255, 255, 255 });
+		App->font->CalcSize(score_item->GetText(), score_item->textureRect.w, score_item->textureRect.h);
+	}
+
+	// COINS
+
+	if (coins_collected != nullptr)
+	{
+		sprintf_s(coins_text, 10, "%d", coins);
+
+		coins_collected->SetText(coins_text);
+		SDL_DestroyTexture(coins_collected->texture);
+		p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(coins_collected->texture));
+		App->tex->textures.del(texlist);
+		coins_collected->texture = App->font->Print(coins_collected->GetText(), { 255, 255, 255, 255 });
+		App->font->CalcSize(coins_collected->GetText(), coins_collected->textureRect.w, coins_collected->textureRect.h);
+	}
+
+
+	
+		
+	
 	return true;
 }
 
@@ -130,34 +139,40 @@ bool j1Hud::CleanUp()
 	coins = 0;
 	activateTimer = false;
 	if (timer_item != nullptr)
-	timer_item->to_delete = true;
+		timer_item->to_delete = true;
 	if (minutes_item != nullptr)
-	minutes_item->to_delete = true;
-//	score_title->to_delete = true;
-
+		minutes_item->to_delete = true;
+	if(score_title != nullptr)
+		score_title->to_delete = true;
+	if (score_item != nullptr)
+		score_item->to_delete = true;
 	if(liveFull != nullptr)
-	liveFull->to_delete = true;
+		liveFull->to_delete = true;
 	if (liveFull2 != nullptr)
-	liveFull2->to_delete = true;
+		liveFull2->to_delete = true;
 	if (liveFull3 != nullptr)
-	liveFull3->to_delete = true;
+		liveFull3->to_delete = true;
 	if (liveEmpty != nullptr)
-	liveEmpty->to_delete = true;
+		liveEmpty->to_delete = true;
 	if (liveEmpty2 != nullptr)
-	liveEmpty2->to_delete = true;
+		liveEmpty2->to_delete = true;
 	if (liveEmpty3 != nullptr)
-	liveEmpty3->to_delete = true;
-//	coins_collected->to_delete = true;
-//	coins_image->to_delete = true;
+		liveEmpty3->to_delete = true;
+	if (coins_collected != nullptr)
+		coins_collected->to_delete = true;
+	if (coins_image != nullptr)
+		coins_image->to_delete = true;
 	return true;
 }
 
 bool j1Hud::Load(pugi::xml_node& node)
 {
 	
-		timer = node.child("Timer").attribute("seconds").as_int();
-		minutes = node.child("Timer").attribute("minutes").as_int();
-	
+	timer = node.child("Timer").attribute("seconds").as_int();
+	minutes = node.child("Timer").attribute("minutes").as_int();
+	coins = node.child("Points").attribute("coins").as_int();
+	score = node.child("Points").attribute("score").as_int();
+
 	if (App->menu->LoadHp) {
 		lifesCounter = node.child("Hp").attribute("current").as_int();
 		App->menu->LoadHp = false;
@@ -174,10 +189,12 @@ bool j1Hud::Save(pugi::xml_node& node) const
 
 	pugi::xml_node scene = node.append_child("Hp");
 	pugi::xml_node TimeManagement = node.append_child("Timer");
+	pugi::xml_node ScoreManagement = node.append_child("Points");
 	scene.append_attribute("current") = lifesCounter;
 	TimeManagement.append_attribute("seconds") = timer;
 	TimeManagement.append_attribute("minutes") = minutes;
-
+	ScoreManagement.append_attribute("coins") = coins;
+	ScoreManagement.append_attribute("score") = score;
 	return true;
 }
 
@@ -186,8 +203,7 @@ bool j1Hud::SetLifes(int lifes)
 	if (lifes < 0)
 	{
 		lifes = 0;
-		score = 0;
-		coins = 0;
+	
 
 		App->map->CleanUp();
 		App->menu->Start();
@@ -237,7 +253,7 @@ int j1Hud::GetLifes() const
 
 bool j1Hud::ShowHud()
 {
-	//timer_game.Start();
+	timer_game.Start();
 	liveEmpty = App->gui->CreateGuiElement(Types::image, 20, 50, { 157, 258, 36, 34 }, nullptr);
 	liveEmpty2 = App->gui->CreateGuiElement(Types::image, 60, 50, { 157, 258, 36, 34 }, nullptr);
 	liveEmpty3 = App->gui->CreateGuiElement(Types::image, 100, 50, { 157, 258, 36, 34 }, nullptr);
@@ -267,7 +283,17 @@ bool j1Hud::ShowHud()
 	minutes_item->follow = true;
 
 	activateTimer = true;
+
+	score_title = App->gui->CreateGuiElement(Types::text, 780, 50, { 157, 258, 36, 34 }, NULL, this, "SCORE:");
+	score_title->follow = true;
+	score_item = App->gui->CreateGuiElement(Types::text, 900, 50, { 157, 258, 36, 34 }, NULL, this, "0");
+	score_item->follow = true;
 	
+	coins_collected = App->gui->CreateGuiElement(Types::text, 400, 50, { 157, 258, 36, 34 }, NULL, this, "0");
+	coins_collected->follow = true;
+	coins_image = App->gui->CreateGuiElement(Types::image, 350, 40, { 198, 251, 46, 45 }, NULL, this);
+	coins_image->follow = true;
+
 	return true;
 }
 
