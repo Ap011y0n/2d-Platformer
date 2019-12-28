@@ -303,22 +303,20 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	float f;
 	if (item->parent == scrollBarMusic) {
 		f = item->parent->returnSliderPos();
-		LOG("%f", f);
-		if (f > 128)
+
+		if (f > 1)
 		{
-			f = 128;
+			f = 1;
 		}
 		if (f < 0)
 		{
 			f = 0;
 		}
-		if (f > 0)
-		{
-			App->audio->musicvolume(f, 1);
-		}
+		App->audio->musicvolume(f);
+		LOG("%f", f);
 		if (f < 0)
 		{
-			App->audio->musicvolume(f, 0);
+			App->audio->musicvolume(f);
 		}
 	}
 
