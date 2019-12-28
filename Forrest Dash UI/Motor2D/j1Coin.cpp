@@ -112,7 +112,7 @@ void j1Coin::setAnimation()
 void j1Coin::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c2->type == COLLIDER_PLAYER) {
-		App->hud->score += 100;
+		App->hud->score += 10;
 		App->hud->coins++;
 		EntityCollider->to_delete = true;
 		to_delete = true;
