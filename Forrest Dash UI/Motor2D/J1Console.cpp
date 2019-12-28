@@ -263,7 +263,7 @@ void j1Console::ExecuteCommand(Commands command) {
 		write("- godmode --> Enables/disables player godmode");
 		write("- list --> If you haven't noticed yet, displays all available commands");
 		write("- fps <number> --> sets a framerate cap between 30 and 120");
-		write("- map --> changes map");
+		write("- map <number> --> changes map");
 		write("- Quit --> Closes the application");
 
 		break;
