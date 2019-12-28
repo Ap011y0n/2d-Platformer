@@ -90,7 +90,7 @@ bool j1MainMenu::Start()
 	
 	
 	//Menu Sections
-	
+	CanOpenURL = true;
 	camLock = false;
 
 	moveToPoint[(int)Section::credits].create(-5060, 0);
@@ -218,6 +218,9 @@ bool j1MainMenu::Update(float dt)
 		App->render->camera.y = camPos.y;
 	}
 	
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
+		CanOpenURL = true;
+	}
 	
 
 	return true;
@@ -351,9 +354,10 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	{
 		App->quitGame = true;
 	}
-	else if (item == buttonToRepo)
+	else if (item == buttonToRepo && CanOpenURL)
 	{
 		openUrl("https://github.com/Ap011y0n/2d-Platformer");
+		CanOpenURL = false;
 	}
 }
 
