@@ -42,41 +42,47 @@ bool j1Hud::Update(float dt)
 
 	
 	//TIMER
-	if (timer_game.Read() >= 1000)
+	if(activateTimer)
 	{
-		timer_game.Start();
-		timer++;
 		
-	}
-	if(timer == 60)
-	{
-		timer = 0;
-		minutes += 1;
+
+		if (timer_game.Read() >= 1000)
+		{
+			timer_game.Start();
+			timer++;
+
+		}
+		if (timer == 60)
+		{
+			timer = 0;
+			minutes += 1;
+		}
+
+		sprintf_s(timer_text, 10, "%d", timer);
+		sprintf_s(minutes_text, 10, "%d", minutes);
+
+		if (timer < 10)
+		{
+			timer_text[2] = timer_text[1];
+			timer_text[1] = timer_text[0];
+			timer_text[0] = '0';
+		}
+		if (minutes < 10)
+		{
+			minutes_text[2] = minutes_text[1];
+			minutes_text[1] = minutes_text[0];
+			minutes_text[0] = '0';
+		}
+
+		timer_item = App->gui->CreateGuiElement(Types::text, 200, 50, { 157, 258, 36, 34 }, NULL, this, timer_text);
+		timer_item->follow = true;
+		timer_item->to_delete = true;
+
+		minutes_item = App->gui->CreateGuiElement(Types::text, 160, 50, { 157, 258, 36, 34 }, NULL, this, minutes_text);
+		minutes_item->follow = true;
+		minutes_item->to_delete = true;
 	}
 
-	sprintf_s(timer_text, 10, "%d", timer);
-	sprintf_s(minutes_text, 10, "%d", minutes);
-
-	if (timer < 10)
-	{
-		timer_text[2] = timer_text[1];
-		timer_text[1] = timer_text[0];
-		timer_text[0] = '0';
-	}
-	if (minutes < 10)
-	{
-		minutes_text[2] = minutes_text[1];
-		minutes_text[1] = minutes_text[0];
-		minutes_text[0] = '0';
-	}
-
-	timer_item = App->gui->CreateGuiElement(Types::text, 200, 50, { 157, 258, 36, 34 }, NULL, this, timer_text);
-	timer_item->follow = true;
-	timer_item->to_delete = true;
-
-	minutes_item = App->gui->CreateGuiElement(Types::text, 160, 50, { 157, 258, 36, 34 }, NULL, this, minutes_text);
-	minutes_item->follow = true;
-	minutes_item->to_delete = true;
 
 	return true;
 }
@@ -164,7 +170,7 @@ bool j1Hud::ShowHud()
 	liveFull->follow = true;
 	liveFull2->follow = true;
 	liveFull3->follow = true;
-	
+	activateTimer = true;
 	
 	return true;
 }

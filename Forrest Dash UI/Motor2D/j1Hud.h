@@ -44,7 +44,7 @@ public:
 	GuiItem* minutes_item;
 	j1Timer	timer_game;
 	int lifesCounter = 3;
-	bool hudActive = false;
+	bool activateTimer = false;
 	uint timer = 0;
 	uint minutes = 0;
 
