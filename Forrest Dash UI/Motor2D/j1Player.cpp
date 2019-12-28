@@ -567,11 +567,9 @@ void j1Player::StateMachine(float dt)
 				App->hud->SetLifes(App->hud->GetLifes() - 1);
 				// Reset Collider
 			}
-
-			
 		}
-		
 	}
+
 	if (state == AIMING)
 	{
 		animationStart = 0;
@@ -598,12 +596,6 @@ void j1Player::StateMachine(float dt)
 	{
 		
 		current_animation = &swordAttack;
-	
-		
-		
-			
-
-		
 
 		//Play arrow FX
 		if (!playedSwordFx)
