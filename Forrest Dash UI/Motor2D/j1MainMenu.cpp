@@ -313,13 +313,21 @@ void j1MainMenu::GuiInput(GuiItem* item)
 			f = 0;
 		}
 		App->audio->musicvolume(f);
-		LOG("%f", f);
-		if (f < 0)
-		{
-			App->audio->musicvolume(f);
-		}
 	}
+	float fxf;
+	if (item->parent == scrollBarFx) {
+		fxf = item->parent->returnSliderPos();
 
+		if (fxf > 1)
+		{
+			fxf = 1;
+		}
+		if (fxf < 0)
+		{
+			fxf = 0;
+		}
+		App->audio->fxvolume(fxf);
+	}
 	if(item == buttonNewGame)
 	{
 		camLock = true;

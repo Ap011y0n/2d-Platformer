@@ -44,7 +44,7 @@ public:
 	//Load module audio data
 	bool j1Audio::Load(pugi::xml_node& config);
 	void musicvolume(float value);
-	void fxvolume(float value, bool increase);
+	float fxvolume(float value);
 
 public:
 

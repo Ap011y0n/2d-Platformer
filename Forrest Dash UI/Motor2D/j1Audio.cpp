@@ -207,6 +207,7 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	if (id > 0 && id <= fx.count())
 	{
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
+		Mix_VolumeChunk(fx[id - 1], (volumefx*128));
 	}
 
 	return ret;
@@ -242,17 +243,7 @@ void j1Audio::musicvolume(float value) {
 	Mix_VolumeMusic(128 * volumemusic);
 }
 
-void j1Audio::fxvolume(float value, bool increase) {
-	if (increase)
-	{
-		volumefx += value;
-		if (volumefx > 1)
-			volumefx = 1;
-	}
-	if (!increase)
-	{
-		volumefx -= value;
-		if (volumefx < 0)
-			volumefx = 0;
-	}
+float j1Audio::fxvolume(float value) {
+	volumefx = value;
+	return volumefx;
 }

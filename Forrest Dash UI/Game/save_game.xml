@@ -5,7 +5,7 @@
 	<textures />
 	<audio>
 		<volumemusic value="0.300000012" />
-		<volumefx value="0.300000012" />
+		<volumefx value="0" />
 	</audio>
 	<map />
 	<scene>
