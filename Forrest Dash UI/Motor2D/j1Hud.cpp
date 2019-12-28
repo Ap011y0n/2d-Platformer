@@ -36,7 +36,7 @@ bool j1Hud::Start()
 	extraLife = true;
 	score_item = nullptr;
 	coins_collected = nullptr;
-
+	drawLife = false;
 	return true;
 }
 
@@ -47,6 +47,8 @@ bool j1Hud::PreUpdate()
 
 bool j1Hud::Update(float dt)
 {
+	BROFILER_CATEGORY("Hud Update", Profiler::Color::LightGray);
+
 	if(extraLife)
 	{
 		if (score >= 500)

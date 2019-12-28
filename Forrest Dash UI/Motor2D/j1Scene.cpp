@@ -273,7 +273,7 @@ void j1Scene::Nextmap() {
 	if (App->map->CreateWalkabilityMap(w, h, &data))
 		App->pathfinding->SetMap(w, h, data);
 	App->SaveGame();
-
+	App->hud->coins = 0;
 	RELEASE_ARRAY(data);
 	
 }
@@ -409,6 +409,9 @@ bool j1Scene::CreateEntities() {
 						case 2079:
 								App->EntityManager->CreateEntity(j1Entity::Types::coin, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
 								break;
+						case 2607:
+							App->EntityManager->CreateEntity(j1Entity::Types::coin, App->map->MapToWorld(x, y).x, App->map->MapToWorld(x, y).y);
+							break;
 						}
 					}
 				}
@@ -484,16 +487,28 @@ void j1Scene::GuiInput(GuiItem* item)
 	float f;
 	if (item->parent == scrollMusic) {
 		f = item->parent->returnSliderPos();
-		LOG("%f", f);
-		if (f > 128)
+		if (f > 1)
 		{
-			f = 128;
+			f = 1;
 		}
 		if (f < 0)
 		{
 			f = 0;
 		}
-			App->audio->musicvolume(f);
+		App->audio->musicvolume(f);
+	}
+	float fxf;
+	if (item->parent == scrollMusic) {
+		fxf = item->parent->returnSliderPos();
+		if (fxf > 1)
+		{
+			fxf = 1;
+		}
+		if (fxf < 0)
+		{
+			fxf = 0;
+		}
+		App->audio->fxvolume(fxf);
 	}
 
 	if (item == resumeButton)
@@ -521,6 +536,7 @@ void j1Scene::startlevel1()
 {
 	App->map->CleanUp();
 	App->menu->CleanUp();
+
 	checkpoint = false;
 	current_level = "maplevel1.tmx";
 	App->map->Load(current_level.GetString());
@@ -530,7 +546,7 @@ void j1Scene::startlevel1()
 	if (App->map->CreateWalkabilityMap(w, h, &data))
 		App->pathfinding->SetMap(w, h, data);
 	RELEASE_ARRAY(data);
-	
+	App->hud->coins = 0;
 	App->EntityManager->EntityCleanUp();
 	CreateEntities();
 
@@ -549,7 +565,7 @@ void j1Scene::startlevel2()
 	if (App->map->CreateWalkabilityMap(w, h, &data))
 		App->pathfinding->SetMap(w, h, data);
 	RELEASE_ARRAY(data);
-	
+	App->hud->coins = 0;
 	App->EntityManager->EntityCleanUp();
 	CreateEntities();
 }

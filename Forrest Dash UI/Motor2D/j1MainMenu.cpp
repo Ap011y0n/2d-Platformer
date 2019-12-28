@@ -15,7 +15,7 @@
 #include "j1Gui.h"
 #include "j1Url.h"
 #include "j1Hud.h"
-
+#include "Brofiler/Brofiler.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -182,7 +182,8 @@ bool j1MainMenu::PreUpdate()
 
 bool j1MainMenu::Update(float dt)
 {
-	
+	BROFILER_CATEGORY("MainMenu Update", Profiler::Color::BurlyWood);
+
 	if(!camLock)
 	{
 		if (camVelocity.x < 0.0f)

@@ -9,7 +9,7 @@
 #include "j1Window.h"
 #include "j1MainMenu.h"
 #include "J1Console.h"
-
+#include "Brofiler/Brofiler.h"
 
 
 
@@ -49,6 +49,7 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate(float dt)
 {
+	BROFILER_CATEGORY("Gui PreUpdate", Profiler::Color::LightGoldenRodYellow);
 
 	buttonPressed = false;
 	bool ret = true;
@@ -96,7 +97,8 @@ bool j1Gui::PreUpdate(float dt)
 // Called after all Updates
 bool j1Gui::Update(float dt)
 {
-	
+	BROFILER_CATEGORY("Gui Update", Profiler::Color::LightGray);
+
 	p2List_item<GuiItem*>* gui_list = guiElements.start;
 	while (gui_list) {
 		int x, y;
@@ -133,6 +135,7 @@ bool j1Gui::Update(float dt)
 
 bool j1Gui::PostUpdate(float dt)
 {
+	BROFILER_CATEGORY("Gui PostUpdate", Profiler::Color::GreenYellow);
 
 	p2List_item<GuiItem*>* gui_list = guiElements.start;
 	while (gui_list) {
