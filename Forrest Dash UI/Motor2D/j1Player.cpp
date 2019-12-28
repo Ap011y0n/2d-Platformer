@@ -141,7 +141,7 @@ bool j1Player::Start()
 bool j1Player::Update(float dt)
 {
 	
-
+	LOG("update player");
 	BROFILER_CATEGORY("Update_Player", Profiler::Color::SaddleBrown);
 	charging = false;
 	current_animation = &idle;
@@ -563,7 +563,14 @@ void j1Player::StateMachine(float dt)
 
 		if (SDL_GetTicks() > (DeathTimer + 2000)) {
 			//Reset all entities
+			if(App->hud->GetLifes() > 0)
+			{ 
 			App->EntityManager->ResetEntities = true;
+			}
+			else {
+				App->hud->SetLifes(App->hud->GetLifes() - 1);
+			}
+
 			
 		}
 		

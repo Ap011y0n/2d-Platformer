@@ -28,10 +28,13 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&)const;
 	void DeleteEntity();
+	
 	j1Entity* GetPlayer();
 	j1Entity* CreateEntity(j1Entity::Types type, int posx = 0, int posy = 0, int speedx = 0, int speedy = 0, float angle = .0f);
 public:
 	bool ResetEntities = false;
+	bool DeleteEntities = false;
+
 	p2List<j1Entity*> entities;
 	pugi::xml_node node;
 	SDL_Texture* playerTex = nullptr;

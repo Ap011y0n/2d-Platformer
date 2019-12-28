@@ -40,6 +40,8 @@ bool j1EntityManager::Awake(pugi::xml_node& config) {
 
 //Load and store all the textures we want to use for our entities
 bool j1EntityManager::Start() {
+	ResetEntities = false;
+	DeleteEntities = false;
 	playerTex = App->tex->Load("textures/adventurertex.png");
 	slimeTex = App->tex->Load("textures/slimetex.png");
 	wizardTex = App->tex->Load("textures/wizardtex.png");
@@ -90,6 +92,8 @@ bool j1EntityManager::PostUpdate(float dt) {
 	//In case we want to reset entities, we call to a function in this module
 	if (ResetEntities)
 		EntitiesReset();
+	if (DeleteEntities)
+		EntityCleanUp();
 	return true;
 
 }
@@ -119,6 +123,7 @@ bool j1EntityManager::EntityCleanUp() {
 		entities_list = entities_list->next;
 	}
 	entities.clear();
+	DeleteEntities = false;
 	return true;
 }
 

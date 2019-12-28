@@ -14,6 +14,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Gui.h"
 #include "j1Url.h"
+#include "j1Hud.h"
 
 
 j1MainMenu::j1MainMenu()
@@ -322,6 +323,7 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	if(item == buttonNewGame)
 	{
 		camLock = true;
+		App->hud->SetLifes(3);
 		App->fade->ChangeScene();
 
 	}
