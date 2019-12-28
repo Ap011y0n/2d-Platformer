@@ -91,6 +91,7 @@ private:
 	fPoint camPos = { 0.0f, 0.0f };
 	float camSpeed = 0.0f;
 	bool CanOpenURL;
+	bool CanOpenURLWeb;
 	
 };
 

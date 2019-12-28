@@ -367,6 +367,11 @@ void j1MainMenu::GuiInput(GuiItem* item)
 		openUrl("https://github.com/Ap011y0n/2d-Platformer");
 		CanOpenURL = false;
 	}
+	else if (item == buttonToWeb && CanOpenURL)
+	{
+		openUrl("https://ap011y0n.github.io/2d-Platformer/");
+		CanOpenURL = false;
+	}
 }
 
 bool j1MainMenu::MoveToSection(Section section)

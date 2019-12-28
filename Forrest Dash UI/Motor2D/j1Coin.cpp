@@ -31,7 +31,6 @@ j1Coin::j1Coin(int posx, int posy) : j1Entity(Types::coin)
 	idle = animation_iterator->data;
 	animation_iterator = animation_iterator->next;
 
-
 	initialPosition.x = posx;
 	position.x = posx;
 	position.y = posy;
@@ -113,7 +112,7 @@ void j1Coin::setAnimation()
 void j1Coin::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c2->type == COLLIDER_PLAYER) {
-		App->hud->score += 10;
+		App->hud->score += 100;
 		App->hud->coins++;
 		EntityCollider->to_delete = true;
 		to_delete = true;
