@@ -307,10 +307,13 @@ void j1Console::Open()
 		App->Pause();
 	InputText = App->gui->CreateGuiElement(Types::inputText, 0, 200, { 488, 569, 344, 61 }, nullptr, this);
 	InputText->follow = true;
+	InputText->delayBlit = true;
 	InputText->GetInputText()->SetSingleFocus();
 	ConsoleText[0] = App->gui->CreateGuiElement(Types::text, 30, -30, { 0, 0, 0, 0 }, InputText, this, "- ");
+	ConsoleText[0]->delayBlit = true;
 	for (int i = 1; i < MAXTEXT; i++) {
 		ConsoleText[i] = App->gui->CreateGuiElement(Types::text, 0, -i * 20, { 0, 0, 0, 0 }, ConsoleText[0], this, "- ");
+		ConsoleText[i]->delayBlit = true;
 	}
 }
 

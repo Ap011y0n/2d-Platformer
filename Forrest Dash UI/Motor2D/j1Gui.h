@@ -34,6 +34,8 @@ public:
 	void GetScreenPos(int&, int&);
 	void GetLocalPos(int&, int&);
 	void SetLocalPos(int&, int&);
+	virtual void returnChilds(GuiItem*, GuiItem*) {
+	}
 	virtual void slide() {
 	}
 	virtual float returnSliderPos() {
@@ -73,6 +75,7 @@ public:
 	bool to_delete;
 	bool isDynamic;
 	bool follow;
+	bool delayBlit;
 };
 
 class GuiImage: public GuiItem
@@ -127,6 +130,7 @@ public:
 	virtual ~GuiSlider();
 	void slide();
 	float returnSliderPos();
+	void returnChilds(GuiItem*, GuiItem*);
 private:
 	GuiItem* Image;
 	GuiItem* ScrollThumb;
@@ -159,6 +163,9 @@ public:
 
 	bool PreUpdate(float dt);
 
+	bool PostUpdate(float dt);
+
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -174,7 +181,6 @@ public:
 	
 	GuiItem* CreateGuiElement(Types type, int x, int y, SDL_Rect, GuiItem* parentnode = NULL, j1Module* callback = nullptr, char* text = "");
 
-	void Debug();
 public:
 	bool buttonPressed;
 	int FocusIt;
@@ -183,6 +189,8 @@ public:
 private:
 	p2SString atlas_file_name;
 	SDL_Texture* atlas;
+
+	int xblit, yblit;
 public:
 	bool debug;
 

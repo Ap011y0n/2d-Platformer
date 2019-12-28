@@ -437,18 +437,38 @@ void j1Scene::PauseMenu()
 	SDL_Rect rect = { 0, 764, 643, 356 };
 	panel = App->gui->CreateGuiElement(Types::image, (App->win->width - 643) / 2, (App->win->height - 310) / 2, rect, nullptr, this);
 	panel->follow = true;
+	panel->delayBlit = true;
 	resumeButton = App->gui->CreateGuiElement(Types::button, 20, 100, { 444, 169, 244, 65 }, panel, this, NULL);
 	resumeButton->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
+	resumeButton->delayBlit = true;
 	text = App->gui->CreateGuiElement(Types::text, 30, 14, rect, resumeButton, this, "RESUME");
+	text->delayBlit = true;
 
 	mainmenuButton = App->gui->CreateGuiElement(Types::button, 20, 180, { 444, 169, 244, 65 }, panel, this, NULL);
 	mainmenuButton->setRects({ 444, 413, 244, 66 }, { 444, 661, 244, 65 });
+	mainmenuButton->delayBlit = true;
 	text2 = App->gui->CreateGuiElement(Types::text, 30, 14, rect, mainmenuButton, this, "MAIN MENU");
 	scrollMusic = App->gui->CreateGuiElement(Types::slider, 420, 130, { 28, 257, 12, 189 }, panel, this);
+	scrollMusic->delayBlit = true;
+	/*GuiItem* image;
+	GuiItem* scroll;
+	scrollMusic->returnChilds(image, scroll);
+	image->delayBlit = true;
+	scroll->delayBlit = true;*/
+
+	text2->delayBlit = true;
 	scrollFx = App->gui->CreateGuiElement(Types::slider, 550, 130, { 28, 257, 12, 189 }, panel, this);
+	scrollFx->delayBlit = true;
+	/*scrollFx->returnChilds(image, scroll);
+	image->delayBlit = true;
+	scroll->delayBlit = true;*/
+
 	text = App->gui->CreateGuiElement(Types::text, 300, 280, rect, panel, this, "Music");
+	text->delayBlit = true;
 	text = App->gui->CreateGuiElement(Types::text, 490, 280, rect, panel, this, "Fx");
+	text->delayBlit = true;
 	soundLogo = App->gui->CreateGuiElement(Types::image, 450, 30, { 1884, 379, 72, 71 }, panel, this);
+	soundLogo->delayBlit = true;
 
 }
 

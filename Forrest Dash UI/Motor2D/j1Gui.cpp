@@ -105,24 +105,64 @@ bool j1Gui::Update(float dt)
 
 		gui_list->data->GetScreenPos(x, y);
 		//	LOG("%d", gui_list->data->textureRect.h);
+		if (!gui_list->data->delayBlit) 
+		{
+
 		
-		if (gui_list->data->type == Types::text) {
+		if (gui_list->data->type == Types::text) 
+		{
 		App->render->Blit(gui_list->data->texture, x, y, &gui_list->data->textureRect);
-	}
+		}
 		else {
 			App->render->Blit(GetAtlas(), x, y, &gui_list->data->textureRect);
-			if (debug) {
+			if (debug) 
+			{
 				SDL_Rect* rect = gui_list->data->GetLocalRect();
 				rect->x = x;
 				rect->y = y;
 				App->render->DrawQuad(*rect, 0, 0, 255, 100);
 			}
 		}
-	
+		}
+		gui_list = gui_list->next;
+	}
+	DeleteGuiElement();
+
+	return true;
+}
+
+bool j1Gui::PostUpdate(float dt)
+{
+
+	p2List_item<GuiItem*>* gui_list = guiElements.start;
+	while (gui_list) {
+		int x, y;
+		if (gui_list->data->focus)
+			gui_list->data->Input();
+
+		gui_list->data->GetScreenPos(x, y);
+		//	LOG("%d", gui_list->data->textureRect.h);
+		if (gui_list->data->delayBlit)
+		{
+			if (gui_list->data->type == Types::text)
+			{
+				App->render->Blit(gui_list->data->texture, x, y, &gui_list->data->textureRect);
+			}
+			else {
+				App->render->Blit(GetAtlas(), x, y, &gui_list->data->textureRect);
+				if (debug)
+				{
+					SDL_Rect* rect = gui_list->data->GetLocalRect();
+					rect->x = x;
+					rect->y = y;
+					App->render->DrawQuad(*rect, 0, 0, 255, 100);
+				}
+			}
+		}
 		gui_list = gui_list->next;
 	}
 
-	DeleteGuiElement();
+
 	return true;
 }
 
@@ -374,7 +414,7 @@ GuiImage::GuiImage(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiItem
 	type = Types::image;
 	LocalX = initposx = x;
 	LocalY = initposy = y;
-	
+	delayBlit = false;
 	textureRect = texrect;
 	LocalRect = textureRect;
 	isDynamic = false;
@@ -395,6 +435,7 @@ GuiText::GuiText(int x, int y, SDL_Rect texrect,  char* inputtext, j1Module* cal
 	LocalX = initposx = x;
 	LocalY = initposy = y;
 	LocalRect = texrect;
+	delayBlit = false;
 	isDynamic = false;
 	focus = false;
 	follow = false;
@@ -420,6 +461,7 @@ GuiButton::GuiButton(int x, int y, SDL_Rect idle_rect, j1Module* callback) : Gui
 	idleRect = idle_rect;
 	LocalRect = textureRect;
 	isDynamic = true;
+	delayBlit = false;
 	follow = false;
 	texture = App->gui->GetAtlas();
 	focus = false;
@@ -451,6 +493,7 @@ InputText::InputText(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	texture = App->gui->GetAtlas();
 	focus = false;
 	CallBack = callback;
+	delayBlit = false;
 
 	to_delete = false;
 
@@ -481,10 +524,14 @@ GuiSlider::GuiSlider(int x, int y, SDL_Rect texrect, j1Module* callback) : GuiIt
 	focus = false;
 	CallBack = callback;
 	Image = App->gui->CreateGuiElement(Types::image, 0, 0, texrect, this);
+	Image->delayBlit = true;
 	ScrollThumb = App->gui->CreateGuiElement(Types::image, -18, 0, { 56, 280, 46, 23 }, this, callback);
 	ScrollThumb->setRects({ 78, 912, 46, 23 }, { 78, 888, 46, 23 });
 	ScrollThumb->isDynamic = true;
+	ScrollThumb->delayBlit = true;
 	to_delete = false;
+	delayBlit = false;
+
 
 }
 
@@ -547,6 +594,11 @@ float GuiSlider::returnSliderPos()
 	return ratio;
 }
 
+void GuiSlider::returnChilds(GuiItem* imagepointer, GuiItem* ScrollPointer)
+{
+	imagepointer = Image;
+	ScrollPointer = ScrollThumb;
+}
 const char* GuiText::GetText() const{
 	
 	return text;
