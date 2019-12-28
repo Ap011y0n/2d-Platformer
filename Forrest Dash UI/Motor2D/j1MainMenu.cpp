@@ -93,7 +93,7 @@ bool j1MainMenu::Start()
 	//Menu Sections
 	CanOpenURL = true;
 	camLock = false;
-
+	LoadHp = false;
 	moveToPoint[(int)Section::credits].create(-5060, 0);
 	moveToPoint[(int)Section::main_menu].create(-3060, 0);
 	moveToPoint[(int)Section::settings].create(-1060, 0);
@@ -325,6 +325,8 @@ void j1MainMenu::GuiInput(GuiItem* item)
 		camLock = true;
 		App->hud->SetLifes(3);
 		App->fade->ChangeScene();
+		App->hud->timer = 0;
+		App->hud->minutes = 0;
 
 	}
 	else if (item == buttonContinue)
@@ -332,7 +334,10 @@ void j1MainMenu::GuiInput(GuiItem* item)
 		if(App->CheckSaveGame()){
 		camLock = true;
 		CleanUp();
+		LoadHp = true;
 		App->LoadGame();
+		LOG("%d", App->hud->GetLifes());
+
 	}
 	}
 	

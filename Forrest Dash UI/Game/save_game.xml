@@ -169,7 +169,10 @@
 	<fonts />
 	<main_menu />
 	<console />
-	<hud />
+	<hud>
+		<Hp current="3" />
+		<Timer seconds="0" minutes="0" />
+	</hud>
 	<renderer />
 	<Fade />
 </game_state>

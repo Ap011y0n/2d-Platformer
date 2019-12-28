@@ -76,7 +76,6 @@ bool j1Console::Update(float dt)
 			ConsoleText[i]->texture = App->font->Print(ConsoleText[i]->GetText(), { 255, 255, 255, 255 }, ConsText);
 			App->font->CalcSize(ConsoleText[i]->GetText(), ConsoleText[i]->textureRect.w, ConsoleText[i]->textureRect.h, ConsText);
 			
-			//&& temp2 == -30
 			}
 
 		if (App->input->ScrollUp == true)

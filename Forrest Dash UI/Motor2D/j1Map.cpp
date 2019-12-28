@@ -9,6 +9,7 @@
 #include <math.h>
 #include "Brofiler/Brofiler.h"
 #include "J1Console.h"
+#include "j1Hud.h"
 
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -200,7 +201,7 @@ bool j1Map::Load(const char* file_name)
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
-
+	
 
 	if(result == NULL)
 	{

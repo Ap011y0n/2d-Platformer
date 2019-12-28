@@ -78,6 +78,8 @@ public:
 	GuiItem* scrollBarFx;
 	GuiItem* logoSettings;
 	bool camLock = false;
+	bool LoadHp;
+
 
 private:
 

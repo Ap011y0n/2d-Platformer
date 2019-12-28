@@ -140,9 +140,7 @@ bool j1Player::Start()
 // Update: call player functions which have to run every frame ----------------------------------------------
 bool j1Player::Update(float dt)
 {
-	
-	LOG("update player");
-	BROFILER_CATEGORY("Update_Player", Profiler::Color::SaddleBrown);
+		BROFILER_CATEGORY("Update_Player", Profiler::Color::SaddleBrown);
 	charging = false;
 	current_animation = &idle;
 	if (dt != 0) {

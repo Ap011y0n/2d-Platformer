@@ -15,6 +15,8 @@
 #include "j1Gui.h"
 #include "j1Hud.h"
 #include "Brofiler/Brofiler.h"
+#include "J1Console.h"
+#include "j1Fonts.h"
 
 j1Hud::j1Hud() :j1Module()
 {
@@ -42,48 +44,55 @@ bool j1Hud::PreUpdate()
 
 bool j1Hud::Update(float dt)
 {
-
 	//TIMER
-	//if(activateTimer)
-	//{
-	//	
+	if(activateTimer)
+	{
+		
 
-	//	if (timer_game.Read() >= 1000)
-	//	{
-	//		timer_game.Start();
-	//		timer++;
+		if (timer_game.Read() >= 1000)
+		{
+			timer_game.Start();
+			timer++;
+		}
+		if (timer == 60)
+		{
+			timer = 0;
+			minutes += 1;
+		}
 
-	//	}
-	//	if (timer == 60)
-	//	{
-	//		timer = 0;
-	//		minutes += 1;
-	//	}
+		sprintf_s(timer_text, 10, "%d", timer);
+		sprintf_s(minutes_text, 10, "%d", minutes);
 
-	//	sprintf_s(timer_text, 10, "%d", timer);
-	//	sprintf_s(minutes_text, 10, "%d", minutes);
+		if (timer < 10)
+		{
+			timer_text[2] = timer_text[1];
+			timer_text[1] = timer_text[0];
+			timer_text[0] = '0';
+		}
+		if (minutes < 10)
+		{
+			minutes_text[2] = minutes_text[1];
+			minutes_text[1] = minutes_text[0];
+			minutes_text[0] = '0';
+		}
+	
 
-	//	if (timer < 10)
-	//	{
-	//		timer_text[2] = timer_text[1];
-	//		timer_text[1] = timer_text[0];
-	//		timer_text[0] = '0';
-	//	}
-	//	if (minutes < 10)
-	//	{
-	//		minutes_text[2] = minutes_text[1];
-	//		minutes_text[1] = minutes_text[0];
-	//		minutes_text[0] = '0';
-	//	}
+	timer_item->SetText(timer_text);
+	SDL_DestroyTexture(timer_item->texture);
+	p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(timer_item->texture));
+	App->tex->textures.del(texlist);
 
-	//	timer_item = App->gui->CreateGuiElement(Types::text, 200, 50, { 157, 258, 36, 34 }, NULL, this, timer_text);
-	//	timer_item->follow = true;
-	//	timer_item->to_delete = true;
+	timer_item->texture = App->font->Print(timer_item->GetText(), { 255, 255, 255, 255 });
+	App->font->CalcSize(timer_item->GetText(), timer_item->textureRect.w, timer_item->textureRect.h);
 
-	//	minutes_item = App->gui->CreateGuiElement(Types::text, 160, 50, { 157, 258, 36, 34 }, NULL, this, minutes_text);
-	//	minutes_item->follow = true;
-	//	minutes_item->to_delete = true;
-	//}
+	minutes_item->SetText(minutes_text);
+	SDL_DestroyTexture(minutes_item->texture);
+	texlist = App->tex->textures.At(App->tex->textures.find(minutes_item->texture));
+	App->tex->textures.del(texlist);
+
+	minutes_item->texture = App->font->Print(minutes_item->GetText(), { 255, 255, 255, 255 });
+	App->font->CalcSize(minutes_item->GetText(), minutes_item->textureRect.w, minutes_item->textureRect.h);
+	}
 	////SCORE
 	//if (App->scene->current_level == "maplevel1.tmx" || App->scene->current_level == "maplevel2.tmx")
 	//{
@@ -119,8 +128,11 @@ bool j1Hud::CleanUp()
 {
 	score = 0; 
 	coins = 0;
-	//timer_item->to_delete = true;
-//	minutes_item->to_delete = true;
+	activateTimer = false;
+	if (timer_item != nullptr)
+	timer_item->to_delete = true;
+	if (minutes_item != nullptr)
+	minutes_item->to_delete = true;
 //	score_title->to_delete = true;
 
 	if(liveFull != nullptr)
@@ -129,9 +141,12 @@ bool j1Hud::CleanUp()
 	liveFull2->to_delete = true;
 	if (liveFull3 != nullptr)
 	liveFull3->to_delete = true;
-//	liveEmpty->to_delete = true;
-//	liveEmpty2->to_delete = true;
-//	liveEmpty3->to_delete = true;
+	if (liveEmpty != nullptr)
+	liveEmpty->to_delete = true;
+	if (liveEmpty2 != nullptr)
+	liveEmpty2->to_delete = true;
+	if (liveEmpty3 != nullptr)
+	liveEmpty3->to_delete = true;
 //	coins_collected->to_delete = true;
 //	coins_image->to_delete = true;
 	return true;
@@ -139,13 +154,29 @@ bool j1Hud::CleanUp()
 
 bool j1Hud::Load(pugi::xml_node& node)
 {
-
+	
+		timer = node.child("Timer").attribute("seconds").as_int();
+		minutes = node.child("Timer").attribute("minutes").as_int();
+	
+	if (App->menu->LoadHp) {
+		lifesCounter = node.child("Hp").attribute("current").as_int();
+		App->menu->LoadHp = false;
+		ShowHud();
+	}
+	
 	return true;
 }
 
 bool j1Hud::Save(pugi::xml_node& node) const
 {
-	
+	LOG("Saving HUD state");
+	App->console->write("Saving HUD state");
+
+	pugi::xml_node scene = node.append_child("Hp");
+	pugi::xml_node TimeManagement = node.append_child("Timer");
+	scene.append_attribute("current") = lifesCounter;
+	TimeManagement.append_attribute("seconds") = timer;
+	TimeManagement.append_attribute("minutes") = minutes;
 
 	return true;
 }
@@ -207,19 +238,35 @@ int j1Hud::GetLifes() const
 bool j1Hud::ShowHud()
 {
 	//timer_game.Start();
-	//liveEmpty = App->gui->CreateGuiElement(Types::image, 20, 50, { 157, 258, 36, 34 }, nullptr);
-	//liveEmpty2 = App->gui->CreateGuiElement(Types::image, 60, 50, { 157, 258, 36, 34 }, nullptr);
-	//liveEmpty3 = App->gui->CreateGuiElement(Types::image, 100, 50, { 157, 258, 36, 34 }, nullptr);
-	liveFull = App->gui->CreateGuiElement(Types::image, 20, 50, { 119, 258, 36, 34 }, nullptr);
-	liveFull2 = App->gui->CreateGuiElement(Types::image, 60, 50, { 119, 258, 36, 34 }, nullptr);
-	liveFull3 = App->gui->CreateGuiElement(Types::image, 100, 50, { 119, 258, 36, 34 }, nullptr);
-//	liveEmpty->follow = true;
-//	liveEmpty2->follow = true;
-//	liveEmpty3->follow = true;
-	liveFull->follow = true;
-	liveFull2->follow = true;
-	liveFull3->follow = true;
-//	activateTimer = true;
+	liveEmpty = App->gui->CreateGuiElement(Types::image, 20, 50, { 157, 258, 36, 34 }, nullptr);
+	liveEmpty2 = App->gui->CreateGuiElement(Types::image, 60, 50, { 157, 258, 36, 34 }, nullptr);
+	liveEmpty3 = App->gui->CreateGuiElement(Types::image, 100, 50, { 157, 258, 36, 34 }, nullptr);
+	if (lifesCounter > 0)
+	{
+		liveFull = App->gui->CreateGuiElement(Types::image, 20, 50, { 119, 258, 36, 34 }, nullptr);
+		liveFull->follow = true;
+	}
+	if (lifesCounter > 1)
+	{
+		liveFull2 = App->gui->CreateGuiElement(Types::image, 60, 50, { 119, 258, 36, 34 }, nullptr);
+		liveFull2->follow = true;
+	}
+	if (lifesCounter > 2)
+	{
+		liveFull3 = App->gui->CreateGuiElement(Types::image, 100, 50, { 119, 258, 36, 34 }, nullptr);
+		liveFull3->follow = true;
+	}
+	liveEmpty->follow = true;
+	liveEmpty2->follow = true;
+	liveEmpty3->follow = true;
+
+	timer_item = App->gui->CreateGuiElement(Types::text, 200, 50, { 157, 258, 36, 34 }, NULL, this, "0");
+	timer_item->follow = true;
+
+	minutes_item = App->gui->CreateGuiElement(Types::text, 160, 50, { 157, 258, 36, 34 }, NULL, this, "0");
+	minutes_item->follow = true;
+
+	activateTimer = true;
 	
 	return true;
 }
