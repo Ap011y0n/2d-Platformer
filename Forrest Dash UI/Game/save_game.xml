@@ -5,7 +5,7 @@
 	<textures />
 	<audio>
 		<volumemusic value="0.300000012" />
-		<volumefx value="0" />
+		<volumefx value="0.300000012" />
 	</audio>
 	<map />
 	<scene>
@@ -15,17 +15,23 @@
 	<pathfinding />
 	<gui />
 	<entity>
-		<Entity type="wizard">
-			<position pos_x="657" pos_y="421" />
-		</Entity>
-		<Entity type="wizard">
-			<position pos_x="4794" pos_y="416" />
+		<Entity type="slime">
+			<position pos_x="1536" pos_y="288" />
 		</Entity>
 		<Entity type="slime">
-			<position pos_x="770" pos_y="732" />
+			<position pos_x="2496" pos_y="288" />
 		</Entity>
 		<Entity type="wizard">
-			<position pos_x="2076" pos_y="421" />
+			<position pos_x="640" pos_y="416" />
+		</Entity>
+		<Entity type="wizard">
+			<position pos_x="4864" pos_y="416" />
+		</Entity>
+		<Entity type="slime">
+			<position pos_x="704" pos_y="544" />
+		</Entity>
+		<Entity type="wizard">
+			<position pos_x="2080" pos_y="608" />
 		</Entity>
 		<Entity type="slime">
 			<position pos_x="3616" pos_y="800" />
@@ -39,17 +45,173 @@
 		<Entity type="slime">
 			<position pos_x="3904" pos_y="1504" />
 		</Entity>
+		<Entity type="coin">
+			<position pos_x="1504" pos_y="224" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1536" pos_y="224" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2432" pos_y="224" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2464" pos_y="224" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2208" pos_y="288" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3072" pos_y="288" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3104" pos_y="288" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1184" pos_y="320" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1216" pos_y="320" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2784" pos_y="320" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2816" pos_y="320" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4320" pos_y="416" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="896" pos_y="448" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="928" pos_y="448" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1824" pos_y="512" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1856" pos_y="512" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4128" pos_y="512" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4576" pos_y="512" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1152" pos_y="544" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1184" pos_y="544" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1216" pos_y="544" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2784" pos_y="576" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2816" pos_y="576" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4768" pos_y="576" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1504" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="1536" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2464" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2496" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3424" pos_y="608" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2112" pos_y="640" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="2144" pos_y="640" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4960" pos_y="640" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4128" pos_y="704" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3584" pos_y="768" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3616" pos_y="768" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4320" pos_y="800" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4128" pos_y="896" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3296" pos_y="928" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3328" pos_y="928" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4320" pos_y="992" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4000" pos_y="1056" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4032" pos_y="1056" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3552" pos_y="1088" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3584" pos_y="1088" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3328" pos_y="1216" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3360" pos_y="1216" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3744" pos_y="1248" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3776" pos_y="1248" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4032" pos_y="1376" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="4064" pos_y="1376" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3776" pos_y="1440" />
+		</Entity>
+		<Entity type="coin">
+			<position pos_x="3808" pos_y="1440" />
+		</Entity>
 		<Entity type="player">
-			<position pos_x="3260" pos_y="444" />
+			<position pos_x="100" pos_y="500" />
 		</Entity>
 	</entity>
 	<fonts />
 	<main_menu />
 	<console />
 	<hud>
-		<Hp current="2" />
-		<Timer seconds="32" minutes="0" />
-		<Points coins="39" score="490" />
+		<Hp current="3" />
+		<Timer seconds="0" minutes="0" />
+		<Points coins="0" score="0" />
 	</hud>
 	<renderer />
 	<Fade />

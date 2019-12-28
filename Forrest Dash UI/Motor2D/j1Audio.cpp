@@ -110,7 +110,6 @@ bool j1Audio::CleanUp()
 bool j1Audio::PlayMusic(const char* path, float fade_time)
 {
 	Mix_VolumeMusic(128 * volumemusic);
-	LOG("%f", volumemusic);
 	bool ret = true;
 
 	if(!active)

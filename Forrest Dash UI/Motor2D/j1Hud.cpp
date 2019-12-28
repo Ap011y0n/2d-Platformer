@@ -36,7 +36,7 @@ bool j1Hud::Start()
 	extraLife = true;
 	score_item = nullptr;
 	coins_collected = nullptr;
-
+	drawLife = false;
 	return true;
 }
 
