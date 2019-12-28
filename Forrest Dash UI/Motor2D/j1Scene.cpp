@@ -502,14 +502,7 @@ void j1Scene::GuiInput(GuiItem* item)
 		{
 			f = 0;
 		}
-		if (f > 0)
-		{
-			App->audio->musicvolume(f, 1);
-		}
-		if (f < 0)
-		{
-			App->audio->musicvolume(f, 0);
-		}
+			App->audio->musicvolume(f);
 	}
 
 	if (item == resumeButton)
