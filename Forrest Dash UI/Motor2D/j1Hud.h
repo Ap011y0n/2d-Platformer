@@ -42,6 +42,7 @@ public:
 	GuiItem* liveEmpty3;
 	GuiItem* timer_item;
 	GuiItem* minutes_item;
+	GuiItem* coins_image;
 	GuiItem* coins_collected;
 	GuiItem* score_title;
 	GuiItem* score_item;
@@ -51,7 +52,9 @@ public:
 	uint timer = 0;
 	uint minutes = 0;
 	uint score = 0;
+	uint coins = 0;
 
+	char coins_text[10];
 	char score_text[10];
 	char timer_text[10];
 	char minutes_text[10];

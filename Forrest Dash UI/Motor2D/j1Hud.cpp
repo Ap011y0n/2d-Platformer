@@ -96,7 +96,17 @@ bool j1Hud::Update(float dt)
 		score_item->follow = true;
 		score_item->to_delete = true;
 	}
-
+	// COINS
+	if (App->scene->current_level == "maplevel1.tmx" || App->scene->current_level == "maplevel2.tmx")
+	{
+		sprintf_s(coins_text, 10, "%d", coins);
+		coins_collected = App->gui->CreateGuiElement(Types::text, 400, 50, { 157, 258, 36, 34 }, NULL, this, coins_text);
+		coins_collected->follow = true;
+		coins_collected->to_delete = true;
+		coins_image = App->gui->CreateGuiElement(Types::image, 350, 40, { 198, 251, 46, 45 }, NULL, this);
+		coins_image->follow = true;
+		coins_image->to_delete = true;
+	}
 	return true;
 }
 
@@ -108,7 +118,8 @@ bool j1Hud::PostUpdate()
 
 bool j1Hud::CleanUp()
 {
-	score = 0;
+	score = 0; 
+	coins = 0;
 	score_title->to_delete = true;
 	liveFull->to_delete = true;
 	liveFull2->to_delete = true;
@@ -116,6 +127,8 @@ bool j1Hud::CleanUp()
 	liveEmpty->to_delete = true;
 	liveEmpty2->to_delete = true;
 	liveEmpty3->to_delete = true;
+	coins_collected->to_delete = true;
+	coins_image->to_delete = true;
 	return true;
 }
 
@@ -138,6 +151,7 @@ bool j1Hud::SetLifes(int lifes)
 	{
 		lifes = 0;
 		score = 0;
+		coins = 0;
 		App->map->CleanUp();
 		App->menu->Start();
 		App->scene->checkpoint = false;

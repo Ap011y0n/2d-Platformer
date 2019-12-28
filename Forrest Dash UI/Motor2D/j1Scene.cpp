@@ -250,6 +250,7 @@ bool j1Scene::Save(pugi::xml_node& data) const
 void j1Scene::Nextmap() {
 	
 	App->hud->ShowHud();
+	App->hud->coins = 0;
 	changeEntities = true;
 	App->menu->CleanUp();
 	App->map->CleanUp();
@@ -495,7 +496,7 @@ void j1Scene::startlevel1()
 	if (App->map->CreateWalkabilityMap(w, h, &data))
 		App->pathfinding->SetMap(w, h, data);
 	RELEASE_ARRAY(data);
-
+	App->hud->coins = 0;
 	App->EntityManager->EntityCleanUp();
 	CreateEntities();
 
@@ -512,7 +513,7 @@ void j1Scene::startlevel2()
 	if (App->map->CreateWalkabilityMap(w, h, &data))
 		App->pathfinding->SetMap(w, h, data);
 	RELEASE_ARRAY(data);
-
+	App->hud->coins = 0;
 	App->EntityManager->EntityCleanUp();
 	CreateEntities();
 }
