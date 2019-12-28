@@ -310,7 +310,7 @@ void j1Scene::Debug() {
 	}
 
 	// Start from actual map
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && current_level != "menu.tmx")
 	{
 		App->EntityManager->EntityCleanUp();
 		CreateEntities();
@@ -322,8 +322,11 @@ void j1Scene::Debug() {
 	// Load last save
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
-		App->menu->CleanUp();
-		App->LoadGame();
+		if (App->CheckSaveGame()) {
+			App->menu->CleanUp();
+			App->LoadGame();
+		}
+		
 	}
 
 	// Save current state

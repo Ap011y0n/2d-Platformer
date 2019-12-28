@@ -501,11 +501,14 @@ void GuiSlider::slide() {
 	GetScreenPos(parentx, parenty);
 	ScrollThumb->GetScreenPos(ScreenX, ScreenY);
 	ScrollThumb->GetLocalPos(LocalX, LocalY);
-	difference = LocalY + y - ScreenY;
 	
-	if (y > ScreenY) {
+	
+	if (y > ScreenY) 
+	{
+		difference = LocalY + y - ScreenY;
 		if(ScreenY <= parenty+ Image->GetLocalRect()->h - ScrollThumb->GetLocalRect()->h)
 		{
+			
 			ScrollThumb->SetLocalPos(LocalX, difference);
 		}
 		else {
@@ -513,8 +516,8 @@ void GuiSlider::slide() {
 			ScrollThumb->SetLocalPos(LocalX, height);
 		}
 	}
-	else if (y < ScreenY) {
-		difference = LocalY - y - ScreenY;
+	else if (y < ScreenY){
+		difference = LocalY + y - ScreenY ;
 		if (ScreenY >= parenty) 
 		{
 			ScrollThumb->SetLocalPos(LocalX, difference);
@@ -523,6 +526,10 @@ void GuiSlider::slide() {
 			int pos = -1;
 			ScrollThumb->SetLocalPos(LocalX, pos);
 		}
+	}
+	else if (y == ScreenY)
+	{
+		ScrollThumb->SetLocalPos(LocalX, LocalY);
 	}
 
 }
