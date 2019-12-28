@@ -91,16 +91,16 @@ bool j1Hud::Update(float dt)
 
 	timer_item->SetText(timer_text);
 	SDL_DestroyTexture(timer_item->texture);
-	//p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(timer_item->texture));
-	//App->tex->textures.del(texlist);
+	p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(timer_item->texture));
+	App->tex->textures.del(texlist);
 
 	timer_item->texture = App->font->Print(timer_item->GetText(), { 255, 255, 255, 255 });
 	App->font->CalcSize(timer_item->GetText(), timer_item->textureRect.w, timer_item->textureRect.h);
 
 	minutes_item->SetText(minutes_text);
 	SDL_DestroyTexture(minutes_item->texture);
-	//texlist = App->tex->textures.At(App->tex->textures.find(minutes_item->texture));
-	//App->tex->textures.del(texlist);
+	texlist = App->tex->textures.At(App->tex->textures.find(minutes_item->texture));
+	App->tex->textures.del(texlist);
 
 	minutes_item->texture = App->font->Print(minutes_item->GetText(), { 255, 255, 255, 255 });
 	App->font->CalcSize(minutes_item->GetText(), minutes_item->textureRect.w, minutes_item->textureRect.h);
@@ -127,8 +127,8 @@ bool j1Hud::Update(float dt)
 
 		coins_collected->SetText(coins_text);
 		SDL_DestroyTexture(coins_collected->texture);
-		//p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(coins_collected->texture));
-		//App->tex->textures.del(texlist);
+		p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(coins_collected->texture));
+		App->tex->textures.del(texlist);
 		coins_collected->texture = App->font->Print(coins_collected->GetText(), { 255, 255, 255, 255 });
 		App->font->CalcSize(coins_collected->GetText(), coins_collected->textureRect.w, coins_collected->textureRect.h);
 	}
