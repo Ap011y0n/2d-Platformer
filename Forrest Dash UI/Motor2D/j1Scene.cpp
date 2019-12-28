@@ -439,7 +439,6 @@ void j1Scene::PauseMenu()
 	text = App->gui->CreateGuiElement(Types::text, 490, 280, rect, panel, this, "Fx");
 	soundLogo = App->gui->CreateGuiElement(Types::image, 450, 30, { 1884, 379, 72, 71 }, panel, this);
 
-	/*volume = App->gui->CreateGuiElement(Types::slider, 40, 180, rect, panel, this);*/
 }
 
 void j1Scene::DestroyMenu()
@@ -457,11 +456,27 @@ void j1Scene::DestroyMenu()
 
 void j1Scene::GuiInput(GuiItem* item)
 {
-	/*float f;
-	if (item->parent->type == Types::slider) {
+	float f;
+	if (item->parent == scrollMusic) {
 		f = item->parent->returnSliderPos();
 		LOG("%f", f);
-	}*/
+		if (f > 128)
+		{
+			f = 128;
+		}
+		if (f < 0)
+		{
+			f = 0;
+		}
+		if (f > 0)
+		{
+			App->audio->musicvolume(f, 1);
+		}
+		if (f < 0)
+		{
+			App->audio->musicvolume(f, 0);
+		}
+	}
 
 	if (item == resumeButton)
 	{
