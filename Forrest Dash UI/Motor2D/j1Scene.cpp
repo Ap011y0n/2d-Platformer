@@ -143,15 +143,6 @@ bool j1Scene::Update(float dt)
 				}
 		}
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) {
-		App->audio->musicvolume(0.05, 1);
-		App->audio->fxvolume(0.05, 1);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) {
-		App->audio->musicvolume(0.05, 0);
-		App->audio->fxvolume(0.05, 0);
-	}
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
 		//panel->to_delete = true;
 	}

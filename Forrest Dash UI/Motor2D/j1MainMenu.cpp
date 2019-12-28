@@ -312,11 +312,11 @@ void j1MainMenu::GuiInput(GuiItem* item)
 		{
 			f = 0;
 		}
-		App->audio->musicvolume(f, 1);
+		App->audio->musicvolume(f);
 		LOG("%f", f);
 		if (f < 0)
 		{
-			App->audio->musicvolume(f, 0);
+			App->audio->musicvolume(f);
 		}
 	}
 
