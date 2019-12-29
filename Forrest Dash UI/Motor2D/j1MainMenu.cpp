@@ -334,7 +334,7 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	if(item == buttonNewGame && ButtonSoundCooldown)
 	{
 		ButtonSoundCooldown = false;
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		camLock = true;
 		App->hud->SetLifes(3);
 		App->fade->ChangeScene();
@@ -346,7 +346,7 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	else if (item == buttonContinue && ButtonSoundCooldown)
 	{
 		if(App->CheckSaveGame()){
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		ButtonSoundCooldown = false;
 		camLock = true;
 		CleanUp();
@@ -360,42 +360,42 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	else if (item == buttonSettings && ButtonSoundCooldown)
 	{
 		MoveToSection(Section::settings);
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		ButtonSoundCooldown = false;
 	}
 	else if (item == buttonCredits && ButtonSoundCooldown)
 	{
 		MoveToSection(Section::credits);
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		ButtonSoundCooldown = false;
 	}
 	else if (item == buttonSettingsToMenu && ButtonSoundCooldown)
 	{
 		MoveToSection(Section::main_menu);
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		ButtonSoundCooldown = false;
 	}
 	else if (item == buttonCreditsToMenu && ButtonSoundCooldown)
 	{
 		MoveToSection(Section::main_menu);
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		ButtonSoundCooldown = false;
 	}
 	else if (item == buttonExit && ButtonSoundCooldown)
 	{
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		App->quitGame = true;
 		ButtonSoundCooldown = false;
 	}
 	else if (item == buttonToRepo && CanOpenURL)
 	{
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		openUrl("https://github.com/Ap011y0n/2d-Platformer");
 		CanOpenURL = false;
 	}
 	else if (item == buttonToWeb && CanOpenURL)
 	{
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		openUrl("https://ap011y0n.github.io/2d-Platformer/");
 		CanOpenURL = false;
 	}
