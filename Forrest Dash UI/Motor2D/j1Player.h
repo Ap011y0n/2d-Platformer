@@ -49,6 +49,8 @@ public:
 	void Camera();
 	void MoveCondition(float dt);
 	void OnCollision(Collider* c1, Collider* c2);
+	bool CleanUp();
+
 
 private:
 

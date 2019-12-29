@@ -164,7 +164,7 @@ void j1ProjPlayer::setAnimation()
 void j1ProjPlayer::OnCollision(Collider* c1, Collider* c2) {
 
 	
-	if (c1->type == COLLIDER_PLAYER_SHOT) {
+	if (c1->type == COLLIDER_PLAYER_SHOT && c2->type != COLLIDER_COIN) {
 		c1->to_delete = true;
 		to_delete = true;
 	}

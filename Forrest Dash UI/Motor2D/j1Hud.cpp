@@ -248,6 +248,7 @@ bool j1Hud::SetLifes(int lifes)
 	else if (lifes > MAX_LIFES)
 	{
 		lifes = MAX_LIFES;
+		drawLife = false;
 	}
 	else
 	{
