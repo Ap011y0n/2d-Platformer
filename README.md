@@ -1,6 +1,6 @@
 # Forest Dash
 
-## Asigment for our videogames development subject.
+## Assignment for our videogames development subject.
 
 ## Webpage
 ### https://ap011y0n.github.io/2d-Platformer/
