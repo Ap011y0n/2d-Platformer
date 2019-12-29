@@ -81,7 +81,7 @@ public:
 	bool LoadHp;
 	bool ShowHud;
 
-
+	bool ButtonSoundCooldown;
 
 private:
 
@@ -91,8 +91,7 @@ private:
 	fPoint camPos = { 0.0f, 0.0f };
 	float camSpeed = 0.0f;
 	bool CanOpenURL;
-	bool CanOpenURLWeb;
-	
+	bool CanOpenURLWeb;	
 };
 
 #endif // !__j1MAINMENU_H__

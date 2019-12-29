@@ -25,11 +25,11 @@
   <audio>
     <music>
       <folder>audio/music/</folder>
-      <volumemusic value="0.3"/>
+      <volumemusic value="1.0"/>
     </music>
     <fx>
       <folder>audio/fx/</folder>
-      <volumefx value="0.3"/>
+      <volumefx value="1.0"/>
     </fx>
   </audio>
   
