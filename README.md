@@ -2,7 +2,7 @@
 layout: default
 ---
 <h2>Description</h2>
-For our second year at the Design and Development of videogames degree in the Videogames Development subject we had to make a platformer.
+For our second year at the Design and Development of videogames degree in the Videogames Development subject we had to make a platformer. HOLA
 <h3> Forrest Dash </h3>
 Forrest Dash is a platformer videogame in which you control the main character and you have to surpass the levels quickly and dealing with a lot of enemies.
 <h3>How it works & Innovations </h3>
@@ -29,7 +29,7 @@ This game was developed by a team formed by:
 <dd> <b>Github account:</b> Click <a href=" https://github.com/JBGelsenorJ">here</a> </dd>
 <dd> <b>Linkedin:</b>  Click <a href=" https://www.linkedin.com/in/javier-belda-gonz%C3%A1lez-59718112b/">here</a></dd>
 
-<dt><img src="https://raw.githubusercontent.com/Ap011y0n/2d-Platformer/master/Forrest%20Dash%20UI/WebpageContents/Macia.jpg" height = "200" width = "120" ></img> </dt>
+<dt><img src="https://raw.githubusercontent.com/Ap011y0n/2d-Platformer/master/Forrest%20Dash%20UI/WebpageContents/Macia.jpg" height = "300" width = "220" ></img> </dt>
 <dt>Macià Dalmau Roig</dt>
 <dd> Lead Artist, lvl 1, Atlas, Main Menu, ingame HUD, animations</dd>
 <dd> <b>Github account:</b> Click <a href="https://github.com/maciadalmau">here</a> </dd>
