@@ -49,7 +49,7 @@ public:
 	void Camera();
 	void MoveCondition(float dt);
 	void OnCollision(Collider* c1, Collider* c2);
-	virtual bool CleanUp();
+	bool CleanUp();
 
 
 private:
