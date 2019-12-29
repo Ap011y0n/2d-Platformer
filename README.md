@@ -9,7 +9,7 @@
 
 ## Team
 
-### Albert García Delerda - https://github.com/Ap011y0n
+### Albert Garcia Belerda - https://github.com/Ap011y0n
 #### 0.5: Physics, load things from Tiled, cleaning code
 #### 0.8: Entities, framerate cap
 #### 1.0: UI base class, Console, Bugfixing
