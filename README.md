@@ -48,7 +48,7 @@
 ## Console
 ### Open with º
 ### godmode --> Enables/disables player godmode"
-### list --> If you haven't noticed yet, displays all available commands"
+### list --> displays all available commands"
 ### fps <number> --> sets a framerate cap between 30 and 120"
 ### map <number> --> changes map"
 ### Quit --> Closes the application"
