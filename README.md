@@ -1,104 +1,84 @@
----
-layout: default
----
-<h2>Description</h2>
-For our second year at the Design and Development of videogames degree in the Videogames Development subject we had to make a platformer. HOLA
-<h3> Forrest Dash </h3>
-Forrest Dash is a platformer videogame in which you control the main character and you have to surpass the levels quickly and dealing with a lot of enemies.
-<h3>How it works & Innovations </h3>
-Forrest Dash is a platformer done with the SDL libraries, it is divided in many modules that control the most important aspects of the game such as Audio, Render, Levels, Entities, UI... the game is mostly made in C/C++, for
-surpass the subject we had several requirements that we had to accomplish but we decided to do some off-requirements things, such as:
-- Animations loaded from tmx
-- Checkpoints
-- Special Bow animations
-- Enemies created in tmx
-- Time bar
-- Colliders made in Tiled
-<h2>Our Team</h2>
+# Forrest Dash
 
-This game was developed by a team formed by:
-<dl>
-<dt><img src="https://raw.githubusercontent.com/Ap011y0n/2d-Platformer/master/Forrest%20Dash%20UI/WebpageContents/javi.jpg" height = "100" width = "150" ></img> </dt>
-<dt>Albert García Belerda (Noia 10/6/1996)</dt>
-<dd> Lead Programmer, Entities (player/enemies), UI base, Console, colisions </dd>
-<dd> <b>Github account:</b> Click <a href="https://github.com/Ap011y0n">here</a> </dd>
+## Asigment for our videogames development subject.
 
-<dt><img src="https://raw.githubusercontent.com/Ap011y0n/2d-Platformer/master/Forrest%20Dash%20UI/WebpageContents/javi.jpg" height = "100" width = "150"></img></dt>
-<dt>Javier D. Belda González (Las Palmas de Gran Canaria 09/26/1997)</dt>
-<dd> Audio, pathfinding, level 2, pause menu, coins </dd>
-<dd> <b>Github account:</b> Click <a href=" https://github.com/JBGelsenorJ">here</a> </dd>
-<dd> <b>Linkedin:</b>  Click <a href=" https://www.linkedin.com/in/javier-belda-gonz%C3%A1lez-59718112b/">here</a></dd>
+## Repository
+### https://github.com/Ap011y0n/2d-Platformer
 
-<dt><img src="https://raw.githubusercontent.com/Ap011y0n/2d-Platformer/master/Forrest%20Dash%20UI/WebpageContents/Macia.jpg" height = "300" width = "220" ></img> </dt>
-<dt>Macià Dalmau Roig</dt>
-<dd> Lead Artist, lvl 1, Atlas, Main Menu, ingame HUD, animations</dd>
-<dd> <b>Github account:</b> Click <a href="https://github.com/maciadalmau">here</a> </dd>
+## Team
 
+### Albert García Delerda - https://github.com/Ap011y0n
+#### 0.5: Physics, load things from Tiled, cleaning code
+#### 0.8: Entities, framerate cap
+### Javier D. Belda González - https://github.com/JBGelsenorJ
+#### 0.5: Audio, death condition, Map 2, godmode, camera borders
+#### 0.8: Pathfinding and enemy behaviour
+### Macià Dalmau Roig- https://github.com/maciadalmau
+#### 0.5: Map 1, animations, sprites, shake, parallax, 
+#### 0.8: Framerate cap, enemies animations and machine state, brofiler, bow animation, sfx
+## How to play
+### Your objective is to reach the end of the level, but be careful, you can't be still for very much, there is a bar behind you that only regenerates while running (not jumping), also watch out for the dangers of your trip, such as enemies, spikes, death pits, deep underground lakes...
 
+## Controls
+### A: Backward movement
+### D: Forward movement
+### W: Jump
+### S: Crouch (no need to use yet)
+### Q/E arrow: Dash
+### +/- up/down volume
+### Left click melee attack
+### Right click bow (need to be loaded)
 
-</dl>
+## Debug
+### F1: First level from start
+### F2: Second level from start
+### F3: Start of the current level
+### F5: Save the current state
+### F6: Load the previous state
+### F9: Show colliders
+### F10: God mode
+### F11: framerate cap / no cap
 
-<h2>Gameplay</h2>
-<iframe width="600" height="300" 
-src="https://www.youtube.com/embed/VeiSCmgpkrw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-</iframe>
-<h2>Controls</h2>
-<div class ="highlighter-rouge">
-<div class="highlight">
-<pre class = highlight">
-<code>
-                       
-Controls:
-A: Backward movement
-D: Forward movement
-W: Jump
-S: Crouch (only aesthetical use)
-Q/E arrow: Dash
-+/- up/down volume
-Left click melee attack
-Right click bow (need to be loaded)
- Debug
-F1: First level from start
-F2: Second level from start
-F3: Start of the current level
-F5: Save the current state
-F6: Load the previous state
-F9: Show colliders
-F10: God mode
-F11: framerate cap / no cap
-Libraries, Art & Music:
-Cave Assets: "Warped" by Luis Zuno https://twitter.com/ansimuz?lang=es
-Forest Assets: "Forest game assets" by Anokolisa https://twitter.com/anokolisa
-Mountain background: "Taiga" by vnitti https://twitter.com/vnitti_art
-Player: "Animated Pixel Adventurer" by rvros https://rvros.itch.io/
-Background music thanks to: https://freesound.org/people/Sirkoto51/sounds/443128/
-Sound effects obtained from https://www.zapsplat.com
-Using the following SDL libraries: 
-SDL: https://www.libsdl.org/ 
-SDL_Image: https://www.libsdl.org/projects/SDL_image/ 
-SDL_Mixer: https://www.libsdl.org/projects/SDL_mixer/
-</code>
-                       </div>
-                       </div> 
-<h2>License</h2> 	
-<code>
-MIT License
-Copyright (c) 2019 Ap011y0n, JBGelsenorJ & maciadalmau
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.                   
-</code>				   
-<h2>Download link</h2> 
-<a href="https://github.com/Ap011y0n/2d-Platformer/releases"><h1>Here</12></a>
+## Changelog
+### 0.5: 
+#### Created 2 levels , added player with animations, music and fx selected and implemented, debug features added, time bar added, death/win condition implemented, dash added.
+### 0.8:
+#### Levels have been changed to implement more usage of the dash, now there are enemies that pathfind the player, the player can kill them with a melee attack or a range one, module entites implemented now
+#### the player and the rest of the entities derivate from this class, framerate now capped to 30 (you can desactivate this)
+### Innovations: 
+#### for 0.5: Animations loaded from Tiled, time bar, colliders made in Tiled, volume for music and fx can be manipulated and saved.
+#### for 0.8: Bow animation depends of position of the mouse, checkpoints, enemies created from tmx
+#### for 1.0: HUD and console, pause menu, mains menu and coins
+### Cave Assets: "Warped" by Luis Zuno https://twitter.com/ansimuz?lang=es
+### Forest Assets: "Forest game assets" by Anokolisa https://twitter.com/anokolisa
+### Mountain background: "Taiga" by vnitti https://twitter.com/vnitti_art
+### Player: "Animated Pixel Adventurer" by rvros https://rvros.itch.io/
+### Background music thanks to: https://freesound.org/people/Sirkoto51/sounds/443128/
+### Sound effects obtained from https://www.zapsplat.com
+### Using the following SDL libraries: 
+### SDL: https://www.libsdl.org/ 
+### SDL_Image: https://www.libsdl.org/projects/SDL_image/ 
+### SDL_Mixer: https://www.libsdl.org/projects/SDL_mixer/
+
+## License 
+### MIT License
+
+### Copyright (c) 2019 Ap011y0n, JBGelsenorJ & maciadalmau
+
+### Permission is hereby granted, free of charge, to any person obtaining a copy
+### of this software and associated documentation files (the "Software"), to deal
+### in the Software without restriction, including without limitation the rights
+### to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+### copies of the Software, and to permit persons to whom the Software is
+### furnished to do so, subject to the following conditions:
+
+### The above copyright notice and this permission notice shall be included in all
+### copies or substantial portions of the Software.
+
+### THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+### IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+### FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+### AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+### LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+### OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+### SOFTWARE.
