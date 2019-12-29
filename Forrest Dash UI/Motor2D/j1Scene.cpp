@@ -163,6 +163,7 @@ bool j1Scene::Update(float dt)
 	iPoint p = App->render->ScreenToWorld(x, y);
 	
 
+	if (current_level == "maplevel1.tmx" || current_level == "maplevel2.tmx")
 	App->render->Blit(debug_tex, p.x-15, p.y-15);
 
 	//App->win->SetTitle(title.GetString());
@@ -284,7 +285,10 @@ void j1Scene::Debug() {
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
+		App->hud->CleanUp();
 		startlevel1();
+		App->hud->ShowHud();
+
 		//App->player->position.x = App->player->initialPosition.x;
 		//App->player->position.y = App->player->initialPosition.y;
 		//App->player->BarWidth = App->player->maxBarWidth;
@@ -295,8 +299,10 @@ void j1Scene::Debug() {
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		
-
+		App->hud->CleanUp();
 		startlevel2();
+		App->hud->ShowHud();
+
 		/*App->player->position.x = App->player->initialPosition.x;
 		App->player->position.y = App->player->initialPosition.y;
 		App->player->BarWidth = App->player->maxBarWidth;

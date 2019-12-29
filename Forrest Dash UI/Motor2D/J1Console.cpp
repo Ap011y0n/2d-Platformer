@@ -11,6 +11,7 @@
 #include "j1Fonts.h"
 #include "J1EntityManager.h"
 #include "j1Scene.h"
+#include "j1Hud.h"
 
 
 j1Console::j1Console()
@@ -285,13 +286,19 @@ void j1Console::ExecuteCommand(Commands command) {
 			write("- Changing to map 1");
 			App->menu->CleanUp();
 			App->menu->camLock = true;
+			App->hud->CleanUp();
 			App->scene->startlevel1();
+			App->hud->ShowHud();
+
 		}
 		else if (loadMap == 2) {
 			write("- Changing to map 2");
 			App->menu->CleanUp();
 			App->menu->camLock = true;
+			App->hud->CleanUp();
 			App->scene->startlevel2();
+			App->hud->ShowHud();
+
 		}
 		else {
 			write("- Incorrect map id");
