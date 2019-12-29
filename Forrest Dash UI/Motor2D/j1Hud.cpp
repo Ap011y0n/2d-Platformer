@@ -34,8 +34,21 @@ bool j1Hud::Start()
 	
 	lifesCounter = 3;
 	extraLife = true;
-	score_item = nullptr;
+
+	liveFull = nullptr;
+	liveFull2 = nullptr;
+	liveFull3 = nullptr;
+	liveEmpty = nullptr;
+	liveEmpty2 = nullptr;
+	liveEmpty3 = nullptr;
+	timer_item = nullptr;
+	minutes_item = nullptr;
+	coins_image = nullptr;
 	coins_collected = nullptr;
+	score_title = nullptr;
+	score_item = nullptr;
+
+
 	drawLife = false;
 	return true;
 }
@@ -101,7 +114,7 @@ bool j1Hud::Update(float dt)
 	timer_item->texture = App->font->Print(timer_item->GetText(), { 255, 255, 255, 255 });
 	App->font->CalcSize(timer_item->GetText(), timer_item->textureRect.w, timer_item->textureRect.h);
 	}
-		if (minutes_item) {
+		if (minutes_item != nullptr) {
 
 		
 	minutes_item->SetText(minutes_text);
@@ -132,7 +145,6 @@ bool j1Hud::Update(float dt)
 	if (coins_collected != nullptr)
 	{
 		sprintf_s(coins_text, 10, "%d", coins);
-
 		coins_collected->SetText(coins_text);
 		SDL_DestroyTexture(coins_collected->texture);
 		p2List_item<SDL_Texture*>* texlist = App->tex->textures.At(App->tex->textures.find(coins_collected->texture));
@@ -141,10 +153,6 @@ bool j1Hud::Update(float dt)
 		App->font->CalcSize(coins_collected->GetText(), coins_collected->textureRect.w, coins_collected->textureRect.h);
 	}
 
-
-	
-		
-	
 	return true;
 }
 
