@@ -92,6 +92,7 @@ bool j1MainMenu::Start()
 	
 	//Menu Sections
 	CanOpenURL = true;
+	ButtonSoundCooldown = true;
 	camLock = false;
 	LoadHp = false;
 	ShowHud = false;
@@ -224,6 +225,7 @@ bool j1MainMenu::Update(float dt)
 	
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
 		CanOpenURL = true;
+		ButtonSoundCooldown = true;
 	}
 	
 
@@ -329,8 +331,10 @@ void j1MainMenu::GuiInput(GuiItem* item)
 		}
 		App->audio->fxvolume(fxf);
 	}
-	if(item == buttonNewGame)
+	if(item == buttonNewGame && ButtonSoundCooldown)
 	{
+		ButtonSoundCooldown = false;
+		App->audio->PlayFx(App->audio->coinpickupFx);
 		camLock = true;
 		App->hud->SetLifes(3);
 		App->fade->ChangeScene();
@@ -339,9 +343,11 @@ void j1MainMenu::GuiInput(GuiItem* item)
 		ShowHud = true;
 
 	}
-	else if (item == buttonContinue)
+	else if (item == buttonContinue && ButtonSoundCooldown)
 	{
 		if(App->CheckSaveGame()){
+		App->audio->PlayFx(App->audio->coinpickupFx);
+		ButtonSoundCooldown = false;
 		camLock = true;
 		CleanUp();
 		LoadHp = true;
@@ -351,33 +357,45 @@ void j1MainMenu::GuiInput(GuiItem* item)
 	}
 	}
 	
-	else if (item == buttonSettings)
+	else if (item == buttonSettings && ButtonSoundCooldown)
 	{
 		MoveToSection(Section::settings);
+		App->audio->PlayFx(App->audio->coinpickupFx);
+		ButtonSoundCooldown = false;
 	}
-	else if (item == buttonCredits)
+	else if (item == buttonCredits && ButtonSoundCooldown)
 	{
 		MoveToSection(Section::credits);
+		App->audio->PlayFx(App->audio->coinpickupFx);
+		ButtonSoundCooldown = false;
 	}
-	else if (item == buttonSettingsToMenu)
+	else if (item == buttonSettingsToMenu && ButtonSoundCooldown)
 	{
 		MoveToSection(Section::main_menu);
+		App->audio->PlayFx(App->audio->coinpickupFx);
+		ButtonSoundCooldown = false;
 	}
-	else if (item == buttonCreditsToMenu)
+	else if (item == buttonCreditsToMenu && ButtonSoundCooldown)
 	{
 		MoveToSection(Section::main_menu);
+		App->audio->PlayFx(App->audio->coinpickupFx);
+		ButtonSoundCooldown = false;
 	}
-	else if (item == buttonExit)
+	else if (item == buttonExit && ButtonSoundCooldown)
 	{
+		App->audio->PlayFx(App->audio->coinpickupFx);
 		App->quitGame = true;
+		ButtonSoundCooldown = false;
 	}
 	else if (item == buttonToRepo && CanOpenURL)
 	{
+		App->audio->PlayFx(App->audio->coinpickupFx);
 		openUrl("https://github.com/Ap011y0n/2d-Platformer");
 		CanOpenURL = false;
 	}
 	else if (item == buttonToWeb && CanOpenURL)
 	{
+		App->audio->PlayFx(App->audio->coinpickupFx);
 		openUrl("https://ap011y0n.github.io/2d-Platformer/");
 		CanOpenURL = false;
 	}

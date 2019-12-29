@@ -61,7 +61,8 @@ public:
 	int wizarDeathFx;
 	int slimeDeathFx;
 	int coinpickupFx;
-
+	//ButtonFX
+	int buttonFx;
 private:
 
 	_Mix_Music* music = NULL;

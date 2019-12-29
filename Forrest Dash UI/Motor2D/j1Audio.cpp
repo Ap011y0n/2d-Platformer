@@ -76,6 +76,7 @@ bool j1Audio::Awake(pugi::xml_node & config)
 	wizarDeathFx = LoadFx("audio/fx/wizard_death.wav");
 	slimeDeathFx = LoadFx("audio/fx/slime_death.wav");
 	coinpickupFx = LoadFx("audio/fx/coin.wav");
+	buttonFx = LoadFx("audio/fx/button.wav");
 	return ret;
 }
 

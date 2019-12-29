@@ -518,13 +518,15 @@ void j1Scene::GuiInput(GuiItem* item)
 		App->audio->fxvolume(fxf);
 	}
 
-	if (item == resumeButton)
+	if (item == resumeButton && App->menu->ButtonSoundCooldown)
 	{
+		App->audio->PlayFx(App->audio->coinpickupFx);
 		DestroyMenu();
 
 	}
-	if (item == mainmenuButton)
+	if (item == mainmenuButton && App->menu->ButtonSoundCooldown)
 	{
+		App->audio->PlayFx(App->audio->coinpickupFx);
 		App->map->CleanUp();
 		App->menu->Start();
 		checkpoint = false;

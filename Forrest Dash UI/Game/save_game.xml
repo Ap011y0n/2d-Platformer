@@ -4,8 +4,8 @@
 	<window />
 	<textures />
 	<audio>
-		<volumemusic value="0.300000012" />
-		<volumefx value="0.300000012" />
+		<volumemusic value="1" />
+		<volumefx value="1" />
 	</audio>
 	<map />
 	<scene>
