@@ -49,7 +49,7 @@ public:
 
 	virtual ~j1Entity();
 
-	bool CleanUp();
+	virtual bool CleanUp();
 	bool Load(pugi::xml_node& data);
 	bool Save(pugi::xml_node& data) const;
 

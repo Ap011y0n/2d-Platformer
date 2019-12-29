@@ -137,6 +137,14 @@ bool j1Player::Start()
 	return true;
 }
 
+bool j1Player::CleanUp() {
+
+	if (EntityCollider != nullptr)
+		EntityCollider->to_delete = true;
+	if (colliderAttack != nullptr)
+		colliderAttack->to_delete = true;
+	return true;
+}
 // Update: call player functions which have to run every frame ----------------------------------------------
 bool j1Player::Update(float dt)
 {
