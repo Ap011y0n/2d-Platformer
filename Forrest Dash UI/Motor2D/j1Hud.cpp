@@ -37,8 +37,8 @@ bool j1Hud::Start()
 {
 	
 	lifesCounter = 3;
-	extraLife = true;
 
+	extraLife = true;
 	liveFull = nullptr;
 	liveFull2 = nullptr;
 	liveFull3 = nullptr;
@@ -70,7 +70,6 @@ bool j1Hud::Update(float dt)
 		if (score >= score2)
 		{
 			score2 += 500;
-			
 			drawLife = true;
 			SetLifes(App->hud->GetLifes() + 1);
 		}
