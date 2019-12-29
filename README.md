@@ -48,7 +48,7 @@
 ### Innovations: 
 #### for 0.5: Animations loaded from Tiled, time bar, colliders made in Tiled, volume for music and fx can be manipulated and saved.
 #### for 0.8: Bow animation depends of position of the mouse, checkpoints, enemies created from tmx
-
+#### for 1.0: HUD and console, pause menu, mains menu and coins
 ### Cave Assets: "Warped" by Luis Zuno https://twitter.com/ansimuz?lang=es
 ### Forest Assets: "Forest game assets" by Anokolisa https://twitter.com/anokolisa
 ### Mountain background: "Taiga" by vnitti https://twitter.com/vnitti_art
