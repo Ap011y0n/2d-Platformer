@@ -20,7 +20,7 @@
 ### Macià Dalmau Roig- https://github.com/maciadalmau
 #### 0.5: Map 1, animations, sprites, shake, parallax, 
 #### 0.8: Framerate cap, enemies animations and machine state, brofiler, bow animation, sfx
-#### 1.0: Main menu(settings,credits...), ingame HUD (lifes,timer)
+#### 1.0: Main menu(settings,credits...), ingame HUD (lifes,timer), atlas
 ## How to play
 ### Your objective is to reach the end of the level, but be careful, you can't be still for very much, there is a bar behind you that only regenerates while running (not jumping), also watch out for the dangers of your trip, such as enemies, spikes, death pits, deep underground lakes...
 
