@@ -25,7 +25,11 @@ j1Hud::j1Hud() :j1Module()
 
 bool j1Hud::Awake(pugi::xml_node& node)
 {
-	
+	timer = 0;
+	minutes = 0;
+	score = 0;
+	score2 = 500;
+	coins = 0;
 	return true;
 }
 
@@ -62,15 +66,15 @@ bool j1Hud::Update(float dt)
 {
 	BROFILER_CATEGORY("Hud Update", Profiler::Color::LightGray);
 
-	if(extraLife)
-	{
-		if (score >= 500)
+
+		if (score >= score2)
 		{
-			extraLife = false;
+			score2 += 500;
+			
 			drawLife = true;
 			SetLifes(App->hud->GetLifes() + 1);
 		}
-	}
+	
 	
 
 	//TIMER
@@ -166,6 +170,10 @@ bool j1Hud::CleanUp()
 {
 	score = 0; 
 	coins = 0;
+	score2 = 500;
+	timer = 0;
+	minutes = 0;
+
 	activateTimer = false;
 	if (timer_item != nullptr)
 		timer_item->to_delete = true;

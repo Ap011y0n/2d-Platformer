@@ -56,6 +56,7 @@ public:
 	uint timer = 0;
 	uint minutes = 0;
 	uint score = 0;
+	uint score2 = 0;
 	uint coins = 0;
 
 	char coins_text[10];
