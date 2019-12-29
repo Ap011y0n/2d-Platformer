@@ -520,13 +520,13 @@ void j1Scene::GuiInput(GuiItem* item)
 
 	if (item == resumeButton && App->menu->ButtonSoundCooldown)
 	{
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		DestroyMenu();
 
 	}
 	if (item == mainmenuButton && App->menu->ButtonSoundCooldown)
 	{
-		App->audio->PlayFx(App->audio->coinpickupFx);
+		App->audio->PlayFx(App->audio->buttonFx);
 		App->map->CleanUp();
 		App->menu->Start();
 		checkpoint = false;
