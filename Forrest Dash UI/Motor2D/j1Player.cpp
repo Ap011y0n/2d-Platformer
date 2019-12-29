@@ -169,6 +169,7 @@ bool j1Player::Update(float dt)
 		CheckCollision(dt);
 		Movement(dt);
 		StateMachine(dt);
+		if(Godmode == false)
 		MoveCondition(dt);
 	}
 	SDL_Rect* r = &current_animation->GetCurrentFrame(dt);
