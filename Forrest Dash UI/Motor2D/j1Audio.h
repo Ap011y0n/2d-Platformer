@@ -61,6 +61,7 @@ public:
 	int wizarDeathFx;
 	int slimeDeathFx;
 	int coinpickupFx;
+	int extraLifeFx;
 	//ButtonFX
 	int buttonFx;
 private:

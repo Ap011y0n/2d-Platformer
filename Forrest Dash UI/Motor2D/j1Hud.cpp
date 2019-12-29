@@ -73,6 +73,7 @@ bool j1Hud::Update(float dt)
 			
 			drawLife = true;
 			SetLifes(App->hud->GetLifes() + 1);
+			App->audio->PlayFx(App->audio->extraLifeFx);
 		}
 	
 	
